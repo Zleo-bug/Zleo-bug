@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="author" content="leobro">
     <meta name="description" itemprop="description" content="">
-    <meta name="keywords" content=",Java">
+    <meta name="keywords" content=",Java , Stream流">
 
     <!-- Page Title -->
     
@@ -127,8 +127,7 @@
 <h2 id="三-为什么要使用Stream流"><a href="#三-为什么要使用Stream流" class="headerlink" title="三.为什么要使用Stream流"></a><strong><em>三.为什么要使用Stream流</em></strong></h2><p>Stream API 可以极大提高程序员的生产力，让程序员以一种声明的方式处理数据，一行代码对集合进行多种操作，让我们写出更高效、简洁、有效率的代码。</p>
 <blockquote>
 </blockquote>
-<h2 id="四-Stream流的用法"><a href="#四-Stream流的用法" class="headerlink" title="四.Stream流的用法"></a><strong><em>四.Stream流的用法</em></strong></h2><p><strong>注：在学习Stream流之前，你需要对java的lambda表达式有一定的了解，因为Stream流中会使用到。</strong></p>
-<p><strong>另外，在使用流的时候，先不要重复使用同一个流，后面会讲到原因</strong></p>
+<h2 id="四-Stream流的用法"><a href="#四-Stream流的用法" class="headerlink" title="四.Stream流的用法"></a><strong><em>四.Stream流的用法</em></strong></h2><p><strong>另外，在使用流的时候，先不要重复使用同一个流，后面会讲到原因</strong></p>
 <hr>
 <h3 id="1-流的创建"><a href="#1-流的创建" class="headerlink" title="1.流的创建"></a><strong>1.流的创建</strong></h3><p>对于集合，流的创建通常使用 集合.stream() 来创建一个流，如：</p>
 <pre><code>List&lt;String&gt; list = new ArrayList&lt;&gt;();
@@ -150,7 +149,7 @@ splitStream.sorted.forEach(v-&gt;System.out.println(v));            // 输出：
 <pre><code>Integer[] integers = &#123;1,23,4,5,6,7,3,3,23,6,8,93,2,4,5&#125;;</code></pre>
 <p>以下流的操作均以此数组为例</p>
 <p><strong>forEach循环：</strong></p>
-<p>使用forEach()方法可以循环输出流，forEach()括号里面为lambda表达式</p>
+<p>使用forEach()方法可以循环输出流</p>
 <pre><code>Stream.of(integers).forEach(v-&gt;System.out.println(v)); // 循环输出整形数组</code></pre>
 <p><strong>筛选：</strong></p>
 <p>使用Stream流中的filter()方法可以过滤某些元素，如：</p>
@@ -169,7 +168,7 @@ stream1.filter(v-&gt;v&gt;20).forEach(v-&gt;System.out.println(v));    //23,23,9
 <p>map()方法接受一个lambda表达式，该函数会被应用到每个元素上，并映射成一个新的元素</p>
 <pre><code>Stream.of(integers).filter(i-&gt;i&gt;20).distinct().map(v-&gt;v*=2).forEach(v-&gt;System.out.println(v));        //46,186</code></pre>
 <p><strong>排序</strong></p>
-<p>sorted()方法可以进行默认排序，流中元素需要实现Comparable接口</p>
+<p>sorted()方法可以进行默认排序，流中元素需要实s现Comparable接口</p>
 <p>sorted(Comparator cmp) 方法中传入一个实现Comparator接口的实现类，可以实现自定义排序</p>
 <pre><code>Stream.of(integers).sorted().filter(i-&gt;i&gt;20).forEach(v-&gt;System.out.println(v))         // 23,23,93
 

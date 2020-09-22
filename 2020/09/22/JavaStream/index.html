@@ -230,7 +230,7 @@ int min = Stream.of(integers).collect(Collectors.minBy(Integer::compare)).get();
 
 double average = Stream.of(integers).collect(Collectors.averagingDouble(Integer::intValue));
 
-double sum = Stream.of(integers).collect(Collectors.averagingDouble(Integer::intValue));</code></pre>
+int sum = Stream.of(integers).collect(Collectors.summarizingInt(Integer::intValue));</code></pre>
 <p>以下方法可以集以上四种操作于一身：</p>
 <pre><code>IntSummaryStatistics sta = Stream.of(integers).collect(Collectors.summarizingInt(Integer::intValue));
 int max = sta.getMax();

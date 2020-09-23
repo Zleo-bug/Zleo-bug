@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+    <!-- Head -->
+    <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="author" content="leobro">
+    <meta name="description" itemprop="description" content="">
+    <meta name="keywords" content=",Spring">
+
+    <!-- Page Title -->
+    
+        <title>Spring简介 | 十二点前要睡觉</title>
+    
+    <link rel="icon" href="/img/avatar-default.png">
+    <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    
+    
+<script src="/js/script.js"></script>
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+    <style>
+        .deactiveColor{
+            color: #37474f;
+        }
+        .activeColor{
+            color: #006064;
+        }
+        a:hover{
+            color: #006064;
+        }
+        .header-btn{
+            color: #37474f;
+        }
+        
+        .post-content img{
+            margin: 50px auto;
+        }
+        
+    </style>
+<meta name="generator" content="Hexo 5.2.0"></head>
+    <body>
+        <div class="container">
+
+            <!-- Top Anchor -->
+            <div id="top"></div>
+
+            <!-- Header -->
+            <header class="header-wrapper">
+    <div class="header-title-wrapper">
+        <!-- Page Title -->
+        <p class="header-title">
+             
+                
+                    Spring简介
+                
+            
+        </p>  
+    </div>    
+
+    
+        <!-- Division Line -->
+        <div class="division"></div> 
+    
+    
+    <div class="header-detail">
+        <!-- Header Button -->
+        <div class="header-btn-wrapper">
+            
+                <span>
+                    <a class="home-btn header-btn" href="/" title="homepage"><i class="fa fa-home"></i></a>
+                </span>
+
+                
+                    <span>
+                        <a class="catalog-btn header-btn"><i class="fa fa-list-ul"></i></a>
+                    </span>
+                
+            
+        </div>
+    </div>
+</header>
+
+            <!-- Main -->
+            <main>
+                <article class="post-wrapper">
+    
+
+    
+        <!-- Article Catalog -->
+        <div class="catalog-dropdown col-xs-12 col-sm-12">
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80-%E4%BB%80%E4%B9%88%E6%98%AFSpring"><span class="toc-number">1.</span> <span class="toc-text">一.什么是Spring</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFIOC"><span class="toc-number">1.1.</span> <span class="toc-text">什么是IOC</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFAOP"><span class="toc-number">1.2.</span> <span class="toc-text">什么是AOP</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C-Spring%E7%9A%84%E7%BB%84%E6%88%90"><span class="toc-number">2.</span> <span class="toc-text">二.Spring的组成</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Core-Container-%E6%A0%B8%E5%BF%83%E5%AE%B9%E5%99%A8"><span class="toc-number">2.1.</span> <span class="toc-text">Core Container 核心容器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9D%A2%E5%90%91%E5%88%87%E9%9D%A2%E7%BC%96%E7%A8%8B%E6%A8%A1%E5%9D%97%EF%BC%9A"><span class="toc-number">2.2.</span> <span class="toc-text">面向切面编程模块：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E8%AE%BF%E9%97%AE%E6%A8%A1%E5%9D%97%EF%BC%9A"><span class="toc-number">2.3.</span> <span class="toc-text">数据访问模块：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Web%E6%A8%A1%E5%9D%97"><span class="toc-number">2.4.</span> <span class="toc-text">Web模块</span></a></li></ol></li></ol>
+        </div>
+    
+
+    
+        <!--For now, Lightbox Only Show in Post Layout -->
+        
+
+        
+        
+            <!-- Article Img Lightbox -->
+            <div class="gallery">
+    
+    
+    <div class="lightbox">
+        <!-- Close Button -->
+        <span class="close-gallery">&times;</span>
+        
+        <!-- Photo -->
+        <img class="gallery-photo">
+    </div>
+</div>
+        
+    
+
+    
+
+    <!-- Article Content -->
+    <div class="post-content">
+        <blockquote>
+</blockquote>
+<h2 id="一-什么是Spring"><a href="#一-什么是Spring" class="headerlink" title="一.什么是Spring"></a><strong>一.什么是Spring</strong></h2><p>Spring轻量级的java开发框架，它是为了解决企业应用开发的复杂性而创建的，Spring的核心是控制反转(IOC)和面向切面(AOP)。</p>
+<p>一句话概括就是 Spring是一个轻量级的、具有控制反转和面向切面的容器（框架）。</p>
+<h3 id="什么是IOC"><a href="#什么是IOC" class="headerlink" title="什么是IOC"></a><strong>什么是IOC</strong></h3><p>IOC的定义：所谓IOC，就是由Spring IOC容器来负责对象的生命周期和对象之间的关系。<br>在传统的开发模式下，我们在项目中都是使用new直接生成一个对象，也就是说我所需要的对象是由自己并控制的，但是有了IOC容器后我们所需要的对象由IOC容器负责管理，由原来的主动生成对象 -&gt; 由IOC容器生成对象 ，获得依赖对象的方式改变了，这就是控制反转。<br>在IOC中，通过以配置xml文件或是注解的方式将我们所需要的类和类的路径进行说明，然后在项目中通过<strong>上下文模块</strong>获取xml文件的路径，由IOC容器提供所需要的类<br><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/64001753">IOC参考链接</a></p>
+<h3 id="什么是AOP"><a href="#什么是AOP" class="headerlink" title="什么是AOP"></a><strong>什么是AOP</strong></h3><p>AOP：面向切面编程，是OOP（面向对象编程）的一种补充，OOP引入封装、继承、多态的概念建立一种对象间的一种层次的结构，用来模拟层次结构间共同行为，如方法的重写等等。但如果我们在开发过程中多个模块间有某些重复度很高的代码，但是模块间又不存在一种层次间的关系，这时候怎么解决代码重复这样的问题呢？答案就是使用AOP，AOP技术利用一种称为“横切”的技术，解剖封装的对象内部，并将类间共同的行为封装到一个新的可重用模块中，减少重复代码，降低模块间的耦合度。</p>
+<h2 id="二-Spring的组成"><a href="#二-Spring的组成" class="headerlink" title="二.Spring的组成"></a><strong><em>二.Spring的组成</em></strong></h2><p><img src="/2020/09/22/Spring/SpringFramworkRuntime.png" alt="framework"></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/jpwz/p/10556012.html">参考链接</a></p>
+<p>spring由多个模块组成，下面介绍spring每个模块及其功能</p>
+<h3 id="Core-Container-核心容器"><a href="#Core-Container-核心容器" class="headerlink" title="Core Container 核心容器"></a><strong>Core Container 核心容器</strong></h3><p>Spring核心容器建立在Beans、Core、Context、SpEl模块之上</p>
+<p>Beans模块提供了BeanFactory，是工厂模式的一个经典体现，所有被Spring管理的对象都称为Beans</p>
+<p>Core模块提供了框架的基本组成部分，包括IOC和、DI（依赖注入）功能</p>
+<p>Context上下文模块建立在Beans和Core模块基础之上，提供了一个框架式的对象访问方式，是访问定义和配置中Beans对象的媒介，ApplicationContext接口通过xml文本的路径访问配置中的beans对象。</p>
+<p>SpEl是Spring表达式语言，它提供了强大的表达式语言去支持运行时查询和操作对象</p>
+<h3 id="面向切面编程模块："><a href="#面向切面编程模块：" class="headerlink" title="面向切面编程模块："></a><strong>面向切面编程模块</strong>：</h3><p>AOP模块提供了符合AOP要求的面向切面编程的实现，允许定义方法拦截器和切入点，将代码按照功能进行分离，是纯Java实现</p>
+<p>Aspects模块提供了AspectJ的集成功能，AspectJ是一个基于Java语言的AOP框架</p>
+<p>Instrument模块提供了类植入支持和类加载器的实现，可在特定的应用服务器中使用</p>
+<h3 id="数据访问模块："><a href="#数据访问模块：" class="headerlink" title="数据访问模块："></a><strong>数据访问模块</strong>：</h3><p>JDBC、DAO模块：JDBC模块是对JDBC的抽象，减少JDBC编程的代码量</p>
+<p>ORM模块：封装了大量的对象关系映射的API</p>
+<h3 id="Web模块"><a href="#Web模块" class="headerlink" title="Web模块"></a><strong>Web模块</strong></h3><p>WebSocket模块：提供WebScoket、SockJS的实现，以及对STOMP的支持</p>
+<p>Servlet模块：也称为Spring-webmvc模块，包含了Spring的MVC。</p>
+<p>Web模块：提供基本的Web开发集成特性，比如多文件上传功能、使用Servlet监听器来初始化Ioc容器以及Web应用上下文。</p>
+<p>Portlet模块：提供了对在Portlet环境中使用MVC的支持。</p>
+<!-- 底层是Spring的核心容器，包括Beans容器、上下文、Spring表达式和核心工具，是Spring框架最基本的支撑
+中间层是Spring的功能组件
+上层是Spring的具体使用 -->  
+    </div> 
+
+    
+        <!-- Division Line -->
+        <div class="division"></div> 
+    
+
+    <div class="post-info-wrapper">
+            
+                    <!-- Post Info -->
+                    <p class="post-date">2020-09-22</p>
+                    
+                    
+                        <p class="post-info-categories">
+                            
+                        </p>
+                    
+
+                    
+            
+    </div>
+</article>
+
+
+    
+
+            </main>
+
+            <!-- 'To Top' Btn-->
+            
+                <div id="to-top">
+    <a href="#top" class="toTop">
+        <i class="fa fa-pagelines"></i>
+    </a>
+</div>
+            
+
+            <!-- Footer -->
+            
+                <footer class="footer-wrapper col-xs-12 col-sm-12">
+    <div class="footer-banner-wrapper">
+        <p class="footer-banner">Powered by <a target="_blank" rel="noopener" href="https://hexo.io/" title="Hexo">Hexo</a></p>
+        <P class="footer-banner">Theme <a target="_blank" rel="noopener" href="https://github.com/Lonezj/hexo-theme-wind" title="Wind">wind</a></P>
+    </div>
+</footer>
+            
+        </div>
+
+        <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css">
+        <link rel="stylesheet" href="/css/google-prettify-monokai.css" type="text/css">
+        <script src="//cdn.bootcss.com/prettify/r298/prettify.min.js" type="text/javascript"></script>
+    </body>
+</html>

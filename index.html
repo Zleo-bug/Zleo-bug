@@ -1,275 +1,241 @@
-<!DOCTYPE html>
-<html>
-    <!-- Head -->
-    <head>
-    <meta http-equiv="content-type" content="text/html; charset=utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="author" content="leobro">
-    <meta name="description" itemprop="description" content="">
-    <meta name="keywords" content="">
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>十二点前要睡觉</title><meta name="author" content="leobro,zhangakenug@qq.com"><meta name="copyright" content="leobro"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="description" content="可以每晚都十二点前睡觉吗">
+<meta property="og:type" content="website">
+<meta property="og:title" content="十二点前要睡觉">
+<meta property="og:url" content="http://example.com/index.html">
+<meta property="og:site_name" content="十二点前要睡觉">
+<meta property="og:description" content="可以每晚都十二点前睡觉吗">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/null">
+<meta property="article:author" content="leobro">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/null"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  hexoversion: '5.2.0',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  ClickShowText: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+};
 
-    <!-- Page Title -->
-    
-        <title>Home | 十二点前要睡觉</title>
-    
-    <link rel="icon" href="/img/avatar-default.png">
-    <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
-    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-    
-    
-<script src="/js/script.js"></script>
+var saveToLocal = {
+  set: function setWithExpiry(key, value, ttl) {
+    const now = new Date()
+    const expiryDay = ttl * 86400000
+    const item = {
+      value: value,
+      expiry: now.getTime() + expiryDay,
+    }
+    localStorage.setItem(key, JSON.stringify(item))
+  },
 
-    
-<link rel="stylesheet" href="/css/style.css">
+  get: function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
 
-    
-    <style>
-        .deactiveColor{
-            color: #37474f;
-        }
-        .activeColor{
-            color: #006064;
-        }
-        a:hover{
-            color: #006064;
-        }
-        .header-btn{
-            color: #37474f;
-        }
-        
-        .post-content img{
-            margin: 50px auto;
-        }
-        
-    </style>
-<meta name="generator" content="Hexo 5.2.0"></head>
-    <body>
-        <div class="container">
+    if (!itemStr) {
+      return undefined
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
 
-            <!-- Top Anchor -->
-            <div id="top"></div>
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key)
+      return undefined
+    }
+    return item.value
+  }
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: false,
+  isHome: true,
+  isHighlightShrink: true,
+  isSidebar: false,
+  postUpdate: '2020-09-25 16:56:54'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
 
-            <!-- Header -->
-            <header class="header-wrapper">
-    <div class="header-title-wrapper">
-        <!-- Page Title -->
-        <p class="header-title">
-              
-                十二点前要睡觉
-            
-        </p>  
-    </div>    
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>var activateDarkMode = function () {
+  document.documentElement.setAttribute('data-theme', 'dark')
+  if (document.querySelector('meta[name="theme-color"]') !== null) {
+    document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+  }
+}
+var activateLightMode = function () {
+  document.documentElement.setAttribute('data-theme', 'light')
+  if (document.querySelector('meta[name="theme-color"]') !== null) {
+    document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+  }
+}
 
-    
-        <!-- Division Line -->
-        <div class="division"></div> 
-    
-    
-    <div class="header-detail">
-        <!-- Header Button -->
-        <div class="header-btn-wrapper">
-            
-                <span>
-                    <a class="home-btn header-btn" href="/" title="homepage"><i class="fa fa-home"></i></a>
-                </span>
+var autoChangeMode = 'false'
+var t = saveToLocal.get('theme')
+if (autoChangeMode === '1') {
+  var isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+  var isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+  var isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+  var hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
 
-                
-                    <span>
-                        <a class="header-btn" href="/archives" title="archives"><i class="fa fa fa-file-text-o"></i></a>
-                    </span>
-                
-            
-        </div>
-    </div>
-</header>
+  if (t === undefined) {
+    if (isLightMode) activateLightMode()
+    else if (isDarkMode) activateDarkMode()
+    else if (isNotSpecified || hasNoSupport) {
+      var now = new Date()
+      var hour = now.getHours()
+      var isNight = hour <= 6 || hour >= 18
+      isNight ? activateDarkMode() : activateLightMode()
+    }
+    window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+      if (saveToLocal.get('theme') === undefined) {
+        e.matches ? activateDarkMode() : activateLightMode()
+      }
+    })
+  } else if (t === 'light') activateLightMode()
+  else activateDarkMode()
+} else if (autoChangeMode === '2') {
+  now = new Date()
+  hour = now.getHours()
+  isNight = hour <= 6 || hour >= 18
+  if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+  else if (t === 'light') activateLightMode()
+  else activateDarkMode()
+} else {
+  if (t === 'dark') activateDarkMode()
+  else if (t === 'light') activateLightMode()
+}</script><meta name="generator" content="Hexo 5.2.0"></head><body><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="/null" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">文章</div><div class="length_num">7</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/tags/"><div class="headline">标签</div><div class="length_num">4</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 清单</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/messageboard/"><i class="fa-fw fa fa-link"></i><span> 留言板</span></a></div></div></div></div><div id="body-wrap"><header class="full_page" id="page-header" style="background-image: url(/Users/apple/Desktop/%E5%A3%81%E7%BA%B8/f4131bc77889e084f2b3648261cc43df.jpg)"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">十二点前要睡觉</a></span><span id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 清单</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/messageboard/"><i class="fa-fw fa fa-link"></i><span> 留言板</span></a></div></div><span class="close" id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="site-info"><h1 id="site-title">十二点前要睡觉</h1><div id="site-subtitle"><span id="subtitle"></span></div></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout_page" id="content-inner"><div class="recent-posts" id="recent-posts"><div class="recent-post-item"><div class="recent-post-info"><a class="article-title" href="/2020/09/24/IOC/" title="Spring入门案例">Spring入门案例</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2020-09-24T12:58:19.000Z" title="发表于 2020-09-24 20:58:19">2020-09-24</time></span></div><div class="content">IOC控制反转：IOC案例：接口UserInterface：
+public interface UserInterface &#123;
+    public void use();
+&#125;
+接口UserInterface的实现类 UserImpl：
+public class UserImpl implements UserInterface&#123;
+@Override
+    public void use() &#123;
+        System.out.println(&quot;User using!&quot;);
+    &#125;
+&#125;
+测试类 TextClass：
 
-            <!-- Main -->
-            <main>
-                <!-- Post List -->
-<div class="index-wrapper">
-    
-    <div class="index-post-wrapper">
 
-        <!-- Post Title -->
-        
-            <a class="index-post-title" href="/2020/09/22/Spring/">Spring简介</a>
-        
+public class TextClass &#123;
+    public static void main(String[] args) &#123;
+        UserInterface userInterface = new UserImpl();
+        userInterface.use();
+    &#125;
+&#125;
+输出结果：
+User ...</div></div></div><div class="recent-post-item"><div class="recent-post-info"><a class="article-title" href="/2020/09/24/AOP/" title="AOP理解">AOP理解</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2020-09-23T16:36:15.000Z" title="发表于 2020-09-24 00:36:15">2020-09-24</time></span></div><div class="content">AOP的专业术语：在软件业，AOP为Aspect Oriented Programming的缩写，意为：面向切面编程，通过预编译方式和运行期动态代理实现程序功能的统一维护的一种技术。AOP是OOP的延续，是软件开发中的一个热点，也是Spring框架中的一个重要内容，是函数式编程的一种衍生范型。利用AOP可以对业务逻辑的各个部分进行隔离，从而使得业务逻辑各部分之间的耦合度降低，提高程序的可重用性，同时提高了开发的效率。
+AOP中的相关概念：
+专业的概念定义：
+Aspect 声明类似于 Java 中的类声明，在 Aspect 中会包含着一些 Pointcut 以及相应的 Advice。
+Joint point（连接点）：表示在程序中明确定义的点，典型的包括方法调用，对类成员的访问以及异常处理程序块的执行等等，它自身还可以嵌套其它 joint point。
+Pointcut（切点）：表示一组 joint point，这些 joint point 或是通过逻辑关系组合起来，或是通过通配、正则表达式等方式集中起来，它定义了相应的 Advice 将要发生的地方。
+Advice（增强）：Advice ...</div></div></div><div class="recent-post-item"><div class="recent-post-info"><a class="article-title" href="/2020/09/22/Spring/" title="Spring简介">Spring简介</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2020-09-22T13:21:07.000Z" title="发表于 2020-09-22 21:21:07">2020-09-22</time></span></div><div class="content">
 
-        <!-- Post Info -->
-        <div class="index-post-info">
-            
-                <!-- Division Line -->
-                <div class="division"></div> 
-            
-
-            <div class="post-preview">
-                
-                    
+一.什么是SpringSpring轻量级的java开发框架，它是为了解决企业应用开发的复杂性而创建的，Spring的核心是控制反转(IOC)和面向切面(AOP)。
+一句话概括就是 Spring是一个轻量级的、具有控制反转和面向切面的容器（框架）。
+什么是IOCIOC的定义：所谓IOC，就是由Spring IOC容器来负责对象的生命周期和对象之间的关系。在传统的开发模式下，我们在项目中都是使用new直接生成一个对象，也就是说我所需要的对象是由自己并控制的，但是有了IOC容器后我们所需要的对象由IOC容器负责管理，由原来的主动生成对象 -&gt; 由IOC容器生成对象 ，获得依赖对象的方式改变了，这就是控制反转。在IOC中，通过以配置xml文件或是注解的方式将我们所需要的类和类的路径进行说明，然后在项目中通过上下文模块获取xml文件的路径，由IOC容器提供所需要的类IOC参考链接
+什么是AOPAOP：面向切面编程，是OOP（面向对象编程）的一种补充，OOP引入封装、继承、多态的概念建立一种对象间的一种层次的结构，用来模拟层次结构间共同行为，如方法的重写等等。但如果我们在开发过程中多个模 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info"><a class="article-title" href="/2020/09/22/JavaStream/" title="Java之Stream流">Java之Stream流</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2020-09-22T06:32:17.000Z" title="发表于 2020-09-22 14:32:17">2020-09-22</time></span></div><div class="content">今天在写java实验的过程中，想用Stream流省事时，却发现自己对Stream流有点生疏了，所以特地翻开以前写的Stream流的demo记录下来，以便加深印象。
 
 
-                
-            </div>
+一.什么是Java Stream流Stream流是java8 API中添加的一个新的抽象，它使用一种类似SQL语句从数据库查询数据的直观方式来提供一种对Java集合运算和表达的抽象。
+它将要处理的元素集合看作一种流，流在管道中传输，并且可以在管道上进行对集合的处理，比如对集合就行筛选过滤、排序（自定义或是默认）、聚合等操作。
+Stream流的处理中，元素在管道中经过中间操作的处理，最后由最终操作得到前面处理的结果。
 
-            <div class="index-post-meta">
-                    <span class="index-post-time">2020-09-22</span>
-                    <span class="index-post-categories">
-                        
-                    </span>
-                </div>
-        </div>
-    </div>
-    
-    <div class="index-post-wrapper">
 
-        <!-- Post Title -->
-        
-            <a class="index-post-title" href="/2020/09/22/JavaStream/">Java之Stream流</a>
-        
+二.Stream流的特点1.Stream流不是数据结构，它不会保存数据，流可以是一个泛型。
+2.可以对集合、数组进行连续的操作。
+3.Stream流的数据源可以有集合、数组等。
+4.它不会修改原来的数据源，它会将操作后的数据保存到另外一个对象中。
+5.Stream是惰性求值，流在中间处理过程中，只是对操作进行了记录，并不会立即执行，需要等到执行终止操作的时候才会进行实际的计算。
 
-        <!-- Post Info -->
-        <div class="index-post-info">
-            
-                <!-- Division Line -->
-                <div class="division"></div> 
-            
 
-            <div class="post-preview">
-                
-                    今天在写java实验的过程中，想用Stream流省事时，却发现自己对Stream流有点生疏了，所以特地翻开以前写的Stream流的demo记录下来，以便加深印象。
+三.为什么要使用Str ...</div></div></div><div class="recent-post-item"><div class="recent-post-info"><a class="article-title" href="/2020/09/21/MarkDown/" title="MarkDown入门">MarkDown入门</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2020-09-21T02:33:46.000Z" title="发表于 2020-09-21 10:33:46">2020-09-21</time></span></div><div class="content">MarkDown 是一种轻量级标记语言，它允许我们使用易读易写的纯文本格式编写文档，目前许多网站都在广泛使用MarkDown来撰写文章或是在论坛发表文章，当然用Hexo+github搭建的个人博客中也支持使用MarkDown来撰写文章，为了更好地搭建个人博客，我们有必要使用MarkDown来帮助我们来编写格式更好的文章。
 
-                
-            </div>
+一.标题标题使用#号标记
+一个#是一级标题，二个#是二级标题，以此类推。支持六级标题。
+这是一级标题这是二级标题这是三级标题注：#后面要有空格，不然无法正确显示
 
-            <div class="index-post-meta">
-                    <span class="index-post-time">2020-09-22</span>
-                    <span class="index-post-categories">
-                        
-                    </span>
-                </div>
-        </div>
-    </div>
-    
-    <div class="index-post-wrapper">
+二.段落格式MarkDown可以使用三种字体：斜体、加粗、斜体加粗。
+斜体：在文字两端各加一个*
+这是斜体
+粗体：在文字两端各加两个*
+这是粗体
+斜体加粗：在文字两端各加三个***
+这是斜体加粗
 
-        <!-- Post Title -->
-        
-            <a class="index-post-title" href="/2020/09/21/MarkDown/">MarkDown入门</a>
-        
+分割线使用 — 来建立分割线
 
-        <!-- Post Info -->
-        <div class="index-post-info">
-            
-                <!-- Division Line -->
-                <div class="division"></div> 
-            
+文字两端使用 ～～ 来使文字变成删除格式
+这是文字的删除格式
+注：～～必须是英文的～
 
-            <div class="post-preview">
-                
-                    MarkDown 是一种轻量级标记语言，它允许我们使用易读易写的纯文本格式编写文档，目前许多网站都在广泛使用MarkDown来撰写文章或是在论坛发表文章，当然用Hexo+github搭建的...
-                
-            </div>
+下划线是通过html的 u 标签来实现的，在文字两端加上即可
+这是下划线
 
-            <div class="index-post-meta">
-                    <span class="index-post-time">2020-09-21</span>
-                    <span class="index-post-categories">
-                        
-                    </span>
-                </div>
-        </div>
-    </div>
-    
-    <div class="index-post-wrapper">
+三.列表列表分为 有序列表 和 无序列表
+无序列表使用 *、+、- 作为列表标记
 
-        <!-- Post Title -->
-        
-            <a class="index-post-title" href="/2020/09/21/Python/">Python入门学习（未完待续）</a>
-        
+第一项
+第二项
+第三项
 
-        <!-- Post Info -->
-        <div class="index-post-info">
-            
-                <!-- Division Line -->
-                <div class="division"></div> 
-            
+有序列 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info"><a class="article-title" href="/2020/09/21/Python/" title="Python入门学习（未完待续）">Python入门学习（未完待续）</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2020-09-21T00:31:07.000Z" title="发表于 2020-09-21 08:31:07">2020-09-21</time></span></div><div class="content">这学期选修了信息检索（python基础入门），所以有必要将python的基础markdown，便于以后学习。
+一.什么是python：    python是一个高层次的结合了解释性、编译性、互动性和面向对象的脚本语言。
 
-            <div class="post-preview">
-                
-                    这学期选修了信息检索（python基础入门），所以有必要将python的基础markdown，便于以后学习。
+    python语言是一种解释性语言：这意味着在代码编写、执行过程中没有了编译这个环节
+二.python基础：（1）语句结束符：
 
-                
-            </div>
+        python中可以不写结束符； 如：print(val)        
 
-            <div class="index-post-meta">
-                    <span class="index-post-time">2020-09-21</span>
-                    <span class="index-post-categories">
-                        
-                    </span>
-                </div>
-        </div>
-    </div>
-    
-    <div class="index-post-wrapper">
+（2）注释： #
 
-        <!-- Post Title -->
-        
-            <a class="index-post-title" href="/2020/09/21/NewPassage/">我的第一篇博文</a>
-        
+（3）行与缩进：
 
-        <!-- Post Info -->
-        <div class="index-post-info">
-            
-                <!-- Division Line -->
-                <div class="division"></div> 
-            
+        行与缩进是python语言最具特色的一个地方，python不像其他语言一样使用大括号来包含一个代码块，而是使用：来包含代码块，缩进相同的代码块为同一层次。
 
-            <div class="post-preview">
-                
-                    这是我的第一篇博文，以后要把学习过程中的知识点写在自己的博客上😎
+如：if True:
+        print(&quot;True&quot;);
+    else:
+        print(&quot;False&quot;);
 
-                
-            </div>
+（4）多行语句：
 
-            <div class="index-post-meta">
-                    <span class="index-post-time">2020-09-21</span>
-                    <span class="index-post-categories">
-                        
-                    </span>
-                </div>
-        </div>
-    </div>
-    
-
-    <div class="pagination-wrapper">
-    <ul class="pagination-btn">
-        
-        
-    </ul>
-</div>
-</div>
-            </main>
-
-            <!-- 'To Top' Btn-->
-            
-                <div id="to-top">
-    <a href="#top" class="toTop">
-        <i class="fa fa-pagelines"></i>
-    </a>
-</div>
-            
-
-            <!-- Footer -->
-            
-                <footer class="footer-wrapper col-xs-12 col-sm-12">
-    <div class="footer-banner-wrapper">
-        <p class="footer-banner">Powered by <a target="_blank" rel="noopener" href="https://hexo.io/" title="Hexo">Hexo</a></p>
-        <P class="footer-banner">Theme <a target="_blank" rel="noopener" href="https://github.com/Lonezj/hexo-theme-wind" title="Wind">wind</a></P>
-    </div>
-</footer>
-            
-        </div>
-
-        <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css">
-        <link rel="stylesheet" href="/css/google-prettify-monokai.css" type="text/css">
-        <script src="//cdn.bootcss.com/prettify/r298/prettify.min.js" type="text/javascript"></script>
-    </body>
-</html>
+        如果一行代码很长，可以用 \ 来将代码分行
+    如：total = item_one + \
+        item ...</div></div></div><div class="recent-post-item"><div class="recent-post-info"><a class="article-title" href="/2020/09/21/NewPassage/" title="我的第一篇博文">我的第一篇博文</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2020-09-20T16:06:37.000Z" title="发表于 2020-09-21 00:06:37">2020-09-21</time></span></div><div class="content">这是我的第一篇博文，以后要把学习过程中的知识点写在自己的博客上😎
+</div></div></div><nav id="pagination"><div class="pagination"><span class="page-number current">1</span></div></nav></div><div class="aside_content" id="aside_content"><div class="card-widget card-info"><div class="card-content"><div class="card-info-avatar is-center"><img class="avatar-img" src="/null" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">leobro</div><div class="author-info__description">可以每晚都十二点前睡觉吗</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length_num">7</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length_num">4</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div></div><div class="sticky_layout"><div class="card-widget card-announcement"><div class="card-content"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div></div><div class="card-widget card-recent-post"><div class="card-content"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><div class="content"><a class="title" href="/2020/09/24/IOC/" title="Spring入门案例">Spring入门案例</a><time datetime="2020-09-24T12:58:19.000Z" title="发表于 2020-09-24 20:58:19">2020-09-24</time></div></div><div class="aside-list-item"><div class="content"><a class="title" href="/2020/09/24/AOP/" title="AOP理解">AOP理解</a><time datetime="2020-09-23T16:36:15.000Z" title="发表于 2020-09-24 00:36:15">2020-09-24</time></div></div><div class="aside-list-item"><div class="content"><a class="title" href="/2020/09/22/Spring/" title="Spring简介">Spring简介</a><time datetime="2020-09-22T13:21:07.000Z" title="发表于 2020-09-22 21:21:07">2020-09-22</time></div></div><div class="aside-list-item"><div class="content"><a class="title" href="/2020/09/22/JavaStream/" title="Java之Stream流">Java之Stream流</a><time datetime="2020-09-22T06:32:17.000Z" title="发表于 2020-09-22 14:32:17">2020-09-22</time></div></div><div class="aside-list-item"><div class="content"><a class="title" href="/2020/09/21/MarkDown/" title="MarkDown入门">MarkDown入门</a><time datetime="2020-09-21T02:33:46.000Z" title="发表于 2020-09-21 10:33:46">2020-09-21</time></div></div></div></div></div><div class="card-widget card-tags"><div class="card-content"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/Java-Stream%E6%B5%81/" style="font-size: 1.1em; color: #999">Java , Stream流</a> <a href="/tags/MarkDown/" style="font-size: 1.1em; color: #999">MarkDown</a> <a href="/tags/Spring/" style="font-size: 1.5em; color: #99a9bf">Spring</a> <a href="/tags/python/" style="font-size: 1.1em; color: #999">python</a></div></div></div><div class="card-widget card-archives"><div class="card-content"><div class="item-headline"><i class="fas fa-archive"></i><span>归档</span></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2020/09/"><span class="card-archive-list-date">九月 2020</span><span class="card-archive-list-count">7</span></a></li></ul></div></div><div class="card-widget card-webinfo"><div class="card-content"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站资讯</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">7</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"></div></div><div class="webinfo-item"><div class="item-name">本站总访问量 :</div><div class="item-count" id="busuanzi_value_site_pv"></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2020-09-25T08:56:54.208Z"></div></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 By leobro</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><section id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></section><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><div class="js-pjax"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></div></body></html>

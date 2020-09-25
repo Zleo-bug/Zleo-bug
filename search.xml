@@ -1,0 +1,687 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>AOP理解</title>
+    <url>/2020/09/24/AOP/</url>
+    <content><![CDATA[<p>AOP的专业术语：在软件业，AOP为Aspect Oriented Programming的缩写，意为：面向切面编程，通过预编译方式和运行期动态代理实现程序功能的统一维护的一种技术。AOP是OOP的延续，是软件开发中的一个热点，也是Spring框架中的一个重要内容，是函数式编程的一种衍生范型。利用AOP可以对业务逻辑的各个部分进行隔离，从而使得业务逻辑各部分之间的耦合度降低，提高程序的可重用性，同时提高了开发的效率。</p>
+<p>AOP中的相关概念：</p>
+<p><strong>专业的概念定义：</strong></p>
+<p>Aspect 声明类似于 Java 中的类声明，在 Aspect 中会包含着一些 Pointcut 以及相应的 Advice。</p>
+<p>Joint point（连接点）：表示在程序中明确定义的点，典型的包括方法调用，对类成员的访问以及异常处理程序块的执行等等，它自身还可以嵌套其它 joint point。</p>
+<p>Pointcut（切点）：表示一组 joint point，这些 joint point 或是通过逻辑关系组合起来，或是通过通配、正则表达式等方式集中起来，它定义了相应的 Advice 将要发生的地方。</p>
+<p>Advice（增强）：Advice 定义了在 Pointcut 里面定义的程序点具体要做的操作，它通过 before、after 和 around 来区别是在每个 joint point 之前、之后还是代替执行的代码。</p>
+<p>Target（目标对象）：织入 Advice 的目标对象。</p>
+<p>Weaving（织入）：将 Aspect 和其他对象连接起来, 并创建 Adviced object 的过程</p>
+<p><strong>个人理解：</strong></p>
+<p>Joint point：是所有可能被织入到Advice中的点,一个类中所有的方法都是连接点</p>
+<p>Pointcut：提供一组规则，将符合规则的一组Joint point织入到Advice中</p>
+<p>Advice：Advice说明了Pointcut中Joint Point上将要执行的一些动作，即一串代码</p>
+<p>Aspect：切面是Advice和Pointcut的组合，描述了切点的行为</p>
+<p>AOP编程：</p>
+<p>1.定义被代理者（被代理的类）</p>
+<p>2.定义增强（切点几种执行状态中要做的动作）</p>
+<p>3.定义切入点（给定规则 （正则表达式、AspectJ表达式），找出切入点位置）</p>
+<p>4.定义切面（哪些切入点在执行过程中要做哪些动作）</p>
+<p>5.设置代理 ：动态代理（代理接口）、CGLIB代理（代理具体类）<br>    配置被代理的对象<br>    配置切面<br>    配置被代理的接口</p>
+]]></content>
+      <tags>
+        <tag>Spring</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Spring入门案例</title>
+    <url>/2020/09/24/IOC/</url>
+    <content><![CDATA[<h2 id="IOC控制反转："><a href="#IOC控制反转：" class="headerlink" title="IOC控制反转："></a><strong>IOC控制反转：</strong></h2><h3 id="IOC案例："><a href="#IOC案例：" class="headerlink" title="IOC案例："></a><strong>IOC案例：</strong></h3><p>接口UserInterface：</p>
+<pre><code>public interface UserInterface &#123;
+    public void use();
+&#125;</code></pre>
+<p>接口UserInterface的实现类 UserImpl：</p>
+<pre><code>public class UserImpl implements UserInterface&#123;
+@Override
+    public void use() &#123;
+        System.out.println(&quot;User using!&quot;);
+    &#125;
+&#125;</code></pre>
+<p>测试类 TextClass：</p>
+<!--     import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext; -->
+
+<pre><code>public class TextClass &#123;
+    public static void main(String[] args) &#123;
+        UserInterface userInterface = new UserImpl();
+        userInterface.use();
+    &#125;
+&#125;</code></pre>
+<p>输出结果：</p>
+<p>User using！</p>
+<p>在使用IOC之前，我们一直是在程序中直接使用new来生成一个对象，但在IOC中，我们不需要在程序中使用new来创建对象，而是通过配置XML文件，把所需要的类写入XML文件中，由Spring来管理和获取对象</p>
+<p>将TextCLass中程序改一下：</p>
+<pre><code>import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+public class TextClass &#123;
+    public static void main(String[] args) &#123;
+        String xmlPath = &quot;ApplicationContext.xml&quot;;
+        ApplicationContext applicationContext = new ClassPathXmlApplicationContext(xmlPath);
+        UserInterface userInterface = (UserInterface)applicationContext.getBean(&quot;UserId&quot;);
+        userInterface.use();
+    &#125;
+&#125;</code></pre>
+<p>同时创建ApplicationContext.XML文件，并配置：</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
+       xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+       xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd&quot;&gt;
+
+    &lt;bean id=&quot;UserId&quot; class=&quot;UserImpl&quot;&gt;&lt;/bean&gt;
+&lt;/beans&gt;</code></pre>
+<p>运行TextCLass，输出结果为：</p>
+<p>User using！</p>
+<p>这时候，我们在程序中<strong>由主动创建类</strong>转变为<strong>通过Spring管理和获取类</strong>，这一转变称为控制反转</p>
+<hr>
+<h2 id="DI依赖注入"><a href="#DI依赖注入" class="headerlink" title="DI依赖注入"></a><strong>DI依赖注入</strong></h2><p>在IOC中，我们实现了控制反转，产生了依赖，但在程序运行过程中，我们经常需要动态地向某个对象提供它所需要的其他类，这就需要用到依赖注入DI，要想实现依赖注入，我们必须在需要其他类的某个对象中提供一种渠道（方法）来将依赖注入，最后在XML文件中进行相应的配置</p>
+<p>依赖注入通常有三种方法：</p>
+<ul>
+<li><p>Setter方法注入</p>
+</li>
+<li><p>构造方法注入</p>
+</li>
+<li><p>接口注入</p>
+</li>
+</ul>
+<p>下面主要介绍前两种方法</p>
+<h3 id="DI案例："><a href="#DI案例：" class="headerlink" title="DI案例："></a><strong>DI案例：</strong></h3><p>添加一个MyInterface类，类中有私有成员 userInterface</p>
+<pre><code>public class MyInterface &#123;
+    private UserInterface userInterface;
+    public void show()&#123;
+        userInterface.use();
+    &#125;
+&#125;</code></pre>
+<h4 id="Setter方法注入"><a href="#Setter方法注入" class="headerlink" title="Setter方法注入"></a><strong>Setter方法注入</strong></h4><p>在类中添加Setter方法</p>
+<pre><code>public class MyInterface &#123;
+    private UserInterface userInterface;
+    public void show()&#123;
+        userInterface.use();
+    &#125;
+    public void setUserInterface(UserInterface userInterface)&#123;
+        this.userInterface = userInterface;
+    &#125;
+&#125;</code></pre>
+<p>配置XMl文件</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
+   xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+   xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd&quot;&gt;
+&lt;bean id=&quot;UserId&quot; class=&quot;UserImpl&quot;&gt;&lt;/bean&gt;
+&lt;bean id=&quot;MyInterfaceId&quot; class=&quot;MyInterface&quot;&gt;
+    &lt;property name=&quot;userInterface&quot; ref=&quot;UserId&quot;&gt;&lt;/property&gt;
+&lt;/bean&gt;
+&lt;/beans&gt;</code></pre>
+<p>TextClass类中进行测试</p>
+<pre><code>import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+public class TextClass &#123;
+    public static void main(String[] args) &#123;
+        String xmlPath = &quot;ApplicationContext.xml&quot;;
+        ApplicationContext applicationContext = new ClassPathXmlApplicationContext(xmlPath);
+        MyInterface myInterface = (MyInterface)applicationContext.getBean(&quot;MyInterfaceId&quot;);
+        myInterface.show();
+    &#125;
+&#125;</code></pre>
+<p>输出结果为：</p>
+<p>User using！</p>
+<h4 id="构造方法注入"><a href="#构造方法注入" class="headerlink" title="构造方法注入"></a><strong>构造方法注入</strong></h4><p>在MyInterface类中添加构造函数</p>
+<pre><code>public class MyInterface &#123;
+    private UserInterface userInterface;
+    public void show()&#123;
+        userInterface.use();
+    &#125;
+    public MyInterface()&#123;&#125;
+//    构造方法注入
+    public MyInterface(UserInterface userInterface)&#123;
+        this.userInterface = userInterface;
+    &#125;
+&#125;</code></pre>
+<p>配置XML文件</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
+       xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+       xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd&quot;&gt;
+    &lt;bean id=&quot;UserId&quot; class=&quot;UserImpl&quot;&gt;&lt;/bean&gt;
+    &lt;bean id=&quot;MyInterfaceId&quot; class=&quot;MyInterface&quot;&gt;
+        &lt;constructor-arg index=&quot;0&quot; ref=&quot;UserId&quot;&gt;&lt;/constructor-arg&gt;
+    &lt;/bean&gt;
+&lt;/beans&gt;</code></pre>
+<p>如果有多个属性，index则按照从0…n进行配置</p>
+<p>运行TextCLass，输出结果：</p>
+<p>User Using！</p>
+<h3 id="DI中属性的依赖注入"><a href="#DI中属性的依赖注入" class="headerlink" title="DI中属性的依赖注入"></a><strong>DI中属性的依赖注入</strong></h3><p>以setter方法注入为例：</p>
+<p>新建一个User类：</p>
+<pre><code>import java.util.*;
+
+public class User &#123;
+    private String id;
+    private String name;
+    private String[] strings = new String[10];
+    private List&lt;String&gt; list = new ArrayList&lt;&gt;();
+    private Set&lt;String&gt; set = new HashSet&lt;&gt;();
+    private Map&lt;String,Integer&gt; map = new HashMap&lt;&gt;();
+
+    public void setId(String id) &#123;
+        this.id = id;
+    &#125;
+
+    public void setName(String name) &#123;
+        this.name = name;
+    &#125;
+
+    public void setStrings(String[] strings) &#123;
+        this.strings = strings;
+    &#125;
+
+    public void setList(List&lt;String&gt; list) &#123;
+        this.list = list;
+    &#125;
+
+    public void setSet(Set&lt;String&gt; set) &#123;
+        this.set = set;
+    &#125;
+
+    public void setMap(Map&lt;String, Integer&gt; map) &#123;
+        this.map = map;
+    &#125;
+
+    public Map&lt;String, Integer&gt; getMap() &#123;
+        return map;
+    &#125;
+
+    public Set&lt;String&gt; getSet() &#123;
+        return set;
+    &#125;
+
+    public List&lt;String&gt; getList() &#123;
+        return list;
+    &#125;
+
+    public String[] getStrings() &#123;
+        return strings;
+    &#125;
+
+    public String getName() &#123;
+        return name;
+    &#125;
+
+    public String getId() &#123;
+        return id;
+    &#125;
+&#125;</code></pre>
+<p>配置XML文件：</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
+   xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+   xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd&quot;&gt;
+
+&lt;bean id=&quot;UserId&quot; class=&quot;User&quot;&gt;
+    &lt;property name=&quot;id&quot; value=&quot;20185625&quot;&gt;&lt;/property&gt;
+    &lt;property name=&quot;name&quot; value=&quot;zl&quot;&gt;&lt;/property&gt;
+    &lt;property name=&quot;strings&quot;&gt;
+        &lt;array&gt;
+            &lt;value&gt;&quot;11&quot;&lt;/value&gt;
+            &lt;value&gt;&quot;22&quot;&lt;/value&gt;
+            &lt;value&gt;&quot;33&quot;&lt;/value&gt;
+        &lt;/array&gt;
+    &lt;/property&gt;
+    &lt;property name=&quot;list&quot;&gt;
+        &lt;list&gt;
+            &lt;value&gt;&quot;44&quot;&lt;/value&gt;
+            &lt;value&gt;&quot;55&quot;&lt;/value&gt;
+            &lt;value&gt;&quot;66&quot;&lt;/value&gt;
+        &lt;/list&gt;
+    &lt;/property&gt;
+
+    &lt;property name=&quot;set&quot;&gt;
+        &lt;set&gt;
+            &lt;value&gt;&quot;77&quot;&lt;/value&gt;
+            &lt;value&gt;&quot;88&quot;&lt;/value&gt;
+            &lt;value&gt;&quot;99&quot;&lt;/value&gt;
+        &lt;/set&gt;
+    &lt;/property&gt;
+
+    &lt;property name=&quot;map&quot;&gt;
+        &lt;map&gt;
+            &lt;entry key=&quot;111&quot; value=&quot;111&quot;&gt;&lt;/entry&gt;
+            &lt;entry key=&quot;222&quot; value=&quot;222&quot;&gt;&lt;/entry&gt;
+        &lt;/map&gt;
+    &lt;/property&gt;
+
+&lt;/bean&gt;
+&lt;/beans&gt;</code></pre>
+<p>测试：</p>
+<pre><code>import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import java.util.Arrays;
+
+public class TextClass &#123;
+    public static void main(String[] args) &#123;
+        String xmlPath = &quot;ApplicationContext.xml&quot;;
+        ApplicationContext applicationContext = new ClassPathXmlApplicationContext(xmlPath);
+
+        User user = (User)applicationContext.getBean(&quot;UserId&quot;);
+        System.out.println(Arrays.toString(user.getStrings()));
+        System.out.println(user.getList());
+        System.out.println(user.getMap());
+    &#125;
+&#125;</code></pre>
+<p>输出结果：</p>
+<pre><code>[&quot;11&quot;, &quot;22&quot;, &quot;33&quot;]
+[&quot;44&quot;, &quot;55&quot;, &quot;66&quot;]
+&#123;111=111, 222=222&#125;</code></pre>
+<hr>
+<h2 id="AOP面向编程"><a href="#AOP面向编程" class="headerlink" title="AOP面向编程"></a><strong>AOP面向编程</strong></h2>]]></content>
+      <tags>
+        <tag>Spring</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Java之Stream流</title>
+    <url>/2020/09/22/JavaStream/</url>
+    <content><![CDATA[<p>今天在写java实验的过程中，想用Stream流省事时，却发现自己对Stream流有点生疏了，所以特地翻开以前写的Stream流的demo记录下来，以便加深印象。</p>
+<blockquote>
+</blockquote>
+<h2 id="一-什么是Java-Stream流"><a href="#一-什么是Java-Stream流" class="headerlink" title="一.什么是Java Stream流"></a><strong><em>一.什么是Java Stream流</em></strong></h2><p>Stream流是java8 API中添加的一个新的抽象，它使用一种类似SQL语句从数据库查询数据的直观方式来提供一种对Java集合运算和表达的抽象。</p>
+<p>它将要处理的元素集合看作一种流，流在管道中传输，并且可以在管道上进行对集合的处理，比如对集合就行筛选过滤、排序（自定义或是默认）、聚合等操作。</p>
+<p>Stream流的处理中，元素在管道中经过中间操作的处理，最后由最终操作得到前面处理的结果。</p>
+<blockquote>
+</blockquote>
+<h2 id="二-Stream流的特点"><a href="#二-Stream流的特点" class="headerlink" title="二.Stream流的特点"></a><strong><em>二.Stream流的特点</em></strong></h2><p>1.Stream流不是数据结构，它不会保存数据，流可以是一个泛型。</p>
+<p>2.可以对集合、数组进行连续的操作。</p>
+<p>3.Stream流的数据源可以有集合、数组等。</p>
+<p>4.它不会修改原来的数据源，它会将操作后的数据保存到另外一个对象中。</p>
+<p>5.Stream是惰性求值，流在中间处理过程中，只是对操作进行了记录，并不会立即执行，需要等到执行终止操作的时候才会进行实际的计算。</p>
+<blockquote>
+</blockquote>
+<h2 id="三-为什么要使用Stream流"><a href="#三-为什么要使用Stream流" class="headerlink" title="三.为什么要使用Stream流"></a><strong><em>三.为什么要使用Stream流</em></strong></h2><p>Stream API 可以极大提高程序员的生产力，让程序员以一种声明的方式处理数据，一行代码对集合进行多种操作，让我们写出更高效、简洁、有效率的代码。</p>
+<blockquote>
+</blockquote>
+<h2 id="四-Stream流的用法"><a href="#四-Stream流的用法" class="headerlink" title="四.Stream流的用法"></a><strong><em>四.Stream流的用法</em></strong></h2><p><strong>另外，在使用流的时候，先不要重复使用同一个流，后面会讲到原因</strong></p>
+<h3 id="1-流的创建"><a href="#1-流的创建" class="headerlink" title="1.流的创建"></a><strong>1.流的创建</strong></h3><p>对于集合，流的创建通常使用 集合.stream() 来创建一个流，如：</p>
+<pre><code>List&lt;String&gt; list = new ArrayList&lt;&gt;();
+Stream&lt;String&gt; stream = list.stream();</code></pre>
+<p>对于数组，通常使用集合的工具类 Arrays.stream() 、将数组转换为集合List 又或是Stream.of(array) 来创建一个流，如：</p>
+<pre><code>String[] strs = new String[10];
+Stream&lt;String&gt; stream = Arrays.stream(strs);
+
+Stream&lt;String&gt; stream = Arrays.asList(strs).stream();
+
+Stream&lt;String&gt; stream = Stream.of(1,2,3,4,6);</code></pre>
+<p>将字符串分隔成流：</p>
+<pre><code>String newstr = &quot;123,456,789&quot;;
+Pattern pattern = Pattern.compile(&quot;,&quot;);
+Stream&lt;String&gt; spiltStream = pattern.splitAsStream(newstr);
+splitStream.sorted.forEach(v-&gt;System.out.println(v));            // 输出：123 456 789 </code></pre>
+<hr>
+<h3 id="2-流的中间操作"><a href="#2-流的中间操作" class="headerlink" title="2.流的中间操作"></a><strong>2.流的中间操作</strong></h3><p>定义一个整形数组</p>
+<pre><code>Integer[] integers = &#123;1,23,4,5,6,7,3,3,23,6,8,93,2,4,5&#125;;</code></pre>
+<p>以下流的操作均以此数组为例</p>
+<p><strong>forEach循环：</strong></p>
+<p>使用forEach()方法可以循环输出流</p>
+<pre><code>Stream.of(integers).forEach(v-&gt;System.out.println(v)); // 循环输出整形数组</code></pre>
+<p><strong>筛选：</strong></p>
+<p>使用Stream流中的filter()方法可以过滤某些元素，如：</p>
+<pre><code>Stream&lt;Integer&gt; stream1 = Stream.of(integers);
+stream1.filter(v-&gt;v&gt;20).forEach(v-&gt;System.out.println(v));    //23,23,93</code></pre>
+<p><strong>获取n个元素：</strong></p>
+<p>使用limit(n)方法可以获取流中n个元素，顺序为从 0 – n-1，如：</p>
+<pre><code>Stream.of(integers).limit(5).forEach(v-&gt;System.out.println(v));    //1,23,4,5,6</code></pre>
+<p><strong>跳过前n个元素</strong></p>
+<p>使用skip(n)方法可以跳过流中前n个元素，如：</p>
+<pre><code>Stream.of(integers).skip(7).forEach(v-&gt;System.out.println(v));    //8,93,2,4,5</code></pre>
+<p><strong>去除重复元素</strong></p>
+<p>使用distinct()方法可以去除流中重复元素（使用hashcode（）和equals（）实现）</p>
+<pre><code>Stream.of(integers).distinct().forEach(v-&gt;System.out.println(v));    //1,23,4,5,6,7,3,8,93,2</code></pre>
+<p><strong>生成映射</strong></p>
+<p>map()方法接受一个lambda表达式，该函数会被应用到每个元素上，并映射成一个新的元素</p>
+<pre><code>Stream.of(integers).filter(i-&gt;i&gt;20).distinct().map(v-&gt;v*=2).forEach(v-&gt;System.out.println(v));        //46,186</code></pre>
+<p><strong>排序</strong></p>
+<p>sorted()方法可以进行默认排序，流中元素需要实s现Comparable接口</p>
+<p>sorted(Comparator cmp) 方法中传入一个实现Comparator接口的实现类，可以实现自定义排序</p>
+<pre><code>Stream.of(integers).sorted().filter(i-&gt;i&gt;20).forEach(v-&gt;System.out.println(v))         // 23,23,93
+
+Stream.of(integers).sorted(
+        new Comparator&lt;Integer&gt;() &#123;
+        public int compare(Integer o1, Integer o2) &#123;
+            return o2-o1;
+        &#125;
+    &#125;
+    ).filter(i-&gt;i&gt;20).forEach(v-&gt;System.out.println(v))    // 93,23,23</code></pre>
+<p><strong>消费方法</strong></p>
+<p><del>待续</del></p>
+<hr>
+<h3 id="3-流的终止操作"><a href="#3-流的终止操作" class="headerlink" title="3.流的终止操作"></a><strong>3.流的终止操作</strong></h3><p><strong>前面说过不要重复使用一个流，因为流的终止操作会将流关闭，关闭流后就不能继续使用这个流，如果继续使用流则会出现异常</strong></p>
+<p>流的终止操作有：匹配、聚合、收集</p>
+<hr>
+<p><strong>匹配</strong></p>
+<p>匹配操作是判断元素在流中的存在关系</p>
+<pre><code>Stream&lt;Integer&gt; stream = Stream.of(integers);
+boolean bool1 = stream.allMatch(v-&gt;v&gt;5);    //false
+boolean bool2 = stream.allMatch(v-&gt;v&gt;10);    //此时会出现异常，因为执行了流的终止操作。
+
+boolean allMatch = Stream.of(integers).allMatch(v-&gt;v&gt;5);
+System.out.println(allMatch);    //判断流中所有元素是否符合某种关系
+
+boolean nonMatch = Stream.of(integers).noneMatch(v-&gt;v&gt;100);
+System.out.println(nonMatch);    //判断流中所有元素是否不符合某种关系
+
+boolean anyMatch = Stream.of(integers).anyMatch(v-&gt;v&gt;90);
+System.out.println(anyMatch);    //判断是否有元素符合
+
+int res = Stream.of(integers).findFirst().get();
+System.out.println(res);        //返回流中第一个元素
+
+int any = Stream.of(integers).findAny().get();
+System.out.println(any);        //随机返回一个元素</code></pre>
+<hr>
+<p><strong>聚合</strong></p>
+<p>聚合操作有：返回流中元素个数、最大值、最小值。</p>
+<pre><code>long count = Stream.of(integers).count();    //返回long型
+
+int maxElement = Stream.of(integers).max(Integer::compareTo).get();
+
+int minElement = Stream.of(integers).min(Integer::compareTo).get();</code></pre>
+<hr>
+<p><strong>收集</strong></p>
+<p>收集操作可以将流中的元素包装成一个最终结果集：List、map、set等，如：</p>
+<pre><code>其中 collect 接受一个Collector实例，可将元素收集成另外一个数据结构
+
+Set&lt;Integer&gt; set = Stream.of(integers).collect(Collectors.toSet());    //[1, 2, 3, 4, 5, 6, 23, 7, 8, 93]
+
+List&lt;Integer&gt; list = Stream.of(integers).collect(Collectors.toList());        //[1, 23, 4, 5, 6, 7, 3, 3, 23, 6, 8, 93, 2, 4, 5]
+
+Map&lt;Integer,Integer&gt; map = Stream.of(integers).distinct().filter(v-&gt;v&gt;20).collect(Collectors.toMap(Integer::intValue,Integer::intValue));    //&#123;23=23, 93=93&#125;</code></pre>
+<p>收集操作中求最大、最小、求和、平均值：</p>
+<pre><code>int max = Stream.of(integers).collect(Collectors.maxBy(Integer::compare)).get();
+
+int min = Stream.of(integers).collect(Collectors.minBy(Integer::compare)).get();
+
+double average = Stream.of(integers).collect(Collectors.averagingDouble(Integer::intValue));
+
+int sum = Stream.of(integers).collect(Collectors.summarizingInt(Integer::intValue));</code></pre>
+<p>以下方法可以集以上四种操作于一身：</p>
+<pre><code>IntSummaryStatistics sta = Stream.of(integers).collect(Collectors.summarizingInt(Integer::intValue));
+int max = sta.getMax();
+int min = sta.getMin();
+double average = sta.getAverage();
+long count = sta.getCount();
+long sum = sta.getSum();</code></pre>
+<hr>
+<p><strong>分组</strong></p>
+<p>分组操作将流中相同元素归为一组</p>
+<pre><code>Map&lt;Integer,List&lt;Integer&gt;&gt; map = Stream.of(integers).distinct().collect(Collectors.groupingBy(Integer::intValue));        //&#123;1=[1], 2=[2], 3=[3], 4=[4], 5=[5], 6=[6], 7=[7], 23=[23], 8=[8], 93=[93]&#125;</code></pre>
+<hr>
+<p><strong>分区</strong></p>
+<p>分区操作中，设置条件将流中元素分成两组，满足条件的为true，不满足的为false</p>
+<pre><code>Map&lt;Boolean,List&lt;Integer&gt;&gt; newmap = Stream.of(integers).distinct().collect(Collectors.partitioningBy(v-&gt;v&gt;20));
+
+    System.out.println(newmap);
+
+    System.out.println(newmap.get(true));</code></pre>
+<p>使用newmap.get(true)访问满足条件的元素。</p>
+]]></content>
+      <tags>
+        <tag>JavaStream流</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>MarkDown入门</title>
+    <url>/2020/09/21/MarkDown/</url>
+    <content><![CDATA[<p>MarkDown 是一种轻量级标记语言，它允许我们使用易读易写的纯文本格式编写文档，目前许多网站都在广泛使用MarkDown来撰写文章或是在论坛发表文章，当然用Hexo+github搭建的个人博客中也支持使用MarkDown来撰写文章，为了更好地搭建个人博客，我们有必要使用MarkDown来帮助我们来编写格式更好的文章。</p>
+<hr>
+<h3 id="一-标题"><a href="#一-标题" class="headerlink" title="一.标题"></a><strong><em>一.标题</em></strong></h3><p>标题使用#号标记</p>
+<p>一个#是一级标题，二个#是二级标题，以此类推。支持六级标题。</p>
+<h1 id="这是一级标题"><a href="#这是一级标题" class="headerlink" title="这是一级标题"></a>这是一级标题</h1><h2 id="这是二级标题"><a href="#这是二级标题" class="headerlink" title="这是二级标题"></a>这是二级标题</h2><h3 id="这是三级标题"><a href="#这是三级标题" class="headerlink" title="这是三级标题"></a>这是三级标题</h3><p><strong>注：#后面要有空格，不然无法正确显示</strong></p>
+<hr>
+<h3 id="二-段落格式"><a href="#二-段落格式" class="headerlink" title="二.段落格式"></a><strong><em>二.段落格式</em></strong></h3><p>MarkDown可以使用三种字体：斜体、加粗、斜体加粗。</p>
+<p>斜体：在文字两端各加一个*</p>
+<p><em>这是斜体</em></p>
+<p>粗体：在文字两端各加两个*</p>
+<p><strong>这是粗体</strong></p>
+<p>斜体加粗：在文字两端各加三个***</p>
+<p><strong><em>这是斜体加粗</em></strong></p>
+<hr>
+<p>分割线使用 — 来建立分割线</p>
+<hr>
+<p>文字两端使用 ～～ 来使文字变成删除格式</p>
+<p><del>这是文字的删除格式</del></p>
+<p><strong>注：～～必须是英文的～</strong></p>
+<hr>
+<p>下划线是通过html的 u 标签来实现的，在文字两端加上即可</p>
+<p><u>这是下划线</u></p>
+<hr>
+<h3 id="三-列表"><a href="#三-列表" class="headerlink" title="三.列表"></a><strong><em>三.列表</em></strong></h3><p>列表分为 <u>有序列表</u> 和 <u>无序列表</u></p>
+<p><strong>无序列表</strong>使用 *、+、- 作为列表标记</p>
+<ul>
+<li>第一项</li>
+<li>第二项</li>
+<li>第三项</li>
+</ul>
+<p><strong>有序列表</strong>使用 1. 2. 3.标记</p>
+<p>1.第一项<br>2.第二项<br>3.第三项</p>
+<p><strong><em>列表嵌套</em></strong></p>
+<p>第二层为第一层换行后加一个tab</p>
+<ul>
+<li>第一层<ul>
+<li>第二层<ul>
+<li>第三层 <ul>
+<li>第四层</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<p><strong><em>区块引用和嵌套</em></strong></p>
+<p>区块引用：在段落开头使用 &gt; 符号，后面跟一个空格</p>
+<blockquote>
+<p>这是区块一</p>
+</blockquote>
+<blockquote>
+<p>这是区块二</p>
+</blockquote>
+<p>区块嵌套：一个&gt;是最外层，两个是第一层嵌套，以此类推</p>
+<blockquote>
+<p>父亲</p>
+<blockquote>
+<p>儿子</p>
+<blockquote>
+<p>孙子</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<p><strong><em>注：区块嵌套中&gt;也要隔一个空格</em></strong></p>
+<hr>
+<h3 id="四-链接和图片"><a href="#四-链接和图片" class="headerlink" title="四.链接和图片"></a><strong><em>四.链接和图片</em></strong></h3><p>链接使用：<a href="%E9%93%BE%E6%8E%A5%E5%9C%B0%E5%9D%80">链接名称</a></p>
+<p>如：<a href="https://zleo-bug.github.io/">zleo的博客</a>    </p>
+<p>图片使用：图片的使用和链接使用一样</p>
+<p>如：<a href="http://static.runoob.com/images/runoob-logo.png">菜鸟教程</a></p>
+<p>若使用本地图片，则链接为 在与本md文件同名的文件夹中的图片名称，本文的文件名为MarkDown，则链接为MarkDown图片的名称</p>
+<p><img src="/2020/09/21/MarkDown/f4131bc77889e084f2b3648261cc43df.jpg" alt="图片"></p>
+<p>MarkDown还不支持指定图片的高度和大小，若有需要可以使用html的img标签</p>
+<hr>
+<h3 id="五-表格"><a href="#五-表格" class="headerlink" title="五.表格"></a><strong><em>五.表格</em></strong></h3><p>MarkDown中用|分隔不同单元格，用-来分隔表头和其他行</p>
+<p>如：</p>
+<table>
+<thead>
+<tr>
+<th>表头&emsp;</th>
+<th>表头&emsp;</th>
+<th>表头</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>内容</td>
+<td>内容</td>
+<td>内容</td>
+</tr>
+</tbody></table>
+<br>
+表格中默认为向左看齐
+
+<p>向右看齐：右边加 :</p>
+<p>文字居中：两边加 :</p>
+<p><strong><em>注：&amp;emsp; 表示两个空格</em></strong></p>
+<hr>
+<h3 id="六-代码块"><a href="#六-代码块" class="headerlink" title="六.代码块"></a><strong><em>六.代码块</em></strong></h3><p>如果是段落上的一个函数或者是片段代码可以用反引号包起来</p>
+<p>如：<code>printf()</code> 函数</p>
+<p>如果是一个代码块，则全选代码块加一个tab即可</p>
+<pre><code>#include&lt;stdio.h&gt;
+#include&lt;iostream&gt;
+using namespace std;</code></pre>
+<hr>
+<h3 id="以上就是MarkDown的基本语法。"><a href="#以上就是MarkDown的基本语法。" class="headerlink" title="以上就是MarkDown的基本语法。"></a>以上就是MarkDown的基本语法。</h3>]]></content>
+      <tags>
+        <tag>MarkDown</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>我的第一篇博文</title>
+    <url>/2020/09/21/NewPassage/</url>
+    <content><![CDATA[<p>这是我的第一篇博文，以后要把学习过程中的知识点写在自己的博客上😎</p>
+]]></content>
+  </entry>
+  <entry>
+    <title>Python入门学习（未完待续）</title>
+    <url>/2020/09/21/Python/</url>
+    <content><![CDATA[<p>这学期选修了信息检索（python基础入门），所以有必要将python的基础markdown，便于以后学习。</p>
+<h4 id="一-什么是python："><a href="#一-什么是python：" class="headerlink" title="一.什么是python："></a>一.什么是python：</h4><pre><code>    python是一个高层次的结合了解释性、编译性、互动性和面向对象的脚本语言。
+
+    python语言是一种解释性语言：这意味着在代码编写、执行过程中没有了编译这个环节</code></pre>
+<h4 id="二-python基础："><a href="#二-python基础：" class="headerlink" title="二.python基础："></a>二.python基础：</h4><pre><code>（1）语句结束符：
+
+        python中可以不写结束符； 如：print(val)        
+
+（2）注释： #
+
+（3）行与缩进：
+
+        行与缩进是python语言最具特色的一个地方，python不像其他语言一样使用大括号来包含一个代码块，而是使用：来包含代码块，缩进相同的代码块为同一层次。
+
+如：if True:
+        print(&quot;True&quot;);
+    else:
+        print(&quot;False&quot;);
+
+（4）多行语句：
+
+        如果一行代码很长，可以用 \ 来将代码分行
+    如：total = item_one + \
+        item_two + \
+        item_three
+
+（5）导入模块：
+
+        python中导入模块使用 import [somemoudle] 和 from [somemoudle] import [moudle1],[moudle2]...导入模块
+
+（6）输入与输出：
+
+        python中用 input(&quot;&quot;) 语句输入，输入默认为字符串，若想将输入转换为其他类型的值可用强制转换。
+        如 val = int(input(&quot;enter a val:&quot;))
+
+        python中用 print() 语句输出，输出默认换行，若想取消换行，可以使用这种形式：print(&quot;&quot;,end=&quot; &quot;) 但end这个语法只有最新版本的python3才支持。
+
+（7）运算符：
+
+        python中运算符除了 比较运算符、位运算符、赋值运算符 外 其他运算符和其他语言有所不同。
+
+        算数运算符：
+
+            x/y 的运算结果为浮点数 
+
+            x//y 的结果为向下取整的整数
+
+            x**(val) 表示x的val次幂
+
+        逻辑运算符：
+
+            与运算符为：and
+
+            或运算符为：or
+
+            非运算符为：not
+
+        成员运算符：
+
+            成员运算符在python循环中经常被用来判断指定元素是否在某序列中
+
+            in：表示某元素在指定的序列中 
+
+            not in：表示某元素不在指定序列中
+
+        身份运算符：
+
+            is 或 id() ：用来表示某变量的地址，通常用来判断序列
+
+            == ：用来判断变量值是否相等，通常用来判断变量
+
+            类似于 java 中 String str1 = &quot;123&quot;; String str2 = &quot;123&quot;; String str3 = new String(&quot;123&quot;);
+            str1 == str2 /true         str1 == str3 /false     之间的区别
+
+（6）基本数据类型：
+
+
+        Number (数字类型)：
+
+                只有int、bool、float、complex四种
+
+        String (字符串)：
+
+                python中字符串可用‘’或“”指定一个字符串。
+
+                python中有两种
+        List (列表)：
+
+        Tuple (元组)：
+
+        set (集合)：
+
+        Dictionary (字典)：</code></pre>
+]]></content>
+      <tags>
+        <tag>python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Spring简介</title>
+    <url>/2020/09/22/Spring/</url>
+    <content><![CDATA[<blockquote>
+</blockquote>
+<h2 id="一-什么是Spring"><a href="#一-什么是Spring" class="headerlink" title="一.什么是Spring"></a><strong>一.什么是Spring</strong></h2><p>Spring轻量级的java开发框架，它是为了解决企业应用开发的复杂性而创建的，Spring的核心是控制反转(IOC)和面向切面(AOP)。</p>
+<p>一句话概括就是 Spring是一个轻量级的、具有控制反转和面向切面的容器（框架）。</p>
+<h3 id="什么是IOC"><a href="#什么是IOC" class="headerlink" title="什么是IOC"></a><strong>什么是IOC</strong></h3><p>IOC的定义：所谓IOC，就是由Spring IOC容器来负责对象的生命周期和对象之间的关系。<br>在传统的开发模式下，我们在项目中都是使用new直接生成一个对象，也就是说我所需要的对象是由自己并控制的，但是有了IOC容器后我们所需要的对象由IOC容器负责管理，由原来的主动生成对象 -&gt; 由IOC容器生成对象 ，获得依赖对象的方式改变了，这就是控制反转。<br>在IOC中，通过以配置xml文件或是注解的方式将我们所需要的类和类的路径进行说明，然后在项目中通过<strong>上下文模块</strong>获取xml文件的路径，由IOC容器提供所需要的类<br><a href="https://zhuanlan.zhihu.com/p/64001753">IOC参考链接</a></p>
+<h3 id="什么是AOP"><a href="#什么是AOP" class="headerlink" title="什么是AOP"></a><strong>什么是AOP</strong></h3><p>AOP：面向切面编程，是OOP（面向对象编程）的一种补充，OOP引入封装、继承、多态的概念建立一种对象间的一种层次的结构，用来模拟层次结构间共同行为，如方法的重写等等。但如果我们在开发过程中多个模块间有某些重复度很高的代码，但是模块间又不存在一种层次间的关系，这时候怎么解决代码重复这样的问题呢？答案就是使用AOP，AOP技术利用一种称为“横切”的技术，解剖封装的对象内部，并将类间共同的行为封装到一个新的可重用模块中，减少重复代码，降低模块间的耦合度。</p>
+<h2 id="二-Spring的组成"><a href="#二-Spring的组成" class="headerlink" title="二.Spring的组成"></a><strong><em>二.Spring的组成</em></strong></h2><p><img src="/2020/09/22/Spring/SpringFramworkRuntime.png" alt="framework"></p>
+<p><a href="https://www.cnblogs.com/jpwz/p/10556012.html">参考链接</a></p>
+<p>spring由多个模块组成，下面介绍spring每个模块及其功能</p>
+<h3 id="Core-Container-核心容器"><a href="#Core-Container-核心容器" class="headerlink" title="Core Container 核心容器"></a><strong>Core Container 核心容器</strong></h3><p>Spring核心容器建立在Beans、Core、Context、SpEl模块之上</p>
+<p>Beans模块提供了BeanFactory，是工厂模式的一个经典体现，所有被Spring管理的对象都称为Beans</p>
+<p>Core模块提供了框架的基本组成部分，包括IOC和、DI（依赖注入）功能</p>
+<p>Context上下文模块建立在Beans和Core模块基础之上，提供了一个框架式的对象访问方式，是访问定义和配置中Beans对象的媒介，ApplicationContext接口通过xml文本的路径访问配置中的beans对象。</p>
+<p>SpEl是Spring表达式语言，它提供了强大的表达式语言去支持运行时查询和操作对象</p>
+<h3 id="面向切面编程模块"><a href="#面向切面编程模块" class="headerlink" title="面向切面编程模块"></a><strong>面向切面编程模块</strong></h3><p>AOP模块提供了符合AOP要求的面向切面编程的实现，允许定义方法拦截器和切入点，将代码按照功能进行分离，是纯Java实现</p>
+<p>Aspects模块提供了AspectJ的集成功能，AspectJ是一个基于Java语言的AOP框架</p>
+<p>Instrument模块提供了类植入支持和类加载器的实现，可在特定的应用服务器中使用</p>
+<h3 id="数据访问模块"><a href="#数据访问模块" class="headerlink" title="数据访问模块"></a><strong>数据访问模块</strong></h3><p>JDBC、DAO模块：JDBC模块是对JDBC的抽象，减少JDBC编程的代码量</p>
+<p>ORM模块：封装了大量的对象关系映射的API</p>
+<h3 id="Web模块"><a href="#Web模块" class="headerlink" title="Web模块"></a><strong>Web模块</strong></h3><p>WebSocket模块：提供WebScoket、SockJS的实现，以及对STOMP的支持</p>
+<p>Servlet模块：也称为Spring-webmvc模块，包含了Spring的MVC。</p>
+<p>Web模块：提供基本的Web开发集成特性，比如多文件上传功能、使用Servlet监听器来初始化Ioc容器以及Web应用上下文。</p>
+<p>Portlet模块：提供了对在Portlet环境中使用MVC的支持。</p>
+<!-- 底层是Spring的核心容器，包括Beans容器、上下文、Spring表达式和核心工具，是Spring框架最基本的支撑
+中间层是Spring的功能组件
+上层是Spring的具体使用 -->]]></content>
+      <tags>
+        <tag>Spring</tag>
+      </tags>
+  </entry>
+</search>

@@ -1,51 +1,1012 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Spring之AOP</title>
-    <url>/2020/09/24/AOP/</url>
-    <content><![CDATA[<p>AOP的专业术语：AOP为Aspect Oriented Programming的缩写，意为：面向切面编程，通过预编译方式和运行期动态代理实现程序功能的统一维护和处理的一种技术。利用AOP可以对业务逻辑的各个部分进行隔离，从而使得业务逻辑各部分之间的耦合度降低，提高程序的可重用性，同时提高了开发的效率。</p>
-<p>AOP的实现方式：</p>
-<p>AOP技术是建立在JAVA语言的反射机制与动态代理机制上的</p>
-<p>实现方式有：</p>
+    <title>Java之Stream流</title>
+    <url>/2020/09/22/JavaStream/</url>
+    <content><![CDATA[<p>今天在写java实验的过程中，想用Stream流省事时，却发现自己对Stream流有点生疏了，所以特地翻开以前写的Stream流的demo记录下来，以便加深印象。</p>
+<blockquote>
+</blockquote>
+<h2 id="一-什么是Java-Stream流"><a href="#一-什么是Java-Stream流" class="headerlink" title="一.什么是Java Stream流"></a><strong><em>一.什么是Java Stream流</em></strong></h2><p>Stream流是java8 API中添加的一个新的抽象，它使用一种类似SQL语句从数据库查询数据的直观方式来提供一种对Java集合运算和表达的抽象。</p>
+<p>它将要处理的元素集合看作一种流，流在管道中传输，并且可以在管道上进行对集合的处理，比如对集合就行筛选过滤、排序（自定义或是默认）、聚合等操作。</p>
+<p>Stream流的处理中，元素在管道中经过中间操作的处理，最后由最终操作得到前面处理的结果。</p>
+<blockquote>
+</blockquote>
+<h2 id="二-Stream流的特点"><a href="#二-Stream流的特点" class="headerlink" title="二.Stream流的特点"></a><strong><em>二.Stream流的特点</em></strong></h2><p>1.Stream流不是数据结构，它不会保存数据，流可以是一个泛型。</p>
+<p>2.可以对集合、数组进行连续的操作。</p>
+<p>3.Stream流的数据源可以有集合、数组等。</p>
+<p>4.它不会修改原来的数据源，它会将操作后的数据保存到另外一个对象中。</p>
+<p>5.Stream是惰性求值，流在中间处理过程中，只是对操作进行了记录，并不会立即执行，需要等到执行终止操作的时候才会进行实际的计算。</p>
+<blockquote>
+</blockquote>
+<h2 id="三-为什么要使用Stream流"><a href="#三-为什么要使用Stream流" class="headerlink" title="三.为什么要使用Stream流"></a><strong><em>三.为什么要使用Stream流</em></strong></h2><p>Stream API 可以极大提高程序员的生产力，让程序员以一种声明的方式处理数据，一行代码对集合进行多种操作，让我们写出更高效、简洁、有效率的代码。</p>
+<blockquote>
+</blockquote>
+<h2 id="四-Stream流的用法"><a href="#四-Stream流的用法" class="headerlink" title="四.Stream流的用法"></a><strong><em>四.Stream流的用法</em></strong></h2><p><strong>另外，在使用流的时候，先不要重复使用同一个流，后面会讲到原因</strong></p>
+<h3 id="1-流的创建"><a href="#1-流的创建" class="headerlink" title="1.流的创建"></a><strong>1.流的创建</strong></h3><p>对于集合，流的创建通常使用 集合.stream() 来创建一个流，如：</p>
+<pre><code>List&lt;String&gt; list = new ArrayList&lt;&gt;();
+Stream&lt;String&gt; stream = list.stream();</code></pre>
+<p>对于数组，通常使用集合的工具类 Arrays.stream() 、将数组转换为集合List 又或是Stream.of(array) 来创建一个流，如：</p>
+<pre><code>String[] strs = new String[10];
+Stream&lt;String&gt; stream = Arrays.stream(strs);
+
+Stream&lt;String&gt; stream = Arrays.asList(strs).stream();
+
+Stream&lt;String&gt; stream = Stream.of(1,2,3,4,6);</code></pre>
+<p>将字符串分隔成流：</p>
+<pre><code>String newstr = &quot;123,456,789&quot;;
+Pattern pattern = Pattern.compile(&quot;,&quot;);
+Stream&lt;String&gt; spiltStream = pattern.splitAsStream(newstr);
+splitStream.sorted.forEach(v-&gt;System.out.println(v));            // 输出：123 456 789 </code></pre>
+<hr>
+<h3 id="2-流的中间操作"><a href="#2-流的中间操作" class="headerlink" title="2.流的中间操作"></a><strong>2.流的中间操作</strong></h3><p>定义一个整形数组</p>
+<pre><code>Integer[] integers = &#123;1,23,4,5,6,7,3,3,23,6,8,93,2,4,5&#125;;</code></pre>
+<p>以下流的操作均以此数组为例</p>
+<p><strong>forEach循环：</strong></p>
+<p>使用forEach()方法可以循环输出流</p>
+<pre><code>Stream.of(integers).forEach(v-&gt;System.out.println(v)); // 循环输出整形数组</code></pre>
+<p><strong>筛选：</strong></p>
+<p>使用Stream流中的filter()方法可以过滤某些元素，如：</p>
+<pre><code>Stream&lt;Integer&gt; stream1 = Stream.of(integers);
+stream1.filter(v-&gt;v&gt;20).forEach(v-&gt;System.out.println(v));    //23,23,93</code></pre>
+<p><strong>获取n个元素：</strong></p>
+<p>使用limit(n)方法可以获取流中n个元素，顺序为从 0 – n-1，如：</p>
+<pre><code>Stream.of(integers).limit(5).forEach(v-&gt;System.out.println(v));    //1,23,4,5,6</code></pre>
+<p><strong>跳过前n个元素</strong></p>
+<p>使用skip(n)方法可以跳过流中前n个元素，如：</p>
+<pre><code>Stream.of(integers).skip(7).forEach(v-&gt;System.out.println(v));    //8,93,2,4,5</code></pre>
+<p><strong>去除重复元素</strong></p>
+<p>使用distinct()方法可以去除流中重复元素（使用hashcode（）和equals（）实现）</p>
+<pre><code>Stream.of(integers).distinct().forEach(v-&gt;System.out.println(v));    //1,23,4,5,6,7,3,8,93,2</code></pre>
+<p><strong>生成映射</strong></p>
+<p>map()方法接受一个lambda表达式，该函数会被应用到每个元素上，并映射成一个新的元素</p>
+<pre><code>Stream.of(integers).filter(i-&gt;i&gt;20).distinct().map(v-&gt;v*=2).forEach(v-&gt;System.out.println(v));        //46,186</code></pre>
+<p><strong>排序</strong></p>
+<p>sorted()方法可以进行默认排序，流中元素需要实s现Comparable接口</p>
+<p>sorted(Comparator cmp) 方法中传入一个实现Comparator接口的实现类，可以实现自定义排序</p>
+<pre><code>Stream.of(integers).sorted().filter(i-&gt;i&gt;20).forEach(v-&gt;System.out.println(v))         // 23,23,93
+
+Stream.of(integers).sorted(
+        new Comparator&lt;Integer&gt;() &#123;
+        public int compare(Integer o1, Integer o2) &#123;
+            return o2-o1;
+        &#125;
+    &#125;
+    ).filter(i-&gt;i&gt;20).forEach(v-&gt;System.out.println(v))    // 93,23,23</code></pre>
+<p><strong>消费方法</strong></p>
+<p><del>待续</del></p>
+<hr>
+<h3 id="3-流的终止操作"><a href="#3-流的终止操作" class="headerlink" title="3.流的终止操作"></a><strong>3.流的终止操作</strong></h3><p><strong>前面说过不要重复使用一个流，因为流的终止操作会将流关闭，关闭流后就不能继续使用这个流，如果继续使用流则会出现异常</strong></p>
+<p>流的终止操作有：匹配、聚合、收集</p>
+<hr>
+<p><strong>匹配</strong></p>
+<p>匹配操作是判断元素在流中的存在关系</p>
+<pre><code>Stream&lt;Integer&gt; stream = Stream.of(integers);
+boolean bool1 = stream.allMatch(v-&gt;v&gt;5);    //false
+boolean bool2 = stream.allMatch(v-&gt;v&gt;10);    //此时会出现异常，因为执行了流的终止操作。
+
+boolean allMatch = Stream.of(integers).allMatch(v-&gt;v&gt;5);
+System.out.println(allMatch);    //判断流中所有元素是否符合某种关系
+
+boolean nonMatch = Stream.of(integers).noneMatch(v-&gt;v&gt;100);
+System.out.println(nonMatch);    //判断流中所有元素是否不符合某种关系
+
+boolean anyMatch = Stream.of(integers).anyMatch(v-&gt;v&gt;90);
+System.out.println(anyMatch);    //判断是否有元素符合
+
+int res = Stream.of(integers).findFirst().get();
+System.out.println(res);        //返回流中第一个元素
+
+int any = Stream.of(integers).findAny().get();
+System.out.println(any);        //随机返回一个元素</code></pre>
+<hr>
+<p><strong>聚合</strong></p>
+<p>聚合操作有：返回流中元素个数、最大值、最小值。</p>
+<pre><code>long count = Stream.of(integers).count();    //返回long型
+
+int maxElement = Stream.of(integers).max(Integer::compareTo).get();
+
+int minElement = Stream.of(integers).min(Integer::compareTo).get();</code></pre>
+<hr>
+<p><strong>收集</strong></p>
+<p>收集操作可以将流中的元素包装成一个最终结果集：List、map、set等，如：</p>
+<pre><code>其中 collect 接受一个Collector实例，可将元素收集成另外一个数据结构
+
+Set&lt;Integer&gt; set = Stream.of(integers).collect(Collectors.toSet());    //[1, 2, 3, 4, 5, 6, 23, 7, 8, 93]
+
+List&lt;Integer&gt; list = Stream.of(integers).collect(Collectors.toList());        //[1, 23, 4, 5, 6, 7, 3, 3, 23, 6, 8, 93, 2, 4, 5]
+
+Map&lt;Integer,Integer&gt; map = Stream.of(integers).distinct().filter(v-&gt;v&gt;20).collect(Collectors.toMap(Integer::intValue,Integer::intValue));    //&#123;23=23, 93=93&#125;</code></pre>
+<p>收集操作中求最大、最小、求和、平均值：</p>
+<pre><code>int max = Stream.of(integers).collect(Collectors.maxBy(Integer::compare)).get();
+
+int min = Stream.of(integers).collect(Collectors.minBy(Integer::compare)).get();
+
+double average = Stream.of(integers).collect(Collectors.averagingDouble(Integer::intValue));
+
+int sum = Stream.of(integers).collect(Collectors.summarizingInt(Integer::intValue));</code></pre>
+<p>以下方法可以集以上四种操作于一身：</p>
+<pre><code>IntSummaryStatistics sta = Stream.of(integers).collect(Collectors.summarizingInt(Integer::intValue));
+int max = sta.getMax();
+int min = sta.getMin();
+double average = sta.getAverage();
+long count = sta.getCount();
+long sum = sta.getSum();</code></pre>
+<hr>
+<p><strong>分组</strong></p>
+<p>分组操作将流中相同元素归为一组</p>
+<pre><code>Map&lt;Integer,List&lt;Integer&gt;&gt; map = Stream.of(integers).distinct().collect(Collectors.groupingBy(Integer::intValue));        //&#123;1=[1], 2=[2], 3=[3], 4=[4], 5=[5], 6=[6], 7=[7], 23=[23], 8=[8], 93=[93]&#125;</code></pre>
+<hr>
+<p><strong>分区</strong></p>
+<p>分区操作中，设置条件将流中元素分成两组，满足条件的为true，不满足的为false</p>
+<pre><code>Map&lt;Boolean,List&lt;Integer&gt;&gt; newmap = Stream.of(integers).distinct().collect(Collectors.partitioningBy(v-&gt;v&gt;20));
+
+    System.out.println(newmap);
+
+    System.out.println(newmap.get(true));</code></pre>
+<p>使用newmap.get(true)访问满足条件的元素。</p>
+]]></content>
+      <tags>
+        <tag>JavaStream流</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>MarkDown入门</title>
+    <url>/2020/09/21/MarkDown/</url>
+    <content><![CDATA[<p>MarkDown 是一种轻量级标记语言，它允许我们使用易读易写的纯文本格式编写文档，目前许多网站都在广泛使用MarkDown来撰写文章或是在论坛发表文章，当然用Hexo+github搭建的个人博客中也支持使用MarkDown来撰写文章，为了更好地搭建个人博客，我们有必要使用MarkDown来帮助我们来编写格式更好的文章。</p>
+<hr>
+<h3 id="一-标题"><a href="#一-标题" class="headerlink" title="一.标题"></a><strong><em>一.标题</em></strong></h3><p>标题使用#号标记</p>
+<p>一个#是一级标题，二个#是二级标题，以此类推。支持六级标题。</p>
+<h1 id="这是一级标题"><a href="#这是一级标题" class="headerlink" title="这是一级标题"></a>这是一级标题</h1><h2 id="这是二级标题"><a href="#这是二级标题" class="headerlink" title="这是二级标题"></a>这是二级标题</h2><h3 id="这是三级标题"><a href="#这是三级标题" class="headerlink" title="这是三级标题"></a>这是三级标题</h3><p><strong>注：#后面要有空格，不然无法正确显示</strong></p>
+<hr>
+<h3 id="二-段落格式"><a href="#二-段落格式" class="headerlink" title="二.段落格式"></a><strong><em>二.段落格式</em></strong></h3><p>MarkDown可以使用三种字体：斜体、加粗、斜体加粗。</p>
+<p>斜体：在文字两端各加一个*</p>
+<p><em>这是斜体</em></p>
+<p>粗体：在文字两端各加两个*</p>
+<p><strong>这是粗体</strong></p>
+<p>斜体加粗：在文字两端各加三个***</p>
+<p><strong><em>这是斜体加粗</em></strong></p>
+<hr>
+<p>分割线使用 — 来建立分割线</p>
+<hr>
+<p>文字两端使用 ～～ 来使文字变成删除格式</p>
+<p><del>这是文字的删除格式</del></p>
+<p><strong>注：～～必须是英文的～</strong></p>
+<hr>
+<p>下划线是通过html的 u 标签来实现的，在文字两端加上即可</p>
+<p><u>这是下划线</u></p>
+<hr>
+<h3 id="三-列表"><a href="#三-列表" class="headerlink" title="三.列表"></a><strong><em>三.列表</em></strong></h3><p>列表分为 <u>有序列表</u> 和 <u>无序列表</u></p>
+<p><strong>无序列表</strong>使用 *、+、- 作为列表标记</p>
 <ul>
+<li>第一项</li>
+<li>第二项</li>
+<li>第三项</li>
+</ul>
+<p><strong>有序列表</strong>使用 1. 2. 3.标记</p>
+<p>1.第一项<br>2.第二项<br>3.第三项</p>
+<p><strong><em>列表嵌套</em></strong></p>
+<p>第二层为第一层换行后加一个tab</p>
+<ul>
+<li>第一层<ul>
+<li>第二层<ul>
+<li>第三层 <ul>
+<li>第四层</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<p><strong><em>区块引用和嵌套</em></strong></p>
+<p>区块引用：在段落开头使用 &gt; 符号，后面跟一个空格</p>
+<blockquote>
+<p>这是区块一</p>
+</blockquote>
+<blockquote>
+<p>这是区块二</p>
+</blockquote>
+<p>区块嵌套：一个&gt;是最外层，两个是第一层嵌套，以此类推</p>
+<blockquote>
+<p>父亲</p>
+<blockquote>
+<p>儿子</p>
+<blockquote>
+<p>孙子</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<p><strong><em>注：区块嵌套中&gt;也要隔一个空格</em></strong></p>
+<hr>
+<h3 id="四-链接和图片"><a href="#四-链接和图片" class="headerlink" title="四.链接和图片"></a><strong><em>四.链接和图片</em></strong></h3><p>链接使用：<a href="%E9%93%BE%E6%8E%A5%E5%9C%B0%E5%9D%80">链接名称</a></p>
+<p>如：<a href="https://zleo-bug.github.io/">zleo的博客</a>    </p>
+<p>图片使用：图片的使用和链接使用一样</p>
+<p>如：<a href="http://static.runoob.com/images/runoob-logo.png">菜鸟教程</a></p>
+<p>若使用本地图片，则链接为 在与本md文件同名的文件夹中的图片名称，本文的文件名为MarkDown，则链接为MarkDown图片的名称</p>
+<p><img src="/2020/09/21/MarkDown/f4131bc77889e084f2b3648261cc43df.jpg" alt="图片"></p>
+<p>MarkDown还不支持指定图片的高度和大小，若有需要可以使用html的img标签</p>
+<hr>
+<h3 id="五-表格"><a href="#五-表格" class="headerlink" title="五.表格"></a><strong><em>五.表格</em></strong></h3><p>MarkDown中用|分隔不同单元格，用-来分隔表头和其他行</p>
+<p>如：</p>
+<table>
+<thead>
+<tr>
+<th>表头&emsp;</th>
+<th>表头&emsp;</th>
+<th>表头</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>内容</td>
+<td>内容</td>
+<td>内容</td>
+</tr>
+</tbody></table>
+<br>
+表格中默认为向左看齐
+
+<p>向右看齐：右边加 :</p>
+<p>文字居中：两边加 :</p>
+<p><strong><em>注：&amp;emsp; 表示两个空格</em></strong></p>
+<hr>
+<h3 id="六-代码块"><a href="#六-代码块" class="headerlink" title="六.代码块"></a><strong><em>六.代码块</em></strong></h3><p>如果是段落上的一个函数或者是片段代码可以用反引号包起来</p>
+<p>如：<code>printf()</code> 函数</p>
+<p>如果是一个代码块，则全选代码块加一个tab即可</p>
+<pre><code>#include&lt;stdio.h&gt;
+#include&lt;iostream&gt;
+using namespace std;</code></pre>
+<hr>
+<h3 id="以上就是MarkDown的基本语法。"><a href="#以上就是MarkDown的基本语法。" class="headerlink" title="以上就是MarkDown的基本语法。"></a>以上就是MarkDown的基本语法。</h3>]]></content>
+      <tags>
+        <tag>MarkDown</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>我的第一篇博文</title>
+    <url>/2020/09/21/NewPassage/</url>
+    <content><![CDATA[<p>这是我的第一篇博文，以后要把学习过程中的知识点写在自己的博客上😎</p>
+]]></content>
+  </entry>
+  <entry>
+    <title>Python入门学习</title>
+    <url>/2020/09/21/Python/</url>
+    <content><![CDATA[<p>这学期选修了信息检索（python基础入门），所以有必要将python的基础markdown，便于以后学习。语言都具有相似性，下面列举出python与其他语言不同的地方</p>
+<h2 id="一-什么是python："><a href="#一-什么是python：" class="headerlink" title="一.什么是python："></a>一.什么是python：</h2><p>python是一个高层次的结合了解释性、编译性、互动性和面向对象的脚本语言。</p>
+<p>python语言是一种解释性语言：这意味着在代码编写、执行过程中没有了编译这个环节</p>
+<h2 id="二-python基础："><a href="#二-python基础：" class="headerlink" title="二.python基础："></a>二.python基础：</h2><h3 id="语句结束符："><a href="#语句结束符：" class="headerlink" title="语句结束符："></a>语句结束符：</h3><p>python中可以不写结束符； 如：print(val)    </p>
+<h3 id="变量定义与删除："><a href="#变量定义与删除：" class="headerlink" title="变量定义与删除："></a>变量定义与删除：</h3><p>python中变量类型是弱类型，定义变量时不用声明数据类型，可以用del删除变量</p>
+<h3 id="注释："><a href="#注释：" class="headerlink" title="注释："></a>注释：</h3><h3 id="行与缩进："><a href="#行与缩进：" class="headerlink" title="行与缩进："></a>行与缩进：</h3><p>行与缩进是python语言最具特色的一个地方，python不像其他语言一样使用大括号来包含一个代码块，而是使用：来包含代码块，缩进相同的代码块为同一层次。</p>
+<p>如：</p>
+<pre><code>if True:
+        print(&quot;True&quot;);
+    else:
+        print(&quot;False&quot;);</code></pre>
+<h3 id="多行语句："><a href="#多行语句：" class="headerlink" title="多行语句："></a>多行语句：</h3><p>如果一行代码很长，可以用 \ 来将代码分行<br>如：</p>
+<pre><code>total = item_one + \
+   item_two + \
+   item_three</code></pre>
+<h3 id="导入模块："><a href="#导入模块：" class="headerlink" title="导入模块："></a>导入模块：</h3><p>python中导入模块使用 import [somemoudle] 和 from [somemoudle] import [moudle1],[moudle2]…导入模块，使用import可以导入其他python文件，作用类似于java中的包，导入其他文件后会自动运行文件中的代码，解决方法是在主文件中将代码块放入 <strong>name</strong> == <strong>main</strong> </p>
+<h3 id="输入与输出："><a href="#输入与输出：" class="headerlink" title="输入与输出："></a>输入与输出：</h3><p>python中用 input(“”)语句输入，输入默认为字符串，若想将输入转换为其他类型的值可用强制转换。如 val = int(input(“enter a val:”))</p>
+<p>python中用 print()语句输出，输出默认换行，若想取消换行，可以使用这种形式：print(“”,end=” “) 但end这个语法只有最新版本的python3才支持。</p>
+<p>也可以使用str.format()来格式化输出</p>
+<p>条件控制：</p>
+<p>python中没有switch case表达式，elif代替了else，还添加了for else、while else的表达式</p>
+<h3 id="错误和异常："><a href="#错误和异常：" class="headerlink" title="错误和异常："></a>错误和异常：</h3><p>python中使用 try-expect-finally 代替 try-catch-else-finally，其中else是没有异常执行的代码</p>
+<p>用raise代替throw抛出异常</p>
+<h3 id="继承："><a href="#继承：" class="headerlink" title="继承："></a>继承：</h3><p>python支持多继承</p>
+<h3 id="运算符："><a href="#运算符：" class="headerlink" title="运算符："></a>运算符：</h3><p>python中运算符除了 比较运算符、位运算符、赋值运算符 外 其他运算符和其他语言有所不同。</p>
+<h4 id="算数运算符："><a href="#算数运算符：" class="headerlink" title="算数运算符："></a>算数运算符：</h4><p>x/y 的运算结果为浮点数 </p>
+<p>x//y 的结果为向下取整的整数</p>
+<p>x/<em>/</em>(val) 表示x的val次幂</p>
+<h4 id="逻辑运算符："><a href="#逻辑运算符：" class="headerlink" title="逻辑运算符："></a>逻辑运算符：</h4><p>与运算符为：and</p>
+<p>或运算符为：or</p>
+<p>非运算符为：not</p>
+<h4 id="成员运算符：在python循环中经常被用来判断指定元素是否在某序列中"><a href="#成员运算符：在python循环中经常被用来判断指定元素是否在某序列中" class="headerlink" title="成员运算符：在python循环中经常被用来判断指定元素是否在某序列中"></a>成员运算符：在python循环中经常被用来判断指定元素是否在某序列中</h4><p>in：表示某元素在指定的序列中 </p>
+<p>not in：表示某元素不在指定序列中</p>
+<h4 id="身份运算符："><a href="#身份运算符：" class="headerlink" title="身份运算符："></a>身份运算符：</h4><p>is 或 id() ：用来表示某变量的地址，通常用来判断序列</p>
+<p>== ：用来判断变量值是否相等，通常用来判断变量</p>
+<p>类似于在java中，String str1 = “123”;String str2 = “123”; String str3 = new String(“123”);<br>str1 == str2 /true<br>str1 == str3 /false<br>之间的区别</p>
+<h3 id="基本数据类型："><a href="#基本数据类型：" class="headerlink" title="基本数据类型："></a>基本数据类型：</h3><p>python中使用type()返回变量的类型，使用isinstance方法来判断变量是否与指定类型相同</p>
+<pre><code>a = 10;
+print(type(a))    //    &lt;class &#39;int&#39;&gt;
+print(isinstance(a,int))    //True</code></pre>
+<ul>
+<li><h4 id="Number-数字类型-："><a href="#Number-数字类型-：" class="headerlink" title="Number (数字类型)："></a>Number (数字类型)：</h4></li>
+</ul>
+<p>python中数字类型只有int、bool、float、complex四种</p>
+<p>强制转换：int（）、bool（）、float（）、complex（x,y）</p>
+<ul>
+<li><h4 id="String-字符串-："><a href="#String-字符串-：" class="headerlink" title="String (字符串)："></a>String (字符串)：</h4></li>
+</ul>
+<p>python中字符串用‘’或“”指定一个字符串，可用下标访问字符串</p>
+<p>字符串运算符：</p>
+<p>*运算符：重复输出</p>
+<pre><code>str = &quot;123&quot;
+print(str3) //123123123</code></pre>
+<p>[]运算符：通过索引截取字符串的子串(左闭右开)</p>
+<pre><code>str = &quot;12312312412412&quot;
+print(str[0:4]);</code></pre>
+<p>Python中字符串下标有两种格式，一种是常规的：0…n-1，另一种是从后面索引：-n…-1</p>
+<p>如：</p>
+<pre><code>str = &quot;123456789&quot;
+print(str[0:9])        /123456789
+print(str[-9:0])     /123456789</code></pre>
+<p>in 和 not in 成员运算符：判断字符是否存在字符串中</p>
+<pre><code>str = &quot;12312312412412&quot;
+print(&#39;0&#39; in str);        //False</code></pre>
+<p>r/R运算符：将字符串中的字符转义，变成普通字符</p>
+<pre><code>str = r&quot;12\n312312412412&quot;
+print(str)            //12\n312312412412</code></pre>
+<p>%字符串格式化运算符：</p>
+<pre><code>str = &quot;12312312412412&quot;
+print(&quot;string is %s&quot; %str)        //string is 12312312412412</code></pre>
+<p>f-string 字面量格式化字符串：</p>
+<p>f-string 格式化字符串以 f 开头，后面跟着字符串，字符串中的表达式用大括号{} 包起来，它会将变量或表达式计算后的值替换进去</p>
+<pre><code>name=&quot;十二点前要睡觉&quot;
+print(f&quot;我是&#123;name&#125;&quot;)        //我是十二点前要睡觉
+
+print(f&quot;&#123;1+2&#125;&quot;)     // 3</code></pre>
+<p>str.format()格式化：</p>
+<pre><code>print(&#39;&#123;0&#125; 和 &#123;1&#125;&#39;.format(&#39;Google&#39;, &#39;Runoob&#39;))    //Google 和 Runoob
+
+print(&#39;&#123;name&#125;网址： &#123;site&#125;&#39;.format(name=&#39;菜鸟教程&#39;, site=&#39;www.runoob.com&#39;))    //菜鸟教程网址： www.runoob.com
+
+import math
+print(&#39;常量 PI 的值近似为 &#123;0:.3f&#125;。&#39;.format(math.pi))
+
+table = &#123;&#39;Google&#39;: 1, &#39;Runoob&#39;: 2, &#39;Taobao&#39;: 3&#125;
+print(&#39;Runoob: &#123;0[Runoob]&#125;; Google: &#123;0[Google]&#125;; Taobao: &#123;0[Taobao]&#125;&#39;.format(table))</code></pre>
+<ul>
+<li><h4 id="List-列表-："><a href="#List-列表-：" class="headerlink" title="List (列表)："></a>List (列表)：</h4></li>
+</ul>
+<p>列表是python中最基本的数据类型，基本和数组相似，不过列表允许存在不同类型的值，列表用[]将元素包装，列表是可变的</p>
+<pre><code>list = [1,2,3,4,]
+list = [&quot;abc&quot;,&quot;def&quot;]
+list = [1,2,3,&quot;abc&quot;,&quot;def&quot;]</code></pre>
+<p>列表也可以像字符串类型一样从尾部开始遍历，最后一个元素下标为-1<br>列表的截取也是[]运算符，左闭右开原则</p>
+<pre><code>print(list[-1])    // def</code></pre>
+<p><strong>列表增加元素：</strong></p>
+<p>列表中用append增加元素：</p>
+<pre><code>list.append(1)
+print(list)    //    [1, 2, 3, &#39;abc&#39;, &#39;def&#39;, 1]</code></pre>
+<p>或者使用+运算符往列表中增加列表</p>
+<pre><code>print(list+[1,2,3])        //[2, 3, &#39;abc&#39;, &#39;def&#39;, 1, 2, 3]</code></pre>
+<p><strong>列表删除元素</strong></p>
+<p>用del或删除元素：</p>
+<pre><code>del list[0]
+print(list)    //    [2, 3, &#39;abc&#39;, &#39;def&#39;, 1]</code></pre>
+<p>用pop删除元素，默认删除并最后一个元素，也可以在pop方法中限定下标</p>
+<pre><code>x = list.pop()    //def
+print(x)    //[2, 3, &#39;abc&#39;]
+
+list.pop(0)
+print(list)    //[3, &#39;abc&#39;]</code></pre>
+<ul>
+<li><h4 id="Tuple-元组-："><a href="#Tuple-元组-：" class="headerlink" title="Tuple (元组)："></a>Tuple (元组)：</h4></li>
+</ul>
+<p>元组与列表类似，元组不可修改，元组用()来声明</p>
+<pre><code>tuple = (1,2,3,4,5)
+print(tuple)    //(1, 2, 3, 4, 5)</code></pre>
+<p>元组与列表很相似，不过元组中没有append添加元素方法，不过可以用+运算进行组合<br>可以用list(tuple)将元组转换为列表</p>
+<pre><code>print(tuple+(9,8,7))    /(1, 2, 3, 4, 5, 9, 8, 7)</code></pre>
+<ul>
+<li><h4 id="set-集合-："><a href="#set-集合-：" class="headerlink" title="set (集合)："></a>set (集合)：</h4></li>
+</ul>
+<p>集合是无序的，集合使用{}或set()函数创建集合</p>
+<pre><code>set = &#123;1,2,3,4,5,6&#125;
+print(set)        //&#123;1, 2, 3, 4, 5, 6&#125;
+print(set(&quot;123321&quot;))    //&#123;&#39;1&#39;, &#39;3&#39;, &#39;2&#39;&#125;</code></pre>
+<p>添加元素：</p>
+<p>用add方法往集合添加一个元素，也可以用update添加集合、元组、列表等    </p>
+<pre><code>set.add(4)
+print(set)    //&#123;&#39;3&#39;, &#39;2&#39;, 4, &#39;1&#39;&#125;
+
+set.update(&#123;5&#125;)    //&#123;&#39;2&#39;, 4, 5, &#39;3&#39;, &#39;1&#39;&#125;
+print(set)</code></pre>
+<p>删除元素：</p>
+<p>用remove方法删除元素，但是如果集合中不存在元素会报错</p>
+<p>用discard方法删除元素，如果集合不存在元素也不会报错</p>
+<pre><code>set.discard(5)
+print(set)        //&#123;4, &#39;3&#39;, &#39;2&#39;, &#39;1&#39;&#125;</code></pre>
+<p>集合并交差补运算</p>
+<p>set1|set2: 并集<br>set1&amp;set2: 交集<br>set1-set2: 差集<br>set1^set2: 不同时属于set1和set2的</p>
+<ul>
+<li><h4 id="Dictionary-字典-："><a href="#Dictionary-字典-：" class="headerlink" title="Dictionary (字典)："></a>Dictionary (字典)：</h4></li>
+</ul>
+<p>python中字典用{}声明，键值对用:分隔，用{}声明空字典，字典值可修改</p>
+<pre><code>dict = &#123;&quot;1&quot;:1,&quot;2&quot;:2&#125;
+print(dict)    &#123;&#39;1&#39;: 1, &#39;2&#39;: 2&#125;
+print(dict[&quot;1&quot;])    // 1
+
+dict[&quot;1&quot;] = 100
+print(dict)    //&#123;&#39;1&#39;: 100, &#39;2&#39;: 2&#125;</code></pre>
+<p>字典中用update增加一个键值对</p>
+<pre><code>dict.update(&#123;&quot;3&quot;:3&#125;)
+print(dict)</code></pre>
+<p>pop(key)删除键为key的值</p>
+<pre><code>val = dict.pop(&quot;1&quot;)
+print(val)    //100</code></pre>
+<p>用popitem删除并返回最后一个键值对</p>
+<pre><code>d = dict.popitem();
+print(d)    //(&#39;3&#39;, 3)</code></pre>
+<h3 id="python函数"><a href="#python函数" class="headerlink" title="python函数"></a>python函数</h3><p>python中用def定义一个函数</p>
+<pre><code>def Method():
+print(&quot;难顶&quot;)
+Method()    //难顶</code></pre>
+<p><strong>函数参数：</strong></p>
+<p>函数参数中值得注意的是 <strong>关键字参数</strong> 、<strong>默认参数</strong> 、<strong>不定长参数</strong>、<strong>匿名函数</strong></p>
+<p><strong>关键字参数</strong><br>函数调用可以使用关键字参数来确定传入的参数值，使用关键字参数时允许参数顺序的不一致</p>
+<pre><code>def Method(name, age):
+print(name, age)
+
+Method(age=21, name=&quot;zl&quot;)        //zl 21</code></pre>
+<p><strong>默认参数</strong><br>函数中可以对参数设置默认值</p>
+<pre><code>def Method(name,age,address=&quot;guangdong&quot;):
+print(name, age,address)    //zl 21 guangdong
+Method(age=21, name=&quot;zl&quot;)</code></pre>
+<p><strong>不定长参数</strong><br>不定长参数中，用*导入一个元组，**导入一个字典</p>
+<pre><code>def Method(*tuple):
+print(tuple)
+Method(1,2,3,4,5,6,7)    //(1, 2, 3, 4, 5, 6, 7)
+
+def Method(**dict):
+print(dict)
+Method(a=1,b=2,c=3,d=4);    //&#123;&#39;a&#39;: 1, &#39;b&#39;: 2, &#39;c&#39;: 3, &#39;d&#39;: 4&#125;</code></pre>
+<p>不定长参数后的参数要以关键字参数的形式传入</p>
+<p><strong>匿名函数</strong><br>匿名函数中用lambda表达式创建一个匿名函数，表达式中会提供返回值</p>
+<pre><code>Method = lambda val1=1,val2=2:val1+val2
+print(Method())</code></pre>
+<h3 id="面向对象"><a href="#面向对象" class="headerlink" title="面向对象"></a>面向对象</h3><p>python类中不用像c++、java中声明属性，可以直接在构造方法def <strong>init</strong>(self)使用，属性或方法前加__代表私有，另外，在类中的任何方法都要在参数列表第一个加上self，类似c++、java的this关键字，而且新建对象不用使用new关键字 Aclass=Myclass()即可，继承则使用Aclass(Bclass)</p>
+<pre><code>class person:
+    name = &quot; &quot;
+    age = 0
+    sex = &quot; &quot;
+
+def __init__(self, name, age, sex):
+    self.name = name
+    self.age = age
+    self.sex = sex
+
+def show(self):
+    return (&quot;&#123;0&#125; is a &#123;1&#125; years old &#123;2&#125;&quot;.format(self.name, self.age, self.sex))
+
+class student(person):
+grade = &quot; &quot;
+
+def __init__(self, name, age, sex, grade):
+    person.__init__(self, name, age, sex)
+    self.grade = grade
+
+def show(self):
+    return person.show(self) + &quot; 大学 &#123;&#125; 年级&quot;.format(self.grade)
+
+def print(self):
+    print(person.show(self))
+    print(super().show())
+
+
+class graduate(student, person):
+    salary = 0
+
+def __init__(self, name, age, sex, grade, salary):
+    student.__init__(self, name, age, sex, grade)
+    self.salary = salary</code></pre>
+<h3 id="命名空间"><a href="#命名空间" class="headerlink" title="命名空间"></a>命名空间</h3><ul>
+<li>内置命名</li>
+<li>全局命名</li>
+<li>局部命名</li>
+</ul>
+<p>若要在方法或类中使用全局变量，使用global关键字</p>
+<pre><code>count = 1
+def change():
+    global count
+    print(count)
+    count = 100
+
+change()
+print(count)    //100</code></pre>
+<p>若要在嵌套方法中使用外层方法的局部变量，使用nonlocal关键字</p>
+<pre><code>def outer():
+    num = 10
+    def inner():
+        nonlocal num
+        print(num)    //10
+        num = &quot;str&quot;
+    inner()
+    print(num)    //str
+outer()</code></pre>
+]]></content>
+      <tags>
+        <tag>python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Spring简介</title>
+    <url>/2020/09/22/Spring/</url>
+    <content><![CDATA[<blockquote>
+</blockquote>
+<h2 id="一-什么是Spring"><a href="#一-什么是Spring" class="headerlink" title="一.什么是Spring"></a><strong>一.什么是Spring</strong></h2><p>Spring轻量级的java开发框架，它是为了解决企业应用开发的复杂性而创建的，Spring的核心是控制反转(IOC)和面向切面(AOP)。</p>
+<p>一句话概括就是 Spring是一个轻量级的、具有控制反转和面向切面的容器（框架）。</p>
+<h3 id="什么是IOC"><a href="#什么是IOC" class="headerlink" title="什么是IOC"></a><strong>什么是IOC</strong></h3><p>IOC的定义：所谓IOC，就是由Spring IOC容器来负责对象的生命周期和对象之间的关系。<br>在传统的开发模式下，我们在项目中都是使用new直接生成一个对象，也就是说我所需要的对象是由自己并控制的，但是有了IOC容器后我们所需要的对象由IOC容器负责管理，由原来的主动生成对象 -&gt; 由IOC容器生成对象 ，获得依赖对象的方式改变了，这就是控制反转。<br>在IOC中，通过以配置xml文件或是注解的方式将我们所需要的类和类的路径进行说明，然后在项目中通过<strong>上下文模块</strong>获取xml文件的路径，由IOC容器提供所需要的类<br><a href="https://zhuanlan.zhihu.com/p/64001753">IOC参考链接</a></p>
+<h3 id="什么是AOP"><a href="#什么是AOP" class="headerlink" title="什么是AOP"></a><strong>什么是AOP</strong></h3><p>AOP：Aspect Oriented Programming的缩写，意为：面向切面编程，通过预编译方式和运行期动态代理实现程序功能的统一维护和处理的一种技术。但如果我们在开发过程中多个模块间有某些功能相同的代码，但是模块间又不存在一种层次间的关系，这时候功能如果需要改变，那么需要对每个类进行改动，这是一个很大的工程，这时候怎么解决代码重复这样的问题呢？答案就是使用AOP，AOP技术利用一种称为“横切”的技术，解剖封装的对象内部，并将类间共同的行为封装到一个新的可重用模块中，减少重复代码，降低模块间的耦合度。</p>
+<h3 id="AOP的实现方式有："><a href="#AOP的实现方式有：" class="headerlink" title="AOP的实现方式有："></a>AOP的实现方式有：</h3><ul>
 <li>预编译：AspectJ</li>
 <li>运行期动态代理（JDK动态代理、CGLib动态代理）：SpringAOP、JbossAOP</li>
 </ul>
-<p>AOP的主要功能：</p>
-<ul>
+<h3 id="AOP的主要功能："><a href="#AOP的主要功能：" class="headerlink" title="AOP的主要功能："></a>AOP的主要功能：</h3><ul>
 <li>日志记录</li>
 <li>性能统计</li>
 <li>安全控制</li>
 <li>事务处理</li>
 <li>异常处理</li>
 </ul>
-<p>AOP的主要意图：</p>
-<p>将日志记录，性能统计，安全控制，事务处理，异常处理等代码从业务逻辑代码中划分出来，通过对这些行为的分离，我们希望可以将它们独立到非指导业务逻辑的方法中，进而改变这些行为的时候不影响业务逻辑的代码，使业务逻辑更加纯粹</p>
-<p>AOP中的相关概念：</p>
-<p><strong>专业的概念定义：</strong></p>
-<p>Aspect 声明类似于 Java 中的类声明，在 Aspect 中会包含着一些 Pointcut 以及相应的 Advice。</p>
-<p>Joint point（连接点）：表示在程序中明确定义的点，典型的包括方法调用，对类成员的访问以及异常处理程序块的执行等等，它自身还可以嵌套其它 joint point。</p>
-<p>Pointcut（切点）：表示一组 joint point，这些 joint point 或是通过逻辑关系组合起来，或是通过通配、正则表达式等方式集中起来，它定义了相应的 Advice 将要发生的地方。</p>
-<p>Advice（增强）：Advice 定义了在 Pointcut 里面定义的程序点具体要做的操作，它通过 before、after 和 around 来区别是在每个 joint point 之前、之后还是代替执行的代码。</p>
-<p>Introduction（引入）：在不修改类代码的前提下，为类添加新的方法和属性</p>
-<p>Target（目标对象）：织入 Advice 的目标对象。</p>
-<p>AOP Proxy（AOP代理） AOP框架创建的对象，用来实现切面契约</p>
-<p>Weaving（织入）：将 Aspect 和其他对象连接起来, 并创建 Adviced object 的过程</p>
-<p><strong>个人理解：</strong></p>
-<p>Joint point：是所有可能被织入到Advice中的点,一个类中所有的方法都是连接点</p>
-<p>Pointcut：提供一组规则，将符合规则的一组Joint point织入到Advice中</p>
-<p>Advice：Advice说明了Pointcut中Joint Point上将要执行的一些动作，即一串代码</p>
-<p>Aspect：切面是Advice和Pointcut的组合，描述了切点的行为</p>
-<p>AOP编程：</p>
-<p>1.定义被代理者（被代理的类）</p>
-<p>2.定义增强（切点几种执行状态中要做的动作）</p>
-<p>3.定义切入点（给定规则 （正则表达式、AspectJ表达式），找出切入点位置）</p>
-<p>4.定义切面（哪些切入点在执行过程中要做哪些动作 </p>
-<p>与业务模块无关，但是却为被有模块所共同使用的逻辑块</p>
-<p>5.设置代理 ：动态代理（代理接口）、CGLIB代理（代理具体类）<br>    配置被代理的对象<br>    配置切面<br>    配置被代理的接口</p>
+<h3 id="AOP的主要意图："><a href="#AOP的主要意图：" class="headerlink" title="AOP的主要意图："></a>AOP的主要意图：</h3><p>将日志记录，性能统计，安全控制，事务处理，异常处理等代码从业务逻辑代码中划分出来，通过对这些行为的分离，我们希望可以将它们独立到非指导业务逻辑的方法中，进而改变这些行为的时候不影响业务逻辑的代码，使业务逻辑更加纯粹</p>
+<h3 id="AOP中专业的概念定义："><a href="#AOP中专业的概念定义：" class="headerlink" title="AOP中专业的概念定义："></a><strong>AOP中专业的概念定义：</strong></h3><ul>
+<li><p>Aspect 声明类似于 Java 中的类声明，在 Aspect 中会包含着一些 Pointcut 以及相应的 Advice。 基于配置的切面只支持singleton模式</p>
+</li>
+<li><p>Joint point（连接点）：表示在程序中明确定义的点，典型的包括方法调用，对类成员的访问以及异常处理程序块的执行等等，它自身还可以嵌套其它 joint point。</p>
+</li>
+<li><p>Pointcut（切点）：表示一组 joint point，这些 joint point 或是通过逻辑关系组合起来，或是通过通配、正则表达式等方式集中起来，它定义了相应的 Advice 将要发生的地方。</p>
+</li>
+<li><p>Advice（增强）：Advice 定义了在 Pointcut 里面定义的程序点具体要做的操作，有before、after、after-returing、after-throwing、around五种增强。</p>
+</li>
+<li><p>Introduction（引入）：在不修改类代码的前提下，为类添加新的方法和属性。<br>允许一个切面声明一个实现指定接口的通知对象，并且提供了一个接口实现类来代表这些对象</p>
+</li>
+<li><p>Target（目标对象）：织入 Advice 的目标对象。</p>
+</li>
+<li><p>AOP Proxy（AOP代理） AOP框架创建的对象，用来实现切面契约</p>
+</li>
+<li><p>Weaving（织入）：将 Aspect 和其他对象连接起来, 并创建 Adviced object 的过程</p>
+</li>
+</ul>
+<h3 id="个人理解："><a href="#个人理解：" class="headerlink" title="个人理解："></a><strong>个人理解：</strong></h3><ul>
+<li><p>Joint point：是所有可能被织入到Advice中的点,一个类中所有的方法都是连接点</p>
+</li>
+<li><p>Pointcut：提供一组规则，将符合规则的一组Joint point织入到Advice中</p>
+</li>
+<li><p>Advice：Advice说明了Pointcut中Joint Point上将要执行的一些动作，即一串代码</p>
+</li>
+<li><p>Aspect：切面是Advice和Pointcut的组合，描述了切点的行为</p>
+</li>
+</ul>
+<h2 id="二-Spring的组成"><a href="#二-Spring的组成" class="headerlink" title="二.Spring的组成"></a><strong><em>二.Spring的组成</em></strong></h2><p><img src="/2020/09/22/Spring/SpringFramworkRuntime.png" alt="framework"></p>
+<p><a href="https://www.cnblogs.com/jpwz/p/10556012.html">参考链接</a></p>
+<p>spring由多个模块组成，下面介绍spring每个模块及其功能</p>
+<h3 id="Core-Container-核心容器"><a href="#Core-Container-核心容器" class="headerlink" title="Core Container 核心容器"></a><strong>Core Container 核心容器</strong></h3><p>Spring核心容器建立在Beans、Core、Context、SpEl模块之上</p>
+<p>Beans模块提供了BeanFactory，是工厂模式的一个经典体现，所有被Spring管理的对象都称为Beans</p>
+<p>Core模块提供了框架的基本组成部分，包括IOC和、DI（依赖注入）功能</p>
+<p>Context上下文模块建立在Beans和Core模块基础之上，提供了一个框架式的对象访问方式，是访问定义和配置中Beans对象的媒介，ApplicationContext接口通过xml文本的路径访问配置中的beans对象。</p>
+<p>SpEl是Spring表达式语言，它提供了强大的表达式语言去支持运行时查询和操作对象</p>
+<h3 id="面向切面编程模块"><a href="#面向切面编程模块" class="headerlink" title="面向切面编程模块"></a><strong>面向切面编程模块</strong></h3><p>AOP模块提供了符合AOP要求的面向切面编程的实现，允许定义方法拦截器和切入点，将代码按照功能进行分离，是纯Java实现</p>
+<p>Aspects模块提供了AspectJ的集成功能，AspectJ是一个基于Java语言的AOP框架</p>
+<p>Instrument模块提供了类植入支持和类加载器的实现，可在特定的应用服务器中使用</p>
+<h3 id="数据访问模块"><a href="#数据访问模块" class="headerlink" title="数据访问模块"></a><strong>数据访问模块</strong></h3><p>JDBC、DAO模块：JDBC模块是对JDBC的抽象，减少JDBC编程的代码量</p>
+<p>ORM模块：封装了大量的对象关系映射的API</p>
+<h3 id="Web模块"><a href="#Web模块" class="headerlink" title="Web模块"></a><strong>Web模块</strong></h3><p>WebSocket模块：提供WebScoket、SockJS的实现，以及对STOMP的支持</p>
+<p>Servlet模块：也称为Spring-webmvc模块，包含了Spring的MVC。</p>
+<p>Web模块：提供基本的Web开发集成特性，比如多文件上传功能、使用Servlet监听器来初始化Ioc容器以及Web应用上下文。</p>
+<p>Portlet模块：提供了对在Portlet环境中使用MVC的支持。</p>
+<!-- 底层是Spring的核心容器，包括Beans容器、上下文、Spring表达式和核心工具，是Spring框架最基本的支撑
+中间层是Spring的功能组件
+上层是Spring的具体使用 -->]]></content>
+      <tags>
+        <tag>Spring</tag>
+        <tag>IOC</tag>
+        <tag>AOP</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Spring AOP的两种实现方式（XML、AspectJ）</title>
+    <url>/2020/09/25/AOP/</url>
+    <content><![CDATA[<h2 id="基于XML配置的AOP实例："><a href="#基于XML配置的AOP实例：" class="headerlink" title="基于XML配置的AOP实例："></a>基于XML配置的AOP实例：</h2><p>要使用配置实现AOP编程，要在xml文件中使用<a href="aop:config">aop:config</a>来声明，这种声明方式使用了大量的自动代理方式<br><strong>注：环境可能会缺少必要的包，如aopalliance.jar、aspectweaver.jar</strong></p>
+<p>在<a href="aop:config">aop:config</a>中使用&lt;aop:aspect id=”” ref=””&gt;来配置一个切面，&lt;aop:pointcut id expression/&gt;来配置一个切入点，&lt;aop:before(or other) method=”” pointcut=””&gt;配置一个增强，这三个就组成了一个完整的切面</p>
+<p>下面介绍如何配置一个切面和切面中的几种增强</p>
+<p>定义一个业务类ServiceClass：</p>
+<pre><code>@Component
+public class ServiceClass &#123;
+    public void service()&#123;
+        System.out.println(&quot;this is service&quot;);
+    &#125;
+&#125;</code></pre>
+<p>定义一个MyAspect切面类，生成配置文件newcontext.xml，其中，MyAspect类使用Component注解配置</p>
+<h3 id="before"><a href="#before" class="headerlink" title="before"></a>before</h3><p><strong>before是业务方法执行前进行的操作</strong></p>
+<p>在切面类中添加before方法：</p>
+<pre><code>@Component
+public class MyAspect &#123;
+    public void before()&#123;
+        System.out.println(&quot;MyAspect&#39;s before&quot;);
+    &#125;
+&#125;</code></pre>
+<p>newcontext.xml文件：</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
+       xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+       xmlns:context=&quot;http://www.springframework.org/schema/context&quot;
+       xmlns:aop=&quot;http://www.springframework.org/schema/aop&quot;
+       xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd&quot;&gt;
+    &lt;context:component-scan base-package=&quot;demo&quot;&gt;&lt;/context:component-scan&gt;
+    &lt;aop:config&gt;
+        &lt;aop:aspect id=&quot;aspect&quot; ref=&quot;myAspect&quot;&gt;
+            &lt;aop:pointcut id=&quot;pointcut&quot; expression=&quot;execution(* newdemo.ServiceClass.*(..))&quot;/&gt;
+            &lt;aop:before method=&quot;before&quot; pointcut-ref=&quot;pointcut&quot;&gt;&lt;/aop:before&gt;
+        &lt;/aop:aspect&gt;
+    &lt;/aop:config&gt;
+&lt;/beans&gt;</code></pre>
+<p>其中，切点中的expression的含义为：切点为newdemo.ServiceClass这个包中的所有方法</p>
+<p>测试类：</p>
+<pre><code>public class TestClass &#123;
+    public static void main(String[] args) &#123;
+        ApplicationContext applicationContext = new ClassPathXmlApplicationContext(&quot;newcontext.xml&quot;);
+        ServiceClass serviceClass = (ServiceClass)applicationContext.getBean(&quot;serviceClass&quot;);
+        serviceClass.service();
+    &#125;
+&#125;</code></pre>
+<p>输出结果：</p>
+<p>MyAspect’s before<br>this is service</p>
+<h3 id="after"><a href="#after" class="headerlink" title="after"></a>after</h3><p><strong>业务方法执行完毕进行的操作，通常用于释放资源</strong></p>
+<p>在切面类中添加after方法：</p>
+<pre><code>public void after()&#123;
+        System.out.println(&quot;MyAspect&#39;s after&quot;);
+&#125;</code></pre>
+<p>添加配置：</p>
+<pre><code>&lt;aop:after method=&quot;after&quot; pointcut-ref=&quot;pointcut&quot;&gt;&lt;/aop:after&gt;</code></pre>
+<p>输出结果：</p>
+<p>MyAspect’s before<br>this is service<br>MyAspect’s after</p>
+<h3 id="after-returing"><a href="#after-returing" class="headerlink" title="after-returing"></a>after-returing</h3><p><strong>after-returing是业务方法返回前进行的操作</strong></p>
+<p>在切面类中添加after-returning方法：</p>
+<pre><code>public void afterReturning()&#123;
+        System.out.println(&quot;MyAspect&#39;s afterReturning&quot;);
+&#125;</code></pre>
+<p>添加配置：</p>
+<pre><code>&lt;aop:after-returning method=&quot;afterReturning&quot; pointcut-ref=&quot;pointcut&quot;&gt;&lt;/aop:after-returning&gt;</code></pre>
+<p>输出结果：</p>
+<p>MyAspect’s before<br>this is service<br>MyAspect’s after<br>MyAspect’s afterReturning</p>
+<h3 id="after-throwing"><a href="#after-throwing" class="headerlink" title="after-throwing"></a>after-throwing</h3><p><strong>after-throwing是业务方法抛出异常后进行的操作</strong></p>
+<p>切面类添加afterthrowing方法：</p>
+<pre><code>public void afterThrowing()&#123;
+    System.out.println(&quot;MyAspect&#39;s afterThrowing&quot;);
+&#125;</code></pre>
+<p>在业务类ServiceClass的service方法中抛出异常：</p>
+<pre><code>public void service() throws Exception&#123;
+    System.out.println(&quot;this is service&quot;);
+    throw new Exception();
+&#125;</code></pre>
+<p>添加配置：</p>
+<pre><code>&lt;aop:after-throwing method=&quot;afterThrowing&quot; pointcut-ref=&quot;pointcut&quot;&gt;&lt;/aop:after-throwing&gt;</code></pre>
+<p>测试类：</p>
+<pre><code>public class TestClass &#123;
+    public static void main(String[] args) &#123;
+        ApplicationContext applicationContext = new ClassPathXmlApplicationContext(&quot;newcontext.xml&quot;);
+        ServiceClass serviceClass = (ServiceClass)applicationContext.getBean(&quot;serviceClass&quot;);
+        try &#123;
+            serviceClass.service();
+        &#125;
+        catch (Exception e)&#123;
+        &#125;
+    &#125;
+&#125;</code></pre>
+<p>输出结果：</p>
+<p>MyAspect’s before<br>this is service<br>MyAspect’s after<br>MyAspect’s afterThrowing</p>
+<h3 id="around"><a href="#around" class="headerlink" title="around"></a>around</h3><p><strong>around：Advice最强操作，可以综合前面四种advice</strong></p>
+<p>around方法必须有Object返回值，且第一个形参必须为ProceedingJoinPoint类型，around既可以在执行业务方法之前增强动作，也能在执行业务方法之后进行增强的执行，around增强可以决定业务方法在什么时候执行，在around方法体内，只有调用ProceedingJoinPoint参数的procedd()方法才会执行业务方法</p>
+<p>在切面类中添加around方法：</p>
+<pre><code>public Object around(ProceedingJoinPoint pjp)&#123;
+    Object object = null;
+    try&#123;
+        object = pjp.proceed();
+        System.out.println(&quot;MyAspect&#39;s around&quot;);
+    &#125;
+    catch (Throwable throwable) &#123;
+
+    &#125;
+    return object;
+&#125;</code></pre>
+<p>添加配置：</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
+       xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+       xmlns:context=&quot;http://www.springframework.org/schema/context&quot;
+       xmlns:aop=&quot;http://www.springframework.org/schema/aop&quot;
+       xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd&quot;&gt;
+    &lt;context:component-scan base-package=&quot;newdemo&quot;&gt;&lt;/context:component-scan&gt;
+    &lt;aop:config&gt;
+        &lt;aop:aspect id=&quot;aspect&quot; ref=&quot;myAspect&quot;&gt;
+            &lt;aop:pointcut id=&quot;pointcut&quot; expression=&quot;execution(* newdemo.ServiceClass.*(..))&quot;/&gt;
+            &lt;aop:around method=&quot;around&quot; pointcut-ref=&quot;pointcut&quot;&gt;&lt;/aop:around&gt;
+        &lt;/aop:aspect&gt;
+    &lt;/aop:config&gt;
+&lt;/beans&gt;</code></pre>
+<p>测试类：</p>
+<pre><code>public class TestClass &#123;
+public static void main(String[] args) &#123;
+    ApplicationContext applicationContext = new ClassPathXmlApplicationContext(&quot;newcontext.xml&quot;);
+    ServiceClass serviceClass = (ServiceClass)applicationContext.getBean(&quot;serviceClass&quot;);
+    serviceClass.service();
+    &#125;
+&#125;</code></pre>
+<p>输出结果：</p>
+<p>this is service<br>MyAspect’s around</p>
+<p>改变around方法中两条语句的位置：</p>
+<pre><code>System.out.println(&quot;MyAspect&#39;s around&quot;);
+object = pjp.proceed();</code></pre>
+<p>输出结果：</p>
+<p>MyAspect’s around<br>this is service</p>
+<p>说明只有在执行ProceedingJoinPoint对象的proceed方法后，才会执行业务方法</p>
+<ul>
+<li>advice-parameters：可以往增强方法中传入业务方法中的参数，在切入点配置好参数类型和属性名即可</li>
+</ul>
+<p><strong>下面用around来模拟前面的advice</strong></p>
+<p>切面类：</p>
+<pre><code>@Component
+public class MyAspect &#123;
+    public Object around(ProceedingJoinPoint pjp)&#123;
+        Object object = null;
+        System.out.println(&quot;before&quot;);       //此时还未执行pjp的proceed方法，业务方法不会执行，所以相当于实现advice增强
+        try&#123;
+            object = pjp.proceed();
+        &#125;
+        catch (Throwable throwable) &#123;       //pjp.proceed()方法若捕捉异常，则说明业务方法会抛出一个异常
+        &#125;
+        finally &#123;
+            System.out.println(&quot;after&quot;);    //此时捕捉异常，业务方法执行完毕，所以相当于实现after增强
+        &#125;
+        System.out.println(&quot;after throwing&quot;);   //这就模拟after-throwing增强
+        return object;
+    &#125;
+&#125;</code></pre>
+<p>配置：</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
+       xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+       xmlns:context=&quot;http://www.springframework.org/schema/context&quot;
+       xmlns:aop=&quot;http://www.springframework.org/schema/aop&quot;
+       xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd&quot;&gt;
+    &lt;context:component-scan base-package=&quot;newdemo&quot;&gt;&lt;/context:component-scan&gt;
+    &lt;aop:config&gt;
+        &lt;aop:aspect id=&quot;aspect&quot; ref=&quot;myAspect&quot;&gt;
+            &lt;aop:pointcut id=&quot;pointcut&quot; expression=&quot;execution(* newdemo.ServiceClass.*(..))&quot;/&gt;
+            &lt;aop:around method=&quot;around&quot; pointcut-ref=&quot;pointcut&quot;&gt;&lt;/aop:around&gt;
+        &lt;/aop:aspect&gt;
+    &lt;/aop:config&gt;
+&lt;/beans&gt;</code></pre>
+<p>测试类：</p>
+<pre><code>public class TestClass &#123;
+    public static void main(String[] args) &#123;
+        ApplicationContext applicationContext = new ClassPathXmlApplicationContext(&quot;newcontext.xml&quot;);
+        ServiceClass serviceClass = (ServiceClass)applicationContext.getBean(&quot;serviceClass&quot;);
+        try &#123;
+            serviceClass.service();
+        &#125;
+        catch (Exception e)&#123;
+        &#125;
+    &#125;
+&#125;</code></pre>
+<p>输出结果：</p>
+<p>before<br>this is service<br>after<br>after throwing</p>
+<h3 id="advice-parameters"><a href="#advice-parameters" class="headerlink" title="advice-parameters"></a>advice-parameters</h3><p>在pointcut的expression中指定方法参数，可以获取业务方法中的参数，从而使增强方法中能使用这些参数</p>
+<p>ServiceClass类：</p>
+<pre><code>@Component
+public class ServiceClass &#123;
+    public void parametersService(String name,int age)&#123;
+        System.out.println(&quot;parametersService&#39;s&quot;+name+&quot; &quot;+age);
+    &#125;
+&#125;</code></pre>
+<p>切面类中添加ParametersMethod方法：</p>
+<pre><code>public void ParametersMethod(String name,int age)&#123;
+    System.out.println(&quot;ParametersMethod&#39;s&quot;+name+&quot; &quot;+age);
+&#125;</code></pre>
+<p>添加配置：</p>
+<pre><code>&lt;aop:before method=&quot;ParametersMethod&quot; pointcut=&quot;execution(* newdemo.ServiceClass.parametersService(String,int)) and args(name,age)&quot;&gt;&lt;/aop:before&gt;</code></pre>
+<p>测试：</p>
+<pre><code>public class TestClass &#123;
+    public static void main(String[] args) &#123;
+        ApplicationContext applicationContext = new ClassPathXmlApplicationContext(&quot;newcontext.xml&quot;);
+        ServiceClass serviceClass = (ServiceClass)applicationContext.getBean(&quot;serviceClass&quot;);
+        serviceClass.parametersService(&quot;zzzz&quot;,21);
+    &#125;
+&#125;</code></pre>
+<p>输出结果</p>
+<p>ParametersMethod’szzzz 21<br>parametersService’szzzz 21</p>
+<h3 id="Introduction-引入"><a href="#Introduction-引入" class="headerlink" title="Introduction 引入"></a>Introduction 引入</h3><p>Introduction允许将一个切面声明一个实现指定接口的通知对象，并且提供了一个接口实现类来代表这些对象</p>
+<p>由 &lt;aop: declare-parents&gt;元素声明 </p>
+<p>定义一个MyInterface接口</p>
+<pre><code>public interface MyInterface &#123;
+    public void show();
+&#125;</code></pre>
+<p>接口实现类MyInterfaceImpl</p>
+<pre><code>public class MyInterfaceImpl implements MyInterface&#123;
+    @Override
+    public void show() &#123;
+        System.out.println(&quot;this is my interface&quot;);
+    &#125;
+&#125;</code></pre>
+<p>添加配置：</p>
+<pre><code>aop:declare-parents types-matching=&quot;newdemo.ServiceClass&quot; implement-interface=&quot;newdemo.MyInterface&quot;
+                             default-impl=&quot;newdemo.MyInterfaceImpl&quot;&gt;&lt;/aop:declare-parents&gt;</code></pre>
+<p>测试类：</p>
+<pre><code>public class TestClass &#123;
+    public static void main(String[] args) &#123;
+        ApplicationContext applicationContext = new ClassPathXmlApplicationContext(&quot;newcontext.xml&quot;);
+        MyInterface myInterface = (MyInterface)applicationContext.getBean(&quot;serviceClass&quot;);
+        myInterface.show();
+    &#125;
+&#125;</code></pre>
+<p>输出结果：</p>
+<p>this is my interface</p>
+<p>introduction的作用是强行为ServiceClass添加一个父类，即MyInterface接口，由ServiceClass作为接口的实现类</p>
+<h2 id="基于-AspectJ注解的AOP实例"><a href="#基于-AspectJ注解的AOP实例" class="headerlink" title="基于@AspectJ注解的AOP实例"></a>基于@AspectJ注解的AOP实例</h2><p>@AspectJ是预编译的AOP实现方式，@AspecJ的风格类似纯java注解的普通java类，@AspectJ是指明aspects的另一种风格，像基于注解的IOC一样，基于注解的配置能让开发变得更加方便。</p>
+<p>对@AspectJ的支持可以使用XML或java注释风格的配置，两种方法的作用是一样的</p>
+<ul>
+<li><p>使用XMl，要在配置文件中加上</p>
+<p>  &lt;aop: aspectj-autoproxy&gt;&lt;/aop: aspectj-autoproxy&gt;</p>
+</li>
+<li><p>java注释风格的配置</p>
+</li>
+</ul>
+<p>在切面类中添加注释</p>
+<pre><code>@Configuration
+@EnableAspectJAutoProxy</code></pre>
+<p><strong>下面使用XML文件配置的方式。</strong></p>
+<p>实现一个业务类ServiceCLass</p>
+<pre><code>public class ServiceCLass &#123;
+        public void service()&#123;
+        System.out.println(&quot;service&quot;);
+    &#125;
+&#125;</code></pre>
+<p>生成配置文件AspectJContext.xml：</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
+       xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+       xmlns:context=&quot;http://www.springframework.org/schema/context&quot;
+       xmlns:aop=&quot;http://www.springframework.org/schema/aop&quot;
+       xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd&quot;&gt;
+
+    &lt;context:component-scan base-package=&quot;NewAspectJ&quot;&gt;&lt;/context:component-scan&gt;
+    &lt;aop:aspectj-autoproxy&gt;&lt;/aop:aspectj-autoproxy&gt;
+&lt;/beans&gt;</code></pre>
+<h3 id="Aspect"><a href="#Aspect" class="headerlink" title="@Aspect"></a>@Aspect</h3><p>拥有@Aspect的任何bean都会被Spring自动识别并应用</p>
+<p>用@Aspect注解的类可以有字段和方法，也可以有切入点、通知、引入等</p>
+<p>@Aspect要和@Component一起使用，@Component是自动配置一个bean，而@Aspect是自动将这个bean配置为切面（或者在XML中手动配置bean）</p>
+<p>定义切面类：</p>
+<pre><code>@Component
+@Aspect
+public class MyAspect &#123;
+&#125;</code></pre>
+<h3 id="Pointcut"><a href="#Pointcut" class="headerlink" title="@Pointcut"></a>@Pointcut</h3><p>@Pointcut = 表达式+签名</p>
+<p><strong>@Pointcut的表达式标签有10中：</strong></p>
+<ul>
+<li>execution：用于匹配方法执行的连接点</li>
+<li>within：用于匹配指定类型内的方法执行</li>
+<li>this：用于匹配当前AOP代理对象类型的执行方法；注意是AOP代理对象的类型匹配，这样就可能包括引入接口也类型匹配</li>
+<li>target：用于匹配当前目标对象类型的执行方法；注意是目标对象的类型匹配，这样就不包括引入接口也类型匹配</li>
+<li>args：用于匹配当前执行的方法传入的参数为指定类型的执行方法</li>
+<li>@within：用于匹配所以持有指定注解类型内的方法</li>
+<li>@target：用于匹配当前目标对象类型的执行方法，其中目标对象持有指定的注解</li>
+<li>@args：用于匹配当前执行的方法传入的参数持有指定注解的执行</li>
+<li>@annotation：用于匹配当前执行方法持有指定注解的方法</li>
+<li>bean：SpringAOP扩展的，AspectJ没有对于指示符，用于匹配特定名称的Bean对象的执行方法</li>
+</ul>
+<p>切入点使用@Pointcut对方法进行注解，方法返回类型必须为void，@Pointcut实际上是将方法名作为切入点的一个签名，即方法名=切入点id</p>
+<p>在切面类中添加pointcut签名</p>
+<pre><code>@Component
+@Aspect
+public class MyAspect &#123;
+
+    @Pointcut(&quot;execution(* NewAspectJ.ServiceCLass.service(..))&quot;)
+    public void pointcut()&#123;&#125;
+
+&#125;</code></pre>
+<p>等效于在配置文件中的</p>
+<pre><code>&lt;aop:pointcut id=&quot;pointcut&quot; expression=&quot;execution(* NewAspectJ.ServiceCLass.service(..))&quot;/&gt;</code></pre>
+<p>Pointcut定义时，还可以使用&amp;&amp;、||、！这三种运算</p>
+<pre><code>@Pointcut(&quot;within(NewAspectJ.ServiceCLass)&quot;)
+public void pointcut1()&#123;&#125;
+@Pointcut(&quot;execution(public * *(..))&quot;)
+public void pointcut2()&#123;&#125;
+@Pointcut(&quot;pointcut1()&amp;&amp;pointcut2()&quot;)
+public void pointcut3()&#123;&#125;</code></pre>
+<p>pointcut3表示切点为NewAspect.ServiceClass类中的所有public方法</p>
+<h3 id="Adivce"><a href="#Adivce" class="headerlink" title="@Adivce"></a>@Adivce</h3><ul>
+<li>@Before</li>
+</ul>
+<p>在切面类中添加before方法：</p>
+<pre><code>@Before(&quot;pointcut()&quot;)
+public void before()&#123;
+    System.out.println(&quot;before&quot;);
+&#125;</code></pre>
+<p>等效于在配置文件中的：</p>
+<pre><code>&lt;aop:before method=&quot;before&quot; pointcut-ref=&quot;pointcut&quot;&gt;&lt;/aop:before&gt;</code></pre>
+<p>在测试类TestClass中测试，输出</p>
+<p>before<br>service</p>
+<p>其他advice同理</p>
+<ul>
+<li>@AfterReturning</li>
+</ul>
+<p>有时候需要在通知体内得到返回的实际值，可使用@AfterReturning绑定返回值的形式</p>
+<p>在业务类中添加serviceResult方法，用于返回result值</p>
+<pre><code>public String serviceResult()&#123;
+    return &quot;success&quot;;
+&#125;</code></pre>
+<p>在切面类中添加新的切点</p>
+<pre><code>@Pointcut(&quot;execution(* NewAspectJ.ServiceClass.serviceResult(..))&quot;)
+public void pointcut4()&#123;&#125;</code></pre>
+<p>切面类中添加AfterReturning方法</p>
+<pre><code>@AfterReturning(&quot;pointcut4(),returning = &quot;Result&quot;&quot;)
+public void AfterReturning(String Result)&#123;
+    System.out.println(&quot;AfterReturning &#39;s &quot; + Result);
+&#125;</code></pre>
+<p>输出结果：</p>
+<pre><code>AfterReturning &#39;s success</code></pre>
+<ul>
+<li>@AfterThrowing</li>
+</ul>
+<p>有时候需要在通知体内得到抛出的异常，可使用像@AfterReturning那样的绑定返回值的形式</p>
+<p>在service方法中抛出异常</p>
+<pre><code>public void service() throws Exception&#123;
+        System.out.println(&quot;service&quot;);
+        throw new Exception(&quot;failed&quot;);
+&#125;</code></pre>
+<p>切面类添加AfterThrowing方法</p>
+<pre><code>@AfterThrowing(value = &quot;pointcut()&quot;,throwing = &quot;e&quot;)
+public void AfterThrowing(Exception e)&#123;
+    System.out.println(e.getMessage());
+&#125;</code></pre>
+<p>结果：</p>
+<pre><code>before
+service
+failed</code></pre>
+<ul>
+<li><p>@After<br>与aop::after相同</p>
+</li>
+<li><p>@Around<br>与aop:around相同</p>
+</li>
+<li><p>@给advice传递参数</p>
+</li>
+</ul>
+<p>在advice中使用advice(pointcut&amp;&amp;args)的方式将参数传给advice，若有重载方法，则会自动根据参数匹配</p>
+<p>也可以使用Around中的ProceedingJoinPoint对象的getArgs方法返回参数数组</p>
+<p>业务类中重载service方法：</p>
+<pre><code>public void service(String users,String passwords)&#123;
+    System.out.println(&quot;service &#39;s &quot; + users + &quot; &quot;+passwords);
+&#125;</code></pre>
+<p>切面类实现around的advice：</p>
+<pre><code>@Around(&quot;pointcut()&amp;&amp;args(users,passwords)&quot;)
+public Object Around(ProceedingJoinPoint pjp,String users,String passwords)&#123;
+    Object object = null;
+    System.out.println(&quot;Around&#39;s &quot; + users +&quot; &quot; + passwords);
+    try&#123;
+        object = pjp.proceed();
+        Object[] objects = pjp.getArgs();
+        System.out.println(&quot;也可以通过pjp.getArgs()获得参数&quot;);
+        System.out.println(Arrays.toString(objects));
+    &#125;
+    catch (Throwable e)&#123;
+
+    &#125;
+    return object;
+&#125;</code></pre>
+<p>测试结果：</p>
+<p>Around’s 123 123<br>before<br>service ‘s 123 123<br>也可以通过pjp.getArgs()获得参数<br>[123, 123]</p>
+<!-- ## 基于动态代理的AOP实例 -->
+<!-- 1.定义被代理者（被代理的类）
+
+2.定义增强（切点几种执行状态中要做的动作）
+
+3.定义切入点（给定规则 （正则表达式、AspectJ表达式），找出切入点位置）
+
+4.定义切面（哪些切入点在执行过程中要做哪些动作 
+
+与业务模块无关，但是却为被有模块所共同使用的逻辑块
+
+5.设置代理 ：动态代理（代理接口）、CGLIB代理（代理具体类）
+    配置被代理的对象
+    配置切面
+    配置被代理的接口 -->
 ]]></content>
       <tags>
         <tag>Spring</tag>
+        <tag>AOP</tag>
       </tags>
   </entry>
   <entry>
@@ -837,560 +1798,6 @@ public void setPersonalInfo(PersonalInfo personalInfo) &#123;
 <p>输出</p>
 <p>zllll 2111</p>
 ]]></content>
-      <tags>
-        <tag>Spring</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Java之Stream流</title>
-    <url>/2020/09/22/JavaStream/</url>
-    <content><![CDATA[<p>今天在写java实验的过程中，想用Stream流省事时，却发现自己对Stream流有点生疏了，所以特地翻开以前写的Stream流的demo记录下来，以便加深印象。</p>
-<blockquote>
-</blockquote>
-<h2 id="一-什么是Java-Stream流"><a href="#一-什么是Java-Stream流" class="headerlink" title="一.什么是Java Stream流"></a><strong><em>一.什么是Java Stream流</em></strong></h2><p>Stream流是java8 API中添加的一个新的抽象，它使用一种类似SQL语句从数据库查询数据的直观方式来提供一种对Java集合运算和表达的抽象。</p>
-<p>它将要处理的元素集合看作一种流，流在管道中传输，并且可以在管道上进行对集合的处理，比如对集合就行筛选过滤、排序（自定义或是默认）、聚合等操作。</p>
-<p>Stream流的处理中，元素在管道中经过中间操作的处理，最后由最终操作得到前面处理的结果。</p>
-<blockquote>
-</blockquote>
-<h2 id="二-Stream流的特点"><a href="#二-Stream流的特点" class="headerlink" title="二.Stream流的特点"></a><strong><em>二.Stream流的特点</em></strong></h2><p>1.Stream流不是数据结构，它不会保存数据，流可以是一个泛型。</p>
-<p>2.可以对集合、数组进行连续的操作。</p>
-<p>3.Stream流的数据源可以有集合、数组等。</p>
-<p>4.它不会修改原来的数据源，它会将操作后的数据保存到另外一个对象中。</p>
-<p>5.Stream是惰性求值，流在中间处理过程中，只是对操作进行了记录，并不会立即执行，需要等到执行终止操作的时候才会进行实际的计算。</p>
-<blockquote>
-</blockquote>
-<h2 id="三-为什么要使用Stream流"><a href="#三-为什么要使用Stream流" class="headerlink" title="三.为什么要使用Stream流"></a><strong><em>三.为什么要使用Stream流</em></strong></h2><p>Stream API 可以极大提高程序员的生产力，让程序员以一种声明的方式处理数据，一行代码对集合进行多种操作，让我们写出更高效、简洁、有效率的代码。</p>
-<blockquote>
-</blockquote>
-<h2 id="四-Stream流的用法"><a href="#四-Stream流的用法" class="headerlink" title="四.Stream流的用法"></a><strong><em>四.Stream流的用法</em></strong></h2><p><strong>另外，在使用流的时候，先不要重复使用同一个流，后面会讲到原因</strong></p>
-<h3 id="1-流的创建"><a href="#1-流的创建" class="headerlink" title="1.流的创建"></a><strong>1.流的创建</strong></h3><p>对于集合，流的创建通常使用 集合.stream() 来创建一个流，如：</p>
-<pre><code>List&lt;String&gt; list = new ArrayList&lt;&gt;();
-Stream&lt;String&gt; stream = list.stream();</code></pre>
-<p>对于数组，通常使用集合的工具类 Arrays.stream() 、将数组转换为集合List 又或是Stream.of(array) 来创建一个流，如：</p>
-<pre><code>String[] strs = new String[10];
-Stream&lt;String&gt; stream = Arrays.stream(strs);
-
-Stream&lt;String&gt; stream = Arrays.asList(strs).stream();
-
-Stream&lt;String&gt; stream = Stream.of(1,2,3,4,6);</code></pre>
-<p>将字符串分隔成流：</p>
-<pre><code>String newstr = &quot;123,456,789&quot;;
-Pattern pattern = Pattern.compile(&quot;,&quot;);
-Stream&lt;String&gt; spiltStream = pattern.splitAsStream(newstr);
-splitStream.sorted.forEach(v-&gt;System.out.println(v));            // 输出：123 456 789 </code></pre>
-<hr>
-<h3 id="2-流的中间操作"><a href="#2-流的中间操作" class="headerlink" title="2.流的中间操作"></a><strong>2.流的中间操作</strong></h3><p>定义一个整形数组</p>
-<pre><code>Integer[] integers = &#123;1,23,4,5,6,7,3,3,23,6,8,93,2,4,5&#125;;</code></pre>
-<p>以下流的操作均以此数组为例</p>
-<p><strong>forEach循环：</strong></p>
-<p>使用forEach()方法可以循环输出流</p>
-<pre><code>Stream.of(integers).forEach(v-&gt;System.out.println(v)); // 循环输出整形数组</code></pre>
-<p><strong>筛选：</strong></p>
-<p>使用Stream流中的filter()方法可以过滤某些元素，如：</p>
-<pre><code>Stream&lt;Integer&gt; stream1 = Stream.of(integers);
-stream1.filter(v-&gt;v&gt;20).forEach(v-&gt;System.out.println(v));    //23,23,93</code></pre>
-<p><strong>获取n个元素：</strong></p>
-<p>使用limit(n)方法可以获取流中n个元素，顺序为从 0 – n-1，如：</p>
-<pre><code>Stream.of(integers).limit(5).forEach(v-&gt;System.out.println(v));    //1,23,4,5,6</code></pre>
-<p><strong>跳过前n个元素</strong></p>
-<p>使用skip(n)方法可以跳过流中前n个元素，如：</p>
-<pre><code>Stream.of(integers).skip(7).forEach(v-&gt;System.out.println(v));    //8,93,2,4,5</code></pre>
-<p><strong>去除重复元素</strong></p>
-<p>使用distinct()方法可以去除流中重复元素（使用hashcode（）和equals（）实现）</p>
-<pre><code>Stream.of(integers).distinct().forEach(v-&gt;System.out.println(v));    //1,23,4,5,6,7,3,8,93,2</code></pre>
-<p><strong>生成映射</strong></p>
-<p>map()方法接受一个lambda表达式，该函数会被应用到每个元素上，并映射成一个新的元素</p>
-<pre><code>Stream.of(integers).filter(i-&gt;i&gt;20).distinct().map(v-&gt;v*=2).forEach(v-&gt;System.out.println(v));        //46,186</code></pre>
-<p><strong>排序</strong></p>
-<p>sorted()方法可以进行默认排序，流中元素需要实s现Comparable接口</p>
-<p>sorted(Comparator cmp) 方法中传入一个实现Comparator接口的实现类，可以实现自定义排序</p>
-<pre><code>Stream.of(integers).sorted().filter(i-&gt;i&gt;20).forEach(v-&gt;System.out.println(v))         // 23,23,93
-
-Stream.of(integers).sorted(
-        new Comparator&lt;Integer&gt;() &#123;
-        public int compare(Integer o1, Integer o2) &#123;
-            return o2-o1;
-        &#125;
-    &#125;
-    ).filter(i-&gt;i&gt;20).forEach(v-&gt;System.out.println(v))    // 93,23,23</code></pre>
-<p><strong>消费方法</strong></p>
-<p><del>待续</del></p>
-<hr>
-<h3 id="3-流的终止操作"><a href="#3-流的终止操作" class="headerlink" title="3.流的终止操作"></a><strong>3.流的终止操作</strong></h3><p><strong>前面说过不要重复使用一个流，因为流的终止操作会将流关闭，关闭流后就不能继续使用这个流，如果继续使用流则会出现异常</strong></p>
-<p>流的终止操作有：匹配、聚合、收集</p>
-<hr>
-<p><strong>匹配</strong></p>
-<p>匹配操作是判断元素在流中的存在关系</p>
-<pre><code>Stream&lt;Integer&gt; stream = Stream.of(integers);
-boolean bool1 = stream.allMatch(v-&gt;v&gt;5);    //false
-boolean bool2 = stream.allMatch(v-&gt;v&gt;10);    //此时会出现异常，因为执行了流的终止操作。
-
-boolean allMatch = Stream.of(integers).allMatch(v-&gt;v&gt;5);
-System.out.println(allMatch);    //判断流中所有元素是否符合某种关系
-
-boolean nonMatch = Stream.of(integers).noneMatch(v-&gt;v&gt;100);
-System.out.println(nonMatch);    //判断流中所有元素是否不符合某种关系
-
-boolean anyMatch = Stream.of(integers).anyMatch(v-&gt;v&gt;90);
-System.out.println(anyMatch);    //判断是否有元素符合
-
-int res = Stream.of(integers).findFirst().get();
-System.out.println(res);        //返回流中第一个元素
-
-int any = Stream.of(integers).findAny().get();
-System.out.println(any);        //随机返回一个元素</code></pre>
-<hr>
-<p><strong>聚合</strong></p>
-<p>聚合操作有：返回流中元素个数、最大值、最小值。</p>
-<pre><code>long count = Stream.of(integers).count();    //返回long型
-
-int maxElement = Stream.of(integers).max(Integer::compareTo).get();
-
-int minElement = Stream.of(integers).min(Integer::compareTo).get();</code></pre>
-<hr>
-<p><strong>收集</strong></p>
-<p>收集操作可以将流中的元素包装成一个最终结果集：List、map、set等，如：</p>
-<pre><code>其中 collect 接受一个Collector实例，可将元素收集成另外一个数据结构
-
-Set&lt;Integer&gt; set = Stream.of(integers).collect(Collectors.toSet());    //[1, 2, 3, 4, 5, 6, 23, 7, 8, 93]
-
-List&lt;Integer&gt; list = Stream.of(integers).collect(Collectors.toList());        //[1, 23, 4, 5, 6, 7, 3, 3, 23, 6, 8, 93, 2, 4, 5]
-
-Map&lt;Integer,Integer&gt; map = Stream.of(integers).distinct().filter(v-&gt;v&gt;20).collect(Collectors.toMap(Integer::intValue,Integer::intValue));    //&#123;23=23, 93=93&#125;</code></pre>
-<p>收集操作中求最大、最小、求和、平均值：</p>
-<pre><code>int max = Stream.of(integers).collect(Collectors.maxBy(Integer::compare)).get();
-
-int min = Stream.of(integers).collect(Collectors.minBy(Integer::compare)).get();
-
-double average = Stream.of(integers).collect(Collectors.averagingDouble(Integer::intValue));
-
-int sum = Stream.of(integers).collect(Collectors.summarizingInt(Integer::intValue));</code></pre>
-<p>以下方法可以集以上四种操作于一身：</p>
-<pre><code>IntSummaryStatistics sta = Stream.of(integers).collect(Collectors.summarizingInt(Integer::intValue));
-int max = sta.getMax();
-int min = sta.getMin();
-double average = sta.getAverage();
-long count = sta.getCount();
-long sum = sta.getSum();</code></pre>
-<hr>
-<p><strong>分组</strong></p>
-<p>分组操作将流中相同元素归为一组</p>
-<pre><code>Map&lt;Integer,List&lt;Integer&gt;&gt; map = Stream.of(integers).distinct().collect(Collectors.groupingBy(Integer::intValue));        //&#123;1=[1], 2=[2], 3=[3], 4=[4], 5=[5], 6=[6], 7=[7], 23=[23], 8=[8], 93=[93]&#125;</code></pre>
-<hr>
-<p><strong>分区</strong></p>
-<p>分区操作中，设置条件将流中元素分成两组，满足条件的为true，不满足的为false</p>
-<pre><code>Map&lt;Boolean,List&lt;Integer&gt;&gt; newmap = Stream.of(integers).distinct().collect(Collectors.partitioningBy(v-&gt;v&gt;20));
-
-    System.out.println(newmap);
-
-    System.out.println(newmap.get(true));</code></pre>
-<p>使用newmap.get(true)访问满足条件的元素。</p>
-]]></content>
-      <tags>
-        <tag>JavaStream流</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>MarkDown入门</title>
-    <url>/2020/09/21/MarkDown/</url>
-    <content><![CDATA[<p>MarkDown 是一种轻量级标记语言，它允许我们使用易读易写的纯文本格式编写文档，目前许多网站都在广泛使用MarkDown来撰写文章或是在论坛发表文章，当然用Hexo+github搭建的个人博客中也支持使用MarkDown来撰写文章，为了更好地搭建个人博客，我们有必要使用MarkDown来帮助我们来编写格式更好的文章。</p>
-<hr>
-<h3 id="一-标题"><a href="#一-标题" class="headerlink" title="一.标题"></a><strong><em>一.标题</em></strong></h3><p>标题使用#号标记</p>
-<p>一个#是一级标题，二个#是二级标题，以此类推。支持六级标题。</p>
-<h1 id="这是一级标题"><a href="#这是一级标题" class="headerlink" title="这是一级标题"></a>这是一级标题</h1><h2 id="这是二级标题"><a href="#这是二级标题" class="headerlink" title="这是二级标题"></a>这是二级标题</h2><h3 id="这是三级标题"><a href="#这是三级标题" class="headerlink" title="这是三级标题"></a>这是三级标题</h3><p><strong>注：#后面要有空格，不然无法正确显示</strong></p>
-<hr>
-<h3 id="二-段落格式"><a href="#二-段落格式" class="headerlink" title="二.段落格式"></a><strong><em>二.段落格式</em></strong></h3><p>MarkDown可以使用三种字体：斜体、加粗、斜体加粗。</p>
-<p>斜体：在文字两端各加一个*</p>
-<p><em>这是斜体</em></p>
-<p>粗体：在文字两端各加两个*</p>
-<p><strong>这是粗体</strong></p>
-<p>斜体加粗：在文字两端各加三个***</p>
-<p><strong><em>这是斜体加粗</em></strong></p>
-<hr>
-<p>分割线使用 — 来建立分割线</p>
-<hr>
-<p>文字两端使用 ～～ 来使文字变成删除格式</p>
-<p><del>这是文字的删除格式</del></p>
-<p><strong>注：～～必须是英文的～</strong></p>
-<hr>
-<p>下划线是通过html的 u 标签来实现的，在文字两端加上即可</p>
-<p><u>这是下划线</u></p>
-<hr>
-<h3 id="三-列表"><a href="#三-列表" class="headerlink" title="三.列表"></a><strong><em>三.列表</em></strong></h3><p>列表分为 <u>有序列表</u> 和 <u>无序列表</u></p>
-<p><strong>无序列表</strong>使用 *、+、- 作为列表标记</p>
-<ul>
-<li>第一项</li>
-<li>第二项</li>
-<li>第三项</li>
-</ul>
-<p><strong>有序列表</strong>使用 1. 2. 3.标记</p>
-<p>1.第一项<br>2.第二项<br>3.第三项</p>
-<p><strong><em>列表嵌套</em></strong></p>
-<p>第二层为第一层换行后加一个tab</p>
-<ul>
-<li>第一层<ul>
-<li>第二层<ul>
-<li>第三层 <ul>
-<li>第四层</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<hr>
-<p><strong><em>区块引用和嵌套</em></strong></p>
-<p>区块引用：在段落开头使用 &gt; 符号，后面跟一个空格</p>
-<blockquote>
-<p>这是区块一</p>
-</blockquote>
-<blockquote>
-<p>这是区块二</p>
-</blockquote>
-<p>区块嵌套：一个&gt;是最外层，两个是第一层嵌套，以此类推</p>
-<blockquote>
-<p>父亲</p>
-<blockquote>
-<p>儿子</p>
-<blockquote>
-<p>孙子</p>
-</blockquote>
-</blockquote>
-</blockquote>
-<p><strong><em>注：区块嵌套中&gt;也要隔一个空格</em></strong></p>
-<hr>
-<h3 id="四-链接和图片"><a href="#四-链接和图片" class="headerlink" title="四.链接和图片"></a><strong><em>四.链接和图片</em></strong></h3><p>链接使用：<a href="%E9%93%BE%E6%8E%A5%E5%9C%B0%E5%9D%80">链接名称</a></p>
-<p>如：<a href="https://zleo-bug.github.io/">zleo的博客</a>    </p>
-<p>图片使用：图片的使用和链接使用一样</p>
-<p>如：<a href="http://static.runoob.com/images/runoob-logo.png">菜鸟教程</a></p>
-<p>若使用本地图片，则链接为 在与本md文件同名的文件夹中的图片名称，本文的文件名为MarkDown，则链接为MarkDown图片的名称</p>
-<p><img src="/2020/09/21/MarkDown/f4131bc77889e084f2b3648261cc43df.jpg" alt="图片"></p>
-<p>MarkDown还不支持指定图片的高度和大小，若有需要可以使用html的img标签</p>
-<hr>
-<h3 id="五-表格"><a href="#五-表格" class="headerlink" title="五.表格"></a><strong><em>五.表格</em></strong></h3><p>MarkDown中用|分隔不同单元格，用-来分隔表头和其他行</p>
-<p>如：</p>
-<table>
-<thead>
-<tr>
-<th>表头&emsp;</th>
-<th>表头&emsp;</th>
-<th>表头</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>内容</td>
-<td>内容</td>
-<td>内容</td>
-</tr>
-</tbody></table>
-<br>
-表格中默认为向左看齐
-
-<p>向右看齐：右边加 :</p>
-<p>文字居中：两边加 :</p>
-<p><strong><em>注：&amp;emsp; 表示两个空格</em></strong></p>
-<hr>
-<h3 id="六-代码块"><a href="#六-代码块" class="headerlink" title="六.代码块"></a><strong><em>六.代码块</em></strong></h3><p>如果是段落上的一个函数或者是片段代码可以用反引号包起来</p>
-<p>如：<code>printf()</code> 函数</p>
-<p>如果是一个代码块，则全选代码块加一个tab即可</p>
-<pre><code>#include&lt;stdio.h&gt;
-#include&lt;iostream&gt;
-using namespace std;</code></pre>
-<hr>
-<h3 id="以上就是MarkDown的基本语法。"><a href="#以上就是MarkDown的基本语法。" class="headerlink" title="以上就是MarkDown的基本语法。"></a>以上就是MarkDown的基本语法。</h3>]]></content>
-      <tags>
-        <tag>MarkDown</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>我的第一篇博文</title>
-    <url>/2020/09/21/NewPassage/</url>
-    <content><![CDATA[<p>这是我的第一篇博文，以后要把学习过程中的知识点写在自己的博客上😎</p>
-]]></content>
-  </entry>
-  <entry>
-    <title>Python入门学习</title>
-    <url>/2020/09/21/Python/</url>
-    <content><![CDATA[<p>这学期选修了信息检索（python基础入门），所以有必要将python的基础markdown，便于以后学习。语言都具有相似性，下面列举出python与其他语言不同的地方</p>
-<h2 id="一-什么是python："><a href="#一-什么是python：" class="headerlink" title="一.什么是python："></a>一.什么是python：</h2><p>python是一个高层次的结合了解释性、编译性、互动性和面向对象的脚本语言。</p>
-<p>python语言是一种解释性语言：这意味着在代码编写、执行过程中没有了编译这个环节</p>
-<h2 id="二-python基础："><a href="#二-python基础：" class="headerlink" title="二.python基础："></a>二.python基础：</h2><h3 id="语句结束符："><a href="#语句结束符：" class="headerlink" title="语句结束符："></a>语句结束符：</h3><p>python中可以不写结束符； 如：print(val)    </p>
-<h3 id="变量定义与删除："><a href="#变量定义与删除：" class="headerlink" title="变量定义与删除："></a>变量定义与删除：</h3><p>python中变量类型是弱类型，定义变量时不用声明数据类型，可以用del删除变量</p>
-<h3 id="注释："><a href="#注释：" class="headerlink" title="注释："></a>注释：</h3><h3 id="行与缩进："><a href="#行与缩进：" class="headerlink" title="行与缩进："></a>行与缩进：</h3><p>行与缩进是python语言最具特色的一个地方，python不像其他语言一样使用大括号来包含一个代码块，而是使用：来包含代码块，缩进相同的代码块为同一层次。</p>
-<p>如：</p>
-<pre><code>if True:
-        print(&quot;True&quot;);
-    else:
-        print(&quot;False&quot;);</code></pre>
-<h3 id="多行语句："><a href="#多行语句：" class="headerlink" title="多行语句："></a>多行语句：</h3><p>如果一行代码很长，可以用 \ 来将代码分行<br>如：</p>
-<pre><code>total = item_one + \
-   item_two + \
-   item_three</code></pre>
-<h3 id="导入模块："><a href="#导入模块：" class="headerlink" title="导入模块："></a>导入模块：</h3><p>python中导入模块使用 import [somemoudle] 和 from [somemoudle] import [moudle1],[moudle2]…导入模块，使用import可以导入其他python文件，作用类似于java中的包，导入其他文件后会自动运行文件中的代码，解决方法是在主文件中将代码块放入 <strong>name</strong> == <strong>main</strong> </p>
-<h3 id="输入与输出："><a href="#输入与输出：" class="headerlink" title="输入与输出："></a>输入与输出：</h3><p>python中用 input(“”)语句输入，输入默认为字符串，若想将输入转换为其他类型的值可用强制转换。如 val = int(input(“enter a val:”))</p>
-<p>python中用 print()语句输出，输出默认换行，若想取消换行，可以使用这种形式：print(“”,end=” “) 但end这个语法只有最新版本的python3才支持。</p>
-<p>也可以使用str.format()来格式化输出</p>
-<p>条件控制：</p>
-<p>python中没有switch case表达式，elif代替了else，还添加了for else、while else的表达式</p>
-<h3 id="错误和异常："><a href="#错误和异常：" class="headerlink" title="错误和异常："></a>错误和异常：</h3><p>python中使用 try-expect-finally 代替 try-catch-else-finally，其中else是没有异常执行的代码</p>
-<p>用raise代替throw抛出异常</p>
-<h3 id="继承："><a href="#继承：" class="headerlink" title="继承："></a>继承：</h3><p>python支持多继承</p>
-<h3 id="运算符："><a href="#运算符：" class="headerlink" title="运算符："></a>运算符：</h3><p>python中运算符除了 比较运算符、位运算符、赋值运算符 外 其他运算符和其他语言有所不同。</p>
-<h4 id="算数运算符："><a href="#算数运算符：" class="headerlink" title="算数运算符："></a>算数运算符：</h4><p>x/y 的运算结果为浮点数 </p>
-<p>x//y 的结果为向下取整的整数</p>
-<p>x/<em>/</em>(val) 表示x的val次幂</p>
-<h4 id="逻辑运算符："><a href="#逻辑运算符：" class="headerlink" title="逻辑运算符："></a>逻辑运算符：</h4><p>与运算符为：and</p>
-<p>或运算符为：or</p>
-<p>非运算符为：not</p>
-<h4 id="成员运算符：在python循环中经常被用来判断指定元素是否在某序列中"><a href="#成员运算符：在python循环中经常被用来判断指定元素是否在某序列中" class="headerlink" title="成员运算符：在python循环中经常被用来判断指定元素是否在某序列中"></a>成员运算符：在python循环中经常被用来判断指定元素是否在某序列中</h4><p>in：表示某元素在指定的序列中 </p>
-<p>not in：表示某元素不在指定序列中</p>
-<h4 id="身份运算符："><a href="#身份运算符：" class="headerlink" title="身份运算符："></a>身份运算符：</h4><p>is 或 id() ：用来表示某变量的地址，通常用来判断序列</p>
-<p>== ：用来判断变量值是否相等，通常用来判断变量</p>
-<p>类似于在java中，String str1 = “123”;String str2 = “123”; String str3 = new String(“123”);<br>str1 == str2 /true<br>str1 == str3 /false<br>之间的区别</p>
-<h3 id="基本数据类型："><a href="#基本数据类型：" class="headerlink" title="基本数据类型："></a>基本数据类型：</h3><p>python中使用type()返回变量的类型，使用isinstance方法来判断变量是否与指定类型相同</p>
-<pre><code>a = 10;
-print(type(a))    //    &lt;class &#39;int&#39;&gt;
-print(isinstance(a,int))    //True</code></pre>
-<ul>
-<li><h4 id="Number-数字类型-："><a href="#Number-数字类型-：" class="headerlink" title="Number (数字类型)："></a>Number (数字类型)：</h4></li>
-</ul>
-<p>python中数字类型只有int、bool、float、complex四种</p>
-<p>强制转换：int（）、bool（）、float（）、complex（x,y）</p>
-<ul>
-<li><h4 id="String-字符串-："><a href="#String-字符串-：" class="headerlink" title="String (字符串)："></a>String (字符串)：</h4></li>
-</ul>
-<p>python中字符串用‘’或“”指定一个字符串，可用下标访问字符串</p>
-<p>字符串运算符：</p>
-<p>*运算符：重复输出</p>
-<pre><code>str = &quot;123&quot;
-print(str3) //123123123</code></pre>
-<p>[]运算符：通过索引截取字符串的子串(左闭右开)</p>
-<pre><code>str = &quot;12312312412412&quot;
-print(str[0:4]);</code></pre>
-<p>Python中字符串下标有两种格式，一种是常规的：0…n-1，另一种是从后面索引：-n…-1</p>
-<p>如：</p>
-<pre><code>str = &quot;123456789&quot;
-print(str[0:9])        /123456789
-print(str[-9:0])     /123456789</code></pre>
-<p>in 和 not in 成员运算符：判断字符是否存在字符串中</p>
-<pre><code>str = &quot;12312312412412&quot;
-print(&#39;0&#39; in str);        //False</code></pre>
-<p>r/R运算符：将字符串中的字符转义，变成普通字符</p>
-<pre><code>str = r&quot;12\n312312412412&quot;
-print(str)            //12\n312312412412</code></pre>
-<p>%字符串格式化运算符：</p>
-<pre><code>str = &quot;12312312412412&quot;
-print(&quot;string is %s&quot; %str)        //string is 12312312412412</code></pre>
-<p>f-string 字面量格式化字符串：</p>
-<p>f-string 格式化字符串以 f 开头，后面跟着字符串，字符串中的表达式用大括号{} 包起来，它会将变量或表达式计算后的值替换进去</p>
-<pre><code>name=&quot;十二点前要睡觉&quot;
-print(f&quot;我是&#123;name&#125;&quot;)        //我是十二点前要睡觉
-
-print(f&quot;&#123;1+2&#125;&quot;)     // 3</code></pre>
-<p>str.format()格式化：</p>
-<pre><code>print(&#39;&#123;0&#125; 和 &#123;1&#125;&#39;.format(&#39;Google&#39;, &#39;Runoob&#39;))    //Google 和 Runoob
-
-print(&#39;&#123;name&#125;网址： &#123;site&#125;&#39;.format(name=&#39;菜鸟教程&#39;, site=&#39;www.runoob.com&#39;))    //菜鸟教程网址： www.runoob.com
-
-import math
-print(&#39;常量 PI 的值近似为 &#123;0:.3f&#125;。&#39;.format(math.pi))
-
-table = &#123;&#39;Google&#39;: 1, &#39;Runoob&#39;: 2, &#39;Taobao&#39;: 3&#125;
-print(&#39;Runoob: &#123;0[Runoob]&#125;; Google: &#123;0[Google]&#125;; Taobao: &#123;0[Taobao]&#125;&#39;.format(table))</code></pre>
-<ul>
-<li><h4 id="List-列表-："><a href="#List-列表-：" class="headerlink" title="List (列表)："></a>List (列表)：</h4></li>
-</ul>
-<p>列表是python中最基本的数据类型，基本和数组相似，不过列表允许存在不同类型的值，列表用[]将元素包装，列表是可变的</p>
-<pre><code>list = [1,2,3,4,]
-list = [&quot;abc&quot;,&quot;def&quot;]
-list = [1,2,3,&quot;abc&quot;,&quot;def&quot;]</code></pre>
-<p>列表也可以像字符串类型一样从尾部开始遍历，最后一个元素下标为-1<br>列表的截取也是[]运算符，左闭右开原则</p>
-<pre><code>print(list[-1])    // def</code></pre>
-<p><strong>列表增加元素：</strong></p>
-<p>列表中用append增加元素：</p>
-<pre><code>list.append(1)
-print(list)    //    [1, 2, 3, &#39;abc&#39;, &#39;def&#39;, 1]</code></pre>
-<p>或者使用+运算符往列表中增加列表</p>
-<pre><code>print(list+[1,2,3])        //[2, 3, &#39;abc&#39;, &#39;def&#39;, 1, 2, 3]</code></pre>
-<p><strong>列表删除元素</strong></p>
-<p>用del或删除元素：</p>
-<pre><code>del list[0]
-print(list)    //    [2, 3, &#39;abc&#39;, &#39;def&#39;, 1]</code></pre>
-<p>用pop删除元素，默认删除并最后一个元素，也可以在pop方法中限定下标</p>
-<pre><code>x = list.pop()    //def
-print(x)    //[2, 3, &#39;abc&#39;]
-
-list.pop(0)
-print(list)    //[3, &#39;abc&#39;]</code></pre>
-<ul>
-<li><h4 id="Tuple-元组-："><a href="#Tuple-元组-：" class="headerlink" title="Tuple (元组)："></a>Tuple (元组)：</h4></li>
-</ul>
-<p>元组与列表类似，元组不可修改，元组用()来声明</p>
-<pre><code>tuple = (1,2,3,4,5)
-print(tuple)    //(1, 2, 3, 4, 5)</code></pre>
-<p>元组与列表很相似，不过元组中没有append添加元素方法，不过可以用+运算进行组合<br>可以用list(tuple)将元组转换为列表</p>
-<pre><code>print(tuple+(9,8,7))    /(1, 2, 3, 4, 5, 9, 8, 7)</code></pre>
-<ul>
-<li><h4 id="set-集合-："><a href="#set-集合-：" class="headerlink" title="set (集合)："></a>set (集合)：</h4></li>
-</ul>
-<p>集合是无序的，集合使用{}或set()函数创建集合</p>
-<pre><code>set = &#123;1,2,3,4,5,6&#125;
-print(set)        //&#123;1, 2, 3, 4, 5, 6&#125;
-print(set(&quot;123321&quot;))    //&#123;&#39;1&#39;, &#39;3&#39;, &#39;2&#39;&#125;</code></pre>
-<p>添加元素：</p>
-<p>用add方法往集合添加一个元素，也可以用update添加集合、元组、列表等    </p>
-<pre><code>set.add(4)
-print(set)    //&#123;&#39;3&#39;, &#39;2&#39;, 4, &#39;1&#39;&#125;
-
-set.update(&#123;5&#125;)    //&#123;&#39;2&#39;, 4, 5, &#39;3&#39;, &#39;1&#39;&#125;
-print(set)</code></pre>
-<p>删除元素：</p>
-<p>用remove方法删除元素，但是如果集合中不存在元素会报错</p>
-<p>用discard方法删除元素，如果集合不存在元素也不会报错</p>
-<pre><code>set.discard(5)
-print(set)        //&#123;4, &#39;3&#39;, &#39;2&#39;, &#39;1&#39;&#125;</code></pre>
-<p>集合并交差补运算</p>
-<p>set1|set2: 并集<br>set1&amp;set2: 交集<br>set1-set2: 差集<br>set1^set2: 不同时属于set1和set2的</p>
-<ul>
-<li><h4 id="Dictionary-字典-："><a href="#Dictionary-字典-：" class="headerlink" title="Dictionary (字典)："></a>Dictionary (字典)：</h4></li>
-</ul>
-<p>python中字典用{}声明，键值对用:分隔，用{}声明空字典，字典值可修改</p>
-<pre><code>dict = &#123;&quot;1&quot;:1,&quot;2&quot;:2&#125;
-print(dict)    &#123;&#39;1&#39;: 1, &#39;2&#39;: 2&#125;
-print(dict[&quot;1&quot;])    // 1
-
-dict[&quot;1&quot;] = 100
-print(dict)    //&#123;&#39;1&#39;: 100, &#39;2&#39;: 2&#125;</code></pre>
-<p>字典中用update增加一个键值对</p>
-<pre><code>dict.update(&#123;&quot;3&quot;:3&#125;)
-print(dict)</code></pre>
-<p>pop(key)删除键为key的值</p>
-<pre><code>val = dict.pop(&quot;1&quot;)
-print(val)    //100</code></pre>
-<p>用popitem删除并返回最后一个键值对</p>
-<pre><code>d = dict.popitem();
-print(d)    //(&#39;3&#39;, 3)</code></pre>
-<h3 id="python函数"><a href="#python函数" class="headerlink" title="python函数"></a>python函数</h3><p>python中用def定义一个函数</p>
-<pre><code>def Method():
-print(&quot;难顶&quot;)
-Method()    //难顶</code></pre>
-<p><strong>函数参数：</strong></p>
-<p>函数参数中值得注意的是 <strong>关键字参数</strong> 、<strong>默认参数</strong> 、<strong>不定长参数</strong>、<strong>匿名函数</strong></p>
-<p><strong>关键字参数</strong><br>函数调用可以使用关键字参数来确定传入的参数值，使用关键字参数时允许参数顺序的不一致</p>
-<pre><code>def Method(name, age):
-print(name, age)
-
-Method(age=21, name=&quot;zl&quot;)        //zl 21</code></pre>
-<p><strong>默认参数</strong><br>函数中可以对参数设置默认值</p>
-<pre><code>def Method(name,age,address=&quot;guangdong&quot;):
-print(name, age,address)    //zl 21 guangdong
-Method(age=21, name=&quot;zl&quot;)</code></pre>
-<p><strong>不定长参数</strong><br>不定长参数中，用*导入一个元组，**导入一个字典</p>
-<pre><code>def Method(*tuple):
-print(tuple)
-Method(1,2,3,4,5,6,7)    //(1, 2, 3, 4, 5, 6, 7)
-
-def Method(**dict):
-print(dict)
-Method(a=1,b=2,c=3,d=4);    //&#123;&#39;a&#39;: 1, &#39;b&#39;: 2, &#39;c&#39;: 3, &#39;d&#39;: 4&#125;</code></pre>
-<p>不定长参数后的参数要以关键字参数的形式传入</p>
-<p><strong>匿名函数</strong><br>匿名函数中用lambda表达式创建一个匿名函数，表达式中会提供返回值</p>
-<pre><code>Method = lambda val1=1,val2=2:val1+val2
-print(Method())</code></pre>
-<h3 id="面向对象"><a href="#面向对象" class="headerlink" title="面向对象"></a>面向对象</h3><p>python类中不用像c++、java中声明属性，可以直接在构造方法def <strong>init</strong>(self)使用，属性或方法前加__代表私有，另外，在类中的任何方法都要在参数列表第一个加上self，类似c++、java的this关键字，而且新建对象不用使用new关键字 Aclass=Myclass()即可，继承则使用Aclass(Bclass)</p>
-<pre><code>class person:
-    name = &quot; &quot;
-    age = 0
-    sex = &quot; &quot;
-
-def __init__(self, name, age, sex):
-    self.name = name
-    self.age = age
-    self.sex = sex
-
-def show(self):
-    return (&quot;&#123;0&#125; is a &#123;1&#125; years old &#123;2&#125;&quot;.format(self.name, self.age, self.sex))
-
-class student(person):
-grade = &quot; &quot;
-
-def __init__(self, name, age, sex, grade):
-    person.__init__(self, name, age, sex)
-    self.grade = grade
-
-def show(self):
-    return person.show(self) + &quot; 大学 &#123;&#125; 年级&quot;.format(self.grade)
-
-def print(self):
-    print(person.show(self))
-    print(super().show())
-
-
-class graduate(student, person):
-    salary = 0
-
-def __init__(self, name, age, sex, grade, salary):
-    student.__init__(self, name, age, sex, grade)
-    self.salary = salary</code></pre>
-<h3 id="命名空间"><a href="#命名空间" class="headerlink" title="命名空间"></a>命名空间</h3><ul>
-<li>内置命名</li>
-<li>全局命名</li>
-<li>局部命名</li>
-</ul>
-<p>若要在方法或类中使用全局变量，使用global关键字</p>
-<pre><code>count = 1
-def change():
-    global count
-    print(count)
-    count = 100
-
-change()
-print(count)    //100</code></pre>
-<p>若要在嵌套方法中使用外层方法的局部变量，使用nonlocal关键字</p>
-<pre><code>def outer():
-    num = 10
-    def inner():
-        nonlocal num
-        print(num)    //10
-        num = &quot;str&quot;
-    inner()
-    print(num)    //str
-outer()</code></pre>
-]]></content>
-      <tags>
-        <tag>python</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Spring简介</title>
-    <url>/2020/09/22/Spring/</url>
-    <content><![CDATA[<blockquote>
-</blockquote>
-<h2 id="一-什么是Spring"><a href="#一-什么是Spring" class="headerlink" title="一.什么是Spring"></a><strong>一.什么是Spring</strong></h2><p>Spring轻量级的java开发框架，它是为了解决企业应用开发的复杂性而创建的，Spring的核心是控制反转(IOC)和面向切面(AOP)。</p>
-<p>一句话概括就是 Spring是一个轻量级的、具有控制反转和面向切面的容器（框架）。</p>
-<h3 id="什么是IOC"><a href="#什么是IOC" class="headerlink" title="什么是IOC"></a><strong>什么是IOC</strong></h3><p>IOC的定义：所谓IOC，就是由Spring IOC容器来负责对象的生命周期和对象之间的关系。<br>在传统的开发模式下，我们在项目中都是使用new直接生成一个对象，也就是说我所需要的对象是由自己并控制的，但是有了IOC容器后我们所需要的对象由IOC容器负责管理，由原来的主动生成对象 -&gt; 由IOC容器生成对象 ，获得依赖对象的方式改变了，这就是控制反转。<br>在IOC中，通过以配置xml文件或是注解的方式将我们所需要的类和类的路径进行说明，然后在项目中通过<strong>上下文模块</strong>获取xml文件的路径，由IOC容器提供所需要的类<br><a href="https://zhuanlan.zhihu.com/p/64001753">IOC参考链接</a></p>
-<h3 id="什么是AOP"><a href="#什么是AOP" class="headerlink" title="什么是AOP"></a><strong>什么是AOP</strong></h3><p>AOP：面向切面编程，是OOP（面向对象编程）的一种补充，OOP引入封装、继承、多态的概念建立一种对象间的一种层次的结构，用来模拟层次结构间共同行为，如方法的重写等等。但如果我们在开发过程中多个模块间有某些功能相同的代码，但是模块间又不存在一种层次间的关系，这时候功能如果需要改变，那么需要对每个类进行改动，这是一个很大的工程，这时候怎么解决代码重复这样的问题呢？答案就是使用AOP，AOP技术利用一种称为“横切”的技术，解剖封装的对象内部，并将类间共同的行为封装到一个新的可重用模块中，减少重复代码，降低模块间的耦合度。</p>
-<h2 id="二-Spring的组成"><a href="#二-Spring的组成" class="headerlink" title="二.Spring的组成"></a><strong><em>二.Spring的组成</em></strong></h2><p><img src="/2020/09/22/Spring/SpringFramworkRuntime.png" alt="framework"></p>
-<p><a href="https://www.cnblogs.com/jpwz/p/10556012.html">参考链接</a></p>
-<p>spring由多个模块组成，下面介绍spring每个模块及其功能</p>
-<h3 id="Core-Container-核心容器"><a href="#Core-Container-核心容器" class="headerlink" title="Core Container 核心容器"></a><strong>Core Container 核心容器</strong></h3><p>Spring核心容器建立在Beans、Core、Context、SpEl模块之上</p>
-<p>Beans模块提供了BeanFactory，是工厂模式的一个经典体现，所有被Spring管理的对象都称为Beans</p>
-<p>Core模块提供了框架的基本组成部分，包括IOC和、DI（依赖注入）功能</p>
-<p>Context上下文模块建立在Beans和Core模块基础之上，提供了一个框架式的对象访问方式，是访问定义和配置中Beans对象的媒介，ApplicationContext接口通过xml文本的路径访问配置中的beans对象。</p>
-<p>SpEl是Spring表达式语言，它提供了强大的表达式语言去支持运行时查询和操作对象</p>
-<h3 id="面向切面编程模块"><a href="#面向切面编程模块" class="headerlink" title="面向切面编程模块"></a><strong>面向切面编程模块</strong></h3><p>AOP模块提供了符合AOP要求的面向切面编程的实现，允许定义方法拦截器和切入点，将代码按照功能进行分离，是纯Java实现</p>
-<p>Aspects模块提供了AspectJ的集成功能，AspectJ是一个基于Java语言的AOP框架</p>
-<p>Instrument模块提供了类植入支持和类加载器的实现，可在特定的应用服务器中使用</p>
-<h3 id="数据访问模块"><a href="#数据访问模块" class="headerlink" title="数据访问模块"></a><strong>数据访问模块</strong></h3><p>JDBC、DAO模块：JDBC模块是对JDBC的抽象，减少JDBC编程的代码量</p>
-<p>ORM模块：封装了大量的对象关系映射的API</p>
-<h3 id="Web模块"><a href="#Web模块" class="headerlink" title="Web模块"></a><strong>Web模块</strong></h3><p>WebSocket模块：提供WebScoket、SockJS的实现，以及对STOMP的支持</p>
-<p>Servlet模块：也称为Spring-webmvc模块，包含了Spring的MVC。</p>
-<p>Web模块：提供基本的Web开发集成特性，比如多文件上传功能、使用Servlet监听器来初始化Ioc容器以及Web应用上下文。</p>
-<p>Portlet模块：提供了对在Portlet环境中使用MVC的支持。</p>
-<!-- 底层是Spring的核心容器，包括Beans容器、上下文、Spring表达式和核心工具，是Spring框架最基本的支撑
-中间层是Spring的功能组件
-上层是Spring的具体使用 -->]]></content>
       <tags>
         <tag>Spring</tag>
       </tags>

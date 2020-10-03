@@ -988,21 +988,6 @@ public Object Around(ProceedingJoinPoint pjp,String users,String passwords)&#123
 &#125;</code></pre>
 <p>测试结果：</p>
 <p>Around’s 123 123<br>before<br>service ‘s 123 123<br>也可以通过pjp.getArgs()获得参数<br>[123, 123]</p>
-<!-- ## 基于动态代理的AOP实例 -->
-<!-- 1.定义被代理者（被代理的类）
-
-2.定义增强（切点几种执行状态中要做的动作）
-
-3.定义切入点（给定规则 （正则表达式、AspectJ表达式），找出切入点位置）
-
-4.定义切面（哪些切入点在执行过程中要做哪些动作 
-
-与业务模块无关，但是却为被有模块所共同使用的逻辑块
-
-5.设置代理 ：动态代理（代理接口）、CGLIB代理（代理具体类）
-    配置被代理的对象
-    配置切面
-    配置被代理的接口 -->
 ]]></content>
       <tags>
         <tag>Spring</tag>
@@ -1800,6 +1785,235 @@ public void setPersonalInfo(PersonalInfo personalInfo) &#123;
 ]]></content>
       <tags>
         <tag>Spring</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>AOP的API实现及SpringAOP实现原理</title>
+    <url>/2020/10/02/AOP2/</url>
+    <content><![CDATA[<h1 id="AOP的API实现"><a href="#AOP的API实现" class="headerlink" title="AOP的API实现"></a>AOP的API实现</h1><p>基于接口的aop实现一般为一下步骤：</p>
+<!-- ## 基于动态代理的AOP实例 -->
+<p>1.定义被代理者（被代理的类）</p>
+<p>2.定义增强（切点几种执行状态中要做的动作）</p>
+<p>3.定义切入点（给定规则 （正则表达式、AspectJ表达式），找出切入点位置）</p>
+<p>4.定义切面（哪些切入点在执行过程中要做哪些动作 </p>
+<p>与业务模块无关，但是却为被有模块所共同使用的逻辑块</p>
+<p>5.设置代理 ：动态代理（代理接口）、CGLIB代理（代理具体类）<br>    配置被代理的对象<br>    配置切面<br>    配置被代理的接口</p>
+<h2 id="Pointcut"><a href="#Pointcut" class="headerlink" title="Pointcut"></a>Pointcut</h2><p><img src="/2020/10/02/AOP2/pointcut.png" alt="Poingcut部分继承图"></p>
+<p>其中最常使用的就是JdkRegexpMethodPointcut，根据一组表达式来匹配切入点</p>
+<h2 id="Advice"><a href="#Advice" class="headerlink" title="Advice"></a>Advice</h2><p><img src="/2020/10/02/AOP2/advice.png" alt="Advice部分继承图"></p>
+<p>需要为自己定义的增强实现这几种接口</p>
+<h2 id="Aspect"><a href="#Aspect" class="headerlink" title="Aspect"></a>Aspect</h2><p>在基于API实现的AOP中，用Advisor表示Aspect</p>
+<p><img src="/2020/10/02/AOP2/Advisor.png" alt="Advisor部分继承图"></p>
+<p>其中最常用的是PointcutAdvisor接口的DefaultPointcutAdvisor实现类，它可以通过任意Pointcut和Advice定义一个切面</p>
+<h2 id="代理"><a href="#代理" class="headerlink" title="代理"></a>代理</h2><p>在Spring AOP中，根据一次创建代理的个数，可以分为创建单个代理的织入器和创建多个代理的织入器（即自动代理）。</p>
+<p>Spring AOP中创建单个代理的织入器的类有：</p>
+<ul>
+<li>ProxyFactory</li>
+<li>ProxyFactoryBean</li>
+<li>AspectJProxyFactory</li>
+</ul>
+<p><img src="/2020/10/02/AOP2/singleproxy.png" alt="singleProxy"></p>
+<p>默认情况下，SpringAOP会使用动态代理基于接口生成代理对象，当出现下列情况会使用CGLIB基于类生成代理对象。</p>
+<ul>
+<li>目标类没有实现任何接口</li>
+<li>ProxyFactory的proxyTargetClass属性值被设置为true</li>
+<li>ProxyFactory的optimize属性值被设置为true</li>
+</ul>
+<p>常用的自动代理类：</p>
+<ul>
+<li>BeanNameAutoProxyCreator</li>
+<li>DefaultAdvisorAutoProxyCreator</li>
+<li>AnnotationAwareAspectJAutoProxyCreator</li>
+</ul>
+<p><img src="/2020/10/02/AOP2/singleproxy.png" alt="autoProxy"></p>
+<pre><code>public interface Service &#123;
+    public void service();
+&#125;
+
+
+public class ServiceClass implements Service&#123;
+    public void service()&#123;
+        System.out.println(&quot;service&quot;);
+    &#125;
+&#125;
+
+
+public class MyAspect implements MethodBeforeAdvice, AfterReturningAdvice &#123;
+    @Override
+//    method是被调用的方法，objects是方法参数，o是被调用方法所属的对象
+    public void before(Method method, Object[] objects, Object o) throws Throwable &#123;
+        System.out.println(method.getName()+&quot; &quot;+&quot;service&quot;);
+        System.out.println(Arrays.toString(objects));
+        System.out.println(o.getClass().getName());
+        System.out.println(&quot;--------&quot;);
+        System.out.println(&quot;before&quot;);
+        System.out.println(&quot;--------&quot;);
+    &#125;
+
+    //o是返回值
+    @Override
+    public void afterReturning(Object o, Method method, Object[] objects, Object o1) throws Throwable &#123;
+        System.out.println(&quot;------&quot;);
+        System.out.println(&quot;after&quot; + o);
+        System.out.println(&quot;------&quot;);
+    &#125;
+
+&#125;
+
+public class TestClass &#123;
+    public static void main(String[] args) &#123;
+        Service service = (Service)new ClassPathXmlApplicationContext(&quot;ApiContext.xml&quot;).getBean(&quot;proxy&quot;);
+        service.service();
+
+    &#125;
+&#125;</code></pre>
+<p>xml文件：</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
+       xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+       xmlns:context=&quot;http://www.springframework.org/schema/context&quot;
+       xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd&quot;&gt;
+    &lt;bean id=&quot;myAspect&quot; class=&quot;APIAOP.MyAspect&quot;&gt;&lt;/bean&gt;
+    &lt;bean id=&quot;serviceClass&quot; class=&quot;APIAOP.ServiceClass&quot;&gt;&lt;/bean&gt;
+    &lt;bean id=&quot;pointcut&quot; class=&quot;org.springframework.aop.support.JdkRegexpMethodPointcut&quot;&gt;
+        &lt;property name=&quot;pattern&quot; value=&quot;.*service&quot;&gt;&lt;/property&gt;
+    &lt;/bean&gt;
+    &lt;bean id=&quot;aspect&quot; class=&quot;org.springframework.aop.support.DefaultPointcutAdvisor&quot;&gt;
+        &lt;property name=&quot;pointcut&quot; ref=&quot;pointcut&quot;&gt;&lt;/property&gt;
+        &lt;property name=&quot;advice&quot; ref=&quot;myAspect&quot;&gt;&lt;/property&gt;
+    &lt;/bean&gt;
+    &lt;bean id=&quot;proxy&quot; class=&quot;org.springframework.aop.framework.ProxyFactoryBean&quot;&gt;
+        &lt;property name=&quot;target&quot; ref=&quot;serviceClass&quot;&gt;&lt;/property&gt;
+        &lt;property name=&quot;interceptorNames&quot; value=&quot;myAspect&quot;/&gt;
+        &lt;property name=&quot;proxyInterfaces&quot; value=&quot;APIAOP.Service&quot;/&gt;
+    &lt;/bean&gt;
+&lt;/beans&gt;</code></pre>
+<h1 id="Spring中的AOP的实现原理"><a href="#Spring中的AOP的实现原理" class="headerlink" title="Spring中的AOP的实现原理"></a>Spring中的AOP的实现原理</h1><ul>
+<li>JDK动态代理</li>
+</ul>
+<p>JDK动态代理通过“反射”来接收被代理的类，并且要求被代理的类必须实现一个接口。JDK动态代理的核心是InvocationHandler接口和Proxy类。如果目标类没有实现接口，那么Spring AOP会选择使用CGLIB来动态代理目标类。</p>
+<ul>
+<li>Cglib动态代理</li>
+</ul>
+<p>JDK动态代理必须要有接口, 但如果要代理一个没有接口的类该怎么办呢? CGLIB（Code Generation Library），是一个代码生成的类库，可以在运行时动态地生成某个类的子类。注意，CGLIB是通过继承的方式做的动态代理，因此如果某个类被标记为final，那么它是无法使用CGLIB做动态代理的。CGLIB动态代理的原理是生成目标类的子类,这个子类对象就是代理对象, 代理对象是被增强过的。</p>
+<h2 id="JDK的动态代理"><a href="#JDK的动态代理" class="headerlink" title="JDK的动态代理"></a>JDK的动态代理</h2><p>JDK的动态代理需要了解一个接口和一个类，JDK动态代理的核心是InvocationHandler接口和Proxy类</p>
+<h3 id="Proxy类"><a href="#Proxy类" class="headerlink" title="Proxy类"></a>Proxy类</h3><p>Proxy是一个代理类，其中只有一个newProxyInstance方法</p>
+<pre><code>public static Object newProxyInstance(ClassLoader loader,Class&lt;?&gt;[] interfaces,InvocationHandler h)</code></pre>
+<p>这个方法返回一个代理实例，其中的参数：</p>
+<ul>
+<li><p>ClassLoader loader为类加载器，加载类的字节码</p>
+</li>
+<li><p>Class&lt;?&gt;[] interfaces指定生成的代理对象必须实现的接口（因为被代理对象与代理对象应实现相同的接口）</p>
+</li>
+<li><p>InvocationHandler h </p>
+</li>
+</ul>
+<h3 id="InvocationHandler接口"><a href="#InvocationHandler接口" class="headerlink" title="InvocationHandler接口"></a>InvocationHandler接口</h3><p>InvocationHandler接口：代理类的方法被外界调用之后，将方法交给InvocationHandler，由它来实现对方法的增强</p>
+<p>InvocationHandler接口只有一个invoke方法，由invoke方法实现对被代理方法的增强</p>
+<pre><code>public Object invoke(Object proxy,Method method,Object[] args)</code></pre>
+<p>其中的参数：</p>
+<ul>
+<li><p>Object proxy：代理对象实例</p>
+</li>
+<li><p>Method method：外界调用的方法</p>
+</li>
+<li><p>Object[] args：方法的参数</p>
+</li>
+</ul>
+<p>我们发现，在invoke方法中没有找到我们想要的被代理对象，那我们在实现InvocationHandler接口的代理类中，一定要声明一个被代理对象的属性</p>
+<p>定义一个User接口：</p>
+<pre><code>public interface User &#123;
+    void use();
+&#125;</code></pre>
+<p>定义接口的实现类UserImpl</p>
+<pre><code>public class UserImpl implements User&#123;
+    @Override
+    public void use() &#123;
+        System.out.println(&quot;user using&quot;);
+    &#125;
+&#125;</code></pre>
+<p>定义动态代理类MyJdkAspect：</p>
+<pre><code>public class MyJdkAspect implements InvocationHandler &#123;
+//被代理对象
+private Object target;
+
+public MyJdkAspect()&#123;&#125;
+
+public MyJdkAspect(Object target)&#123;
+    this.target = target;
+&#125;
+
+@Override
+public Object invoke(Object proxy, Method method, Object[] args) throws Throwable &#123;
+        Object object = null;
+        System.out.println(&quot;before&quot;);
+    //        通过反射调用目标对象的方法
+        object = method.invoke(target,args);
+        System.out.println(&quot;after&quot;);
+        return object;
+    &#125;
+&#125;</code></pre>
+<p>测试类：</p>
+<pre><code>public class TestClass &#123;
+public static void main(String[] args) &#123;
+    User user = new UserImpl();
+    MyJdkAspect myJdkAspect = new MyJdkAspect(user);
+//        创建代理实例
+        User proxy = (User) Proxy.newProxyInstance(user.getClass().getClassLoader(),user.getClass().getInterfaces(),myJdkAspect);
+//        代理对象proxy调用use方法时会自动调用invoke方法，实现增强
+        proxy.use();
+    &#125;
+&#125;</code></pre>
+<p>输出结果：</p>
+<p>before<br>user using<br>after</p>
+<p><a href="https://blog.csdn.net/jiankunking/article/details/52143504?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522160166897019195240408337%2522%252C%2522scm%2522%253A%252220140713.130102334.pc%255Fall.%2522%257D&request_id=160166897019195240408337&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~first_rank_v2~rank_v28-9-52143504.pc_first_rank_v2_rank_v28&utm_term=aop+jdk%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86&spm=1018.2118.3001.4187#%E4%BA%8C%E3%80%81Java%20%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%E7%B1%BB%C2%A0">参考链接</a></p>
+<h2 id="cglib动态代理"><a href="#cglib动态代理" class="headerlink" title="cglib动态代理"></a>cglib动态代理</h2><p>使用cglib动态代理需要实现MethodInterceptor接口</p>
+<p>MethodInterceptor接口中有一个intercept方法</p>
+<pre><code>public Object intercept(Object object, java.lang.reflect.Method method, Object[] args, MethodProxy proxy) throws Throwable;</code></pre>
+<p>Object object 是代理对象</p>
+<p>Method method 是拦截方法</p>
+<p>Object[] args 是方法参数</p>
+<pre><code>public class NewUserImpl &#123;
+    public void use()&#123;
+        System.out.println(&quot;user using&quot;);
+    &#125;
+&#125;
+
+public class MyCglibProxy implements MethodInterceptor &#123;
+    //被代理的目标对象
+    private Object target;
+//  生成代理类
+    public Object creatProxyInstance(Object target)&#123;
+        this.target = target;
+        Enhancer enhancer = new Enhancer();
+        enhancer.setSuperclass(this.target.getClass());
+        enhancer.setCallback(this);
+        return enhancer.create();
+    &#125;
+
+    //重写拦截方法
+    @Override
+    public Object intercept(Object o, Method method, Object[] objects, MethodProxy methodProxy) throws Throwable &#123;
+        Object object = null;
+        System.out.println(&quot;before&quot;);
+        object = methodProxy.invoke(target,objects);
+        System.out.println(&quot;after&quot;);
+        return object;
+    &#125;
+&#125;
+
+
+public class TestClass &#123;
+    public static void main(String[] args) &#123;
+        NewUserImpl newUser = new NewUserImpl();
+        NewUserImpl user = (NewUserImpl) new MyCglibProxy().creatProxyInstance(newUser);
+        user.use();
+    &#125;
+&#125;</code></pre>
+]]></content>
+      <tags>
+        <tag>Spring</tag>
+        <tag>AOP</tag>
       </tags>
   </entry>
 </search>

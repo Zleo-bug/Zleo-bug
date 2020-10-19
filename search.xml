@@ -147,12 +147,13 @@ long sum = sta.getSum();</code></pre>
 ]]></content>
       <tags>
         <tag>JavaStream流</tag>
+        <tag>java</tag>
       </tags>
   </entry>
   <entry>
     <title>MarkDown入门</title>
     <url>/2020/09/21/MarkDown/</url>
-    <content><![CDATA[<p>MarkDown 是一种轻量级标记语言，它允许我们使用易读易写的纯文本格式编写文档，目前许多网站都在广泛使用MarkDown来撰写文章或是在论坛发表文章，当然用Hexo+github搭建的个人博客中也支持使用MarkDown来撰写文章，为了更好地搭建个人博客，我们有必要使用MarkDown来帮助我们来编写格式更好的文章。</p>
+    <content><![CDATA[<p>MarkDown 是一种轻量级标记语言，它允许我们使用易读易写的纯文本格式编写文档，目前许多网站都在广泛使用MarkDown来撰写文章或是在论坛发表文章，当然个人博客中也支持使用MarkDown来撰写文章，为了更好地搭建个人博客，我们有必要使用MarkDown来帮助我们来编写格式更好的文章。</p>
 <hr>
 <h3 id="一-标题"><a href="#一-标题" class="headerlink" title="一.标题"></a><strong><em>一.标题</em></strong></h3><p>标题使用#号标记</p>
 <p>一个#是一级标题，二个#是二级标题，以此类推。支持六级标题。</p>
@@ -272,85 +273,88 @@ using namespace std;</code></pre>
     <title>Python入门学习</title>
     <url>/2020/09/21/Python/</url>
     <content><![CDATA[<p>这学期选修了信息检索（python基础入门），所以有必要将python的基础markdown，便于以后学习。语言都具有相似性，下面列举出python与其他语言不同的地方</p>
-<h2 id="一-什么是python："><a href="#一-什么是python：" class="headerlink" title="一.什么是python："></a>一.什么是python：</h2><p>python是一个高层次的结合了解释性、编译性、互动性和面向对象的脚本语言。</p>
+<h1 id="一-什么是python："><a href="#一-什么是python：" class="headerlink" title="一.什么是python："></a>一.什么是python：</h1><p>python是一个高层次的结合了解释性、编译性、互动性和面向对象的脚本语言。</p>
 <p>python语言是一种解释性语言：这意味着在代码编写、执行过程中没有了编译这个环节</p>
-<h2 id="二-python基础："><a href="#二-python基础：" class="headerlink" title="二.python基础："></a>二.python基础：</h2><h3 id="语句结束符："><a href="#语句结束符：" class="headerlink" title="语句结束符："></a>语句结束符：</h3><p>python中可以不写结束符； 如：print(val)    </p>
-<h3 id="变量定义与删除："><a href="#变量定义与删除：" class="headerlink" title="变量定义与删除："></a>变量定义与删除：</h3><p>python中变量类型是弱类型，定义变量时不用声明数据类型，可以用del删除变量</p>
-<h3 id="注释："><a href="#注释：" class="headerlink" title="注释："></a>注释：</h3><h3 id="行与缩进："><a href="#行与缩进：" class="headerlink" title="行与缩进："></a>行与缩进：</h3><p>行与缩进是python语言最具特色的一个地方，python不像其他语言一样使用大括号来包含一个代码块，而是使用：来包含代码块，缩进相同的代码块为同一层次。</p>
+<h1 id="二-python基础："><a href="#二-python基础：" class="headerlink" title="二.python基础："></a>二.python基础：</h1><h2 id="语句结束符："><a href="#语句结束符：" class="headerlink" title="语句结束符："></a>语句结束符：</h2><p>python中可以不写结束符； 如：print(val)    </p>
+<h2 id="变量定义与删除："><a href="#变量定义与删除：" class="headerlink" title="变量定义与删除："></a>变量定义与删除：</h2><p>python中变量类型是弱类型，定义变量时不用声明数据类型，可以用del删除变量</p>
+<h2 id="注释："><a href="#注释：" class="headerlink" title="注释："></a>注释：</h2><h2 id="行与缩进："><a href="#行与缩进：" class="headerlink" title="行与缩进："></a>行与缩进：</h2><p>行与缩进是python语言最具特色的一个地方，python不像其他语言一样使用大括号来包含一个代码块，而是使用：来包含代码块，缩进相同的代码块为同一层次。</p>
 <p>如：</p>
 <pre><code>if True:
         print(&quot;True&quot;);
     else:
         print(&quot;False&quot;);</code></pre>
-<h3 id="多行语句："><a href="#多行语句：" class="headerlink" title="多行语句："></a>多行语句：</h3><p>如果一行代码很长，可以用 \ 来将代码分行<br>如：</p>
+<h2 id="多行语句："><a href="#多行语句：" class="headerlink" title="多行语句："></a>多行语句：</h2><p>如果一行代码很长，可以用 \ 来将代码分行<br>如：</p>
 <pre><code>total = item_one + \
    item_two + \
    item_three</code></pre>
-<h3 id="导入模块："><a href="#导入模块：" class="headerlink" title="导入模块："></a>导入模块：</h3><p>python中导入模块使用 import [somemoudle] 和 from [somemoudle] import [moudle1],[moudle2]…导入模块，使用import可以导入其他python文件，作用类似于java中的包，导入其他文件后会自动运行文件中的代码，解决方法是在主文件中将代码块放入 <strong>name</strong> == <strong>main</strong> </p>
-<h3 id="输入与输出："><a href="#输入与输出：" class="headerlink" title="输入与输出："></a>输入与输出：</h3><p>python中用 input(“”)语句输入，输入默认为字符串，若想将输入转换为其他类型的值可用强制转换。如 val = int(input(“enter a val:”))</p>
+<h2 id="导入模块："><a href="#导入模块：" class="headerlink" title="导入模块："></a>导入模块：</h2><p>python中导入模块使用 import [somemoudle] 和 from [somemoudle] import [moudle1],[moudle2]…导入模块，使用import可以导入其他python文件，作用类似于java中的包，导入其他文件后会自动运行文件中的代码，解决方法是在主文件中将代码块放入 <strong>name</strong> == <strong>main</strong> </p>
+<h2 id="输入与输出："><a href="#输入与输出：" class="headerlink" title="输入与输出："></a>输入与输出：</h2><p>python中用 input(“”)语句输入，输入默认为字符串，若想将输入转换为其他类型的值可用强制转换。如 val = int(input(“enter a val:”))</p>
 <p>python中用 print()语句输出，输出默认换行，若想取消换行，可以使用这种形式：print(“”,end=” “) 但end这个语法只有最新版本的python3才支持。</p>
 <p>也可以使用str.format()来格式化输出</p>
 <p>条件控制：</p>
 <p>python中没有switch case表达式，elif代替了else，还添加了for else、while else的表达式</p>
-<h3 id="错误和异常："><a href="#错误和异常：" class="headerlink" title="错误和异常："></a>错误和异常：</h3><p>python中使用 try-expect-finally 代替 try-catch-else-finally，其中else是没有异常执行的代码</p>
+<h2 id="错误和异常："><a href="#错误和异常：" class="headerlink" title="错误和异常："></a>错误和异常：</h2><p>python中使用 try-expect-finally 代替 try-catch-else-finally，其中else是没有异常执行的代码</p>
 <p>用raise代替throw抛出异常</p>
-<h3 id="继承："><a href="#继承：" class="headerlink" title="继承："></a>继承：</h3><p>python支持多继承</p>
-<h3 id="运算符："><a href="#运算符：" class="headerlink" title="运算符："></a>运算符：</h3><p>python中运算符除了 比较运算符、位运算符、赋值运算符 外 其他运算符和其他语言有所不同。</p>
-<h4 id="算数运算符："><a href="#算数运算符：" class="headerlink" title="算数运算符："></a>算数运算符：</h4><p>x/y 的运算结果为浮点数 </p>
+<h2 id="继承："><a href="#继承：" class="headerlink" title="继承："></a>继承：</h2><p>python支持多继承</p>
+<h2 id="运算符："><a href="#运算符：" class="headerlink" title="运算符："></a>运算符：</h2><p>python中运算符除了 比较运算符、位运算符、赋值运算符 外 其他运算符和其他语言有所不同。</p>
+<h3 id="算数运算符："><a href="#算数运算符：" class="headerlink" title="算数运算符："></a>算数运算符：</h3><p>x/y 的运算结果为浮点数 </p>
 <p>x//y 的结果为向下取整的整数</p>
 <p>x/<em>/</em>(val) 表示x的val次幂</p>
-<h4 id="逻辑运算符："><a href="#逻辑运算符：" class="headerlink" title="逻辑运算符："></a>逻辑运算符：</h4><p>与运算符为：and</p>
+<h3 id="逻辑运算符："><a href="#逻辑运算符：" class="headerlink" title="逻辑运算符："></a>逻辑运算符：</h3><p>与运算符为：and</p>
 <p>或运算符为：or</p>
 <p>非运算符为：not</p>
-<h4 id="成员运算符：在python循环中经常被用来判断指定元素是否在某序列中"><a href="#成员运算符：在python循环中经常被用来判断指定元素是否在某序列中" class="headerlink" title="成员运算符：在python循环中经常被用来判断指定元素是否在某序列中"></a>成员运算符：在python循环中经常被用来判断指定元素是否在某序列中</h4><p>in：表示某元素在指定的序列中 </p>
+<h3 id="成员运算符：在python循环中经常被用来判断指定元素是否在某序列中"><a href="#成员运算符：在python循环中经常被用来判断指定元素是否在某序列中" class="headerlink" title="成员运算符：在python循环中经常被用来判断指定元素是否在某序列中"></a>成员运算符：在python循环中经常被用来判断指定元素是否在某序列中</h3><p>in：表示某元素在指定的序列中 </p>
 <p>not in：表示某元素不在指定序列中</p>
-<h4 id="身份运算符："><a href="#身份运算符：" class="headerlink" title="身份运算符："></a>身份运算符：</h4><p>is 或 id() ：用来表示某变量的地址，通常用来判断序列</p>
+<h3 id="Python循环："><a href="#Python循环：" class="headerlink" title="Python循环："></a>Python循环：</h3><p>Python循环中通常使用range(i,j)来指定遍历的范围，range为左闭右开原则，如for(i in range(0,5)) 遍历下标为0-4</p>
+<h3 id="身份运算符："><a href="#身份运算符：" class="headerlink" title="身份运算符："></a>身份运算符：</h3><p>is 或 id() ：用来表示某变量的地址，通常用来判断序列</p>
 <p>== ：用来判断变量值是否相等，通常用来判断变量</p>
 <p>类似于在java中，String str1 = “123”;String str2 = “123”; String str3 = new String(“123”);<br>str1 == str2 /true<br>str1 == str3 /false<br>之间的区别</p>
-<h3 id="基本数据类型："><a href="#基本数据类型：" class="headerlink" title="基本数据类型："></a>基本数据类型：</h3><p>python中使用type()返回变量的类型，使用isinstance方法来判断变量是否与指定类型相同</p>
+<h2 id="基本数据类型："><a href="#基本数据类型：" class="headerlink" title="基本数据类型："></a>基本数据类型：</h2><p>python中使用type()返回变量的类型，使用isinstance方法来判断变量是否与指定类型相同</p>
 <pre><code>a = 10;
-print(type(a))    //    &lt;class &#39;int&#39;&gt;
-print(isinstance(a,int))    //True</code></pre>
+print(type(a))    #    &lt;class &#39;int&#39;&gt;
+print(isinstance(a,int))    #True</code></pre>
 <ul>
-<li><h4 id="Number-数字类型-："><a href="#Number-数字类型-：" class="headerlink" title="Number (数字类型)："></a>Number (数字类型)：</h4></li>
+<li><h3 id="Number-数字类型-："><a href="#Number-数字类型-：" class="headerlink" title="Number (数字类型)："></a>Number (数字类型)：</h3></li>
 </ul>
 <p>python中数字类型只有int、bool、float、complex四种</p>
 <p>强制转换：int（）、bool（）、float（）、complex（x,y）</p>
 <ul>
-<li><h4 id="String-字符串-："><a href="#String-字符串-：" class="headerlink" title="String (字符串)："></a>String (字符串)：</h4></li>
+<li><h3 id="String-字符串-："><a href="#String-字符串-：" class="headerlink" title="String (字符串)："></a>String (字符串)：</h3></li>
 </ul>
-<p>python中字符串用‘’或“”指定一个字符串，可用下标访问字符串</p>
+<p>python中字符串用‘’或“”指定一个字符串，可用下标访问字符串，有正序访问和逆序访问两种方式</p>
 <p>字符串运算符：</p>
-<p>*运算符：重复输出</p>
-<pre><code>str = &quot;123&quot;
-print(str3) //123123123</code></pre>
+<ul>
+<li><p>运算符：重复输出</p>
+<p>  str = “123”<br>  print(str * 3) #123123123</p>
+</li>
+</ul>
 <p>[]运算符：通过索引截取字符串的子串(左闭右开)</p>
 <pre><code>str = &quot;12312312412412&quot;
 print(str[0:4]);</code></pre>
 <p>Python中字符串下标有两种格式，一种是常规的：0…n-1，另一种是从后面索引：-n…-1</p>
 <p>如：</p>
 <pre><code>str = &quot;123456789&quot;
-print(str[0:9])        /123456789
-print(str[-9:0])     /123456789</code></pre>
+print(str[0:9])        #123456789
+print(str[-9:0])     #123456789</code></pre>
 <p>in 和 not in 成员运算符：判断字符是否存在字符串中</p>
 <pre><code>str = &quot;12312312412412&quot;
-print(&#39;0&#39; in str);        //False</code></pre>
+print(&#39;0&#39; in str);        #False</code></pre>
 <p>r/R运算符：将字符串中的字符转义，变成普通字符</p>
 <pre><code>str = r&quot;12\n312312412412&quot;
-print(str)            //12\n312312412412</code></pre>
+print(str)            #12\n312312412412</code></pre>
 <p>%字符串格式化运算符：</p>
 <pre><code>str = &quot;12312312412412&quot;
-print(&quot;string is %s&quot; %str)        //string is 12312312412412</code></pre>
+print(&quot;string is %s&quot; %str)        #string is 12312312412412</code></pre>
 <p>f-string 字面量格式化字符串：</p>
 <p>f-string 格式化字符串以 f 开头，后面跟着字符串，字符串中的表达式用大括号{} 包起来，它会将变量或表达式计算后的值替换进去</p>
 <pre><code>name=&quot;十二点前要睡觉&quot;
-print(f&quot;我是&#123;name&#125;&quot;)        //我是十二点前要睡觉
+print(f&quot;我&#123;name&#125;&quot;)        #我十二点前要睡觉
 
-print(f&quot;&#123;1+2&#125;&quot;)     // 3</code></pre>
+print(f&quot;&#123;1+2&#125;&quot;)     # 3</code></pre>
 <p>str.format()格式化：</p>
-<pre><code>print(&#39;&#123;0&#125; 和 &#123;1&#125;&#39;.format(&#39;Google&#39;, &#39;Runoob&#39;))    //Google 和 Runoob
+<pre><code>print(&#39;&#123;0&#125; 和 &#123;1&#125;&#39;.format(&#39;Google&#39;, &#39;Runoob&#39;))    #Google 和 Runoob
 
-print(&#39;&#123;name&#125;网址： &#123;site&#125;&#39;.format(name=&#39;菜鸟教程&#39;, site=&#39;www.runoob.com&#39;))    //菜鸟教程网址： www.runoob.com
+print(&#39;&#123;name&#125;网址： &#123;site&#125;&#39;.format(name=&#39;菜鸟教程&#39;, site=&#39;www.runoob.com&#39;))    #菜鸟教程网址： www.runoob.com
 
 import math
 print(&#39;常量 PI 的值近似为 &#123;0:.3f&#125;。&#39;.format(math.pi))
@@ -358,106 +362,131 @@ print(&#39;常量 PI 的值近似为 &#123;0:.3f&#125;。&#39;.format(math.pi))
 table = &#123;&#39;Google&#39;: 1, &#39;Runoob&#39;: 2, &#39;Taobao&#39;: 3&#125;
 print(&#39;Runoob: &#123;0[Runoob]&#125;; Google: &#123;0[Google]&#125;; Taobao: &#123;0[Taobao]&#125;&#39;.format(table))</code></pre>
 <ul>
-<li><h4 id="List-列表-："><a href="#List-列表-：" class="headerlink" title="List (列表)："></a>List (列表)：</h4></li>
+<li><h3 id="List-列表-："><a href="#List-列表-：" class="headerlink" title="List (列表)："></a>List (列表)：</h3></li>
 </ul>
 <p>列表是python中最基本的数据类型，基本和数组相似，不过列表允许存在不同类型的值，列表用[]将元素包装，列表是可变的</p>
 <pre><code>list = [1,2,3,4,]
 list = [&quot;abc&quot;,&quot;def&quot;]
 list = [1,2,3,&quot;abc&quot;,&quot;def&quot;]</code></pre>
 <p>列表也可以像字符串类型一样从尾部开始遍历，最后一个元素下标为-1<br>列表的截取也是[]运算符，左闭右开原则</p>
-<pre><code>print(list[-1])    // def</code></pre>
+<pre><code>print(list[-1])    # def</code></pre>
 <p><strong>列表增加元素：</strong></p>
 <p>列表中用append增加元素：</p>
 <pre><code>list.append(1)
-print(list)    //    [1, 2, 3, &#39;abc&#39;, &#39;def&#39;, 1]</code></pre>
+print(list)    #    [1, 2, 3, &#39;abc&#39;, &#39;def&#39;, 1]</code></pre>
 <p>或者使用+运算符往列表中增加列表</p>
-<pre><code>print(list+[1,2,3])        //[2, 3, &#39;abc&#39;, &#39;def&#39;, 1, 2, 3]</code></pre>
+<pre><code>print(list+[1,2,3])        #[2, 3, &#39;abc&#39;, &#39;def&#39;, 1, 2, 3]</code></pre>
+<p>也可以使用insert(i,x)往下标i插入元素x</p>
 <p><strong>列表删除元素</strong></p>
 <p>用del或删除元素：</p>
 <pre><code>del list[0]
-print(list)    //    [2, 3, &#39;abc&#39;, &#39;def&#39;, 1]</code></pre>
+print(list)    #    [2, 3, &#39;abc&#39;, &#39;def&#39;, 1]</code></pre>
 <p>用pop删除元素，默认删除并最后一个元素，也可以在pop方法中限定下标</p>
-<pre><code>x = list.pop()    //def
-print(x)    //[2, 3, &#39;abc&#39;]
+<pre><code>x = list.pop()    #def
+print(x)    #[2, 3, &#39;abc&#39;]
 
 list.pop(0)
-print(list)    //[3, &#39;abc&#39;]</code></pre>
+print(list)    #[3, &#39;abc&#39;]</code></pre>
 <ul>
-<li><h4 id="Tuple-元组-："><a href="#Tuple-元组-：" class="headerlink" title="Tuple (元组)："></a>Tuple (元组)：</h4></li>
+<li><h3 id="Tuple-元组-："><a href="#Tuple-元组-：" class="headerlink" title="Tuple (元组)："></a>Tuple (元组)：</h3></li>
 </ul>
 <p>元组与列表类似，元组不可修改，元组用()来声明</p>
 <pre><code>tuple = (1,2,3,4,5)
-print(tuple)    //(1, 2, 3, 4, 5)</code></pre>
+print(tuple)    #(1, 2, 3, 4, 5)</code></pre>
 <p>元组与列表很相似，不过元组中没有append添加元素方法，不过可以用+运算进行组合<br>可以用list(tuple)将元组转换为列表</p>
-<pre><code>print(tuple+(9,8,7))    /(1, 2, 3, 4, 5, 9, 8, 7)</code></pre>
+<pre><code>print(tuple+(9,8,7))    #(1, 2, 3, 4, 5, 9, 8, 7)</code></pre>
 <ul>
-<li><h4 id="set-集合-："><a href="#set-集合-：" class="headerlink" title="set (集合)："></a>set (集合)：</h4></li>
+<li><h3 id="列表推导式："><a href="#列表推导式：" class="headerlink" title="列表推导式："></a>列表推导式：</h3></li>
+</ul>
+<p>列表推导式很大简便了python的编程，列表推导式有那么一点像Java中的 集合.foreach(lambda) 方法，使用列表推导式可以实现一行代码实现多个操作的功能</p>
+<p>生成新的列表：</p>
+<pre><code>vec = [1,3,5]
+print([x*3 for x in vec])    #[3,9,15]
+print(vec)    #[1,3,5]</code></pre>
+<p>使用推导式进行筛选：</p>
+<pre><code>print([x for x in vec if x&gt;=3])    #[3,5]</code></pre>
+<p>推导式中使用if-else：</p>
+<pre><code>print([x if x%2==0 else -x for x in range(1,10)])    #[-1, 2, -3, 4, -5, 6, -7, 8, -9]</code></pre>
+<p>生成集合：</p>
+<pre><code>vec = [1,3,5,4,4,4,4,4]
+print(&#123;x for x in vec&#125;)    #&#123;1, 3, 4, 5&#125;</code></pre>
+<p>生成嵌套列表：</p>
+<pre><code>print([[x,x**2] for x in vec])    #[[1, 1], [3, 9], [5, 25]]</code></pre>
+<p>生成字典：</p>
+<pre><code>print(&#123;x:x**2 for x in vec&#125;)    #&#123;1, 3, 4, 5&#125;</code></pre>
+<p>推导式也可以进行对列表的反转、正序、逆序输出：</p>
+<pre><code>vec = [1,3,5,4,4,4,4,4]
+print([x for x in reversed(vec)])    #[4, 4, 4, 4, 4, 5, 3, 1]
+print([x for x in sorted(vec)]) #[1, 3, 4, 4, 4, 4, 4, 5]
+print([x for x in reversed(sorted(vec))]) #[5, 4, 4, 4, 4, 4, 3, 1]</code></pre>
+<ul>
+<li><h3 id="set-集合-："><a href="#set-集合-：" class="headerlink" title="set (集合)："></a>set (集合)：</h3></li>
 </ul>
 <p>集合是无序的，集合使用{}或set()函数创建集合</p>
 <pre><code>set = &#123;1,2,3,4,5,6&#125;
-print(set)        //&#123;1, 2, 3, 4, 5, 6&#125;
-print(set(&quot;123321&quot;))    //&#123;&#39;1&#39;, &#39;3&#39;, &#39;2&#39;&#125;</code></pre>
+print(set)        #&#123;1, 2, 3, 4, 5, 6&#125;
+print(set(&quot;123321&quot;))    #&#123;&#39;1&#39;, &#39;3&#39;, &#39;2&#39;&#125;</code></pre>
 <p>添加元素：</p>
 <p>用add方法往集合添加一个元素，也可以用update添加集合、元组、列表等    </p>
 <pre><code>set.add(4)
-print(set)    //&#123;&#39;3&#39;, &#39;2&#39;, 4, &#39;1&#39;&#125;
+print(set)    #&#123;&#39;3&#39;, &#39;2&#39;, 4, &#39;1&#39;&#125;
 
-set.update(&#123;5&#125;)    //&#123;&#39;2&#39;, 4, 5, &#39;3&#39;, &#39;1&#39;&#125;
+set.update(&#123;5&#125;)    #&#123;&#39;2&#39;, 4, 5, &#39;3&#39;, &#39;1&#39;&#125;
 print(set)</code></pre>
 <p>删除元素：</p>
 <p>用remove方法删除元素，但是如果集合中不存在元素会报错</p>
 <p>用discard方法删除元素，如果集合不存在元素也不会报错</p>
 <pre><code>set.discard(5)
-print(set)        //&#123;4, &#39;3&#39;, &#39;2&#39;, &#39;1&#39;&#125;</code></pre>
+print(set)        #&#123;4, &#39;3&#39;, &#39;2&#39;, &#39;1&#39;&#125;</code></pre>
 <p>集合并交差补运算</p>
 <p>set1|set2: 并集<br>set1&amp;set2: 交集<br>set1-set2: 差集<br>set1^set2: 不同时属于set1和set2的</p>
 <ul>
-<li><h4 id="Dictionary-字典-："><a href="#Dictionary-字典-：" class="headerlink" title="Dictionary (字典)："></a>Dictionary (字典)：</h4></li>
+<li><h3 id="Dictionary-字典-："><a href="#Dictionary-字典-：" class="headerlink" title="Dictionary (字典)："></a>Dictionary (字典)：</h3></li>
 </ul>
 <p>python中字典用{}声明，键值对用:分隔，用{}声明空字典，字典值可修改</p>
 <pre><code>dict = &#123;&quot;1&quot;:1,&quot;2&quot;:2&#125;
 print(dict)    &#123;&#39;1&#39;: 1, &#39;2&#39;: 2&#125;
-print(dict[&quot;1&quot;])    // 1
+print(dict[&quot;1&quot;])    # 1
 
 dict[&quot;1&quot;] = 100
-print(dict)    //&#123;&#39;1&#39;: 100, &#39;2&#39;: 2&#125;</code></pre>
+print(dict)    #&#123;&#39;1&#39;: 100, &#39;2&#39;: 2&#125;</code></pre>
 <p>字典中用update增加一个键值对</p>
 <pre><code>dict.update(&#123;&quot;3&quot;:3&#125;)
 print(dict)</code></pre>
 <p>pop(key)删除键为key的值</p>
 <pre><code>val = dict.pop(&quot;1&quot;)
-print(val)    //100</code></pre>
+print(val)    #100</code></pre>
 <p>用popitem删除并返回最后一个键值对</p>
 <pre><code>d = dict.popitem();
-print(d)    //(&#39;3&#39;, 3)</code></pre>
-<h3 id="python函数"><a href="#python函数" class="headerlink" title="python函数"></a>python函数</h3><p>python中用def定义一个函数</p>
+print(d)    #(&#39;3&#39;, 3)</code></pre>
+<h2 id="python函数"><a href="#python函数" class="headerlink" title="python函数"></a>python函数</h2><p>python中用def定义一个函数</p>
 <pre><code>def Method():
 print(&quot;难顶&quot;)
-Method()    //难顶</code></pre>
+Method()    #难顶</code></pre>
 <p><strong>函数参数：</strong></p>
 <p>函数参数中值得注意的是 <strong>关键字参数</strong> 、<strong>默认参数</strong> 、<strong>不定长参数</strong>、<strong>匿名函数</strong></p>
 <p><strong>关键字参数</strong><br>函数调用可以使用关键字参数来确定传入的参数值，使用关键字参数时允许参数顺序的不一致</p>
 <pre><code>def Method(name, age):
 print(name, age)
 
-Method(age=21, name=&quot;zl&quot;)        //zl 21</code></pre>
+Method(age=21, name=&quot;zl&quot;)        #zl 21</code></pre>
 <p><strong>默认参数</strong><br>函数中可以对参数设置默认值</p>
 <pre><code>def Method(name,age,address=&quot;guangdong&quot;):
-print(name, age,address)    //zl 21 guangdong
+print(name, age,address)    #zl 21 guangdong
 Method(age=21, name=&quot;zl&quot;)</code></pre>
 <p><strong>不定长参数</strong><br>不定长参数中，用*导入一个元组，**导入一个字典</p>
 <pre><code>def Method(*tuple):
 print(tuple)
-Method(1,2,3,4,5,6,7)    //(1, 2, 3, 4, 5, 6, 7)
+Method(1,2,3,4,5,6,7)    #(1, 2, 3, 4, 5, 6, 7)
 
 def Method(**dict):
 print(dict)
-Method(a=1,b=2,c=3,d=4);    //&#123;&#39;a&#39;: 1, &#39;b&#39;: 2, &#39;c&#39;: 3, &#39;d&#39;: 4&#125;</code></pre>
+Method(a=1,b=2,c=3,d=4);    #&#123;&#39;a&#39;: 1, &#39;b&#39;: 2, &#39;c&#39;: 3, &#39;d&#39;: 4&#125;</code></pre>
 <p>不定长参数后的参数要以关键字参数的形式传入</p>
 <p><strong>匿名函数</strong><br>匿名函数中用lambda表达式创建一个匿名函数，表达式中会提供返回值</p>
 <pre><code>Method = lambda val1=1,val2=2:val1+val2
 print(Method())</code></pre>
-<h3 id="面向对象"><a href="#面向对象" class="headerlink" title="面向对象"></a>面向对象</h3><p>python类中不用像c++、java中声明属性，可以直接在构造方法def <strong>init</strong>(self)使用，属性或方法前加__代表私有，另外，在类中的任何方法都要在参数列表第一个加上self，类似c++、java的this关键字，而且新建对象不用使用new关键字 Aclass=Myclass()即可，继承则使用Aclass(Bclass)</p>
+<h2 id="面向对象"><a href="#面向对象" class="headerlink" title="面向对象"></a>面向对象</h2><p>python类中不用像c++、java中声明属性，可以直接在构造方法def <strong>init</strong>(self)使用，属性或方法前加__代表私有，另外，在类中的任何方法都要在参数列表第一个加上self，类似c++、java的this关键字，在方法中调用属性时要使用self.的方式，而且新建对象不用使用new关键字，Aclass=Myclass()即可，继承则使用Aclass(Bclass)声明</p>
 <pre><code>class person:
     name = &quot; &quot;
     age = 0
@@ -492,7 +521,7 @@ class graduate(student, person):
 def __init__(self, name, age, sex, grade, salary):
     student.__init__(self, name, age, sex, grade)
     self.salary = salary</code></pre>
-<h3 id="命名空间"><a href="#命名空间" class="headerlink" title="命名空间"></a>命名空间</h3><ul>
+<h2 id="命名空间"><a href="#命名空间" class="headerlink" title="命名空间"></a>命名空间</h2><ul>
 <li>内置命名</li>
 <li>全局命名</li>
 <li>局部命名</li>
@@ -505,16 +534,16 @@ def change():
     count = 100
 
 change()
-print(count)    //100</code></pre>
+print(count)    #100</code></pre>
 <p>若要在嵌套方法中使用外层方法的局部变量，使用nonlocal关键字</p>
 <pre><code>def outer():
     num = 10
     def inner():
         nonlocal num
-        print(num)    //10
+        print(num)    #10
         num = &quot;str&quot;
     inner()
-    print(num)    //str
+    print(num)    #str
 outer()</code></pre>
 ]]></content>
       <tags>
@@ -594,6 +623,7 @@ outer()</code></pre>
         <tag>Spring</tag>
         <tag>IOC</tag>
         <tag>AOP</tag>
+        <tag>java</tag>
       </tags>
   </entry>
   <entry>
@@ -992,6 +1022,7 @@ public Object Around(ProceedingJoinPoint pjp,String users,String passwords)&#123
       <tags>
         <tag>Spring</tag>
         <tag>AOP</tag>
+        <tag>java</tag>
       </tags>
   </entry>
   <entry>
@@ -2014,6 +2045,1275 @@ public class TestClass &#123;
       <tags>
         <tag>Spring</tag>
         <tag>AOP</tag>
+        <tag>java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>JavaWeb之Servlet</title>
+    <url>/2020/10/04/Servlet/</url>
+    <content><![CDATA[<p>最近在使用SpringMVC的时候有是要用到Servlet中的方法，也借此机会复习一波Servlet</p>
+<h1 id="什么是Servlet"><a href="#什么是Servlet" class="headerlink" title="什么是Servlet"></a><strong>什么是Servlet</strong></h1><p>Servlet的全称是JavaServlet，是运行在Web服务器或应用服务器上的程序，由Servlet容器统一管理，它是作为来自 Web 浏览器或其他 HTTP 客户端的请求和HTTP服务器上的数据库或应用程序之间的中间层。其主要功能在于交互式地浏览和修改数据，生成动态Web内容。</p>
+<p>Servlet的本质是一个独立的Java类，编写一个Servlet，其实就是按照相应的规范编写一个Java类</p>
+<h1 id="servlet容器"><a href="#servlet容器" class="headerlink" title="servlet容器"></a><strong>servlet容器</strong></h1><p>上面说到servlet是运行在web服务器或应用服务器上的程序，由servlet容器统一管理，servlet容器是web服务器或应用服务器的一部分，Servlet不能独立运行，它必须被部署到Servlet容器中，由容器来实例化和调用Servlet的方法，servlet是由servlet容器统一管理的，它负责管理servlet的生命周期。</p>
+<h1 id="servlet的工作流程"><a href="#servlet的工作流程" class="headerlink" title="servlet的工作流程"></a><strong>servlet的工作流程</strong></h1><p><img src="/2020/10/04/Servlet/servlet.jpg" alt="servlet"></p>
+<h1 id="servlet的使用方法和原理"><a href="#servlet的使用方法和原理" class="headerlink" title="servlet的使用方法和原理"></a><strong>servlet的使用方法和原理</strong></h1><h2 id="servlet的使用"><a href="#servlet的使用" class="headerlink" title="servlet的使用"></a><strong>servlet的使用</strong></h2><p>Servlet技术的核心是Servlet接口，它是所有Servlet类必须直接或者间接实现的一个接口。要想使用servlet，就必须实现servlet接口或者继承实现了servlet接口的类。</p>
+<h2 id="servlet的工作原理"><a href="#servlet的工作原理" class="headerlink" title="servlet的工作原理"></a><strong>servlet的工作原理</strong></h2><p>当客户端有请求时，Servlet容器实例化相对应的servlet，并调用它的service()方法，传入ServletRequest对象和ServletResponse对象，这两个对象是由servlet容器封装好的，ServletRequest对象封装了http的请求，ServletResponse则封装了对http请求的响应。</p>
+<p>对于每一个应用程序，Servlet容器还会创建一个ServletContext对象。这个对象中封装了上下文（应用程序）的环境详情。</p>
+<h1 id="servlet的生命周期"><a href="#servlet的生命周期" class="headerlink" title="servlet的生命周期"></a><strong>servlet的生命周期</strong></h1><p>servlet的生命周期分为init()、service()和destroy()三个过程</p>
+<ul>
+<li>init()</li>
+</ul>
+<p>当Servlet第一次被请求时，Servlet容器就会开始调用这个方法来初始化一个Servlet对象出来，但是这个方法在后续请求中不会再被Servlet容器调用，可以利用init()方法对servlet进行初始化工作</p>
+<ul>
+<li>service()</li>
+</ul>
+<p>每当请求Servlet时，Servlet容器就会调用这个方法</p>
+<ul>
+<li>destroy()</li>
+</ul>
+<p>当要销毁Servlet时，Servlet容器就会调用这个方法，在卸载应用程序或者关闭Servlet容器时，就会发生这种情况，一般在这个方法中会写一些清除代码。</p>
+<h1 id="Servlet、ServletRequest、ServletResponse接口"><a href="#Servlet、ServletRequest、ServletResponse接口" class="headerlink" title="Servlet、ServletRequest、ServletResponse接口"></a><strong>Servlet、ServletRequest、ServletResponse接口</strong></h1><h2 id="Servlet接口："><a href="#Servlet接口：" class="headerlink" title="Servlet接口："></a><strong>Servlet接口：</strong></h2><pre><code>public interface Servlet &#123;
+    void init(ServletConfig var1) throws ServletException;
+
+ // 获取配置信息
+    ServletConfig getServletConfig();
+
+    void service(ServletRequest var1, ServletResponse var2) throws ServletException, IOException;
+
+ // 获取servlet信息 传给init（）方法的ServletConfig对象
+    String getServletInfo();
+
+    void destroy();
+&#125;</code></pre>
+<h2 id="ServletRequest接口"><a href="#ServletRequest接口" class="headerlink" title="ServletRequest接口"></a><strong>ServletRequest接口</strong></h2><p>ServletRequest接口中最常用的一个方法是getParameter方法，用于返回请求参数的值</p>
+<pre><code>String getParameter(String var1);//返回请求参数的值</code></pre>
+<h2 id="ServletResponse接口"><a href="#ServletResponse接口" class="headerlink" title="ServletResponse接口"></a><strong>ServletResponse接口</strong></h2><p> javax.servlet.ServletResponse接口表示一个Servlet响应，在调用Servlet的Service()方法前，Servlet容器会先创建一个ServletResponse对象，并把它作为第二个参数传给Service()方法。</p>
+<pre><code>public interface ServletResponse &#123;
+
+    String getCharacterEncoding();
+
+    String getContentType();
+
+    PrintWriter getWriter() throws IOException;
+
+    void setCharacterEncoding(String var1);
+
+    void setContentLength(int var1);
+
+     // ....省略一些方法
+    void setContentType(String var1);
+&#125;</code></pre>
+<p>其中最常用的方法是： </p>
+<pre><code>PrintWriter getWriter() throws IOException;
+
+void setContentType(String var1);</code></pre>
+<p>在响应客户端请求时，都先应调用setContentType方法，设置响应的内容类型，并将“text/html”作为一个参数传入，这是在告诉浏览器响应的内容类型为HTML，需要以HTML的方法解释响应内容而不是普通的文本，或者也可以加上“charset=UTF-8”改变响应的编码方式以防止发生中文乱码现象。</p>
+<p>getWriter方法返回一个可以向客户端发送文本的java对象，可以在客户端页面中输出信息</p>
+<h1 id="ServletContext对象"><a href="#ServletContext对象" class="headerlink" title="ServletContext对象"></a><strong>ServletContext对象</strong></h1><p>ServletContext对象表示Servlet应用程序。每个Web应用程序都只有一个ServletContext对象。有了ServletContext对象，就可以共享从应用程序中的所有资料处访问到的信息，并且可以动态注册Web对象。前者将对象保存在ServletContext中的一个内部Map中。保存在ServletContext中的对象被称作属性。</p>
+<p>servletcontext对象中的方法：</p>
+<pre><code>Object getAttribute(String var1);
+
+Enumeration&lt;String&gt; getAttributeNames();
+
+void setAttribute(String var1, Object var2);
+
+void removeAttribute(String var1);</code></pre>
+<h1 id="ServletConfig接口"><a href="#ServletConfig接口" class="headerlink" title="ServletConfig接口"></a><strong>ServletConfig接口</strong></h1><p>当Servlet容器初始化Servlet时，Servlet容器会给Servlet的init()方式传入一个ServletConfig对象。一些方法如下：</p>
+<pre><code>String getInitParameter(String name) //根据初始化参数名，返回对应的初始化参数值
+
+Enumeration getInitParameterNames()    //返回一个Enumeration对象，其中包含所有的初始化参数名
+
+ServletContext getServletContext()    //返回一个代表当前Web应用的，ServletContext对象
+
+String getServletName()    //返回Servlet的名字，即web.xml中元素的值</code></pre>
+<h1 id="HttpServlet、HttpServletRequest、HttpServlelResponse"><a href="#HttpServlet、HttpServletRequest、HttpServlelResponse" class="headerlink" title="HttpServlet、HttpServletRequest、HttpServlelResponse"></a><strong>HttpServlet、HttpServletRequest、HttpServlelResponse</strong></h1><p>在实际应用中，最常用的Servlet类HttpServlet抽象类<br>常用的接口是ServletRequest的子接口HttpServletRequest 和 ServletResponse的子接口HttpServletResponse </p>
+<p>继承关系如下图：</p>
+<p><img src="/2020/10/04/Servlet/relationship.jpg" alt="relationship"></p>
+<h2 id="HttpServlet"><a href="#HttpServlet" class="headerlink" title="HttpServlet"></a><strong>HttpServlet</strong></h2><p>常用Servlet对象是javax.servlet.http包下的HttpServlet抽象类</p>
+<p>HttpServlet抽象类是继承于GenericServlet抽象类而来的。使用HttpServlet抽象类时，还需要借助分别代表Servlet请求和Servlet响应的HttpServletRequest和HttpServletResponse对象</p>
+<p>继承HttpServlet的Servlet类中要实现doXX方法，分别用于客户端的不同请求</p>
+<pre><code>protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException &#123;
+&#125;
+
+...
+
+protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException &#123;
+&#125;</code></pre>
+<p>HttpServlet类中重写了service()方法，根据客户端请求类型的不同而调用相应的doXX方法</p>
+<h2 id="HttpServletRequest"><a href="#HttpServletRequest" class="headerlink" title="HttpServletRequest"></a><strong>HttpServletRequest</strong></h2><p>HttpServletRequest接口中添加了几个重要方法：</p>
+<pre><code>Cookie[] getCookies();//返回一个cookie对象数组
+
+String getHeader(String var1);//返回指定HTTP标题的值
+
+HttpSession getSession();//返回与这个请求相关的会话对象</code></pre>
+<h2 id="HttpServlelResponse"><a href="#HttpServlelResponse" class="headerlink" title="HttpServlelResponse"></a><strong>HttpServlelResponse</strong></h2><p>HttpServlelResponse中添加的重要方法：</p>
+<pre><code>void addCookie(Cookie var1);//给这个响应添加一个cookie
+
+void addHeader(String var1, String var2);//给这个请求添加一个响应头
+
+void sendRedirect(String var1) throws IOException;//发送一条响应码，讲浏览器跳转到指定的位置
+
+void setStatus(int var1);//设置响应行的状态码</code></pre>
+<h1 id="cookie和session"><a href="#cookie和session" class="headerlink" title="cookie和session"></a><strong>cookie和session</strong></h1><p>会话（Session）跟踪是Web程序中常用的技术，用来跟踪用户的整个会话。常用的会话跟踪技术是Cookie与Session</p>
+<h2 id="cookie"><a href="#cookie" class="headerlink" title="cookie"></a><strong>cookie</strong></h2><p>HTTP协议是无状态的协议。一旦数据交换完毕，客户端与服务器端的连接就会关闭，再次交换数据需要建立新的连接。这就意味着服务器无法从连接上跟踪会话。要跟踪该会话，必须引入一种机制。而cookie就是这样一种机制。</p>
+<p>由于HTTP是一种无状态的协议，服务器单从网络连接上无从知道客户身份。怎么办呢？就给客户端们颁发一个通行证吧，每人一个，无论谁访问都必须携带自己通行证。这样服务器就能从通行证上确认客户身份了。这就是Cookie的工作原理。</p>
+<p>Cookie实际上是一小段的文本信息。客户端请求服务器，如果服务器需要记录该用户状态，就使用response对象的addCookie方法向客户端浏览器颁发一个Cookie。客户端浏览器会把Cookie保存起来。当浏览器再请求该网站时，浏览器把请求的网址连同该Cookie一同提交给服务器。服务器检查该Cookie，以此来辨认用户状态。服务器还可以根据需要修改Cookie的内容。</p>
+<p>Cookie类在javax.servlet.http.Cookie包下</p>
+<p>Cookie对象中常用的方法</p>
+<pre><code>public void setDomain(String pattern)    //该方法设置 cookie 适用的域，例如 xxx.com
+
+public String getDomain()    //该方法获取 cookie 适用的域，例如 xxx.com。
+
+//该方法设置cookie有效时间（以秒为单位）。如果不这样设置，cookie只会在当前session会话中持续有效。
+public void setMaxAge(int expiry)
+
+//该方法返回 cookie 的最大生存周期（以秒为单位），默认情况下，-1 表示 cookie 将持续下去，直到浏览器关闭。
+public int getMaxAge()    
+
+public String getName()    //该方法返回 cookie 的名称。名称在创建后不能改变。
+
+public void setValue(String newValue)    //该方法设置与 cookie 关联的值。
+
+public String getValue() //该方法获取与 cookie 关联的值。
+
+//该方法设置 cookie 适用的路径。如果不指定路径，与当前页面相同目录下的（包括子目录下的）所有 URL 都会返回 cookie。
+public void setPath(String uri)
+
+public String getPath()    //该方法获取 cookie 适用的路径。
+
+//该方法设置布尔值，表示 cookie 是否应该只在加密的（即 SSL）连接上发送。
+public void setSecure(boolean flag)
+
+public void setComment(String purpose)    //设置cookie的注释。该注释在浏览器向用户呈现 cookie 时非常有用。
+
+public String getComment()    //获取 cookie 的注释，如果 cookie 没有注释则返回 null。</code></pre>
+<h2 id="session"><a href="#session" class="headerlink" title="session"></a><strong>session</strong></h2><p>Session是另一种记录客户状态的机制，不同的是Cookie保存在客户端浏览器中，而Session保存在服务器上。客户端浏览器访问服务器的时候，服务器把客户端信息以某种形式记录在服务器上。这就是Session。客户端浏览器再次访问时只需要从该Session中查找该客户的状态就可以了。</p>
+<p>Session对应的类为javax.servlet.http.HttpSession类</p>
+<p>Servlet里通过request.getSession()方法获取该客户的Session</p>
+<p>HttpSession对象中常用的方法：</p>
+<pre><code>//该方法返回在该 session 会话中具有指定名称的对象，如果没有指定名称的对象，则返回 null。
+public Object getAttribute(String name)
+
+//该方法使用指定的名称绑定一个对象到该 session 会话。
+public void setAttribute(String name, Object value)
+
+//该方法返回 String 对象的枚举，String 对象包含所有绑定到该 session 会话的对象的名称。
+public Enumeration getAttributeNames()
+
+//设置session的超时时间，以秒为单位。
+public void setMaxInactiveInterval(int interval)
+
+//获取session的超时时间以秒为单位。
+public int getMaxInactiveInterval()
+
+//该方法返回一个包含分配给该 session 会话的唯一标识符的字符串。
+public String getId()
+
+//该方法返回客户端最后一次发送与该 session 会话相关的请求的时间自格林尼治标准时间 1970 年 1 月 1 日午夜算起，以毫秒为单位。
+public long getLastAccessedTime()
+
+//该方法指示该 session 会话无效，并解除绑定到它上面的任何对象。
+    public void invalidate()
+
+//如果客户端还不知道该 session 会话，或者如果客户选择不参入该 session 会话，则该方法返回 true。
+    public boolean isNew()
+
+//该方法将从该 session 会话移除指定名称的对象。
+    public void removeAttribute(String name)</code></pre>
+]]></content>
+      <tags>
+        <tag>Spring</tag>
+        <tag>JavaWeb</tag>
+        <tag>Servlet</tag>
+        <tag>SpringMVC</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>SpringMVC入门</title>
+    <url>/2020/10/04/SpringMVC/</url>
+    <content><![CDATA[<h1 id="什么是MVC框架"><a href="#什么是MVC框架" class="headerlink" title="什么是MVC框架"></a><strong>什么是MVC框架</strong></h1><p>MVC的全名是Model View Controller，是模型(model)－视图(view)－控制器(controller)的缩写，是在WEB模型中一种很流行的框架，通过把Model，View，Controller分离，把较为复杂的web应用分成逻辑清晰的几部分，是为了简化开发，增强开发人员间的配合，减少出错，MVC是一种分层工作的方法。</p>
+<p>model 模型：一个或多个bean，负责存储数据和处理业务逻辑<br>view 视图：一个或多个jsp文件，负责显示信息<br>controller 控制器：一个或多个servlet，负责处理与用户间的交互</p>
+<hr>
+<h1 id="什么是SpringMVC"><a href="#什么是SpringMVC" class="headerlink" title="什么是SpringMVC"></a><strong>什么是SpringMVC</strong></h1><p>SpringMVC是Spring的一个子框架，拥有Spring的特性</p>
+<h2 id="SpringMVC的组成"><a href="#SpringMVC的组成" class="headerlink" title="SpringMVC的组成"></a><strong>SpringMVC的组成</strong></h2><p>Spring MVC主要由 DispatcherServlet(前端控制器)、HandlerMapping(处理器映射)、Controller(处理器)、ViewResolver(视图解析器)、View(视图) 组成</p>
+<ul>
+<li><h3 id="DispatcherServlet接口："><a href="#DispatcherServlet接口：" class="headerlink" title="DispatcherServlet接口："></a>DispatcherServlet接口：</h3></li>
+</ul>
+<p>(Servlet)</p>
+<p>DispatcherServlet是SpringMVC的核心，DispatcherServlet接口是前端控制器，所有的请求都有经过它来统一分发。在DispatcherServlet将请求分发给Spring Controller之前，需要借助于Spring提供的HandlerMapping类定位到具体的Controller</p>
+<ul>
+<li><h3 id="HandlerMapping接口："><a href="#HandlerMapping接口：" class="headerlink" title="HandlerMapping接口："></a>HandlerMapping接口：</h3></li>
+</ul>
+<p>(Servlet-Mapping)</p>
+<p>DispatcherServlet通过HandlerMapping定位具体的Controller，将客户端请求交给Controller</p>
+<ul>
+<li><h3 id="Controller接口："><a href="#Controller接口：" class="headerlink" title="Controller接口："></a>Controller接口：</h3></li>
+</ul>
+<p>(Servlet)</p>
+<p>Controller将处理客户端发来的请求，一旦Controller处理完用户请求，将返回ModelAndView对象给 DispatcherServlet前端控制器，ModelAndView中包含了模型（Model）和视图（View）。</p>
+<ul>
+<li><h3 id="ViewResolver接口："><a href="#ViewResolver接口：" class="headerlink" title="ViewResolver接口："></a>ViewResolver接口：</h3></li>
+</ul>
+<p>Spring提供的视图解析器（ViewResolver）在Web应用中查找View对象，从而将相应结果渲染给客户。</p>
+<h2 id="SpringMVC的运行过程"><a href="#SpringMVC的运行过程" class="headerlink" title="SpringMVC的运行过程"></a>SpringMVC的运行过程</h2><p><img src="/2020/10/04/SpringMVC/SpringMVC.png"></p>
+<p>SpringMVC的运行过程为：</p>
+<p>客户端提交请求给DispatcherServlet，DispatcherServlet寻找一个或多个的处理器映射HandlerMapping，找到与请求相应的Controller，然后将请求交给Controller，Controller处理完毕请求之后返回ModelAndView对象给Dispatcher，Dispatcher通过ViewResolver找到ModelAndView中指定的视图后，将视图返回给客户端</p>
+<hr>
+<h1 id="SpringMVC入门之HelloWorld"><a href="#SpringMVC入门之HelloWorld" class="headerlink" title="SpringMVC入门之HelloWorld"></a><strong>SpringMVC入门之HelloWorld</strong></h1><p>在springmvc.controller包下创建HelloWorldController类，继承Controller接口：</p>
+<p><strong>注：要选择org.springframework.web.servlet接口下的Controller子接口</strong></p>
+<pre><code>package springmvc.controller;
+
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.Controller;
+
+public class HelloWorldController implements Controller &#123;
+    @Override
+    public ModelAndView handleRequest(javax.servlet.http.HttpServletRequest httpServletRequest, javax.servlet.http.HttpServletResponse httpServletResponse) throws Exception &#123;
+        ModelAndView mav = new ModelAndView();
+        mav.addObject(&quot;message&quot;,&quot;helloworld!&quot;);
+        mav.setViewName(&quot;/WEB-INF/helloWorld.jsp&quot;);
+        return mav;
+    &#125;
+&#125;</code></pre>
+<p>其中的helloWorld.jsp文件后面会创建</p>
+<p>配置dispatcher-servlet.xml文件，为前端处理器添加处理器映射：</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;
+&lt;!DOCTYPE beans PUBLIC &quot;-//SPRING//DTD BEAN//EN&quot; &quot;http://www.springframework.org/dtd/spring-beans.dtd&quot;&gt;
+&lt;beans&gt;
+    &lt;bean id=&quot;simpleUrlHandlerMapping&quot;
+          class=&quot;org.springframework.web.servlet.handler.SimpleUrlHandlerMapping&quot;&gt;
+        &lt;property name=&quot;mappings&quot;&gt;
+            &lt;props&gt;
+&lt;!--                这里HelloWorldController使用的是后边bean的id--&gt;
+                &lt;prop key=&quot;/index&quot;&gt;HelloWorldController&lt;/prop&gt;
+            &lt;/props&gt;
+        &lt;/property&gt;
+    &lt;/bean&gt;
+    &lt;bean id=&quot;HelloWorldController&quot; class=&quot;springmvc.controller.HelloWorldController&quot;&gt;&lt;/bean&gt;
+&lt;/beans&gt;</code></pre>
+<p>配置web.xml文件：</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;web-app version=&quot;2.4&quot; xmlns=&quot;http://java.sun.com/xml/ns/j2ee&quot;
+         xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+         xsi:schemaLocation=&quot;http://java.sun.com/xml/ns/j2ee
+http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd&quot;&gt;
+    &lt;servlet&gt;
+
+&lt;!--        会自动使用这个name到WEB-INF中找***-servlet.xml 的文件，所以xml文件名为dispatcher-servlet.xml，而这里的servlet-name为dispatcher--&gt;
+
+        &lt;servlet-name&gt;dispatcher&lt;/servlet-name&gt;
+        &lt;servlet-class&gt;
+            org.springframework.web.servlet.DispatcherServlet
+        &lt;/servlet-class&gt;
+        &lt;load-on-startup&gt;1&lt;/load-on-startup&gt;
+    &lt;/servlet&gt;
+    &lt;servlet-mapping&gt;
+        &lt;servlet-name&gt;dispatcher&lt;/servlet-name&gt;
+        &lt;!--这里将url设置为/，处理所有的url        --&gt;
+        &lt;url-pattern&gt;/&lt;/url-pattern&gt;    
+    &lt;/servlet-mapping&gt;
+&lt;/web-app&gt;</code></pre>
+<p>修改index.jsp文件：</p>
+<pre><code>&lt;%@ page contentType=&quot;text/html;charset=UTF-8&quot; language=&quot;java&quot; %&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;$Title$&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+  &lt;h1&gt;welcome to login&lt;/h1&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+<p>在WEB-INF下添加helloWorld.jsp文件：</p>
+<pre><code>&lt;%@ page contentType=&quot;text/html;charset=UTF-8&quot; language=&quot;java&quot; %&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Title&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;%--绑定处理器中添加的值--%&gt;
+
+    &lt;h1&gt;$&#123;message&#125;&lt;/h1&gt;    
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+<p>项目的文件目录如下：</p>
+<p><img src="/2020/10/04/SpringMVC/content.jpg" alt="content"></p>
+<p>postman访问<a href="http://localhost:8080/">http://localhost:8080</a><br><img src="/2020/10/04/SpringMVC/8080.jpg" alt="8080"></p>
+<p>访问<a href="http://localhost:8080/index">http://localhost:8080/index</a><br><img src="/2020/10/04/SpringMVC/index.jpg" alt="index"></p>
+<p>SpringMVC中的数据绑定，只要在控制器中对数据模型进行相应的处理，如上面例子的</p>
+<pre><code>mav.addObject(&quot;message&quot;,&quot;helloworld!&quot;); </code></pre>
+<p>或者Model类型对象的 addAttribute()方法处理数据，然后在相应的view层使用${}显示数据即可。</p>
+<p>如果在Dispatcher中配置视图解析器</p>
+<pre><code>&lt;bean id=&quot;internalResourceViewResolver&quot; class=&quot;org.springframework.web.servlet.view.InternalResourceViewResolver&quot;&gt;
+    &lt;property name=&quot;prefix&quot; value=&quot;/WEB-INF/&quot;&gt;&lt;/property&gt;
+    &lt;property name=&quot;suffix&quot; value=&quot;.jsp&quot;&gt;&lt;/property&gt;
+&lt;/bean&gt;</code></pre>
+<p>则Controller中的返回对象ModelAndView中指定的视图不用添加前缀和后缀</p>
+<pre><code>mav.setViewName(&quot;result&quot;);</code></pre>
+<p>将返回同样的结果</p>
+<hr>
+<h1 id="Controller注解和-RequestMapping注解"><a href="#Controller注解和-RequestMapping注解" class="headerlink" title="@Controller注解和@RequestMapping注解"></a><strong>@Controller注解和@RequestMapping注解</strong></h1><p><strong>注：要使用注解，要在控制器的配置文件中加上如下语句</strong>    </p>
+<pre><code>&lt;context: component-scan base-package=&quot;package-name&quot;&gt;&lt;/context: component-scan&gt;</code></pre>
+<h2 id="Controller"><a href="#Controller" class="headerlink" title="@Controller"></a>@Controller</h2><p>使用@Controller注解将某类声明为控制器，使用@Controller就不用在Dispatcher配置文件中配置控制器了</p>
+<h2 id="RequestMapping"><a href="#RequestMapping" class="headerlink" title="@RequestMapping"></a>@RequestMapping</h2><p>使用@RequestMapping可以为每个请求编写对应的处理方法</p>
+<h3 id="方法级别注解"><a href="#方法级别注解" class="headerlink" title="方法级别注解"></a>方法级别注解</h3><p>@RequestMapping作用于方法时，若客户端有相应的请求，则dispatcher将通过该请求找到对应的方法，从而找到方法所在的控制器，由控制器处理</p>
+<pre><code>@Controller
+public class LoginController &#123;
+    @RequestMapping(&quot;/login&quot;)
+    public String login()&#123;
+        return &quot;login&quot;;
+    &#125;
+    @RequestMapping(value = &quot;/result&quot;)
+    public String result()&#123;
+        return &quot;result&quot;;
+    &#125;
+&#125;
+
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;$Title$&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h1&gt;welcome to login&lt;/h1&gt;
+&lt;form action=&quot;/result&quot;&gt;
+    学号：&lt;input name=&quot;id&quot;&gt;&lt;br&gt;
+    姓名：&lt;input name=&quot;name&quot;&gt;&lt;br&gt;
+    年龄：&lt;input name=&quot;age&quot;&gt;&lt;br&gt;
+    &lt;button type=&quot;sumbit&quot;&gt;提交&lt;/button&gt;
+&lt;/form&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+<p><strong>注：此配置是基于视图处理器的配置</strong></p>
+<p>此时，浏览器打开<a href="http://localhost:8080/login">http://localhost:8080/login</a> 将会成功显示登陆界面</p>
+<h3 id="类级别注解"><a href="#类级别注解" class="headerlink" title="类级别注解"></a>类级别注解</h3><p>在类级别注解的情况下，控制器类中的所有方法都将映射为类级别的请求。</p>
+<pre><code>@Controller
+@RequestMapping(&quot;/init&quot;)
+public class LoginController &#123;
+    @RequestMapping(&quot;/login&quot;)
+    public String login()&#123;
+        return &quot;login&quot;;
+    &#125;
+    @RequestMapping(value = &quot;/result&quot;)
+    public String result()&#123;
+        return &quot;result&quot;;
+    &#125;
+&#125;</code></pre>
+<p>此时，浏览器打开<a href="http://localhost:8080/init/login">http://localhost:8080/init/login</a> 将会成功显示登陆界面</p>
+<h2 id="接收请求参数"><a href="#接收请求参数" class="headerlink" title="接收请求参数"></a><strong>接收请求参数</strong></h2><h3 id="直接把表单数据写在参数列表中"><a href="#直接把表单数据写在参数列表中" class="headerlink" title="直接把表单数据写在参数列表中"></a><strong>直接把表单数据写在参数列表中</strong></h3><pre><code>@Controller
+public class LoginController &#123;
+    @RequestMapping(&quot;/login&quot;)
+    public String login()&#123;
+        return &quot;login&quot;;
+    &#125;
+    @RequestMapping(value = &quot;/result&quot;)
+    public String result(String name,String id,int age,Model model)&#123;
+        model.addAttribute(&quot;id&quot;,id);
+        model.addAttribute(&quot;name&quot;,name);
+        model.addAttribute(&quot;age&quot;,age);
+        return &quot;result&quot;;
+    &#125;
+&#125;</code></pre>
+<h3 id="HttpServletRequest获得参数"><a href="#HttpServletRequest获得参数" class="headerlink" title="HttpServletRequest获得参数"></a><strong>HttpServletRequest获得参数</strong></h3><p>如Model接口和javax.servlet.http.HttpServletRequest组合可以像ModelAndView那样返回客户端的值</p>
+<pre><code>@RequestMapping(value = &quot;/result&quot;)
+public String result(Model model,javax.servlet.http.HttpServletRequest httpServletRequest)&#123;
+    model.addAttribute(&quot;id&quot;,httpServletRequest.getParameter(&quot;id&quot;));
+    model.addAttribute(&quot;name&quot;,httpServletRequest.getParameter(&quot;name&quot;));
+    model.addAttribute(&quot;age&quot;,httpServletRequest.getParameter(&quot;age&quot;));
+    return &quot;result&quot;;
+&#125;</code></pre>
+<h3 id="通过实体Bean接收请求参数"><a href="#通过实体Bean接收请求参数" class="headerlink" title="通过实体Bean接收请求参数"></a><strong>通过实体Bean接收请求参数</strong></h3><p>student类：</p>
+<pre><code>@Component
+public class student &#123;
+    private String id;
+    private String name;
+    private int age;
+    //省略getter和setter
+    public String toString()&#123;
+        return &quot;[id=&quot;+id+&quot;,name=&quot;+name+&quot;,age=&quot;+age+&quot;]&quot;;
+    &#125;
+&#125;
+
+@RequestMapping(value = &quot;/result&quot;)
+public String result(student stu,Model model)&#123;
+    model.addAttribute(&quot;id&quot;,stu.getId());
+    model.addAttribute(&quot;name&quot;,stu.getName());
+    model.addAttribute(&quot;age&quot;,stu.getAge());
+    return &quot;result&quot;;
+&#125;</code></pre>
+<h3 id="RequestParam"><a href="#RequestParam" class="headerlink" title="@RequestParam"></a><strong>@RequestParam</strong></h3><pre><code>@RequestMapping(value = &quot;/result&quot;)
+public String result(student stu, Model model, @RequestParam String name, @RequestParam String id)&#123;
+        System.out.println(id + &quot; &quot; + name);
+        model.addAttribute(&quot;id&quot;, stu.getId());
+        model.addAttribute(&quot;name&quot;, stu.getName());
+        model.addAttribute(&quot;age&quot;, stu.getAge());
+    return &quot;result&quot;;
+&#125;</code></pre>
+<h3 id="ModelAttribute"><a href="#ModelAttribute" class="headerlink" title="@ModelAttribute"></a><strong>@ModelAttribute</strong></h3><p>当 @ModelAttribute 注解放在处理方法的形参上时，用于将多个请求参数封装到一个实体对象，从而简化数据绑定流程，而且自动暴露为模型数据，在视图页面展示时使用。而“通过实体Bean接收请求参数”中只是将多个请求参数封装到一个实体对象，并不能暴露为模型数据（需要使用 model.addAttribute 语句才能暴露为模型数据)</p>
+<pre><code>@RequestMapping(value = &quot;/result&quot;)
+public String result(@ModelAttribute(&quot;stu&quot;) student stu)&#123;
+    System.out.println(stu.getId()+&quot; &quot;+stu.getName()+&quot; &quot;+stu.getAge());
+    return &quot;result&quot;;
+&#125;</code></pre>
+<p>在result处理方法中，ModelAttribute(“stu”) student stu先将请求参数的输入封装到student对象中，然后再创建对象的实例，以键值为stu存储在Model对象中</p>
+<p>此时，只要在相应的result.jsp中使用EL表达式¥{property}就可以将数据表示出来</p>
+<pre><code>&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Title&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;登录成功&lt;/h1&gt;
+    &lt;p&gt;$&#123;id&#125;&lt;/p&gt;
+    &lt;p&gt;$&#123;name&#125;&lt;/p&gt;
+    &lt;p&gt;$&#123;age&#125;&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+<p>ModelAttribute作用于无返回值的方法，被@ModelAttribute注释的方法会在此controller每个方法执行前被执行</p>
+<p>在控制器中添加show方法，想要把请求参数显示在result.jsp中</p>
+<pre><code>@ModelAttribute
+public void show(Model model,@RequestParam String name)&#123;
+    model.addAttribute(&quot;name&quot;,name);
+&#125;</code></pre>
+<p>运行发现，name请求参数成功显示在页面中</p>
+<h1 id="Service和-AutoWired"><a href="#Service和-AutoWired" class="headerlink" title="@Service和@AutoWired"></a>@Service和@AutoWired</h1><p>在springmvc.controller包下创建ServiceInterface接口</p>
+<pre><code>public interface ServiceInterface &#123;
+    public void service(student stu);
+&#125;</code></pre>
+<p>提供实现类ServiceImpl，该类标注为Service类</p>
+<pre><code>@Service
+public class ServiceImpl implements ServiceInterface&#123;
+    public void service(student stu)&#123;
+        System.out.println(&quot;service&quot;);
+        System.out.println(stu.toString());
+    &#125;
+&#125;</code></pre>
+<p>在LoginController控制器中添加属性，标志为自动注入</p>
+<pre><code>@Autowired(required = false)
+ServiceInterface serviceInterface;</code></pre>
+<p>修改result处理方法</p>
+<pre><code>@RequestMapping(value = &quot;/result&quot;)
+public String result(@ModelAttribute(&quot;stu&quot;) student stu)&#123;
+    serviceInterface.service(stu);
+    return &quot;result&quot;;
+&#125;</code></pre>
+<p>在postman中提交请求，可以发现IDEA输出端成功显示表单信息</p>
+<h1 id="转发和重定向"><a href="#转发和重定向" class="headerlink" title="转发和重定向"></a><strong>转发和重定向</strong></h1><p>重定向是将用户从当前处理请求定向到另一个视图或处理请求，以前的请求（request）中存放的信息全部失效，并进入一个新的 request 作用域，如return “redirect:aview”;</p>
+<p>转发是将用户对当前处理的请求转发给另一个视图或处理请求，以前的 request 中存放的信息不会失效。</p>
+<p>转发是服务器行为，重定向是客户端行为。</p>
+<p>在 Spring MVC 框架中，控制器类中处理方法的 return 语句默认就是转发实现，只不过实现的是转发到视图。</p>
+<h1 id="SpringMVC与JSON的数据交互"><a href="#SpringMVC与JSON的数据交互" class="headerlink" title="SpringMVC与JSON的数据交互"></a>SpringMVC与JSON的数据交互</h1><h2 id="jackson"><a href="#jackson" class="headerlink" title="jackson"></a><strong>jackson</strong></h2><p>添加依赖</p>
+<pre><code>&lt;dependency&gt;
+  &lt;groupId&gt;com.fasterxml.jackson.core&lt;/groupId&gt;
+  &lt;artifactId&gt;jackson-core&lt;/artifactId&gt;
+  &lt;version&gt;2.8.1&lt;/version&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+  &lt;groupId&gt;com.fasterxml.jackson.core&lt;/groupId&gt;
+  &lt;artifactId&gt;jackson-databind&lt;/artifactId&gt;
+  &lt;version&gt;2.8.1&lt;/version&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+  &lt;groupId&gt;com.fasterxml.jackson.core&lt;/groupId&gt;
+  &lt;artifactId&gt;jackson-annotations&lt;/artifactId&gt;
+  &lt;version&gt;2.8.1&lt;/version&gt;
+&lt;/dependency&gt;</code></pre>
+<p>在UserController中添加json方法</p>
+<pre><code>@RequestMapping(&quot;/json&quot;)
+@ResponseBody
+public String json()&#123;
+    return new student(&quot;123&quot;,&quot;张三&quot;,12).toString();
+&#125;</code></pre>
+<p>或者使用ObjectMapper对象的writeValueAsString方法，将对象解析为字符串</p>
+<pre><code>@RequestMapping(value = &quot;/json&quot;)
+@ResponseBody
+public String json() throws IOException &#123;
+    student stu =  new student(&quot;123&quot;,&quot;张三&quot;,12);
+    ObjectMapper objectMapper = new ObjectMapper();
+    String str = objectMapper.writeValueAsString(stu);
+    return str;
+&#125;</code></pre>
+<p>另外，用@ResponseBody作用于方法返回字符串给请求，@RequestBody作用于参数用于接受Json对象字符串后自动转换为对象</p>
+<p>postman测试，网页中出现[id=123,name=??,age=12]，出现乱码</p>
+<p><strong>JSON乱码解决</strong></p>
+<ul>
+<li>@RequestMapping添加属性 produces=”application/json;charset=utf-8”</li>
+</ul>
+<p>此时返回[id=123,name=张三,age=12]</p>
+<ul>
+<li><p>在dispatcher-servlet中添加如下配置统一解决问题</p>
+<p>  &lt;mvc: annotation-driven&gt;</p>
+<pre><code>  &lt;mvc: message-converters register-defaults=&quot;true&quot;&gt;
+      &lt;bean class=&quot;org.springframework.http.converter.StringHttpMessageConverter&quot;&gt;
+          &lt;constructor-arg value=&quot;UTF-8&quot;/&gt;
+      &lt;/bean&gt;
+      &lt;bean class=&quot;org.springframework.http.converter.json.MappingJackson2HttpMessageConverter&quot;&gt;
+          &lt;property name=&quot;objectMapper&quot;&gt;
+              &lt;bean class=&quot;org.springframework.http.converter.json.Jackson2ObjectMapperFactoryBean&quot;&gt;
+                  &lt;property name=&quot;failOnEmptyBeans&quot; value=&quot;false&quot;/&gt;
+              &lt;/bean&gt;
+          &lt;/property&gt;
+      &lt;/bean&gt;
+  &lt;/mvc: message-converters&gt;</code></pre>
+<p>  &lt;/mvc: annotation-driven&gt;</p>
+</li>
+<li><p>将控制器注解位@RestController</p>
+</li>
+</ul>
+<p>此时控制器类的所有处理方法都返回一个JSON字符串，不再进行视图解析</p>
+<h2 id="fastjson"><a href="#fastjson" class="headerlink" title="fastjson"></a><strong>fastjson</strong></h2><p>添加依赖</p>
+<pre><code>&lt;dependency&gt;
+    &lt;groupId&gt;com.alibaba&lt;/groupId&gt;
+    &lt;artifactId&gt;fastjson&lt;/artifactId&gt;
+    &lt;version&gt;1.2.74&lt;/version&gt;
+ &lt;/dependency&gt;</code></pre>
+<p>fastjson中JSON类中有很多静态方法，只要返回字符串就好，如</p>
+<pre><code>String str = JSON.toJSONString(stu);</code></pre>
+<p>当然也有json字符串转换为java对象的方法</p>
+<h2 id="ajax-json与MVC交互实例"><a href="#ajax-json与MVC交互实例" class="headerlink" title="ajax json与MVC交互实例"></a><strong>ajax json与MVC交互实例</strong></h2><p>模仿注册页面中账号和密码的有效性检验</p>
+<p>User类：</p>
+<p>@Component<br>public class User {</p>
+<pre><code>@NotBlank(message = &quot;用户名不能为空&quot;)
+private String name;
+@NotBlank(message = &quot;密码不能为空&quot;)
+@Length(min = 3,max = 8,message = &quot;密码位数为3-8位&quot;)
+private String passwords;
+
+public String getPasswords() &#123;
+    return passwords;
+&#125;
+
+public String getName() &#123;
+    return name;
+&#125;
+
+public void setPasswords(String passwords) &#123;
+
+    this.passwords = passwords;
+&#125;
+
+public void setName(String name) &#123;
+    this.name = name;
+&#125;
+
+public String toString()&#123;
+    return &quot;[name=&quot;+name+&quot;,passwords=&quot;+passwords+&quot;]&quot;;
+&#125;</code></pre>
+<p>}</p>
+<p>UserController：</p>
+<pre><code>@Controller
+public class UserController &#123;
+
+    @RequestMapping(&quot;/test&quot;)
+    @ResponseBody
+    public String test(User user)&#123;
+//        System.out.println(user+&quot; &quot;+passwords);
+        System.out.println(user);
+        String msg = &quot;&quot;;
+        if(user.getName()!=null)&#123;
+            if(user.getName().equals(&quot;123&quot;))&#123;
+                msg =  &quot;ok&quot;;
+            &#125;else&#123;
+                msg =  &quot;failed&quot;;
+            &#125;
+        &#125;
+        if(user.getPasswords()!=null)&#123;
+            if(user.getPasswords().equals(&quot;1233&quot;))&#123;
+                msg =  &quot;ok&quot;;
+            &#125;else&#123;
+                msg = &quot;failed&quot;;
+            &#125;
+        &#125;
+        return msg;
+    &#125;
+
+&#125;</code></pre>
+<p>jsp文件：</p>
+<pre><code>&lt;%@ page contentType=&quot;text/html;charset=UTF-8&quot; language=&quot;java&quot; %&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Title&lt;/title&gt;
+    &lt;script src=&quot;https://s3.pstatp.com/cdn/expire-1-M/jquery/3.3.1/jquery.min.js&quot;&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;script&gt;
+        function uservalidator() &#123;
+            $.ajax(&#123;
+                url:&quot;$&#123;pageContext.request.contextPath&#125;/test&quot;,
+                data:&#123;&quot;name&quot;:$(&quot;#user&quot;).val(),&quot;passwords&quot;:$(&quot;#passwords&quot;).val()&#125;,
+                success:function (data) &#123;
+                    $(&quot;#usermsg&quot;).html(data)
+                &#125;
+            &#125;)
+        &#125;
+    &lt;/script&gt;
+    &lt;script&gt;
+        function passwordsvalidator() &#123;
+            $.ajax(&#123;
+                url:&quot;$&#123;pageContext.request.contextPath&#125;/test&quot;,
+                data:&#123;&quot;name&quot;:$(&quot;#user&quot;).val(),&quot;passwords&quot;:$(&quot;#passwords&quot;).val()&#125;,
+                success:function (data) &#123;
+                    $(&quot;#pswmsg&quot;).html(data)
+                &#125;
+            &#125;)
+        &#125;
+    &lt;/script&gt;
+    &lt;form&gt;
+        用户名：&lt;input type=&quot;text&quot; name=&quot;user&quot; id=&quot;user&quot; onblur=&quot;uservalidator()&quot;&gt;&lt;br&gt;
+        &lt;p id=&quot;usermsg&quot;&gt;&lt;/p&gt;
+        密码：&lt;input type=&quot;password&quot; name=&quot;passwords&quot; id=&quot;passwords&quot; onblur=&quot;passwordsvalidator()&quot;&gt;
+        &lt;p id=&quot;pswmsg&quot;&gt;&lt;/p&gt;
+    &lt;/form&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+<h1 id="拦截器"><a href="#拦截器" class="headerlink" title="拦截器"></a><strong>拦截器</strong></h1><p>SpringMVC的拦截器和Servlet中的Filter相似，主要用于拦截用户的请求并做相应的处理，通常应用在权限验证、记录请求信息的日志、判断用户是否登录等功能上</p>
+<p>定义一个拦截器需要实现HandlerInterceptor接口，HandlerInterceptor接口中有三个方法</p>
+<ul>
+<li><p>preHandle：该方法在控制器的处理请求方法前执行，其返回值表示是否中断后续操作，返回 true 表示继续向下执行，返回 false 表示中断后续操作。</p>
+</li>
+<li><p>postHandle：该方法在控制器的处理请求方法调用之后、解析视图之前执行，可以通过此方法对请求域中的模型<br>和视图做进一步的修改。</p>
+</li>
+<li><p>afterCompletion：该方法在控制器的处理请求方法执行完成后执行，即视图渲染结束后执行，可以通过此方法实现一些资源清理、记录日志信息等工作。</p>
+</li>
+</ul>
+<h2 id="拦截器的配置与使用"><a href="#拦截器的配置与使用" class="headerlink" title="拦截器的配置与使用"></a><strong>拦截器的配置与使用</strong></h2><p>在springmvc.controller包下定义一个MyInterceptor类，实现HandlerInterceptor接口</p>
+<pre><code>public class MyInterceptor implements HandlerInterceptor &#123;
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception &#123;
+        System.out.println(&quot;preHandle&quot;);
+        return true;
+    &#125;
+
+    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception &#123;
+        System.out.println(&quot;postHandle&quot;);
+    &#125;
+
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception &#123;
+        System.out.println(&quot;afterCompletion&quot;);
+    &#125;
+&#125;</code></pre>
+<p>在springmvc-dispatcher.xml中配置拦截器</p>
+<pre><code>&lt;mvc:interceptors&gt;
+    &lt;bean class=&quot;springmvc.controller.MyInterceptor&quot;&gt;&lt;/bean&gt;
+&lt;/mvc:interceptors&gt;</code></pre>
+<p>&lt;mvc： interceptors&gt; 元素用于配置一组拦截器，其子元素 <bean> 定义的是全局拦截器，即拦截所有的请求。</bean></p>
+<p>若还要定义其他拦截器，可在里面加上</p>
+<pre><code>&lt;mvc:interceptor&gt;
+    &lt;!-- 配置拦截器作用的路径 --&gt;
+    &lt;mvc:mapping path=&quot;&quot; /&gt;
+    &lt;!-- 配置不需要拦截作用的路径 --&gt;
+    &lt;mvc:exclude-mapping path=&quot;&quot; /&gt;
+    &lt;!-- 定义&lt;mvc:interceptor&gt;元素中，表示匹配指定路径的请求才进行拦截 --&gt;
+    &lt;bean class=&quot;&quot;/&gt;
+&lt;/mvc:interceptor&gt;</code></pre>
+<p>&lt;mvc： interceptor&gt; 元素的子元素必须按照 &lt;mvc： mapping…/&gt;、&lt;mvc： exclude-mapping…/&gt;、&lt;bean…/&gt; 的顺序配置。</p>
+<p>运行程序，输出端输出：</p>
+<p>preHandle<br>springmvc.controller.LoginController<br>postHandle<br>afterCompletion</p>
+<h2 id="拦截器的执行流程"><a href="#拦截器的执行流程" class="headerlink" title="拦截器的执行流程"></a><strong>拦截器的执行流程</strong></h2><p>若配置文件中只定义了一个拦截器，则根据 preHandle -&gt; ControllerMethod -&gt; postHandle -&gt; afterCompletion执行</p>
+<p>若配置了多个拦截器，则它们的 preHandle 方法将按照配置文件中拦截器的配置顺序执行，而它们的 postHandle 方法和 afterCompletion 方法则按照配置顺序的反序执行</p>
+<p>定义一个类MyInterceptor1，和类MyInterceptor一样，MyInterceptor类中的三个方法输出1，MyInterceptor1的三个方法输出2，在springmvc配置文件中定义两个拦截器interceptor、interceptor1</p>
+<pre><code>&lt;mvc:interceptors&gt;</code></pre>
+<!--        <bean class="springmvc.controller.MyInterceptor"></bean>-->
+<pre><code>    &lt;mvc:interceptor&gt;
+        &lt;mvc:mapping path=&quot;/**&quot;/&gt;
+        &lt;bean class=&quot;springmvc.controller.MyInterceptor&quot;&gt;&lt;/bean&gt;
+    &lt;/mvc:interceptor&gt;
+    &lt;mvc:interceptor&gt;
+        &lt;mvc:mapping path=&quot;/login&quot;/&gt;
+        &lt;bean class=&quot;springmvc.controller.MyInterceptor1&quot;&gt;&lt;/bean&gt;
+    &lt;/mvc:interceptor&gt;
+&lt;/mvc:interceptors&gt;</code></pre>
+<p>输出端输出：</p>
+<p>preHandle 1<br>preHandle 2<br>postHandle 2<br>postHandle 1<br>afterCompletion 2<br>afterCompletion 1</p>
+<h2 id="拦截器实例：用户的登录权限验证"><a href="#拦截器实例：用户的登录权限验证" class="headerlink" title="拦截器实例：用户的登录权限验证"></a><strong>拦截器实例：用户的登录权限验证</strong></h2><p>这个WEB应用中，主要有tologin跳转登录页面、login登录页面、result结果页面，如果用户未登录直接进入到result页面，则显示用户未登录，如果用户账号或密码错误，则提示账号或密码错误</p>
+<p>在springmvc.interceptor包下添加User类</p>
+<pre><code>public class User &#123;
+
+    private String users;
+
+    private String passwords;
+
+    //省略getter和setter方法
+&#125;
+
+@Controller
+public class UserController &#123;</code></pre>
+<p>UserController控制器</p>
+<pre><code>    @RequestMapping(&quot;/tologin&quot;)
+    public String tologin()&#123;
+        return &quot;login&quot;;
+    &#125;
+    @RequestMapping(&quot;/login&quot;)
+    public String login(User user, HttpSession session, Model model)&#123;
+        System.out.println(user.getUsers()+&quot; &quot;+user.getPasswords());
+        if(&quot;123&quot;.equals(user.getUsers())&amp;&amp;&quot;123&quot;.equals(user.getPasswords()))&#123;
+            session.setAttribute(&quot;user&quot;,user);
+            return &quot;redirect:result&quot;;
+        &#125;
+        model.addAttribute(&quot;msg&quot;,&quot;用户名或密码错误，请重新登录！&quot;);
+        return &quot;login&quot;;
+    &#125;
+    @RequestMapping(&quot;/result&quot;)
+    public String result()&#123;
+        return &quot;result&quot;;
+    &#125;
+
+    @RequestMapping(&quot;/exit&quot;)
+    public String exit(HttpServletRequest request,HttpSession session)&#123;
+    session.invalidate();
+    return &quot;login&quot;;
+&#125;
+
+&#125;</code></pre>
+<p>创建拦截器loginInterceptor</p>
+<pre><code>public class loginInterceptor implements HandlerInterceptor &#123;
+
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception &#123;
+        System.out.println(&quot;123&quot;);
+        StringBuffer url = request.getRequestURL();
+        if(url.indexOf(&quot;/tologin&quot;)&gt;=0||url.indexOf(&quot;/login&quot;)&gt;=0) return true;
+        HttpSession session = request.getSession();
+        Object obj = session.getAttribute(&quot;user&quot;);
+        if(obj != null) return true;
+        request.setAttribute(&quot;msg&quot;,&quot;请登录！&quot;);
+        request.getRequestDispatcher(&quot;/WEB-INF/login.jsp&quot;).forward(request,response);
+        return false;
+    &#125;
+
+    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception &#123;
+
+    &#125;
+
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception &#123;
+
+    &#125;
+&#125;</code></pre>
+<p>配置Dispatcher-servlet.xml</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
+       xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+       xmlns:context=&quot;http://www.springframework.org/schema/context&quot;
+       xmlns:mvc=&quot;http://www.springframework.org/schema/mvc&quot;
+       xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd&quot;&gt;
+        &lt;context:component-scan base-package=&quot;springmvc.interceptor&quot;&gt;&lt;/context:component-scan&gt;
+    &lt;bean class=&quot;org.springframework.web.servlet.view.InternalResourceViewResolver&quot;&gt;
+        &lt;property name=&quot;prefix&quot; value=&quot;/WEB-INF/&quot;&gt;&lt;/property&gt;
+        &lt;property name=&quot;suffix&quot; value=&quot;.jsp&quot;&gt;&lt;/property&gt;
+    &lt;/bean&gt;
+    &lt;mvc:interceptors&gt;
+        &lt;mvc:interceptor&gt;
+            &lt;mvc:mapping path=&quot;/**&quot;/&gt;
+            &lt;bean class=&quot;springmvc.interceptor.loginInterceptor&quot;&gt;&lt;/bean&gt;
+        &lt;/mvc:interceptor&gt;
+    &lt;/mvc:interceptors&gt;
+&lt;/beans&gt;</code></pre>
+<p>配置web.xml</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;web-app version=&quot;2.4&quot; xmlns=&quot;http://java.sun.com/xml/ns/j2ee&quot;
+         xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+         xsi:schemaLocation=&quot;http://java.sun.com/xml/ns/j2ee
+http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd&quot;&gt;
+    &lt;servlet&gt;
+        &lt;servlet-name&gt;interceptor&lt;/servlet-name&gt;
+        &lt;servlet-class&gt;
+            org.springframework.web.servlet.DispatcherServlet
+        &lt;/servlet-class&gt;
+        &lt;load-on-startup&gt;1&lt;/load-on-startup&gt;
+    &lt;/servlet&gt;
+    &lt;servlet-mapping&gt;
+        &lt;servlet-name&gt;interceptor&lt;/servlet-name&gt;
+        &lt;url-pattern&gt;/&lt;/url-pattern&gt;
+    &lt;/servlet-mapping&gt;
+&lt;/web-app&gt;</code></pre>
+<p>login.jsp：</p>
+<pre><code>&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;$Title$&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h1&gt;$&#123;msg&#125;&lt;/h1&gt;
+&lt;form method=&quot;get&quot; action=&quot;/login&quot;&gt;
+    账号：&lt;input type=&quot;text&quot; name=&quot;users&quot; id=&quot;users&quot;&gt;&lt;br&gt;
+    密码：&lt;input type=&quot;password&quot; name=&quot;passwords&quot; id=&quot;passwords&quot;&gt;&lt;br&gt;
+    &lt;input type=&quot;submit&quot; value=&quot;提交&quot; &gt;
+&lt;/form&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+<p>result.jsp：</p>
+<pre><code>&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Title&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;p&gt;当前用户：$&#123;user.users&#125;&lt;/p&gt;
+    &lt;form action=&quot;/exit&quot;&gt;
+        &lt;button type=&quot;submit&quot;&gt;退出&lt;/button&gt;
+    &lt;/form&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+<p>直接进入result<br><img src="/2020/10/04/SpringMVC/1.png" alt="1"></p>
+<p>输入账号密码<br><img src="/2020/10/04/SpringMVC/2.png" alt="2"></p>
+<p>退出<br><img src="/2020/10/04/SpringMVC/3.png" alt="3"></p>
+<p>再次直接进入result<br><img src="/2020/10/04/SpringMVC/4.png" alt="4"></p>
+<h1 id="验证器"><a href="#验证器" class="headerlink" title="验证器"></a><strong>验证器</strong></h1><h2 id="Validator接口"><a href="#Validator接口" class="headerlink" title="Validator接口"></a><strong>Validator接口</strong></h2><p>创建自定义的验证器需要实现org.springframework.validation.Validator 接口，该接口有两个接口方法：</p>
+<p>boolean supports(Class&lt;?&gt; klass)<br>void validate(Object object,Errors errors)</p>
+<p>当supports返回true时，验证器可以处理指定的Class</p>
+<p>validate 方法的功能是验证目标对象 object，并将验证错误消息存入 Errors 对象</p>
+<p>往 Errors 对象存入错误消息的方法是 reject 或 rejectValue，这两个方法的部分重载方法如下：</p>
+<p>void reject(String errorCode)<br>void reject(String errorCode,String defaultMessage)<br>void rejectValue(String filed,String errorCode)<br>void rejectValue(String filed,String errorCode,String defaultMessage)</p>
+<h2 id="ValidationUtils类"><a href="#ValidationUtils类" class="headerlink" title="ValidationUtils类"></a><strong>ValidationUtils类</strong></h2><p>org.springframework.validation.ValidationUtils 是一个工具类</p>
+<h2 id="验证器实例"><a href="#验证器实例" class="headerlink" title="验证器实例"></a>验证器实例</h2><p>引用上面用户登录的例子，当用户用户名或密码为空的时候，提示错误</p>
+<p>在springmvc.validator包下创建MyValidator类，实现Validator接口</p>
+<pre><code>@Component
+public class MyValidator implements Validator &#123;
+    public boolean supports(Class&lt;?&gt; aClass) &#123;
+        return User.class.isAssignableFrom(aClass);
+    &#125;
+
+    public void validate(Object o, Errors errors) &#123;
+        User user = (User)o;
+        ValidationUtils.rejectIfEmpty(errors,&quot;users&quot;,&quot;user.users.required&quot;);
+        ValidationUtils.rejectIfEmpty(errors,&quot;passwords&quot;,&quot;passwords.invalid&quot;);
+    &#125;
+&#125;</code></pre>
+<p>在interceptor-servlet.xml中添加对validator包的自动扫描机制</p>
+<pre><code>    &lt;context:component-scan base-package=&quot;springmvc.validator&quot;&gt;&lt;/context:component-scan&gt;</code></pre>
+<p>修改UserController中的login处理方法</p>
+<pre><code>public String login(@ModelAttribute User user, HttpSession session, Model model, BindingResult result)&#123;
+    MyValidator myValidator = new MyValidator();
+    if(myValidator.supports(User.class))&#123;
+        myValidator.validate(user,result);
+        List&lt;ObjectError&gt; list = result.getAllErrors();
+        for(ObjectError error:list)&#123;
+            System.out.println(error.getCode());
+        &#125;
+    &#125;
+    if(result.hasErrors())  return &quot;redirect:tologin&quot;;
+    if(&quot;123&quot;.equals(user.getUsers())&amp;&amp;&quot;123&quot;.equals(user.getPasswords()))&#123;
+        session.setAttribute(&quot;user&quot;,user);
+        return &quot;redirect:result&quot;;
+    &#125;
+    model.addAttribute(&quot;msg&quot;,&quot;用户名或密码错误，请重新登录！&quot;);
+    return &quot;login&quot;;
+&#125;</code></pre>
+<p>此时，若不输入账号密码直接登录，则终端输出</p>
+<p>user.users.required<br>passwords.invalid</p>
+<p>##<strong>Spring MVC JSR-303验证框架之Hibernate-Validator</strong></p>
+<p>JSR-303是一个数据验证的规范，JSR-303的校验是基于注解的，Spring中没有对这一规范进行实现，所以在SpringMVC中使用JSR-303的时候就需要提供一个对JSR-303规范的实现，而Hibernate-Validator是实现了这一规范的，使用Hibernate-Validator进行验证，不再需要实现Validator接口</p>
+<p>Hibernate-Validator内部已经定义好了一系列的限制注解，我们只需要把这些注解标记在需要验证的实体类的属性上或是其对应的get方法上</p>
+<p><strong>注：要使用Hibernate-Validator进行验证，需要在配置文件中加上</strong></p>
+<pre><code>    &lt;mvc:annotation-driven/&gt;  </code></pre>
+<p><strong>并添加依赖：</strong></p>
+<pre><code>dependency&gt;
+        &lt;groupId&gt;org.hibernate&lt;/groupId&gt;
+        &lt;artifactId&gt;hibernate-validator&lt;/artifactId&gt;
+        &lt;version&gt;6.1.6.Final&lt;/version&gt;
+&lt;/dependency&gt;</code></pre>
+<p>使用Hibernate-Validator进行验证，可以在要验证的 类的属性 或 getter方法加上相应的注解</p>
+<table>
+<thead>
+<tr>
+<th>标签</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>@Nul</td>
+<td>被注释的元素必须为 null</td>
+</tr>
+<tr>
+<td>@NotNull</td>
+<td>被注释的元素必须不为 null</td>
+</tr>
+<tr>
+<td>@AssertTrue</td>
+<td>被注释的元素必须为 true</td>
+</tr>
+<tr>
+<td>@AssertFalse</td>
+<td>被注释的元素必须为 false</td>
+</tr>
+<tr>
+<td>@Min(value)</td>
+<td>被注释的元素必须是一个数字，其值必须大于等于指定的最小值</td>
+</tr>
+<tr>
+<td>@Max(value)</td>
+<td>被注释的元素必须是一个数字，其值必须小于等于指定的最大值</td>
+</tr>
+<tr>
+<td>@DecimalMin(value)</td>
+<td>被注释的元素必须是一个数字，其值必须大于等于指定的最小值</td>
+</tr>
+<tr>
+<td>@DecimalMax(value)</td>
+<td>被注释的元素必须是一个数字，其值必须小于等于指定的最大值</td>
+</tr>
+<tr>
+<td>@Size(max, min)</td>
+<td>被注释的元素的大小必须在指定的范围内，元素必须为集合，代表集合个数</td>
+</tr>
+<tr>
+<td>@Digits (integer, fraction)</td>
+<td>被注释的元素必须是一个数字，其值必须在可接受的范围内</td>
+</tr>
+<tr>
+<td>@Past</td>
+<td>被注释的元素必须是一个过去的日期</td>
+</tr>
+<tr>
+<td>@Future</td>
+<td>被注释的元素必须是一个将来的日期</td>
+</tr>
+<tr>
+<td>@Email</td>
+<td>被注释的元素必须是电子邮箱地址</td>
+</tr>
+<tr>
+<td>@Length(min=, max=)</td>
+<td>被注释的字符串的大小必须在指定的范围内，必须为数组或者字符串，若微数组则表示为数组长度，字符串则表示为字符串长度</td>
+</tr>
+<tr>
+<td>@NotEmpty</td>
+<td>被注释的字符串的必须非空</td>
+</tr>
+<tr>
+<td>@Range(min=, max=)</td>
+<td>被注释的元素必须在合适的范围内</td>
+</tr>
+<tr>
+<td>@NotBlank</td>
+<td>被注释的字符串的必须非空</td>
+</tr>
+<tr>
+<td>@Pattern(regexp = )</td>
+<td>正则表达式校验</td>
+</tr>
+<tr>
+<td>@Valid</td>
+<td>对象级联校验,即校验对象中对象的属性</td>
+</tr>
+</tbody></table>
+<p>如：</p>
+<p>在User的字段中添加标签</p>
+<pre><code>public class User &#123;
+
+    @NotBlank(message = &quot;用户名不能为空&quot;)
+    private String users;
+
+    @NotBlank(message = &quot;密码不能为空&quot;)
+    @Length(min = 3,max = 8,message = &quot;密码位数为3-8位&quot;)
+    private String passwords;
+
+    //省略getter和setter方法
+&#125;</code></pre>
+<p>在UserController添加test处理方法</p>
+<pre><code>@RequestMapping(&quot;/test&quot;)
+public String test(@Valid User user,BindingResult result)&#123;
+    if(result.hasErrors())&#123;
+        for (ObjectError error:result.getAllErrors())&#123;
+            System.out.println(error.getDefaultMessage());
+        &#125;
+    &#125;
+    return &quot;test&quot;;
+&#125;</code></pre>
+<p>test页面和login页面一样（省去拦截器）</p>
+<p>部署项目，此时，如果账号密码都为空，直接登录，则输出</p>
+<p>用户名不能为空<br>密码位数为3-8位<br>密码不能为空</p>
+<h1 id="RESTful风格"><a href="#RESTful风格" class="headerlink" title="RESTful风格"></a><strong>RESTful风格</strong></h1><p>RESTful风格是一个资源定位及操作的风格，它既不是标准也不是协议，仅仅只是一种风格，主要用于客户端和服务器交互类的软件。基于这个风格设计的软件可以更简洁，更有层次，更易于实现缓存等机制。</p>
+<p>使用RESTful风格可以通过相同的请求方式实现不同的效果，对于相同的请求方式，只要在表单元素中使用不同的method，然后在mvc的控制器相应的处理方法中使用不同的method作出回应，即可实现</p>
+<p>原来的请求方式：</p>
+<p><a href="http://localhost:8080/login?name=123&amp;passwords=123">http://localhost:8080/login?name=123&amp;passwords=123</a></p>
+<p>使用RESTful风格：</p>
+<p><a href="http://localhost:8080/login/123/123">http://localhost:8080/login/123/123</a></p>
+<pre><code>@RequestMapping(&quot;/test/&#123;name&#125;/&#123;passwords&#125;&quot;)
+public String login(@PathVariable int name,@PathVariable String passwords)&#123;
+    System.out.println(name);
+    System.out.println(passwords);
+    return &quot;newresult&quot;;
+&#125;</code></pre>
+<p>newresult页面为新jsp</p>
+<pre><code>&lt;%@ page contentType=&quot;text/html;charset=UTF-8&quot; language=&quot;java&quot; %&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Title&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;登录成功&lt;/h1&gt;
+    $&#123;name&#125;
+    &lt;br&gt;
+    $&#123;passwords&#125;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+<p>还可以使用对应于表单中的请求方式</p>
+<pre><code>@RequestMapping(&quot;/test&quot;,method = RequestMethod.POST)
+public String login(@PathVariable int name,@PathVariable String passwords)&#123;
+    System.out.println(name);
+    System.out.println(passwords);
+    return &quot;newresult&quot;;
+&#125;</code></pre>
+<p>此时，若表单中的请求方式为post，则会出现405方法不允许错误</p>
+<p>也可以使用基于注解的请求方式</p>
+<pre><code>@GetMapping(&quot;/login/&#123;name&#125;/&#123;passwords&#125;&quot;)
+public String login(@PathVariable int name, @PathVariable String passwords, Model model)&#123;
+    model.addAttribute(&quot;name&quot;,name);
+    model.addAttribute(&quot;passwords&quot;,passwords);
+    return &quot;result&quot;;
+&#125;</code></pre>
+]]></content>
+      <tags>
+        <tag>Spring</tag>
+        <tag>SpringMVC</tag>
+        <tag>java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>MVC Cannot resolve reference to bean &#39;cacheManager&#39;异常解决</title>
+    <url>/2020/10/12/mvcwrong/</url>
+    <content><![CDATA[<p>在新建的MVC项目中，要想使用注解驱动，出现异常信息：</p>
+<pre><code>12-Oct-2020 17:43:10.828 警告 [RMI TCP Connection(21)-127.0.0.1] org.springframework.web.context.support.XmlWebApplicationContext.refresh Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name &#39;org.springframework.cache.interceptor.CacheInterceptor#0&#39;: Cannot resolve reference to bean &#39;cacheManager&#39; while setting bean property &#39;cacheManager&#39;; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No bean named &#39;cacheManager&#39; available
+12-Oct-2020 17:43:10.830 严重 [RMI TCP Connection(21)-127.0.0.1] org.springframework.web.servlet.DispatcherServlet.initServletBean Context initialization failed
+    org.springframework.beans.factory.BeanCreationException: Error creating bean with name &#39;org.springframework.cache.interceptor.CacheInterceptor#0&#39;: Cannot resolve reference to bean &#39;cacheManager&#39; while setting bean property &#39;cacheManager&#39;; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No bean named &#39;cacheManager&#39; available
+        at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:342)
+        at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveValueIfNecessary(BeanDefinitionValueResolver.java:113)
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.applyPropertyValues(AbstractAutowireCapableBeanFactory.java:1699)
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1444)
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:594)
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:517)
+        at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:323)
+        at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:222)
+        at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:321)
+        at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:202)
+        at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:879)
+        at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:878)
+        at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:550)
+        at org.springframework.web.servlet.FrameworkServlet.configureAndRefreshWebApplicationContext(FrameworkServlet.java:702)
+        at org.springframework.web.servlet.FrameworkServlet.createWebApplicationContext(FrameworkServlet.java:668)
+        at org.springframework.web.servlet.FrameworkServlet.createWebApplicationContext(FrameworkServlet.java:716)
+        at org.springframework.web.servlet.FrameworkServlet.initWebApplicationContext(FrameworkServlet.java:591)
+        at org.springframework.web.servlet.FrameworkServlet.initServletBean(FrameworkServlet.java:530)
+        at org.springframework.web.servlet.HttpServletBean.init(HttpServletBean.java:170)
+        at javax.servlet.GenericServlet.init(GenericServlet.java:158)
+        at org.apache.catalina.core.StandardWrapper.initServlet(StandardWrapper.java:1134)
+        at org.apache.catalina.core.StandardWrapper.loadServlet(StandardWrapper.java:1089)
+        at org.apache.catalina.core.StandardWrapper.load(StandardWrapper.java:983)
+        at org.apache.catalina.core.StandardContext.loadOnStartup(StandardContext.java:4864)
+        at org.apache.catalina.core.StandardContext.startInternal(StandardContext.java:5173)
+        at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:183)
+        at org.apache.catalina.core.ContainerBase.addChildInternal(ContainerBase.java:717)
+        at org.apache.catalina.core.ContainerBase.addChild(ContainerBase.java:690)
+        at org.apache.catalina.core.StandardHost.addChild(StandardHost.java:706)
+        at org.apache.catalina.startup.HostConfig.manageApp(HostConfig.java:1727)
+        at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+        at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+        at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+        at java.base/java.lang.reflect.Method.invoke(Method.java:564)
+        at org.apache.tomcat.util.modeler.BaseModelMBean.invoke(BaseModelMBean.java:288)
+        at java.management/com.sun.jmx.interceptor.DefaultMBeanServerInterceptor.invoke(DefaultMBeanServerInterceptor.java:809)
+        at java.management/com.sun.jmx.mbeanserver.JmxMBeanServer.invoke(JmxMBeanServer.java:801)
+        at org.apache.catalina.mbeans.MBeanFactory.createStandardContext(MBeanFactory.java:456)
+        at org.apache.catalina.mbeans.MBeanFactory.createStandardContext(MBeanFactory.java:405)
+        at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+        at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+        at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+        at java.base/java.lang.reflect.Method.invoke(Method.java:564)
+        at org.apache.tomcat.util.modeler.BaseModelMBean.invoke(BaseModelMBean.java:288)
+        at java.management/com.sun.jmx.interceptor.DefaultMBeanServerInterceptor.invoke(DefaultMBeanServerInterceptor.java:809)
+        at java.management/com.sun.jmx.mbeanserver.JmxMBeanServer.invoke(JmxMBeanServer.java:801)
+        at java.management/com.sun.jmx.remote.security.MBeanServerAccessController.invoke(MBeanServerAccessController.java:468)
+        at java.management.rmi/javax.management.remote.rmi.RMIConnectionImpl.doOperation(RMIConnectionImpl.java:1466)
+        at java.management.rmi/javax.management.remote.rmi.RMIConnectionImpl$PrivilegedOperation.run(RMIConnectionImpl.java:1307)
+        at java.base/java.security.AccessController.doPrivileged(AccessController.java:691)
+        at java.management.rmi/javax.management.remote.rmi.RMIConnectionImpl.doPrivilegedOperation(RMIConnectionImpl.java:1406)
+        at java.management.rmi/javax.management.remote.rmi.RMIConnectionImpl.invoke(RMIConnectionImpl.java:827)
+        at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+        at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+        at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+        at java.base/java.lang.reflect.Method.invoke(Method.java:564)
+        at java.rmi/sun.rmi.server.UnicastServerRef.dispatch(UnicastServerRef.java:359)
+        at java.rmi/sun.rmi.transport.Transport$1.run(Transport.java:200)
+        at java.rmi/sun.rmi.transport.Transport$1.run(Transport.java:197)
+        at java.base/java.security.AccessController.doPrivileged(AccessController.java:691)
+        at java.rmi/sun.rmi.transport.Transport.serviceCall(Transport.java:196)
+        at java.rmi/sun.rmi.transport.tcp.TCPTransport.handleMessages(TCPTransport.java:587)
+        at java.rmi/sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.run0(TCPTransport.java:828)
+        at java.rmi/sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.lambda$run$0(TCPTransport.java:705)
+        at java.base/java.security.AccessController.doPrivileged(AccessController.java:391)
+        at java.rmi/sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.run(TCPTransport.java:704)
+        at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1130)
+        at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:630)
+        at java.base/java.lang.Thread.run(Thread.java:832)
+    Caused by: org.springframework.beans.factory.NoSuchBeanDefinitionException: No bean named &#39;cacheManager&#39; available
+        at org.springframework.beans.factory.support.DefaultListableBeanFactory.getBeanDefinition(DefaultListableBeanFactory.java:805)
+        at org.springframework.beans.factory.support.AbstractBeanFactory.getMergedLocalBeanDefinition(AbstractBeanFactory.java:1278)
+        at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:297)
+        at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:276)
+        at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:202)
+        at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:330)
+        ... 68 more</code></pre>
+<p>解决方案：</p>
+<p>在配置Dispatcher的xml文件中，   </p>
+<pre><code>&lt;mvc:annotation-driven&gt;&lt;/mvc:annotation-driven&gt;</code></pre>
+<p>使用错误</p>
+<p>因为annotation-driven有几个同名的</p>
+<p><img src="/2020/10/12/mvcwrong/driven.jpg" alt="driven"></p>
+<p>如果要选择注解驱动，要选择第三个</p>
+]]></content>
+      <tags>
+        <tag>Spring</tag>
+        <tag>SpringMVC</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ajax简介</title>
+    <url>/2020/10/13/ajax/</url>
+    <content><![CDATA[<h1 id="什么是ajax"><a href="#什么是ajax" class="headerlink" title="什么是ajax"></a><strong>什么是ajax</strong></h1><p>Ajax即“Asynchronous Javascript And XML”(异步JavaScript 和XML)，是指一种创建交互式网页应用的网页开发技术。通过在后台与服务器进行少量数据交换，Ajax可以使用网页实现异步更新。这意味着可以在不重新加载整个网页的情况下，对网页的某部分进行更新（无刷新技术）。传统的网页（不使用Ajax）如果需要更新内容，必须重载整个网页页面。</p>
+<p>使用ajax，要在html或jsp文件中加上对ajax的引用</p>
+<pre><code>&lt;script src=&quot;https://s3.pstatp.com/cdn/expire-1-M/jquery/3.3.1/jquery.min.js&quot;&gt;&lt;/script&gt;</code></pre>
+<p>一个完整的ajax常用请求如下：</p>
+<pre><code>&lt;script&gt;
+    function uservalidator() &#123;
+        $.ajax(&#123;
+            //请求的url地址
+            url:&quot;$&#123;pageContext.request.contextPath&#125;/test&quot;,
+            //参数值 可以传递Json字符串类型 也可以传递对象类型
+            data:&#123;&quot;name&quot;:$(&quot;#user&quot;).val(),&quot;passwords&quot;:$(&quot;#passwords&quot;).val()&#125;,
+            //参数类型
+            //dataType:&quot;json&quot;,
+            //请求方式
+            type:&quot;GET&quot;,
+            //回调函数
+            success:function (data) &#123;
+                $(&quot;#usermsg&quot;).html(data)
+            &#125;
+        &#125;)
+    &#125;
+&lt;/script&gt;</code></pre>
+<p>也可以将ajax换成相应的请求方法    $.get({…})、$.post({…}) 等等</p>
+<p>ajax与mvc的交互过程如下：</p>
+<p><img src="/2020/10/13/ajax/process.jpg" alt="process"></p>
+<h1 id="ajax和jsp"><a href="#ajax和jsp" class="headerlink" title="ajax和jsp"></a><strong>ajax和jsp</strong></h1><p>为什么现在前后端的数据交互基本上不用jsp而使用html+ajax？</p>
+<p>首先要理解jsp的原理和ajax的原理</p>
+<ul>
+<li>jsp原理：</li>
+</ul>
+<p>jsp的本质是servlet，服务器通过相应的请求找到jsp页面并将jsp页面转换成java程序（servlet），后台把返回的数据通过这段java代码将结果按照html的格式输出给前端浏览器显示。在jsp中，html和java代码相结合</p>
+<ul>
+<li>ajax原理：</li>
+</ul>
+<p>服务器通过json直接把数据返回给前端浏览器，而浏览器中使用js解析数据，并改变浏览器中的内容</p>
+<ul>
+<li>jsp的缺点：</li>
+</ul>
+<p>1.动态和静态资源放在一起，一旦服务器出现状况，前后台一起玩完，用户体验极差。</p>
+<p>2.一旦jsp出现了问题，就需要前端后端发开人员一块来分析解决，效率低。</p>
+<p>3.jsp无法使用nginx等。</p>
+<p>4.jsp页面复杂，难以修改。</p>
+<p>5.第一次加载jsp需要编译成servlet，时间久，而且业务量大的时候，jsp负担太大。</p>
+<p>6.jsp技术无法动态的展示数据，返回数据的时候都是整个页面一起返回，没有办法做到前后端分离</p>
+<p>由于jsp的这些缺点，前后端分离的思想很快就开始流行了</p>
+<p>** 项目开发的趋势：实现前后端的真正解耦**</p>
+<p>以前的老项目中：</p>
+<p>客户端请求 -&gt; 服务端处理请求 -&gt; 业务逻辑 -&gt; 解析jsp文件 -&gt; 返回jsp</p>
+<p>新的方式：</p>
+<p>客户端请求 -&gt; html页面调用接口产生数据（ajax、json） -&gt; html动态改变内容</p>
+<p>前后端各管各，要进行数据交互的时候，只要使用前后端约定好的接口进行交互即可</p>
+<p><strong>但是jsp和ajax并不冲突，很多网站往往将两者结合，比如，首屏的渲染使用jsp，数据的交互使用ajax</strong></p>
+<h1 id="ajax与mvc交互实例"><a href="#ajax与mvc交互实例" class="headerlink" title="ajax与mvc交互实例"></a><strong>ajax与mvc交互实例</strong></h1><p>模仿注册页面中账号和密码的有效性检验</p>
+<p>User类：</p>
+<p>@Component<br>public class User {</p>
+<pre><code>@NotBlank(message = &quot;用户名不能为空&quot;)
+private String name;
+@NotBlank(message = &quot;密码不能为空&quot;)
+@Length(min = 3,max = 8,message = &quot;密码位数为3-8位&quot;)
+private String passwords;
+
+public String getPasswords() &#123;
+    return passwords;
+&#125;
+
+public String getName() &#123;
+    return name;
+&#125;
+
+public void setPasswords(String passwords) &#123;
+
+    this.passwords = passwords;
+&#125;
+
+public void setName(String name) &#123;
+    this.name = name;
+&#125;
+
+public String toString()&#123;
+    return &quot;[name=&quot;+name+&quot;,passwords=&quot;+passwords+&quot;]&quot;;
+&#125;</code></pre>
+<p>}</p>
+<p>UserController：</p>
+<pre><code>@Controller
+public class UserController &#123;
+
+    @RequestMapping(&quot;/test&quot;)
+    @ResponseBody
+    public String test(User user)&#123;
+//        System.out.println(user+&quot; &quot;+passwords);
+        System.out.println(user);
+        String msg = &quot;&quot;;
+        if(user.getName()!=null)&#123;
+            if(user.getName().equals(&quot;123&quot;))&#123;
+                msg =  &quot;ok&quot;;
+            &#125;else&#123;
+                msg =  &quot;failed&quot;;
+            &#125;
+        &#125;
+        if(user.getPasswords()!=null)&#123;
+            if(user.getPasswords().equals(&quot;1233&quot;))&#123;
+                msg =  &quot;ok&quot;;
+            &#125;else&#123;
+                msg = &quot;failed&quot;;
+            &#125;
+        &#125;
+        return msg;
+    &#125;
+
+&#125;</code></pre>
+<p>jsp文件：</p>
+<pre><code>&lt;%@ page contentType=&quot;text/html;charset=UTF-8&quot; language=&quot;java&quot; %&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Title&lt;/title&gt;
+    &lt;script src=&quot;https://s3.pstatp.com/cdn/expire-1-M/jquery/3.3.1/jquery.min.js&quot;&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;script&gt;
+        function uservalidator() &#123;
+            $.ajax(&#123;
+                url:&quot;$&#123;pageContext.request.contextPath&#125;/test&quot;,
+                data:&#123;&quot;name&quot;:$(&quot;#user&quot;).val(),&quot;passwords&quot;:$(&quot;#passwords&quot;).val()&#125;,
+                success:function (data) &#123;
+                    $(&quot;#usermsg&quot;).html(data)
+                &#125;
+            &#125;)
+        &#125;
+    &lt;/script&gt;
+    &lt;script&gt;
+        function passwordsvalidator() &#123;
+            $.ajax(&#123;
+                url:&quot;$&#123;pageContext.request.contextPath&#125;/test&quot;,
+                data:&#123;&quot;name&quot;:$(&quot;#user&quot;).val(),&quot;passwords&quot;:$(&quot;#passwords&quot;).val()&#125;,
+                success:function (data) &#123;
+                    $(&quot;#pswmsg&quot;).html(data)
+                &#125;
+            &#125;)
+        &#125;
+    &lt;/script&gt;
+    &lt;form&gt;
+        用户名：&lt;input type=&quot;text&quot; name=&quot;user&quot; id=&quot;user&quot; onblur=&quot;uservalidator()&quot;&gt;&lt;br&gt;
+        &lt;p id=&quot;usermsg&quot;&gt;&lt;/p&gt;
+        密码：&lt;input type=&quot;password&quot; name=&quot;passwords&quot; id=&quot;passwords&quot; onblur=&quot;passwordsvalidator()&quot;&gt;
+        &lt;p id=&quot;pswmsg&quot;&gt;&lt;/p&gt;
+    &lt;/form&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+]]></content>
+      <tags>
+        <tag>ajax</tag>
       </tags>
   </entry>
 </search>

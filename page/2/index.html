@@ -1,0 +1,173 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>十二点前要睡觉</title><meta name="author" content="leobro,zhangakenug@qq.com"><meta name="copyright" content="leobro"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="description" content="可以每晚都十二点前睡觉吗">
+<meta property="og:type" content="website">
+<meta property="og:title" content="十二点前要睡觉">
+<meta property="og:url" content="http://example.com/page/2/index.html">
+<meta property="og:site_name" content="十二点前要睡觉">
+<meta property="og:description" content="可以每晚都十二点前睡觉吗">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/WechatIMG68.jpeg">
+<meta property="article:author" content="leobro">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/WechatIMG68.jpeg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/page/2/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  hexoversion: '5.2.0',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  ClickShowText: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+};
+
+var saveToLocal = {
+  set: function setWithExpiry(key, value, ttl) {
+    const now = new Date()
+    const expiryDay = ttl * 86400000
+    const item = {
+      value: value,
+      expiry: now.getTime() + expiryDay,
+    }
+    localStorage.setItem(key, JSON.stringify(item))
+  },
+
+  get: function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
+
+    if (!itemStr) {
+      return undefined
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
+
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key)
+      return undefined
+    }
+    return item.value
+  }
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: false,
+  isHome: true,
+  isHighlightShrink: false,
+  isSidebar: false,
+  postUpdate: '2020-10-19 23:36:07'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>var activateDarkMode = function () {
+  document.documentElement.setAttribute('data-theme', 'dark')
+  if (document.querySelector('meta[name="theme-color"]') !== null) {
+    document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+  }
+}
+var activateLightMode = function () {
+  document.documentElement.setAttribute('data-theme', 'light')
+  if (document.querySelector('meta[name="theme-color"]') !== null) {
+    document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+  }
+}
+
+var autoChangeMode = 'false'
+var t = saveToLocal.get('theme')
+if (autoChangeMode === '1') {
+  var isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+  var isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+  var isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+  var hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+  if (t === undefined) {
+    if (isLightMode) activateLightMode()
+    else if (isDarkMode) activateDarkMode()
+    else if (isNotSpecified || hasNoSupport) {
+      var now = new Date()
+      var hour = now.getHours()
+      var isNight = hour <= 6 || hour >= 18
+      isNight ? activateDarkMode() : activateLightMode()
+    }
+    window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+      if (saveToLocal.get('theme') === undefined) {
+        e.matches ? activateDarkMode() : activateLightMode()
+      }
+    })
+  } else if (t === 'light') activateLightMode()
+  else activateDarkMode()
+} else if (autoChangeMode === '2') {
+  now = new Date()
+  hour = now.getHours()
+  isNight = hour <= 6 || hour >= 18
+  if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+  else if (t === 'light') activateLightMode()
+  else activateDarkMode()
+} else {
+  if (t === 'dark') activateDarkMode()
+  else if (t === 'light') activateLightMode()
+}</script><meta name="generator" content="Hexo 5.2.0"></head><body><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="/img/WechatIMG68.jpeg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">文章</div><div class="length_num">12</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/tags/"><div class="headline">标签</div><div class="length_num">11</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></div><div class="menus_item"><a class="site-page" href="/messageboard/"><i class="fa-fw fa fa-link"></i><span> 留言板</span></a></div></div></div></div><div id="body-wrap"><header class="full_page" id="page-header" style="background-image: url(/img/f4131bc77889e084f2b3648261cc43df.jpg)"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">十二点前要睡觉</a></span><span id="menus"><div id="search_button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></div><div class="menus_item"><a class="site-page" href="/messageboard/"><i class="fa-fw fa fa-link"></i><span> 留言板</span></a></div></div><span class="close" id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="site-info"><h1 id="site-title">十二点前要睡觉</h1><div id="site-subtitle"><span id="subtitle"></span></div></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout_page" id="content-inner"><div class="recent-posts" id="recent-posts"><div class="recent-post-item"><div class="post_cover left_radius"><a href="/2020/09/21/Python/" title="Python入门学习">     <img class="post_bg" src="/img/wallhaven-39xklv.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Python入门学习"></a></div><div class="recent-post-info"><a class="article-title" href="/2020/09/21/Python/" title="Python入门学习">Python入门学习</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2020-09-21T00:31:07.000Z" title="发表于 2020-09-21 08:31:07">2020-09-21</time></span><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fas fa-tag article-meta__icon"></i><a class="article-meta__tags" href="/tags/python/">python</a></span></div><div class="content">这学期选修了信息检索（python基础入门），所以有必要将python的基础markdown，便于以后学习。语言都具有相似性，下面列举出python与其他语言不同的地方
+一.什么是python：python是一个高层次的结合了解释性、编译性、互动性和面向对象的脚本语言。
+python语言是一种解释性语言：这意味着在代码编写、执行过程中没有了编译这个环节
+二.python基础：语句结束符：python中可以不写结束符； 如：print(val)    
+变量定义与删除：python中变量类型是弱类型，定义变量时不用声明数据类型，可以用del删除变量
+注释：行与缩进：行与缩进是python语言最具特色的一个地方，python不像其他语言一样使用大括号来包含一个代码块，而是使用：来包含代码块，缩进相同的代码块为同一层次。
+如：
+if True:
+        print(&quot;True&quot;);
+    else:
+        print(&quot;False&quot;);
+多行语句：如果一行代码很长，可以用 \ 来将代码分行如：
+total = item_one +  ...</div></div></div><div class="recent-post-item"><div class="post_cover right_radius"><a href="/2020/09/21/NewPassage/" title="我的第一篇博文">     <img class="post_bg" src="/img/wallhaven-dg7y23.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="我的第一篇博文"></a></div><div class="recent-post-info"><a class="article-title" href="/2020/09/21/NewPassage/" title="我的第一篇博文">我的第一篇博文</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2020-09-20T16:06:37.000Z" title="发表于 2020-09-21 00:06:37">2020-09-21</time></span></div><div class="content">这是我的第一篇博文，以后要把学习过程中的知识点写在自己的博客上😎
+</div></div></div><nav id="pagination"><div class="pagination"><a class="extend prev" rel="prev" href="/"><i class="fas fa-chevron-left fa-fw"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span></div></nav></div><div class="aside_content" id="aside_content"><div class="card-widget card-info"><div class="card-content"><div class="card-info-avatar is-center"><img class="avatar-img" src="/img/WechatIMG68.jpeg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">leobro</div><div class="author-info__description">可以每晚都十二点前睡觉吗</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length_num">12</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length_num">11</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div></div><div class="sticky_layout"><div class="card-widget card-announcement"><div class="card-content"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div></div><div class="card-widget card-recent-post"><div class="card-content"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2020/10/13/ajax/" title="ajax简介"><img src="/img/wallhaven-3k6d96.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="ajax简介"/></a><div class="content"><a class="title" href="/2020/10/13/ajax/" title="ajax简介">ajax简介</a><time datetime="2020-10-13T01:18:54.000Z" title="发表于 2020-10-13 09:18:54">2020-10-13</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2020/10/12/mvcwrong/" title="MVC Cannot resolve reference to bean 'cacheManager'异常解决"><img src="/img/wallhaven-2em38y.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="MVC Cannot resolve reference to bean 'cacheManager'异常解决"/></a><div class="content"><a class="title" href="/2020/10/12/mvcwrong/" title="MVC Cannot resolve reference to bean 'cacheManager'异常解决">MVC Cannot resolve reference to bean 'cacheManager'异常解决</a><time datetime="2020-10-12T09:47:17.000Z" title="发表于 2020-10-12 17:47:17">2020-10-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2020/10/04/Servlet/" title="JavaWeb之Servlet"><img src="/img/wallhaven-2em38y.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="JavaWeb之Servlet"/></a><div class="content"><a class="title" href="/2020/10/04/Servlet/" title="JavaWeb之Servlet">JavaWeb之Servlet</a><time datetime="2020-10-04T04:39:22.000Z" title="发表于 2020-10-04 12:39:22">2020-10-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2020/10/04/SpringMVC/" title="SpringMVC入门"><img src="/img/wallhaven-lmeq1r.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="SpringMVC入门"/></a><div class="content"><a class="title" href="/2020/10/04/SpringMVC/" title="SpringMVC入门">SpringMVC入门</a><time datetime="2020-10-04T03:24:25.000Z" title="发表于 2020-10-04 11:24:25">2020-10-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2020/10/02/AOP2/" title="AOP的API实现及SpringAOP实现原理"><img src="/img/wallhaven-832xlo.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="AOP的API实现及SpringAOP实现原理"/></a><div class="content"><a class="title" href="/2020/10/02/AOP2/" title="AOP的API实现及SpringAOP实现原理">AOP的API实现及SpringAOP实现原理</a><time datetime="2020-10-02T15:40:14.000Z" title="发表于 2020-10-02 23:40:14">2020-10-02</time></div></div></div></div></div><div class="card-widget card-tags"><div class="card-content"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/JavaStream%E6%B5%81/" style="font-size: 1.1em; color: rgb(81, 180, 141)">JavaStream流</a><a href="/tags/MarkDown/" style="font-size: 1.1em; color: rgb(36, 48, 51)">MarkDown</a><a href="/tags/python/" style="font-size: 1.1em; color: rgb(198, 135, 110)">python</a><a href="/tags/Spring/" style="font-size: 1.5em; color: rgb(108, 113, 23)">Spring</a><a href="/tags/IOC/" style="font-size: 1.1em; color: rgb(86, 172, 91)">IOC</a><a href="/tags/AOP/" style="font-size: 1.23em; color: rgb(131, 114, 118)">AOP</a><a href="/tags/JavaWeb/" style="font-size: 1.1em; color: rgb(22, 51, 51)">JavaWeb</a><a href="/tags/Servlet/" style="font-size: 1.1em; color: rgb(8, 70, 159)">Servlet</a><a href="/tags/SpringMVC/" style="font-size: 1.23em; color: rgb(96, 139, 71)">SpringMVC</a><a href="/tags/ajax/" style="font-size: 1.1em; color: rgb(21, 106, 29)">ajax</a><a href="/tags/java/" style="font-size: 1.37em; color: rgb(48, 107, 28)">java</a></div></div></div><div class="card-widget card-archives"><div class="card-content"><div class="item-headline"><i class="fas fa-archive"></i><span>归档</span></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2020/10/"><span class="card-archive-list-date">十月 2020</span><span class="card-archive-list-count">5</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2020/09/"><span class="card-archive-list-date">九月 2020</span><span class="card-archive-list-count">7</span></a></li></ul></div></div><div class="card-widget card-webinfo"><div class="card-content"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站资讯</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">12</div></div><div class="webinfo-item"><div class="item-name">本站总字数 :</div><div class="item-count">28.9k</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"></div></div><div class="webinfo-item"><div class="item-name">本站总访问量 :</div><div class="item-count" id="busuanzi_value_site_pv"></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2020-10-19T15:36:07.460Z"></div></div></div></div></div></div></div></main><footer id="footer" style="background-image: url(/img/f4131bc77889e084f2b3648261cc43df.jpg)"><div id="footer-wrap"><div class="copyright">&copy;2020 By leobro</div><div class="icp"><a><img class="icp-icon" src="/img/icp.png"/><span>welcome to my blog!</span></a></div></div></footer></div><section id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></section><div class="search-dialog" id="local-search"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"><div id="local-hits"></div><div id="local-stats"><div class="local-search-stats__hr" id="hr"><span>由</span> <a target="_blank" rel="noopener" href="https://github.com/wzpan/hexo-generator-search" style="color:#49B1F5;">hexo-generator-search</a>
+ <span>提供支持</span></div></div></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>function subtitleType () {
+  if (true) { 
+    var typed = new Typed("#subtitle", {
+      strings: "生活就像海洋，只有意志坚强的人才能到达彼岸".split(","),
+      startDelay: 300,
+      typeSpeed: 150,
+      loop: false,
+      backSpeed: 50
+    })
+  } else {
+    document.getElementById("subtitle").innerHTML = '生'
+  }
+}
+
+if (true) {
+  if (typeof Typed === 'function') subtitleType()
+  else $.getScript('https://cdn.jsdelivr.net/npm/typed.js/lib/typed.min.js', subtitleType)
+} else {
+  subtitleType()
+}</script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></div></body></html>

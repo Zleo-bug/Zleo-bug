@@ -3316,4 +3316,126 @@ public class UserController &#123;
         <tag>ajax</tag>
       </tags>
   </entry>
+  <entry>
+    <title>java jdbc的基本使用</title>
+    <url>/2020/10/20/javadb/</url>
+    <content><![CDATA[<p>今天在做java实验的时候用到了jdbc，现在顺便复习一下jdbc的操作。</p>
+<h1 id="什么是JDBC"><a href="#什么是JDBC" class="headerlink" title="什么是JDBC"></a><strong>什么是JDBC</strong></h1><p>JDBC全称为 Java Database Connectivity ，jdbc可以通过载入不同的数据库的驱动程序与不同的数据库进行连接</p>
+<h1 id="jdbc的使用"><a href="#jdbc的使用" class="headerlink" title="jdbc的使用"></a><strong>jdbc的使用</strong></h1><p>要想使用jdbc，首先要导入对应数据库的驱动类：</p>
+<p><img src="/2020/10/20/javadb/jar.jpg" alt="jar"></p>
+<p>jdbc的使用流程为：</p>
+<p>1.注册驱动<br>2.获取连接<br>3.执行SQL语句<br>4.获取结果<br>5.关闭连接</p>
+<h2 id="注册驱动"><a href="#注册驱动" class="headerlink" title="注册驱动"></a><strong>注册驱动</strong></h2><p>注册驱动的语句为：</p>
+<pre><code>Class.forName(JDBC_DRIVER);</code></pre>
+<p>JDBC_DRIVER为对应的数据库驱动，如：</p>
+<pre><code>String JDBC_DRIVER = &quot;com.mysql.cj.jdbc.Driver&quot;;</code></pre>
+<p>值得注意的是Class.forName为反射中的知识，若找不到相应的类名，它会抛出一个异常，所以必须使用try-catch处理异常或者声明异常</p>
+<h2 id="获取连接"><a href="#获取连接" class="headerlink" title="获取连接"></a><strong>获取连接</strong></h2><p>获取连接的目的是获取Connection对象，可通过DriverManager类的getConnection方法获取</p>
+<p>其中getConnection方法中有三个参数：</p>
+<pre><code>getConnection(url,user,pwd);</code></pre>
+<p>url为连接数据库的路径，如：</p>
+<pre><code>String DB_URL = &quot;jdbc:mysql://localhost:3306/dbtest01?characterEncoding=utf-8&amp;serverTimezone=UTC&amp;useServerPrepStmts=true&amp;cachePrepStmts=true&quot;;</code></pre>
+<p>其中，detest01为路径上的某个数据库</p>
+<p>characterEncoding=utf-8设置为中文</p>
+<p>serverTimezone=UTC表示当前时区</p>
+<p>useServerPrepStmts=true 表示preparedstatement进行预编译，默认preparedstatement不会进行预编译</p>
+<p>cachePrepStmts=true表示缓存，当使用不同的PreparedStatement对象来执行相同的SQL语句时，还是会出现编译两次的现象，这是因为驱动没有缓存编译后的函数key，导致二次编译。</p>
+<p>user和pwd分别为数据库用户名和密码</p>
+<p>获取连接的方式如下：</p>
+<pre><code>private static final String user = &quot;root&quot;;
+
+private static final String password = &quot;111111&quot;;
+
+private static final String url = &quot;jdbc:mysql://localhost:3306/dbtest01?characterEncoding=utf-8&amp;serverTimezone=UTC&amp;useServerPrepStmts=true&amp;cachePrepStmts=true&quot;;
+
+private static final String jdbc_driver = &quot;com.mysql.cj.jdbc.Driver&quot;;
+
+...
+
+Class.forName(jdbc_driver);
+
+connection = DriverManager.getConnection(url,user,password);</code></pre>
+<h2 id="执行sql语句"><a href="#执行sql语句" class="headerlink" title="执行sql语句"></a><strong>执行sql语句</strong></h2><p>JDBC执行sql语句的方式主要使用Statement对象或PreparedStatement对象</p>
+<h3 id="Statement"><a href="#Statement" class="headerlink" title="Statement"></a><strong>Statement</strong></h3><p>要获取Statement对象，要使用Connection对象的createStatement(sql)方法</p>
+<p>statement对象中有几种对数据库操作的方法：</p>
+<ul>
+<li>statement.execute()</li>
+</ul>
+<p>execute()方法返回一个boolean值，表示sql语句执行成功或者失败</p>
+<ul>
+<li>statement.executeQuery()</li>
+</ul>
+<p>对于查询类的sql语句，通常使用executeQuery()方法，该方法返回一个ResultSet结果集</p>
+<ul>
+<li>statement.executeUpdate()</li>
+</ul>
+<p>对于更新类的sql语句，通常使用executeUpdate()方法，返回结果是一个整数,表示受影响的行数</p>
+<p>如：</p>
+<pre><code>statement = connection.createStatement(&quot;select * from table&quot;);
+ResultSet resultSet = statement.executeQuery();</code></pre>
+<p><strong>要注意statement中的sql语句要将所有的数据都填充好才可以</strong></p>
+<p>如执行插入语句，String sql = “insert into stu values(1,2,3);”</p>
+<p>必须把数据给提前写好才可以</p>
+<h3 id="PreparedStatement"><a href="#PreparedStatement" class="headerlink" title="PreparedStatement"></a><strong>PreparedStatement</strong></h3><p>要获取PreparedStatement对象，使用Connection对象的prepareStatement(sql)方法</p>
+<p>PrepareStatement的功能与Statement相似，但不同的是，PrepareStatement可以使用占位符,它是由占位符标识需要输入数据的位置，然后再逐一填入数据。当然，PreparedStatement也可以执行没有占位符的sql语句</p>
+<p>如执行插入语句，String sql = “insert into stu values(?,?,?);”</p>
+<p>使用占位符后便可以在sql语句执行前再填充数据</p>
+<p>要填充数据，要使用PreparedStatement对象的setXX方法</p>
+<p>setXXX方法中，XXX是要填充的数据类型</p>
+<p>setXXX方法中有两个参数，第一个参数是参数在表中的位置，第二个参数是参数的值</p>
+<p><strong>注：第一个参数中，参数下表是从1开始的</strong></p>
+<p>如：</p>
+<pre><code>String sql = &quot;insert into stu values(?,?,?);&quot;;
+
+PreparedStatement statement = connection.prepareStatement(sql);
+
+statement.setInt(1,no);
+
+statement.setString(2,name);
+
+statement.setInt(3,age);</code></pre>
+<p>在获取了statement对象后，便可调用想使用的执行方法执行sql语句</p>
+<h2 id="获取结果"><a href="#获取结果" class="headerlink" title="获取结果"></a><strong>获取结果</strong></h2><p>sql语句的返回结果是一个结果集，ResultSet主要用于存储结果集，可以通过next()方法由前向后逐个获取结果集中的数据</p>
+<p>在resultset中，可以使用getXXX(index)获得下标为index的值，或者使用getXXX(“property_name”)通过属性名获得相应的值，其中XXX为数据类型</p>
+<p>如：</p>
+<pre><code>statement.executeQuery();
+ResultSet resultSet = statement.getResultSet();
+while(resultSet.next())&#123;
+    int sno = resultSet.getInt(&quot;sno&quot;);
+    String sname = resultSet.getString(&quot;sname&quot;);
+    System.out.println(sno + sname);
+&#125;</code></pre>
+<p><strong>注：要想获得resultSet中的数据，首先要使用resultSet.next()方法，否则会报错</strong></p>
+<h2 id="关闭连接"><a href="#关闭连接" class="headerlink" title="关闭连接"></a><strong>关闭连接</strong></h2><p>在执行完数据库操作后，通常要关闭和数据库的连接</p>
+<p>使用.close()关闭连接，通常放在finally中执行</p>
+<pre><code>resultSet.close();
+statement.close();
+connection.close();</code></pre>
+<h1 id="事务"><a href="#事务" class="headerlink" title="事务"></a><strong>事务</strong></h1><p>把一系列要执行的操作称为事务，而事务管理就是管理这些操作要么完全执行，要么完全不执行，所有命令全部成功执行才意味着该事务的成功，任何一个命令失败都意味着该事务的失败。</p>
+<h2 id="事务管理的特性"><a href="#事务管理的特性" class="headerlink" title="事务管理的特性"></a><strong>事务管理的特性</strong></h2><p>原子性：事务的整个操作是一个整体，不可以分割，要么都做，要么都不做。</p>
+<p>一致性：事务必须使数据库从一个一致性状态变换到另一个一致性状态，也就是说一个事务执行之前和执行之后都必须处于一致性状态。</p>
+<p>隔离性：当多个用户并发访问数据库时，比如操作同一张表时，数据库为每一个用户开启的事务，不能被其他事务的操作所干扰，多个并发事务之间要相互隔离。</p>
+<p>持久性：事务一旦被提交了，那么对数据库中的数据的改变就是永久性的</p>
+<h2 id="JDBC中事务管理操作"><a href="#JDBC中事务管理操作" class="headerlink" title="JDBC中事务管理操作"></a><strong>JDBC中事务管理操作</strong></h2><p>JDBC中，Connection有三个方法与事务操作有关</p>
+<ul>
+<li>setAutoCommit(boolean)</li>
+</ul>
+<p>要想进行事务管理，在进行相应的sql操作之前，要执行：</p>
+<pre><code>connection.setAutoCommit(false);</code></pre>
+<p>取消事务的自动提交，setAutoCommit的默认值为true</p>
+<ul>
+<li>commit()</li>
+</ul>
+<p>commit表示提交事务</p>
+<ul>
+<li>rollback()</li>
+</ul>
+<p>rollbakc表示回滚，通常在处理异常或出现错误的时候进行</p>
+]]></content>
+      <tags>
+        <tag>数据库</tag>
+        <tag>java</tag>
+        <tag>jdbc</tag>
+      </tags>
+  </entry>
 </search>

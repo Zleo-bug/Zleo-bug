@@ -3565,11 +3565,11 @@ having avg_age &gt; 20;</code></pre>
 <pre><code>update newtable set name=&quot;菜逼&quot;,age=21 where id=1246;</code></pre>
 <h1 id="多表查询操作"><a href="#多表查询操作" class="headerlink" title="多表查询操作"></a><strong>多表查询操作</strong></h1><p>创建学生表stu、课程表course、学生选课表sc</p>
 <p>stu:</p>
-<p><img src="/2020/10/21/dboperator/stu.jpg" alt="stu"></p>
+<p><img src="/2020/10/21/dboperator/stu.png" alt="stu"></p>
 <p>course:</p>
-<p><img src="/2020/10/21/dboperator/course.jpg" alt="course"></p>
+<p><img src="/2020/10/21/dboperator/course.png" alt="course"></p>
 <p>sc:</p>
-<p><img src="/2020/10/21/dboperator/sc.jpg" alt="sc"></p>
+<p><img src="/2020/10/21/dboperator/sc.png" alt="sc"></p>
 <h2 id="连接查询"><a href="#连接查询" class="headerlink" title="连接查询"></a><strong>连接查询</strong></h2><p>连接查询的where子句中用来连接两个表的条件称为 连接条件</p>
 <p>主要的连接条件为比较运算符，主要有 = &gt; &lt; ≥ ≤ !=等</p>
 <p>一般格式为：[table1] c1 比较运算符 [table2] c2</p>

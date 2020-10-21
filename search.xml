@@ -1193,6 +1193,255 @@ public class UserController &#123;
       </tags>
   </entry>
   <entry>
+    <title>常用sql语句</title>
+    <url>/2020/10/21/dboperator/</url>
+    <content><![CDATA[<p>掌握sql语句是后端程序员与数据库打交道的必备技能，下面简单回顾一下一些常用的sql语句</p>
+<h1 id="对数据库的操作"><a href="#对数据库的操作" class="headerlink" title="对数据库的操作"></a><strong>对数据库的操作</strong></h1><h2 id="终端进入数据库："><a href="#终端进入数据库：" class="headerlink" title="终端进入数据库："></a><strong>终端进入数据库：</strong></h2><pre><code>mysql -u root -p</code></pre>
+<h2 id="查看所有的数据库："><a href="#查看所有的数据库：" class="headerlink" title="查看所有的数据库："></a><strong>查看所有的数据库：</strong></h2><pre><code>show databases;</code></pre>
+<h2 id="创建数据库："><a href="#创建数据库：" class="headerlink" title="创建数据库："></a><strong>创建数据库：</strong></h2><pre><code>create database dbname;</code></pre>
+<h2 id="删除数据库："><a href="#删除数据库：" class="headerlink" title="删除数据库："></a><strong>删除数据库：</strong></h2><pre><code>drop database dbname;</code></pre>
+<h2 id="选择数据库："><a href="#选择数据库：" class="headerlink" title="选择数据库："></a><strong>选择数据库：</strong></h2><pre><code>use dbname;</code></pre>
+<h2 id="查看当前数据库中的所有表："><a href="#查看当前数据库中的所有表：" class="headerlink" title="查看当前数据库中的所有表："></a><strong>查看当前数据库中的所有表：</strong></h2><pre><code>show tables;</code></pre>
+<h1 id="对表结构的操作"><a href="#对表结构的操作" class="headerlink" title="对表结构的操作"></a><strong>对表结构的操作</strong></h1><h2 id="查看表的结构："><a href="#查看表的结构：" class="headerlink" title="查看表的结构："></a><strong>查看表的结构：</strong></h2><pre><code>desc tablename;</code></pre>
+<h2 id="查看表的创建语句："><a href="#查看表的创建语句：" class="headerlink" title="查看表的创建语句："></a><strong>查看表的创建语句：</strong></h2><pre><code>show create table newtable;</code></pre>
+<h2 id="创建表："><a href="#创建表：" class="headerlink" title="创建表："></a><strong>创建表：</strong></h2><pre><code>create table table_name(
+字段名1 数据类型1 可选的约束条件1,
+字段名2 数据类型2 可选的约束条件2,
+...
+）；</code></pre>
+<p>如：</p>
+<pre><code>create table newtable(
+id int primary key not null,
+name varchar(10) not null,
+age int
+);</code></pre>
+<h2 id="删除表："><a href="#删除表：" class="headerlink" title="删除表："></a><strong>删除表：</strong></h2><pre><code>drop table newtable;</code></pre>
+<h2 id="修改表："><a href="#修改表：" class="headerlink" title="修改表："></a><strong>修改表：</strong></h2><p>添加字段：</p>
+<pre><code>alter table newtable add address varchar(10);</code></pre>
+<p>重命名字段：</p>
+<pre><code>alter table newtable change address addr varchar(10);</code></pre>
+<p>修改字段类型：</p>
+<pre><code>alter table newtable modify id varchar(10);</code></pre>
+<p>修改字段约束：</p>
+<pre><code>alter table newtable modify id int;</code></pre>
+<p>删除字段：</p>
+<pre><code>alter table newtable drop addr;</code></pre>
+<p>设置默认值：</p>
+<pre><code>alter table newtable alter age set default 0;</code></pre>
+<p>删除默认值：</p>
+<pre><code>alter table newtable alter age drop default;</code></pre>
+<h1 id="对表内容的增删查改"><a href="#对表内容的增删查改" class="headerlink" title="对表内容的增删查改"></a><strong>对表内容的增删查改</strong></h1><h2 id="基本查询语句"><a href="#基本查询语句" class="headerlink" title="基本查询语句"></a><strong>基本查询语句</strong></h2><p><strong>查询表的所有字段：</strong></p>
+<pre><code>select * from tablename;</code></pre>
+<p>如：</p>
+<pre><code>select * from newtable</code></pre>
+<p><strong>查询指定的字段：</strong></p>
+<pre><code>select n1,n2,n3,... from tablename;    </code></pre>
+<p>如：</p>
+<pre><code>select id,name from newtable</code></pre>
+<p><strong>as关键字：</strong></p>
+<p>给字段起别名：</p>
+<pre><code>select id as 学号,name as 姓名 from newtable</code></pre>
+<p>给表起别名：</p>
+<pre><code>select t.id,t.name from newtable as t;</code></pre>
+<h2 id="条件查询语句"><a href="#条件查询语句" class="headerlink" title="条件查询语句"></a><strong>条件查询语句</strong></h2><h3 id="使用比较运算符进行查询"><a href="#使用比较运算符进行查询" class="headerlink" title="使用比较运算符进行查询"></a><strong>使用比较运算符进行查询</strong></h3><p>比较运算符：= &gt; ≥ &lt; ≤ !=</p>
+<p>如：</p>
+<pre><code>select id,name from newtable where age&gt;=18
+
+select id,name from newtable where name=&quot;张三&quot;</code></pre>
+<h3 id="使用逻辑运算符进行查询"><a href="#使用逻辑运算符进行查询" class="headerlink" title="使用逻辑运算符进行查询"></a><strong>使用逻辑运算符进行查询</strong></h3><pre><code>select id,name from newtable where id&gt;1235 and age&gt;18
+
+select * from newtable where age&gt;18 or sex=&#39;男&#39;</code></pre>
+<h3 id="模糊查询"><a href="#模糊查询" class="headerlink" title="模糊查询"></a><strong>模糊查询</strong></h3><p>模糊查询使用like进行查询，%代表任意多个关键字 下划线_ 表示任意一个字符</p>
+<p>一般模糊查询语句如：SELECT 字段 FROM 表 WHERE 某字段 [not]Like 条件</p>
+<pre><code>select * from newtable where name like &quot;张%&quot;
+
+select * from newtable where name like &quot;_一&quot;</code></pre>
+<p>如果字段名字中存在 下划线_ 或者 百分号%，此时要进将字符转义，转义要在语句后面加上 escape’’</p>
+<p>如，表中字段存在下划线，则查询为：</p>
+<pre><code>select * from newtable where addr like &#39;%/_%&#39; escape &#39;/&#39;</code></pre>
+<p>[]：表示匹配括号中所列字符的任意一个，类似正则表达式</p>
+<p> 如果[ ] 内有一系列字符（01234、abcde之类的）则可略写为“0-4”、“a-e” </p>
+<p>如：</p>
+<pre><code>select * from newtable where name like &#39;张[三七八]&#39;;</code></pre>
+<p>[^ ]表示表示不在括号所列之内的单个字符。</p>
+<h3 id="范围查询"><a href="#范围查询" class="headerlink" title="范围查询"></a><strong>范围查询</strong></h3><p>范围查询分为连续查询和非连续查询</p>
+<p>in关键字表示一个非连续的范围</p>
+<pre><code>select * from newtable where age in(18,19,20);</code></pre>
+<p>between and 表示在一个连续的范围内</p>
+<pre><code>select * from newtable where age between 17 and 22;</code></pre>
+<h3 id="空判断"><a href="#空判断" class="headerlink" title="空判断"></a><strong>空判断</strong></h3><p>判断字段是否为空： is null</p>
+<p>不为空：is not null</p>
+<pre><code>select * from newtable where addr is not null</code></pre>
+<h3 id="exists语句"><a href="#exists语句" class="headerlink" title="exists语句"></a><strong>exists语句</strong></h3><p>使用exists判断某行是否存在</p>
+<h3 id="排序"><a href="#排序" class="headerlink" title="排序"></a><strong>排序</strong></h3><p>排序的查询语法：</p>
+<pre><code>select * from 表名 order by 列1 asc|desc [,列2 asc|desc,...]</code></pre>
+<p>asc为升序，desc为降序，默认为asc</p>
+<p>order by 语句只能对最终结果进行排序</p>
+<p>如：</p>
+<pre><code>select * from newtable order by id asc,age desc;</code></pre>
+<h3 id="分页"><a href="#分页" class="headerlink" title="分页"></a><strong>分页</strong></h3><p>获取所有数据的前n-m条：select * from 表名 limit start=n,count=m，start默认为0</p>
+<pre><code>select * from newtable limit 1,5;</code></pre>
+<h3 id="取字段值唯一"><a href="#取字段值唯一" class="headerlink" title="取字段值唯一"></a><strong>取字段值唯一</strong></h3><p>distinct 关键字</p>
+<pre><code>select distinct age from newtable</code></pre>
+<h3 id="聚合函数"><a href="#聚合函数" class="headerlink" title="聚合函数"></a><strong>聚合函数</strong></h3><h4 id="求总数："><a href="#求总数：" class="headerlink" title="求总数："></a><strong>求总数：</strong></h4><p>count( * )：统计元组个数</p>
+<pre><code>select count(*) from newtable</code></pre>
+<p>count([distinct|all]列名)：统计某列值的个数</p>
+<h4 id="求最大值："><a href="#求最大值：" class="headerlink" title="求最大值："></a><strong>求最大值：</strong></h4><p>max(某列)</p>
+<pre><code>select max(age) from newtable</code></pre>
+<h4 id="求最小值："><a href="#求最小值：" class="headerlink" title="求最小值："></a><strong>求最小值：</strong></h4><p>min(某列)</p>
+<pre><code>select min(age) from newtable</code></pre>
+<h4 id="求和："><a href="#求和：" class="headerlink" title="求和："></a><strong>求和：</strong></h4><p>sum(某列)</p>
+<pre><code>select sum(age) from newtable</code></pre>
+<h4 id="平均值"><a href="#平均值" class="headerlink" title="平均值"></a><strong>平均值</strong></h4><p>avg(某列)</p>
+<pre><code>select avg(age) from newtable</code></pre>
+<h3 id="分组操作"><a href="#分组操作" class="headerlink" title="分组操作"></a><strong>分组操作</strong></h3><p>分组操作使用group by，将查询返回的结果集进行一个分组，并展示各个分组中排在第一个的记录，将分组中其余成员隐藏。</p>
+<pre><code>select avg(age) from newtable group by sex</code></pre>
+<h3 id="having子句"><a href="#having子句" class="headerlink" title="having子句"></a><strong>having子句</strong></h3><p>HAVING 子句是一个高配版的 where 子句，无论是我们的分组或是排序，都是基于以返回的结果集，也就是说 where 子句的筛选已经结束。<br>如果我们对排序、分组后的数据集依然有筛选需求，就要用到 HAVING 子句了。</p>
+<pre><code>select avg(age) as avg_age from newtable group by sex
+having avg_age &gt; 20;</code></pre>
+<h2 id="插入语句"><a href="#插入语句" class="headerlink" title="插入语句"></a><strong>插入语句</strong></h2><p>插入语句的一般格式为：insert into tablename(…) values(…);</p>
+<p>全列插入：值的顺序与表结构字段的顺序完全一一对应</p>
+<p>如：</p>
+<pre><code>insert into newtable values (1241,&quot;张三&quot;,22,&quot;男&quot;,&quot;北京市_&quot;);</code></pre>
+<p>部分列插入：值的顺序与给出的列顺序对应，此时需要根据实际的数据的特点 填写对应字段列表</p>
+<p>如：</p>
+<pre><code>insert into newtable(id,name,sex) values (1242,&quot;张三&quot;,&quot;男&quot;);</code></pre>
+<p>全列多行插入：</p>
+<p>如：</p>
+<pre><code>insert into newtable values (1245,&quot;张三&quot;,22,&quot;男&quot;,&quot;北京市_&quot;),(1246,&quot;张三&quot;,22,&quot;男&quot;,&quot;北京市_&quot;);</code></pre>
+<p>部分列多行插入：</p>
+<pre><code>insert into newtable(id,name,age) values(1222,&quot;li&quot;,21),(1223,&quot;zhang&quot;,22);</code></pre>
+<h2 id="删除语句"><a href="#删除语句" class="headerlink" title="删除语句"></a><strong>删除语句</strong></h2><p>删除语句的一般格式为：delete from tablename where 条件</p>
+<p>如：</p>
+<pre><code>delete from newtable where id=1242 or id=1241</code></pre>
+<h2 id="修改语句"><a href="#修改语句" class="headerlink" title="修改语句"></a><strong>修改语句</strong></h2><p>修改语句的一般格式为：update tablename set 列1=值1,列2=值2… where 条件</p>
+<p>如：</p>
+<pre><code>update newtable set name=&quot;菜逼&quot;,age=21 where id=1246;</code></pre>
+<h1 id="多表查询操作"><a href="#多表查询操作" class="headerlink" title="多表查询操作"></a><strong>多表查询操作</strong></h1><p>创建学生表stu、课程表course、学生选课表sc</p>
+<p>stu:</p>
+<p><img src="/2020/10/21/dboperator/stu.png" alt="stu"></p>
+<p>course:</p>
+<p><img src="/2020/10/21/dboperator/course.png" alt="course"></p>
+<p>sc:</p>
+<p><img src="/2020/10/21/dboperator/sc.png" alt="sc"></p>
+<h2 id="连接查询"><a href="#连接查询" class="headerlink" title="连接查询"></a><strong>连接查询</strong></h2><p>连接查询的where子句中用来连接两个表的条件称为 连接条件</p>
+<p>主要的连接条件为比较运算符，主要有 = &gt; &lt; ≥ ≤ !=等</p>
+<p>一般格式为：[table1] c1 比较运算符 [table2] c2</p>
+<p>如：</p>
+<p>查询每个学生及其选修课程的情况</p>
+<pre><code>select sum(ccredit)
+from sc,course
+where sc.sno=&#39;201215121&#39; and sc.cno=course.cno</code></pre>
+<p>查询选修2号课程且成绩在80分以上的所有学生的学号和姓名</p>
+<pre><code>select stu.sno,stu.sname
+from stu,sc
+where stu.sno=sc.sno and sc.cno=&#39;2&#39; and sc.grade&gt;80;</code></pre>
+<h2 id="自身连接"><a href="#自身连接" class="headerlink" title="自身连接"></a><strong>自身连接</strong></h2><p>如：</p>
+<p>查询每一门课的间接先修课</p>
+<pre><code>select first.cno,second.cpno
+from course first,course second
+where first.cpno = second.cno;</code></pre>
+<h2 id="多表连接"><a href="#多表连接" class="headerlink" title="多表连接"></a><strong>多表连接</strong></h2><p>如：</p>
+<p>查询每个学生的学号、姓名、选修的课程名及成绩</p>
+<pre><code>select stu.sno,stu.sname,course.cno,sc.grade
+from stu,course,sc
+where stu.sno=sc.sno and course.cno = sc.cno</code></pre>
+<h2 id="嵌套查询"><a href="#嵌套查询" class="headerlink" title="嵌套查询"></a><strong>嵌套查询</strong></h2><p>一个select-from-where语句称为一个查询块，将一个查询块放在另一个查询块的where子句或having短语的条件中称为嵌套查询</p>
+<p>嵌套查询中，子查询的结果往往是一个集合，所以谓词in是嵌套查询中最常使用的谓词</p>
+<p>如：</p>
+<p>查询与“刘晨”在同一个系的学生</p>
+<pre><code>select *
+from stu
+where sdept in 
+(select sdept
+from stu
+where sname=&quot;刘晨&quot;);</code></pre>
+<p>查询选修了课程名为“信息系统”的学生学号和姓名</p>
+<pre><code>select sno,sname
+from stu
+where sno in 
+    (select sno
+    from sc
+    where sc.cno in
+        (select course.cno
+        from course
+        where course.cname=&quot;信息系统&quot;));</code></pre>
+<p>若采用连接查询：</p>
+<pre><code>select stu.sno,stu.sname
+from stu,sc,course
+where course.cname=&quot;信息系统&quot; and course.cno = sc.cno and stu.sno = sc.sno;</code></pre>
+<p>在实际应用中，能使用连接查询尽量使用连接查询</p>
+<h3 id="带有any、all谓词的子查询"><a href="#带有any、all谓词的子查询" class="headerlink" title="带有any、all谓词的子查询"></a><strong>带有any、all谓词的子查询</strong></h3><blockquote>
+<p>any 大于子查询中任何一个<br>&lt; any 小于子查询中任何一个<br>all 大于子查询中所有<br>&lt; all 小于子查询中所有<br>…</p>
+</blockquote>
+<p>如：</p>
+<p>查询非计算机科学系中比计算机科学系任意一个学生年龄小的学生姓名和年龄</p>
+<pre><code>select sname,sage
+from stu
+where sage &lt; any
+(
+    select sage
+    from stu
+    where sdept=&#39;cs&#39;) and sdept!=&#39;cs&#39;;</code></pre>
+<h3 id="带有exists谓词的子查询"><a href="#带有exists谓词的子查询" class="headerlink" title="带有exists谓词的子查询"></a>带有exists谓词的子查询</h3><p>exists表示存在量词，带有exists谓词的子查询只返回逻辑值，exists的作用域为子查询</p>
+<p>流程为：取出外层查询的元组，根据它进行内层查询，如果返回值为真，则存入结果集</p>
+<p>如：</p>
+<p>查询所有选修了1号课程的学生姓名</p>
+<pre><code>select sname
+from stu
+where exists
+(select sno
+from sc
+where sc.sno = stu.sno and cno=&#39;1&#39;);</code></pre>
+<p>与exists对应的是not exists</p>
+<p>如：</p>
+<p>查询没有选修1号课程的学生姓名</p>
+<pre><code>select sname
+from stu
+where not exists
+(select *
+from sc
+where stu.sno=sc.sno and cno=&#39;1&#39;);</code></pre>
+<h3 id="集合查询"><a href="#集合查询" class="headerlink" title="集合查询"></a><strong>集合查询</strong></h3><p>select语句的查询结果为元组的集合，所以多个select语句的结果可进行集合操作</p>
+<p>集合操作主要有 并操作union、交操作intersect、差操作except</p>
+<p><strong>注：参加集合操作的各查询结果的列数必须相同，对应的数据类型也必须相同</strong></p>
+<p>如：</p>
+<p>查询计算机科学系的学生及年龄不大于19岁的学生</p>
+<pre><code>select *
+from stu
+where sdept=&#39;cs&#39;
+
+union
+
+select *
+from stu
+where sage&lt;=19</code></pre>
+<p>查询计算机科学系的学生与年龄不大于19岁的学生的交集</p>
+<pre><code>select *
+from stu
+where sdept=&#39;cs&#39;
+
+intersect
+
+select *
+from stu
+where sage&lt;=19;</code></pre>
+<p>查询计算机科学系的学生与年龄不大于19岁的学生的差集</p>
+<pre><code>select *
+from stu
+where sdept=&#39;cs&#39;
+
+except
+
+select *
+from stu
+where sage&lt;=19;</code></pre>
+]]></content>
+      <tags>
+        <tag>数据库</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>java jdbc的基本使用</title>
     <url>/2020/10/20/javadb/</url>
     <content><![CDATA[<p>今天在做java实验的时候用到了jdbc，现在顺便复习一下jdbc的操作。</p>
@@ -1310,8 +1559,8 @@ connection.close();</code></pre>
 ]]></content>
       <tags>
         <tag>java</tag>
-        <tag>jdbc</tag>
         <tag>数据库</tag>
+        <tag>jdbc</tag>
       </tags>
   </entry>
   <entry>
@@ -3436,255 +3685,6 @@ public String login(@PathVariable int name, @PathVariable String passwords, Mode
         <tag>Spring</tag>
         <tag>java</tag>
         <tag>SpringMVC</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>常用sql语句</title>
-    <url>/2020/10/21/dboperator/</url>
-    <content><![CDATA[<p>掌握sql语句是后端程序员与数据库打交道的必备技能，下面简单回顾一下一些常用的sql语句</p>
-<h1 id="对数据库的操作"><a href="#对数据库的操作" class="headerlink" title="对数据库的操作"></a><strong>对数据库的操作</strong></h1><h2 id="终端进入数据库："><a href="#终端进入数据库：" class="headerlink" title="终端进入数据库："></a><strong>终端进入数据库：</strong></h2><pre><code>mysql -u root -p</code></pre>
-<h2 id="查看所有的数据库："><a href="#查看所有的数据库：" class="headerlink" title="查看所有的数据库："></a><strong>查看所有的数据库：</strong></h2><pre><code>show databases;</code></pre>
-<h2 id="创建数据库："><a href="#创建数据库：" class="headerlink" title="创建数据库："></a><strong>创建数据库：</strong></h2><pre><code>create database dbname;</code></pre>
-<h2 id="删除数据库："><a href="#删除数据库：" class="headerlink" title="删除数据库："></a><strong>删除数据库：</strong></h2><pre><code>drop database dbname;</code></pre>
-<h2 id="选择数据库："><a href="#选择数据库：" class="headerlink" title="选择数据库："></a><strong>选择数据库：</strong></h2><pre><code>use dbname;</code></pre>
-<h2 id="查看当前数据库中的所有表："><a href="#查看当前数据库中的所有表：" class="headerlink" title="查看当前数据库中的所有表："></a><strong>查看当前数据库中的所有表：</strong></h2><pre><code>show tables;</code></pre>
-<h1 id="对表结构的操作"><a href="#对表结构的操作" class="headerlink" title="对表结构的操作"></a><strong>对表结构的操作</strong></h1><h2 id="查看表的结构："><a href="#查看表的结构：" class="headerlink" title="查看表的结构："></a><strong>查看表的结构：</strong></h2><pre><code>desc tablename;</code></pre>
-<h2 id="查看表的创建语句："><a href="#查看表的创建语句：" class="headerlink" title="查看表的创建语句："></a><strong>查看表的创建语句：</strong></h2><pre><code>show create table newtable;</code></pre>
-<h2 id="创建表："><a href="#创建表：" class="headerlink" title="创建表："></a><strong>创建表：</strong></h2><pre><code>create table table_name(
-字段名1 数据类型1 可选的约束条件1,
-字段名2 数据类型2 可选的约束条件2,
-...
-）；</code></pre>
-<p>如：</p>
-<pre><code>create table newtable(
-id int primary key not null,
-name varchar(10) not null,
-age int
-);</code></pre>
-<h2 id="删除表："><a href="#删除表：" class="headerlink" title="删除表："></a><strong>删除表：</strong></h2><pre><code>drop table newtable;</code></pre>
-<h2 id="修改表："><a href="#修改表：" class="headerlink" title="修改表："></a><strong>修改表：</strong></h2><p>添加字段：</p>
-<pre><code>alter table newtable add address varchar(10);</code></pre>
-<p>重命名字段：</p>
-<pre><code>alter table newtable change address addr varchar(10);</code></pre>
-<p>修改字段类型：</p>
-<pre><code>alter table newtable modify id varchar(10);</code></pre>
-<p>修改字段约束：</p>
-<pre><code>alter table newtable modify id int;</code></pre>
-<p>删除字段：</p>
-<pre><code>alter table newtable drop addr;</code></pre>
-<p>设置默认值：</p>
-<pre><code>alter table newtable alter age set default 0;</code></pre>
-<p>删除默认值：</p>
-<pre><code>alter table newtable alter age drop default;</code></pre>
-<h1 id="对表内容的增删查改"><a href="#对表内容的增删查改" class="headerlink" title="对表内容的增删查改"></a><strong>对表内容的增删查改</strong></h1><h2 id="基本查询语句"><a href="#基本查询语句" class="headerlink" title="基本查询语句"></a><strong>基本查询语句</strong></h2><p><strong>查询表的所有字段：</strong></p>
-<pre><code>select * from tablename;</code></pre>
-<p>如：</p>
-<pre><code>select * from newtable</code></pre>
-<p><strong>查询指定的字段：</strong></p>
-<pre><code>select n1,n2,n3,... from tablename;    </code></pre>
-<p>如：</p>
-<pre><code>select id,name from newtable</code></pre>
-<p><strong>as关键字：</strong></p>
-<p>给字段起别名：</p>
-<pre><code>select id as 学号,name as 姓名 from newtable</code></pre>
-<p>给表起别名：</p>
-<pre><code>select t.id,t.name from newtable as t;</code></pre>
-<h2 id="条件查询语句"><a href="#条件查询语句" class="headerlink" title="条件查询语句"></a><strong>条件查询语句</strong></h2><h3 id="使用比较运算符进行查询"><a href="#使用比较运算符进行查询" class="headerlink" title="使用比较运算符进行查询"></a><strong>使用比较运算符进行查询</strong></h3><p>比较运算符：= &gt; ≥ &lt; ≤ !=</p>
-<p>如：</p>
-<pre><code>select id,name from newtable where age&gt;=18
-
-select id,name from newtable where name=&quot;张三&quot;</code></pre>
-<h3 id="使用逻辑运算符进行查询"><a href="#使用逻辑运算符进行查询" class="headerlink" title="使用逻辑运算符进行查询"></a><strong>使用逻辑运算符进行查询</strong></h3><pre><code>select id,name from newtable where id&gt;1235 and age&gt;18
-
-select * from newtable where age&gt;18 or sex=&#39;男&#39;</code></pre>
-<h3 id="模糊查询"><a href="#模糊查询" class="headerlink" title="模糊查询"></a><strong>模糊查询</strong></h3><p>模糊查询使用like进行查询，%代表任意多个关键字 下划线_ 表示任意一个字符</p>
-<p>一般模糊查询语句如：SELECT 字段 FROM 表 WHERE 某字段 [not]Like 条件</p>
-<pre><code>select * from newtable where name like &quot;张%&quot;
-
-select * from newtable where name like &quot;_一&quot;</code></pre>
-<p>如果字段名字中存在 下划线_ 或者 百分号%，此时要进将字符转义，转义要在语句后面加上 escape’’</p>
-<p>如，表中字段存在下划线，则查询为：</p>
-<pre><code>select * from newtable where addr like &#39;%/_%&#39; escape &#39;/&#39;</code></pre>
-<p>[]：表示匹配括号中所列字符的任意一个，类似正则表达式</p>
-<p> 如果[ ] 内有一系列字符（01234、abcde之类的）则可略写为“0-4”、“a-e” </p>
-<p>如：</p>
-<pre><code>select * from newtable where name like &#39;张[三七八]&#39;;</code></pre>
-<p>[^ ]表示表示不在括号所列之内的单个字符。</p>
-<h3 id="范围查询"><a href="#范围查询" class="headerlink" title="范围查询"></a><strong>范围查询</strong></h3><p>范围查询分为连续查询和非连续查询</p>
-<p>in关键字表示一个非连续的范围</p>
-<pre><code>select * from newtable where age in(18,19,20);</code></pre>
-<p>between and 表示在一个连续的范围内</p>
-<pre><code>select * from newtable where age between 17 and 22;</code></pre>
-<h3 id="空判断"><a href="#空判断" class="headerlink" title="空判断"></a><strong>空判断</strong></h3><p>判断字段是否为空： is null</p>
-<p>不为空：is not null</p>
-<pre><code>select * from newtable where addr is not null</code></pre>
-<h3 id="exists语句"><a href="#exists语句" class="headerlink" title="exists语句"></a><strong>exists语句</strong></h3><p>使用exists判断某行是否存在</p>
-<h3 id="排序"><a href="#排序" class="headerlink" title="排序"></a><strong>排序</strong></h3><p>排序的查询语法：</p>
-<pre><code>select * from 表名 order by 列1 asc|desc [,列2 asc|desc,...]</code></pre>
-<p>asc为升序，desc为降序，默认为asc</p>
-<p>order by 语句只能对最终结果进行排序</p>
-<p>如：</p>
-<pre><code>select * from newtable order by id asc,age desc;</code></pre>
-<h3 id="分页"><a href="#分页" class="headerlink" title="分页"></a><strong>分页</strong></h3><p>获取所有数据的前n-m条：select * from 表名 limit start=n,count=m，start默认为0</p>
-<pre><code>select * from newtable limit 1,5;</code></pre>
-<h3 id="取字段值唯一"><a href="#取字段值唯一" class="headerlink" title="取字段值唯一"></a><strong>取字段值唯一</strong></h3><p>distinct 关键字</p>
-<pre><code>select distinct age from newtable</code></pre>
-<h3 id="聚合函数"><a href="#聚合函数" class="headerlink" title="聚合函数"></a><strong>聚合函数</strong></h3><h4 id="求总数："><a href="#求总数：" class="headerlink" title="求总数："></a><strong>求总数：</strong></h4><p>count( * )：统计元组个数</p>
-<pre><code>select count(*) from newtable</code></pre>
-<p>count([distinct|all]列名)：统计某列值的个数</p>
-<h4 id="求最大值："><a href="#求最大值：" class="headerlink" title="求最大值："></a><strong>求最大值：</strong></h4><p>max(某列)</p>
-<pre><code>select max(age) from newtable</code></pre>
-<h4 id="求最小值："><a href="#求最小值：" class="headerlink" title="求最小值："></a><strong>求最小值：</strong></h4><p>min(某列)</p>
-<pre><code>select min(age) from newtable</code></pre>
-<h4 id="求和："><a href="#求和：" class="headerlink" title="求和："></a><strong>求和：</strong></h4><p>sum(某列)</p>
-<pre><code>select sum(age) from newtable</code></pre>
-<h4 id="平均值"><a href="#平均值" class="headerlink" title="平均值"></a><strong>平均值</strong></h4><p>avg(某列)</p>
-<pre><code>select avg(age) from newtable</code></pre>
-<h3 id="分组操作"><a href="#分组操作" class="headerlink" title="分组操作"></a><strong>分组操作</strong></h3><p>分组操作使用group by，将查询返回的结果集进行一个分组，并展示各个分组中排在第一个的记录，将分组中其余成员隐藏。</p>
-<pre><code>select avg(age) from newtable group by sex</code></pre>
-<h3 id="having子句"><a href="#having子句" class="headerlink" title="having子句"></a><strong>having子句</strong></h3><p>HAVING 子句是一个高配版的 where 子句，无论是我们的分组或是排序，都是基于以返回的结果集，也就是说 where 子句的筛选已经结束。<br>如果我们对排序、分组后的数据集依然有筛选需求，就要用到 HAVING 子句了。</p>
-<pre><code>select avg(age) as avg_age from newtable group by sex
-having avg_age &gt; 20;</code></pre>
-<h2 id="插入语句"><a href="#插入语句" class="headerlink" title="插入语句"></a><strong>插入语句</strong></h2><p>插入语句的一般格式为：insert into tablename(…) values(…);</p>
-<p>全列插入：值的顺序与表结构字段的顺序完全一一对应</p>
-<p>如：</p>
-<pre><code>insert into newtable values (1241,&quot;张三&quot;,22,&quot;男&quot;,&quot;北京市_&quot;);</code></pre>
-<p>部分列插入：值的顺序与给出的列顺序对应，此时需要根据实际的数据的特点 填写对应字段列表</p>
-<p>如：</p>
-<pre><code>insert into newtable(id,name,sex) values (1242,&quot;张三&quot;,&quot;男&quot;);</code></pre>
-<p>全列多行插入：</p>
-<p>如：</p>
-<pre><code>insert into newtable values (1245,&quot;张三&quot;,22,&quot;男&quot;,&quot;北京市_&quot;),(1246,&quot;张三&quot;,22,&quot;男&quot;,&quot;北京市_&quot;);</code></pre>
-<p>部分列多行插入：</p>
-<pre><code>insert into newtable(id,name,age) values(1222,&quot;li&quot;,21),(1223,&quot;zhang&quot;,22);</code></pre>
-<h2 id="删除语句"><a href="#删除语句" class="headerlink" title="删除语句"></a><strong>删除语句</strong></h2><p>删除语句的一般格式为：delete from tablename where 条件</p>
-<p>如：</p>
-<pre><code>delete from newtable where id=1242 or id=1241</code></pre>
-<h2 id="修改语句"><a href="#修改语句" class="headerlink" title="修改语句"></a><strong>修改语句</strong></h2><p>修改语句的一般格式为：update tablename set 列1=值1,列2=值2… where 条件</p>
-<p>如：</p>
-<pre><code>update newtable set name=&quot;菜逼&quot;,age=21 where id=1246;</code></pre>
-<h1 id="多表查询操作"><a href="#多表查询操作" class="headerlink" title="多表查询操作"></a><strong>多表查询操作</strong></h1><p>创建学生表stu、课程表course、学生选课表sc</p>
-<p>stu:</p>
-<p><img src="/2020/10/21/dboperator/stu.png" alt="stu"></p>
-<p>course:</p>
-<p><img src="/2020/10/21/dboperator/course.png" alt="course"></p>
-<p>sc:</p>
-<p><img src="/2020/10/21/dboperator/sc.png" alt="sc"></p>
-<h2 id="连接查询"><a href="#连接查询" class="headerlink" title="连接查询"></a><strong>连接查询</strong></h2><p>连接查询的where子句中用来连接两个表的条件称为 连接条件</p>
-<p>主要的连接条件为比较运算符，主要有 = &gt; &lt; ≥ ≤ !=等</p>
-<p>一般格式为：[table1] c1 比较运算符 [table2] c2</p>
-<p>如：</p>
-<p>查询每个学生及其选修课程的情况</p>
-<pre><code>select sum(ccredit)
-from sc,course
-where sc.sno=&#39;201215121&#39; and sc.cno=course.cno</code></pre>
-<p>查询选修2号课程且成绩在80分以上的所有学生的学号和姓名</p>
-<pre><code>select stu.sno,stu.sname
-from stu,sc
-where stu.sno=sc.sno and sc.cno=&#39;2&#39; and sc.grade&gt;80;</code></pre>
-<h2 id="自身连接"><a href="#自身连接" class="headerlink" title="自身连接"></a><strong>自身连接</strong></h2><p>如：</p>
-<p>查询每一门课的间接先修课</p>
-<pre><code>select first.cno,second.cpno
-from course first,course second
-where first.cpno = second.cno;</code></pre>
-<h2 id="多表连接"><a href="#多表连接" class="headerlink" title="多表连接"></a><strong>多表连接</strong></h2><p>如：</p>
-<p>查询每个学生的学号、姓名、选修的课程名及成绩</p>
-<pre><code>select stu.sno,stu.sname,course.cno,sc.grade
-from stu,course,sc
-where stu.sno=sc.sno and course.cno = sc.cno</code></pre>
-<h2 id="嵌套查询"><a href="#嵌套查询" class="headerlink" title="嵌套查询"></a><strong>嵌套查询</strong></h2><p>一个select-from-where语句称为一个查询块，将一个查询块放在另一个查询块的where子句或having短语的条件中称为嵌套查询</p>
-<p>嵌套查询中，子查询的结果往往是一个集合，所以谓词in是嵌套查询中最常使用的谓词</p>
-<p>如：</p>
-<p>查询与“刘晨”在同一个系的学生</p>
-<pre><code>select *
-from stu
-where sdept in 
-(select sdept
-from stu
-where sname=&quot;刘晨&quot;);</code></pre>
-<p>查询选修了课程名为“信息系统”的学生学号和姓名</p>
-<pre><code>select sno,sname
-from stu
-where sno in 
-    (select sno
-    from sc
-    where sc.cno in
-        (select course.cno
-        from course
-        where course.cname=&quot;信息系统&quot;));</code></pre>
-<p>若采用连接查询：</p>
-<pre><code>select stu.sno,stu.sname
-from stu,sc,course
-where course.cname=&quot;信息系统&quot; and course.cno = sc.cno and stu.sno = sc.sno;</code></pre>
-<p>在实际应用中，能使用连接查询尽量使用连接查询</p>
-<h3 id="带有any、all谓词的子查询"><a href="#带有any、all谓词的子查询" class="headerlink" title="带有any、all谓词的子查询"></a><strong>带有any、all谓词的子查询</strong></h3><blockquote>
-<p>any 大于子查询中任何一个<br>&lt; any 小于子查询中任何一个<br>all 大于子查询中所有<br>&lt; all 小于子查询中所有<br>…</p>
-</blockquote>
-<p>如：</p>
-<p>查询非计算机科学系中比计算机科学系任意一个学生年龄小的学生姓名和年龄</p>
-<pre><code>select sname,sage
-from stu
-where sage &lt; any
-(
-    select sage
-    from stu
-    where sdept=&#39;cs&#39;) and sdept!=&#39;cs&#39;;</code></pre>
-<h3 id="带有exists谓词的子查询"><a href="#带有exists谓词的子查询" class="headerlink" title="带有exists谓词的子查询"></a>带有exists谓词的子查询</h3><p>exists表示存在量词，带有exists谓词的子查询只返回逻辑值，exists的作用域为子查询</p>
-<p>流程为：取出外层查询的元组，根据它进行内层查询，如果返回值为真，则存入结果集</p>
-<p>如：</p>
-<p>查询所有选修了1号课程的学生姓名</p>
-<pre><code>select sname
-from stu
-where exists
-(select sno
-from sc
-where sc.sno = stu.sno and cno=&#39;1&#39;);</code></pre>
-<p>与exists对应的是not exists</p>
-<p>如：</p>
-<p>查询没有选修1号课程的学生姓名</p>
-<pre><code>select sname
-from stu
-where not exists
-(select *
-from sc
-where stu.sno=sc.sno and cno=&#39;1&#39;);</code></pre>
-<h3 id="集合查询"><a href="#集合查询" class="headerlink" title="集合查询"></a><strong>集合查询</strong></h3><p>select语句的查询结果为元组的集合，所以多个select语句的结果可进行集合操作</p>
-<p>集合操作主要有 并操作union、交操作intersect、差操作except</p>
-<p><strong>注：参加集合操作的各查询结果的列数必须相同，对应的数据类型也必须相同</strong></p>
-<p>如：</p>
-<p>查询计算机科学系的学生及年龄不大于19岁的学生</p>
-<pre><code>select *
-from stu
-where sdept=&#39;cs&#39;
-
-union
-
-select *
-from stu
-where sage&lt;=19</code></pre>
-<p>查询计算机科学系的学生与年龄不大于19岁的学生的交集</p>
-<pre><code>select *
-from stu
-where sdept=&#39;cs&#39;
-
-intersect
-
-select *
-from stu
-where sage&lt;=19;</code></pre>
-<p>查询计算机科学系的学生与年龄不大于19岁的学生的差集</p>
-<pre><code>select *
-from stu
-where sdept=&#39;cs&#39;
-
-except
-
-select *
-from stu
-where sage&lt;=19;</code></pre>
-]]></content>
-      <tags>
-        <tag>数据库</tag>
       </tags>
   </entry>
 </search>

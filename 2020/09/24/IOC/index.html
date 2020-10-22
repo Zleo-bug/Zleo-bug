@@ -1,13 +1,13 @@
-<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Spring之控制反转（IOC） | 十二点前要睡觉</title><meta name="keywords" content="Spring"><meta name="author" content="leobro,zhangakenug@qq.com"><meta name="copyright" content="leobro"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="description" content="IOC控制反转：IOC案例：接口UserInterface： public interface UserInterface &amp;#123;     public void use(); &amp;#125; 接口UserInterface的实现类 UserImpl： public class UserImpl implements UserInterface&amp;#123; @Override     publ">
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Spring之控制反转（IOC） | 十二点前要睡觉</title><meta name="keywords" content="Spring"><meta name="author" content="leobro,zhangakenug@qq.com"><meta name="copyright" content="leobro"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="description" content="IOC控制反转：IOC案例：接口UserInterface： 123public interface UserInterface &amp;#123;   	public void use();&amp;#125; 接口UserInterface的实现类 UserImpl： 123456public class UserImpl implements UserInterface&amp;#123;   @Override">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Spring之控制反转（IOC）">
 <meta property="og:url" content="http://example.com/2020/09/24/IOC/index.html">
 <meta property="og:site_name" content="十二点前要睡觉">
-<meta property="og:description" content="IOC控制反转：IOC案例：接口UserInterface： public interface UserInterface &amp;#123;     public void use(); &amp;#125; 接口UserInterface的实现类 UserImpl： public class UserImpl implements UserInterface&amp;#123; @Override     publ">
+<meta property="og:description" content="IOC控制反转：IOC案例：接口UserInterface： 123public interface UserInterface &amp;#123;   	public void use();&amp;#125; 接口UserInterface的实现类 UserImpl： 123456public class UserImpl implements UserInterface&amp;#123;   @Override">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/2020/09/24/IOC/Spring,IOC,java">
 <meta property="article:published_time" content="2020-09-24T12:58:19.000Z">
-<meta property="article:modified_time" content="2020-10-19T03:52:19.998Z">
+<meta property="article:modified_time" content="2020-10-22T03:23:09.135Z">
 <meta property="article:author" content="leobro">
 <meta property="article:tag" content="Spring">
 <meta name="twitter:card" content="summary">
@@ -78,9 +78,9 @@ var saveToLocal = {
 }</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
   isPost: true,
   isHome: false,
-  isHighlightShrink: true,
+  isHighlightShrink: false,
   isSidebar: true,
-  postUpdate: '2020-10-19 11:52:19'
+  postUpdate: '2020-10-22 11:23:09'
 }</script><noscript><style type="text/css">
   #nav {
     opacity: 1
@@ -140,49 +140,21 @@ if (autoChangeMode === '1') {
 } else {
   if (t === 'dark') activateDarkMode()
   else if (t === 'light') activateLightMode()
-}</script><link rel="stylesheet" href="/self/Kimbiedark.css"><meta name="generator" content="Hexo 5.2.0"></head><body><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="/img/WechatIMG68.jpeg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">文章</div><div class="length_num">14</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/tags/"><div class="headline">标签</div><div class="length_num">13</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></div><div class="menus_item"><a class="site-page" href="/messageboard/"><i class="fa-fw fa fa-link"></i><span> 留言板</span></a></div></div></div></div><div id="body-wrap"><div id="sidebar"><i class="fas fa-arrow-right on" id="toggle-sidebar"></i><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#IOC%E6%8E%A7%E5%88%B6%E5%8F%8D%E8%BD%AC%EF%BC%9A"><span class="toc-number">1.</span> <span class="toc-text">IOC控制反转：</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#IOC%E6%A1%88%E4%BE%8B%EF%BC%9A"><span class="toc-number">1.1.</span> <span class="toc-text">IOC案例：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DI%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5"><span class="toc-number">2.</span> <span class="toc-text">DI依赖注入</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#DI%E6%A1%88%E4%BE%8B%EF%BC%9A"><span class="toc-number">2.1.</span> <span class="toc-text">DI案例：</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Setter%E6%96%B9%E6%B3%95%E6%B3%A8%E5%85%A5"><span class="toc-number">2.1.1.</span> <span class="toc-text">Setter方法注入</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95%E6%B3%A8%E5%85%A5"><span class="toc-number">2.1.2.</span> <span class="toc-text">构造方法注入</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DI%E4%B8%AD%E5%B1%9E%E6%80%A7%E7%9A%84%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5"><span class="toc-number">2.2.</span> <span class="toc-text">DI中属性的依赖注入</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Bean%E7%9A%84%E4%BD%9C%E7%94%A8%E5%9F%9F"><span class="toc-number">3.</span> <span class="toc-text">Bean的作用域</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#singleton"><span class="toc-number">3.1.</span> <span class="toc-text">singleton:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#prototype"><span class="toc-number">3.2.</span> <span class="toc-text">prototype:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#request%E5%92%8Csession"><span class="toc-number">3.3.</span> <span class="toc-text">request和session</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Bean%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E4%B9%8B%E5%88%9D%E5%A7%8B%E5%8C%96%E5%92%8C%E9%94%80%E6%AF%81"><span class="toc-number">4.</span> <span class="toc-text">Bean的生命周期之初始化和销毁</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E5%88%9D%E5%A7%8B%E5%8C%96%E5%92%8C%E9%94%80%E6%AF%81%E6%96%B9%E6%B3%95"><span class="toc-number">4.1.</span> <span class="toc-text">自定义初始化和销毁方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0InitializingBean%E5%92%8CDisposableBean%E6%8E%A5%E5%8F%A3"><span class="toc-number">4.2.</span> <span class="toc-text">实现InitializingBean和DisposableBean接口</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%A8xml%E6%96%87%E4%BB%B6%E5%A4%B4%E4%B8%AD%E9%85%8D%E7%BD%AE%E9%BB%98%E8%AE%A4%E7%9A%84%E5%88%9D%E5%A7%8B%E5%8C%96%E5%92%8C%E9%94%80%E6%AF%81%E6%96%B9%E6%B3%95"><span class="toc-number">4.3.</span> <span class="toc-text">在xml文件头中配置默认的初始化和销毁方法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Aware%E6%8E%A5%E5%8F%A3"><span class="toc-number">5.</span> <span class="toc-text">Aware接口</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Bean%E7%9A%84%E8%87%AA%E5%8A%A8%E8%A3%85%E9%85%8D"><span class="toc-number">6.</span> <span class="toc-text">Bean的自动装配</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#byname"><span class="toc-number">6.1.</span> <span class="toc-text">byname</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#bytype"><span class="toc-number">6.2.</span> <span class="toc-text">bytype</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#byConstructor"><span class="toc-number">6.3.</span> <span class="toc-text">byConstructor</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B3%A8%E8%A7%A3%E5%AE%9E%E7%8E%B0Bean%E7%9A%84%E8%87%AA%E5%8A%A8%E9%85%8D%E7%BD%AE"><span class="toc-number">7.</span> <span class="toc-text">注解实现Bean的自动配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Component%E3%80%81-Service%E3%80%81-Controller%E3%80%81-Repository"><span class="toc-number">7.1.</span> <span class="toc-text">@Component、@Service、@Controller、@Repository</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Required"><span class="toc-number">7.2.</span> <span class="toc-text">@Required</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Autowired"><span class="toc-number">7.3.</span> <span class="toc-text">@Autowired</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Qualifier"><span class="toc-number">7.4.</span> <span class="toc-text">@Qualifier</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Bean"><span class="toc-number">7.5.</span> <span class="toc-text">@Bean</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Configuration"><span class="toc-number">7.6.</span> <span class="toc-text">@Configuration</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E5%91%BD%E5%90%8D%E7%AD%96%E7%95%A5"><span class="toc-number">8.</span> <span class="toc-text">自定义命名策略</span></a></li></ol></div></div></div><header class="post-bg" id="page-header" style="background-image: url(/2020/09/24/IOC/Spring,IOC,java)"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">十二点前要睡觉</a></span><span id="menus"><div id="search_button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></div><div class="menus_item"><a class="site-page" href="/messageboard/"><i class="fa-fw fa fa-link"></i><span> 留言板</span></a></div></div><span class="close" id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="post-info"><div id="post-title"><div class="posttitle">Spring之控制反转（IOC）</div></div><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="fa-fw post-meta-icon far fa-calendar-alt"></i><span class="post-meta-label">发表于</span><time datetime="2020-09-24T12:58:19.000Z" title="undefined 2020-09-24 20:58:19">2020-09-24</time></span></div><div class="meta-secondline"> <span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">5k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>24分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout_post" id="content-inner"><article id="post"><div class="post-content" id="article-container"><h2 id="IOC控制反转："><a href="#IOC控制反转：" class="headerlink" title="IOC控制反转："></a><strong>IOC控制反转：</strong></h2><h3 id="IOC案例："><a href="#IOC案例：" class="headerlink" title="IOC案例："></a><strong>IOC案例：</strong></h3><p>接口UserInterface：</p>
-<pre><code>public interface UserInterface &#123;
-    public void use();
-&#125;</code></pre>
+}</script><meta name="generator" content="Hexo 5.2.0"></head><body><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="/img/WechatIMG68.jpeg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">文章</div><div class="length_num">14</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/tags/"><div class="headline">标签</div><div class="length_num">13</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></div><div class="menus_item"><a class="site-page" href="/messageboard/"><i class="fa-fw fa fa-link"></i><span> 留言板</span></a></div></div></div></div><div id="body-wrap"><div id="sidebar"><i class="fas fa-arrow-right on" id="toggle-sidebar"></i><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#IOC%E6%8E%A7%E5%88%B6%E5%8F%8D%E8%BD%AC%EF%BC%9A"><span class="toc-number">1.</span> <span class="toc-text">IOC控制反转：</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#IOC%E6%A1%88%E4%BE%8B%EF%BC%9A"><span class="toc-number">1.1.</span> <span class="toc-text">IOC案例：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DI%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5"><span class="toc-number">2.</span> <span class="toc-text">DI依赖注入</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#DI%E6%A1%88%E4%BE%8B%EF%BC%9A"><span class="toc-number">2.1.</span> <span class="toc-text">DI案例：</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Setter%E6%96%B9%E6%B3%95%E6%B3%A8%E5%85%A5"><span class="toc-number">2.1.1.</span> <span class="toc-text">Setter方法注入</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95%E6%B3%A8%E5%85%A5"><span class="toc-number">2.1.2.</span> <span class="toc-text">构造方法注入</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DI%E4%B8%AD%E5%B1%9E%E6%80%A7%E7%9A%84%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5"><span class="toc-number">2.2.</span> <span class="toc-text">DI中属性的依赖注入</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Bean%E7%9A%84%E4%BD%9C%E7%94%A8%E5%9F%9F"><span class="toc-number">3.</span> <span class="toc-text">Bean的作用域</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#singleton"><span class="toc-number">3.1.</span> <span class="toc-text">singleton:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#prototype"><span class="toc-number">3.2.</span> <span class="toc-text">prototype:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#request%E5%92%8Csession"><span class="toc-number">3.3.</span> <span class="toc-text">request和session</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Bean%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E4%B9%8B%E5%88%9D%E5%A7%8B%E5%8C%96%E5%92%8C%E9%94%80%E6%AF%81"><span class="toc-number">4.</span> <span class="toc-text">Bean的生命周期之初始化和销毁</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E5%88%9D%E5%A7%8B%E5%8C%96%E5%92%8C%E9%94%80%E6%AF%81%E6%96%B9%E6%B3%95"><span class="toc-number">4.1.</span> <span class="toc-text">自定义初始化和销毁方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0InitializingBean%E5%92%8CDisposableBean%E6%8E%A5%E5%8F%A3"><span class="toc-number">4.2.</span> <span class="toc-text">实现InitializingBean和DisposableBean接口</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%A8xml%E6%96%87%E4%BB%B6%E5%A4%B4%E4%B8%AD%E9%85%8D%E7%BD%AE%E9%BB%98%E8%AE%A4%E7%9A%84%E5%88%9D%E5%A7%8B%E5%8C%96%E5%92%8C%E9%94%80%E6%AF%81%E6%96%B9%E6%B3%95"><span class="toc-number">4.3.</span> <span class="toc-text">在xml文件头中配置默认的初始化和销毁方法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Aware%E6%8E%A5%E5%8F%A3"><span class="toc-number">5.</span> <span class="toc-text">Aware接口</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Bean%E7%9A%84%E8%87%AA%E5%8A%A8%E8%A3%85%E9%85%8D"><span class="toc-number">6.</span> <span class="toc-text">Bean的自动装配</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#byname"><span class="toc-number">6.1.</span> <span class="toc-text">byname</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#bytype"><span class="toc-number">6.2.</span> <span class="toc-text">bytype</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#byConstructor"><span class="toc-number">6.3.</span> <span class="toc-text">byConstructor</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B3%A8%E8%A7%A3%E5%AE%9E%E7%8E%B0Bean%E7%9A%84%E8%87%AA%E5%8A%A8%E9%85%8D%E7%BD%AE"><span class="toc-number">7.</span> <span class="toc-text">注解实现Bean的自动配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Component%E3%80%81-Service%E3%80%81-Controller%E3%80%81-Repository"><span class="toc-number">7.1.</span> <span class="toc-text">@Component、@Service、@Controller、@Repository</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Required"><span class="toc-number">7.2.</span> <span class="toc-text">@Required</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Autowired"><span class="toc-number">7.3.</span> <span class="toc-text">@Autowired</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Qualifier"><span class="toc-number">7.4.</span> <span class="toc-text">@Qualifier</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Bean"><span class="toc-number">7.5.</span> <span class="toc-text">@Bean</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Configuration"><span class="toc-number">7.6.</span> <span class="toc-text">@Configuration</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E5%91%BD%E5%90%8D%E7%AD%96%E7%95%A5"><span class="toc-number">8.</span> <span class="toc-text">自定义命名策略</span></a></li></ol></div></div></div><header class="post-bg" id="page-header" style="background-image: url(/2020/09/24/IOC/Spring,IOC,java)"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">十二点前要睡觉</a></span><span id="menus"><div id="search_button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></div><div class="menus_item"><a class="site-page" href="/messageboard/"><i class="fa-fw fa fa-link"></i><span> 留言板</span></a></div></div><span class="close" id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="post-info"><div id="post-title"><div class="posttitle">Spring之控制反转（IOC）</div></div><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="fa-fw post-meta-icon far fa-calendar-alt"></i><span class="post-meta-label">发表于</span><time datetime="2020-09-24T12:58:19.000Z" title="undefined 2020-09-24 20:58:19">2020-09-24</time></span></div><div class="meta-secondline"> <span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">5.4k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>26分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout_post" id="content-inner"><article id="post"><div class="post-content" id="article-container"><h2 id="IOC控制反转："><a href="#IOC控制反转：" class="headerlink" title="IOC控制反转："></a><strong>IOC控制反转：</strong></h2><h3 id="IOC案例："><a href="#IOC案例：" class="headerlink" title="IOC案例："></a><strong>IOC案例：</strong></h3><p>接口UserInterface：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs plain">public interface UserInterface &#123;<br>   	public void use();<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>接口UserInterface的实现类 UserImpl：</p>
-<pre><code>public class UserImpl implements UserInterface&#123;
-@Override
-    public void use() &#123;
-        System.out.println(&quot;User using!&quot;);
-    &#125;
-&#125;</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs plain">public class UserImpl implements UserInterface&#123;<br>   @Override<br>   	public void use() &#123;<br>       	System.out.println(&quot;User using!&quot;);<br>   	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>测试类 TextClass：</p>
 <!--     import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext; -->
-
-<pre><code>public class TextClass &#123;
-    public static void main(String[] args) &#123;
-        UserInterface userInterface = new UserImpl();
-        userInterface.use();
-    &#125;
-&#125;</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs plain">public class TextClass &#123;<br>   	public static void main(String[] args) &#123;<br>        UserInterface userInterface &#x3D; new UserImpl();<br>        userInterface.use();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>输出结果：</p>
 <p>User using！</p>
 <p>在使用IOC之前，我们一直是在程序中直接使用new来生成一个对象，但在IOC中，我们不需要在程序中使用new来创建对象，而是通过配置XML文件，把所需要的类写入XML文件中，由Spring来管理和获取对象</p>
 <p>将TextCLass中程序改一下：</p>
-<pre><code>import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-public class TextClass &#123;
-    public static void main(String[] args) &#123;
-        String xmlPath = &quot;ApplicationContext.xml&quot;;
-        ApplicationContext applicationContext = new ClassPathXmlApplicationContext(xmlPath);
-        UserInterface userInterface = (UserInterface)applicationContext.getBean(&quot;UserId&quot;);
-        userInterface.use();
-    &#125;
-&#125;</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs plain">import org.springframework.context.ApplicationContext;<br>import org.springframework.context.support.ClassPathXmlApplicationContext;<br>public class TextClass &#123;<br>    public static void main(String[] args) &#123;<br>        String xmlPath &#x3D; &quot;ApplicationContext.xml&quot;;<br>        ApplicationContext applicationContext &#x3D; new ClassPathXmlApplicationContext(xmlPath);<br>        UserInterface userInterface &#x3D; (UserInterface)applicationContext.getBean(&quot;UserId&quot;);<br>        userInterface.use();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>同时创建ApplicationContext.XML文件，并配置：</p>
-<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
-       xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
-       xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd&quot;&gt;
-
-    &lt;bean id=&quot;UserId&quot; class=&quot;UserImpl&quot;&gt;&lt;/bean&gt;
-&lt;/beans&gt;</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs plain">&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;UTF-8&quot;?&gt;<br>&lt;beans xmlns&#x3D;&quot;http:&#x2F;&#x2F;www.springframework.org&#x2F;schema&#x2F;beans&quot;<br>       xmlns:xsi&#x3D;&quot;http:&#x2F;&#x2F;www.w3.org&#x2F;2001&#x2F;XMLSchema-instance&quot;<br>       xsi:schemaLocation&#x3D;&quot;http:&#x2F;&#x2F;www.springframework.org&#x2F;schema&#x2F;beans http:&#x2F;&#x2F;www.springframework.org&#x2F;schema&#x2F;beans&#x2F;spring-beans.xsd&quot;&gt;<br><br>    &lt;bean id&#x3D;&quot;UserId&quot; class&#x3D;&quot;UserImpl&quot;&gt;&lt;&#x2F;bean&gt;<br>&lt;&#x2F;beans&gt;<br></code></pre></td></tr></table></figure>
 <p>运行TextCLass，输出结果为：</p>
 <p>User using！</p>
 <p>这时候，我们在程序中<strong>由主动创建类</strong>转变为<strong>通过Spring管理和获取类</strong>，这一转变称为控制反转</p>
@@ -199,216 +171,40 @@ public class TextClass &#123;
 </ul>
 <p>下面主要介绍前两种方法</p>
 <h3 id="DI案例："><a href="#DI案例：" class="headerlink" title="DI案例："></a><strong>DI案例：</strong></h3><p>添加一个MyClass类，类中有私有成员 userInterface</p>
-<pre><code>public class MyInterface &#123;
-    private UserInterface userInterface;
-    public void show()&#123;
-        userInterface.use();
-    &#125;
-&#125;</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs plain">public class MyInterface &#123;<br>   	private UserInterface userInterface;<br>   	public void show()&#123;<br>   	    userInterface.use();<br>   	&#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
 <h4 id="Setter方法注入"><a href="#Setter方法注入" class="headerlink" title="Setter方法注入"></a><strong>Setter方法注入</strong></h4><p>在类中添加Setter方法</p>
-<pre><code>public class MyClass &#123;
-    private UserInterface userInterface;
-    public void show()&#123;
-        userInterface.use();
-    &#125;
-    public void setUserInterface(UserInterface userInterface)&#123;
-        this.userInterface = userInterface;
-    &#125;
-&#125;</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs plain">public class MyClass &#123;<br>    private UserInterface userInterface;<br>    public void show()&#123;<br>        userInterface.use();<br>    &#125;<br>    public void setUserInterface(UserInterface userInterface)&#123;<br>        this.userInterface &#x3D; userInterface;<br>   	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>配置XML文件</p>
-<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
-   xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
-   xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd&quot;&gt;
-&lt;bean id=&quot;UserId&quot; class=&quot;UserImpl&quot;&gt;&lt;/bean&gt;
-&lt;bean id=&quot;MyClassId&quot; class=&quot;MyClass&quot;&gt;
-    &lt;property name=&quot;userInterface&quot; ref=&quot;UserId&quot;&gt;&lt;/property&gt;
-&lt;/bean&gt;
-&lt;/beans&gt;</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs plain">&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;UTF-8&quot;?&gt;<br>&lt;beans xmlns&#x3D;&quot;http:&#x2F;&#x2F;www.springframework.org&#x2F;schema&#x2F;beans&quot;<br>      xmlns:xsi&#x3D;&quot;http:&#x2F;&#x2F;www.w3.org&#x2F;2001&#x2F;XMLSchema-instance&quot;<br>      xsi:schemaLocation&#x3D;&quot;http:&#x2F;&#x2F;www.springframework.org&#x2F;schema&#x2F;beans http:&#x2F;&#x2F;www.springframework.org&#x2F;schema&#x2F;beans&#x2F;spring-beans.xsd&quot;&gt;<br>   &lt;bean id&#x3D;&quot;UserId&quot; class&#x3D;&quot;UserImpl&quot;&gt;&lt;&#x2F;bean&gt;<br>   &lt;bean id&#x3D;&quot;MyClassId&quot; class&#x3D;&quot;MyClass&quot;&gt;<br>       &lt;property name&#x3D;&quot;userInterface&quot; ref&#x3D;&quot;UserId&quot;&gt;&lt;&#x2F;property&gt;<br>   &lt;&#x2F;bean&gt;<br>&lt;&#x2F;beans&gt;<br></code></pre></td></tr></table></figure>
 <p>TextClass类中进行测试</p>
-<pre><code>import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-public class TextClass &#123;
-    public static void main(String[] args) &#123;
-        String xmlPath = &quot;ApplicationContext.xml&quot;;
-        ApplicationContext applicationContext = new ClassPathXmlApplicationContext(xmlPath);
-        MyInterface myInterface = (MyInterface)applicationContext.getBean(&quot;MyInterfaceId&quot;);
-        myInterface.show();
-    &#125;
-&#125;</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs plain">import org.springframework.context.ApplicationContext;<br>import org.springframework.context.support.ClassPathXmlApplicationContext;<br>public class TextClass &#123;<br>    public static void main(String[] args) &#123;<br>        String xmlPath &#x3D; &quot;ApplicationContext.xml&quot;;<br>        ApplicationContext applicationContext &#x3D; new ClassPathXmlApplicationContext(xmlPath);<br>        MyInterface myInterface &#x3D; (MyInterface)applicationContext.getBean(&quot;MyInterfaceId&quot;);<br>        myInterface.show();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>输出结果为：</p>
 <p>User using！</p>
 <h4 id="构造方法注入"><a href="#构造方法注入" class="headerlink" title="构造方法注入"></a><strong>构造方法注入</strong></h4><p>在MyClass类中添加构造函数</p>
-<pre><code>public class MyClass &#123;
-    private UserInterface userInterface;
-    public void show()&#123;
-        userInterface.use();
-    &#125;
-    public MyClass()&#123;&#125;
-//    构造方法注入
-    public MyClass(UserInterface userInterface)&#123;
-        this.userInterface = userInterface;
-    &#125;
-&#125;</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs plain">public class MyClass &#123;<br>    private UserInterface userInterface;<br>    public void show()&#123;<br>        userInterface.use();<br>    &#125;<br>    public MyClass()&#123;&#125;<br>&#x2F;&#x2F;    构造方法注入<br>    public MyClass(UserInterface userInterface)&#123;<br>        this.userInterface &#x3D; userInterface;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>配置XML文件</p>
-<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
-       xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
-       xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd&quot;&gt;
-    &lt;bean id=&quot;UserId&quot; class=&quot;UserImpl&quot;&gt;&lt;/bean&gt;
-    &lt;bean id=&quot;MyClassId&quot; class=&quot;MyClass&quot;&gt;
-        &lt;constructor-arg index=&quot;0&quot; ref=&quot;UserId&quot;&gt;&lt;/constructor-arg&gt;
-    &lt;/bean&gt;
-&lt;/beans&gt;</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs plain">&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;UTF-8&quot;?&gt;<br>&lt;beans xmlns&#x3D;&quot;http:&#x2F;&#x2F;www.springframework.org&#x2F;schema&#x2F;beans&quot;<br>       xmlns:xsi&#x3D;&quot;http:&#x2F;&#x2F;www.w3.org&#x2F;2001&#x2F;XMLSchema-instance&quot;<br>       xsi:schemaLocation&#x3D;&quot;http:&#x2F;&#x2F;www.springframework.org&#x2F;schema&#x2F;beans http:&#x2F;&#x2F;www.springframework.org&#x2F;schema&#x2F;beans&#x2F;spring-beans.xsd&quot;&gt;<br>    &lt;bean id&#x3D;&quot;UserId&quot; class&#x3D;&quot;UserImpl&quot;&gt;&lt;&#x2F;bean&gt;<br>    &lt;bean id&#x3D;&quot;MyClassId&quot; class&#x3D;&quot;MyClass&quot;&gt;<br>        &lt;constructor-arg index&#x3D;&quot;0&quot; ref&#x3D;&quot;UserId&quot;&gt;&lt;&#x2F;constructor-arg&gt;<br>    &lt;&#x2F;bean&gt;<br>&lt;&#x2F;beans&gt;<br></code></pre></td></tr></table></figure>
 <p>如果有多个属性，index则按照从0…n进行配置</p>
 <p>运行TextCLass，输出结果：</p>
 <p>User Using！</p>
 <h3 id="DI中属性的依赖注入"><a href="#DI中属性的依赖注入" class="headerlink" title="DI中属性的依赖注入"></a><strong>DI中属性的依赖注入</strong></h3><p>以setter方法注入为例：</p>
 <p>新建一个User类：</p>
-<pre><code>import java.util.*;
-
-public class User &#123;
-    private String id;
-    private String name;
-    private String[] strings = new String[10];
-    private List&lt;String&gt; list = new ArrayList&lt;&gt;();
-    private Set&lt;String&gt; set = new HashSet&lt;&gt;();
-    private Map&lt;String,Integer&gt; map = new HashMap&lt;&gt;();
-
-    public void setId(String id) &#123;
-        this.id = id;
-    &#125;
-
-    public void setName(String name) &#123;
-        this.name = name;
-    &#125;
-
-    public void setStrings(String[] strings) &#123;
-        this.strings = strings;
-    &#125;
-
-    public void setList(List&lt;String&gt; list) &#123;
-        this.list = list;
-    &#125;
-
-    public void setSet(Set&lt;String&gt; set) &#123;
-        this.set = set;
-    &#125;
-
-    public void setMap(Map&lt;String, Integer&gt; map) &#123;
-        this.map = map;
-    &#125;
-
-    public Map&lt;String, Integer&gt; getMap() &#123;
-        return map;
-    &#125;
-
-    public Set&lt;String&gt; getSet() &#123;
-        return set;
-    &#125;
-
-    public List&lt;String&gt; getList() &#123;
-        return list;
-    &#125;
-
-    public String[] getStrings() &#123;
-        return strings;
-    &#125;
-
-    public String getName() &#123;
-        return name;
-    &#125;
-
-    public String getId() &#123;
-        return id;
-    &#125;
-&#125;</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><code class="hljs plain">import java.util.*;<br><br>public class User &#123;<br>    private String id;<br>    private String name;<br>    private String[] strings &#x3D; new String[10];<br>    private List&lt;String&gt; list &#x3D; new ArrayList&lt;&gt;();<br>    private Set&lt;String&gt; set &#x3D; new HashSet&lt;&gt;();<br>    private Map&lt;String,Integer&gt; map &#x3D; new HashMap&lt;&gt;();<br><br>    public void setId(String id) &#123;<br>        this.id &#x3D; id;<br>    &#125;<br><br>    public void setName(String name) &#123;<br>        this.name &#x3D; name;<br>    &#125;<br><br>    public void setStrings(String[] strings) &#123;<br>        this.strings &#x3D; strings;<br>    &#125;<br><br>    public void setList(List&lt;String&gt; list) &#123;<br>        this.list &#x3D; list;<br>    &#125;<br><br>    public void setSet(Set&lt;String&gt; set) &#123;<br>        this.set &#x3D; set;<br>    &#125;<br><br>    public void setMap(Map&lt;String, Integer&gt; map) &#123;<br>        this.map &#x3D; map;<br>    &#125;<br><br>    public Map&lt;String, Integer&gt; getMap() &#123;<br>        return map;<br>    &#125;<br><br>    public Set&lt;String&gt; getSet() &#123;<br>        return set;<br>    &#125;<br><br>    public List&lt;String&gt; getList() &#123;<br>        return list;<br>    &#125;<br><br>    public String[] getStrings() &#123;<br>        return strings;<br>    &#125;<br><br>    public String getName() &#123;<br>        return name;<br>    &#125;<br><br>    public String getId() &#123;<br>        return id;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>配置XML文件：</p>
-<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
-   xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
-   xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd&quot;&gt;
-
-&lt;bean id=&quot;UserId&quot; class=&quot;User&quot;&gt;
-    &lt;property name=&quot;id&quot; value=&quot;20185625&quot;&gt;&lt;/property&gt;
-    &lt;property name=&quot;name&quot; value=&quot;zl&quot;&gt;&lt;/property&gt;
-    &lt;property name=&quot;strings&quot;&gt;
-        &lt;array&gt;
-            &lt;value&gt;&quot;11&quot;&lt;/value&gt;
-            &lt;value&gt;&quot;22&quot;&lt;/value&gt;
-            &lt;value&gt;&quot;33&quot;&lt;/value&gt;
-        &lt;/array&gt;
-    &lt;/property&gt;
-    &lt;property name=&quot;list&quot;&gt;
-        &lt;list&gt;
-            &lt;value&gt;&quot;44&quot;&lt;/value&gt;
-            &lt;value&gt;&quot;55&quot;&lt;/value&gt;
-            &lt;value&gt;&quot;66&quot;&lt;/value&gt;
-        &lt;/list&gt;
-    &lt;/property&gt;
-
-    &lt;property name=&quot;set&quot;&gt;
-        &lt;set&gt;
-            &lt;value&gt;&quot;77&quot;&lt;/value&gt;
-            &lt;value&gt;&quot;88&quot;&lt;/value&gt;
-            &lt;value&gt;&quot;99&quot;&lt;/value&gt;
-        &lt;/set&gt;
-    &lt;/property&gt;
-
-    &lt;property name=&quot;map&quot;&gt;
-        &lt;map&gt;
-            &lt;entry key=&quot;111&quot; value=&quot;111&quot;&gt;&lt;/entry&gt;
-            &lt;entry key=&quot;222&quot; value=&quot;222&quot;&gt;&lt;/entry&gt;
-        &lt;/map&gt;
-    &lt;/property&gt;
-
-&lt;/bean&gt;
-&lt;/beans&gt;</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><code class="hljs plain">&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;UTF-8&quot;?&gt;<br>&lt;beans xmlns&#x3D;&quot;http:&#x2F;&#x2F;www.springframework.org&#x2F;schema&#x2F;beans&quot;<br>      xmlns:xsi&#x3D;&quot;http:&#x2F;&#x2F;www.w3.org&#x2F;2001&#x2F;XMLSchema-instance&quot;<br>      xsi:schemaLocation&#x3D;&quot;http:&#x2F;&#x2F;www.springframework.org&#x2F;schema&#x2F;beans http:&#x2F;&#x2F;www.springframework.org&#x2F;schema&#x2F;beans&#x2F;spring-beans.xsd&quot;&gt;<br><br>   &lt;bean id&#x3D;&quot;UserId&quot; class&#x3D;&quot;User&quot;&gt;<br>       &lt;property name&#x3D;&quot;id&quot; value&#x3D;&quot;20185625&quot;&gt;&lt;&#x2F;property&gt;<br>       &lt;property name&#x3D;&quot;name&quot; value&#x3D;&quot;zl&quot;&gt;&lt;&#x2F;property&gt;<br>       &lt;property name&#x3D;&quot;strings&quot;&gt;<br>           &lt;array&gt;<br>               &lt;value&gt;&quot;11&quot;&lt;&#x2F;value&gt;<br>               &lt;value&gt;&quot;22&quot;&lt;&#x2F;value&gt;<br>               &lt;value&gt;&quot;33&quot;&lt;&#x2F;value&gt;<br>           &lt;&#x2F;array&gt;<br>       &lt;&#x2F;property&gt;<br>       &lt;property name&#x3D;&quot;list&quot;&gt;<br>           &lt;list&gt;<br>               &lt;value&gt;&quot;44&quot;&lt;&#x2F;value&gt;<br>               &lt;value&gt;&quot;55&quot;&lt;&#x2F;value&gt;<br>               &lt;value&gt;&quot;66&quot;&lt;&#x2F;value&gt;<br>           &lt;&#x2F;list&gt;<br>       &lt;&#x2F;property&gt;<br><br>       &lt;property name&#x3D;&quot;set&quot;&gt;<br>           &lt;set&gt;<br>               &lt;value&gt;&quot;77&quot;&lt;&#x2F;value&gt;<br>               &lt;value&gt;&quot;88&quot;&lt;&#x2F;value&gt;<br>               &lt;value&gt;&quot;99&quot;&lt;&#x2F;value&gt;<br>           &lt;&#x2F;set&gt;<br>       &lt;&#x2F;property&gt;<br><br>       &lt;property name&#x3D;&quot;map&quot;&gt;<br>           &lt;map&gt;<br>               &lt;entry key&#x3D;&quot;111&quot; value&#x3D;&quot;111&quot;&gt;&lt;&#x2F;entry&gt;<br>               &lt;entry key&#x3D;&quot;222&quot; value&#x3D;&quot;222&quot;&gt;&lt;&#x2F;entry&gt;<br>           &lt;&#x2F;map&gt;<br>       &lt;&#x2F;property&gt;<br><br>   &lt;&#x2F;bean&gt;<br>&lt;&#x2F;beans&gt;<br></code></pre></td></tr></table></figure>
 <p>测试：</p>
-<pre><code>import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-
-import java.util.Arrays;
-
-public class TextClass &#123;
-    public static void main(String[] args) &#123;
-        String xmlPath = &quot;ApplicationContext.xml&quot;;
-        ApplicationContext applicationContext = new ClassPathXmlApplicationContext(xmlPath);
-
-        User user = (User)applicationContext.getBean(&quot;UserId&quot;);
-        System.out.println(Arrays.toString(user.getStrings()));
-        System.out.println(user.getList());
-        System.out.println(user.getMap());
-    &#125;
-&#125;</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs plain">import org.springframework.context.ApplicationContext;<br>import org.springframework.context.support.ClassPathXmlApplicationContext;<br><br>import java.util.Arrays;<br><br>public class TextClass &#123;<br>    public static void main(String[] args) &#123;<br>        String xmlPath &#x3D; &quot;ApplicationContext.xml&quot;;<br>        ApplicationContext applicationContext &#x3D; new ClassPathXmlApplicationContext(xmlPath);<br><br>        User user &#x3D; (User)applicationContext.getBean(&quot;UserId&quot;);<br>        System.out.println(Arrays.toString(user.getStrings()));<br>        System.out.println(user.getList());<br>        System.out.println(user.getMap());<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>输出结果：</p>
 <pre><code>[&quot;11&quot;, &quot;22&quot;, &quot;33&quot;]
 [&quot;44&quot;, &quot;55&quot;, &quot;66&quot;]
 &#123;111=111, 222=222&#125;</code></pre>
 <hr>
 <h2 id="Bean的作用域"><a href="#Bean的作用域" class="headerlink" title="Bean的作用域"></a><strong>Bean的作用域</strong></h2><p>定义一个ScopeClass类 和 TestClass：</p>
-<pre><code>public class ScopeClass &#123;
-
-    public void show()&#123;
-        System.out.println(this.hashCode());
-    &#125;
-
-    public static void main(String[] args) &#123;
-        ApplicationContext applicationContext = new ClassPathXmlApplicationContext(&quot;newcontext&quot;);
-        ScopeClass scopeClass = (ScopeClass)applicationContext.getBean(&quot;ScopeClassId&quot;);
-        scopeClass.show();
-    &#125;
-&#125;</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs plain">public class ScopeClass &#123;<br><br>    public void show()&#123;<br>        System.out.println(this.hashCode());<br>    &#125;<br><br>    public static void main(String[] args) &#123;<br>        ApplicationContext applicationContext &#x3D; new ClassPathXmlApplicationContext(&quot;newcontext&quot;);<br>        ScopeClass scopeClass &#x3D; (ScopeClass)applicationContext.getBean(&quot;ScopeClassId&quot;);<br>        scopeClass.show();<br>    &#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
 <h3 id="singleton"><a href="#singleton" class="headerlink" title="singleton:"></a><strong>singleton:</strong></h3><p>在XML文件中配置:    </p>
-<pre><code>&lt;bean id=&quot;ScopeClassId&quot; class=&quot;com.newdemo.ScopeClass&quot; scope=&quot;singleton&quot;&gt;&lt;/bean&gt;</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plain">&lt;bean id&#x3D;&quot;ScopeClassId&quot; class&#x3D;&quot;com.newdemo.ScopeClass&quot; scope&#x3D;&quot;singleton&quot;&gt;&lt;&#x2F;bean&gt;<br></code></pre></td></tr></table></figure>
 <p>在TestClass进行测试</p>
-<pre><code>public class TestClass &#123;
-public static void main(String[] args) &#123;
-    ApplicationContext applicationContext = new ClassPathXmlApplicationContext(&quot;newcontext.xml&quot;);
-    ScopeClass scopeClass = (ScopeClass)applicationContext.getBean(&quot;ScopeClassId&quot;);
-    scopeClass.show();
-&#125;</code></pre>
-<p>}</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs plain">	public class TestClass &#123;<br>    public static void main(String[] args) &#123;<br>        ApplicationContext applicationContext &#x3D; new ClassPathXmlApplicationContext(&quot;newcontext.xml&quot;);<br>        ScopeClass scopeClass &#x3D; (ScopeClass)applicationContext.getBean(&quot;ScopeClassId&quot;);<br>        scopeClass.show();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>输出结果：</p>
 <p>346224929<br>346224929</p>
 <p>说明bean中配置singleton单例，一个bean容器（同一个上下文）中只存在一份</p>
@@ -431,62 +227,24 @@ public static void main(String[] args) &#123;
 <li>在xml头中为所有Bean定义默认的初始化和销毁方法</li>
 </ul>
 <p>定义一个LifeCircleClass类：</p>
-<pre><code>public class LifeCircleClass &#123;
-
-&#125;</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs plain">public class LifeCircleClass &#123;<br>    <br>&#125;<br></code></pre></td></tr></table></figure>
 <h3 id="自定义初始化和销毁方法"><a href="#自定义初始化和销毁方法" class="headerlink" title="自定义初始化和销毁方法"></a><strong>自定义初始化和销毁方法</strong></h3><p>在类中定义初始化和销毁方法：</p>
-<pre><code>public class LifeCircleClass &#123;
-    public void init()&#123;
-        System.out.println(&quot;init&quot;);
-    &#125;
-    public void destroy()&#123;
-        System.out.println(&quot;destroy&quot;);
-    &#125;
-&#125;</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs plain">public class LifeCircleClass &#123;<br>   	public void init()&#123;<br>       	System.out.println(&quot;init&quot;);<br>   	&#125;<br>   	public void destroy()&#123;<br>       	System.out.println(&quot;destroy&quot;);<br>   	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>在xml文件中配置bean：</p>
-<pre><code>&lt;bean id=&quot;LifeCircleClassId&quot; class=&quot;com.newdemo.LifeCircleClass&quot; init-method=&quot;init&quot; destroy-method=&quot;destroy&quot;&gt;&lt;/bean&gt;</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plain">&lt;bean id&#x3D;&quot;LifeCircleClassId&quot; class&#x3D;&quot;com.newdemo.LifeCircleClass&quot; init-method&#x3D;&quot;init&quot; destroy-method&#x3D;&quot;destroy&quot;&gt;&lt;&#x2F;bean&gt;<br><br></code></pre></td></tr></table></figure>
 <p>测试：</p>
-<pre><code>ApplicationContext applicationContext = new ClassPathXmlApplicationContext(&quot;newcontext.xml&quot;);
-    LifeCircleClass lifeCircleClass = (LifeCircleClass)applicationContext.getBean(&quot;LifeCircleClassId&quot;);
-    ((AbstractApplicationContext) applicationContext).close();  //关闭容器</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs plain">ApplicationContext applicationContext &#x3D; new ClassPathXmlApplicationContext(&quot;newcontext.xml&quot;);<br>       LifeCircleClass lifeCircleClass &#x3D; (LifeCircleClass)applicationContext.getBean(&quot;LifeCircleClassId&quot;);<br>       ((AbstractApplicationContext) applicationContext).close();  &#x2F;&#x2F;关闭容器<br></code></pre></td></tr></table></figure>
 <p>输出结果：</p>
 <p>init<br>destroy</p>
 <hr>
-<h3 id="实现InitializingBean和DisposableBean接口"><a href="#实现InitializingBean和DisposableBean接口" class="headerlink" title="实现InitializingBean和DisposableBean接口"></a><strong>实现InitializingBean和DisposableBean接口</strong></h3><pre><code>public class LifeCircleClass implements InitializingBean, DisposableBean &#123;
-
-    @Override
-    public void afterPropertiesSet() throws Exception &#123;
-        System.out.println(&quot;init&quot;);
-    &#125;
-
-    @Override
-    public void destroy() throws Exception &#123;
-        System.out.println(&quot;destroy&quot;);
-    &#125;
-
-&#125;</code></pre>
+<h3 id="实现InitializingBean和DisposableBean接口"><a href="#实现InitializingBean和DisposableBean接口" class="headerlink" title="实现InitializingBean和DisposableBean接口"></a><strong>实现InitializingBean和DisposableBean接口</strong></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs plain">public class LifeCircleClass implements InitializingBean, DisposableBean &#123;<br><br>   	@Override<br>   	public void afterPropertiesSet() throws Exception &#123;<br>       	System.out.println(&quot;init&quot;);<br>   	&#125;<br><br>   	@Override<br>   	public void destroy() throws Exception &#123;<br>       	System.out.println(&quot;destroy&quot;);<br>   	&#125;<br><br>&#125;<br></code></pre></td></tr></table></figure>
 <p>此时可以不在xml文件中配置，测试结果相同</p>
 <hr>
 <h3 id="在xml文件头中配置默认的初始化和销毁方法"><a href="#在xml文件头中配置默认的初始化和销毁方法" class="headerlink" title="在xml文件头中配置默认的初始化和销毁方法"></a><strong>在xml文件头中配置默认的初始化和销毁方法</strong></h3><p>default-init-method 顶级 <beans> 元素属性上存在属性会导致Spring IoC容器 init 将bean类上调用的方法识别为初始化方法回调。当bean被创建和组装时，如果bean类具有这样的方法，则在适当的时候调用它。</beans></p>
 <p>如：在LifeCircleClass中自定义init()和destroy()方法，在xml头中配置</p>
-<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
-   xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
-   xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd&quot;
-default-init-method=&quot;init&quot; default-destroy-method=&quot;destroy&quot;&gt;
-
-    &lt;bean id=&quot;ScopeClassId&quot; class=&quot;com.newdemo.ScopeClass&quot; scope=&quot;prototype&quot;&gt;&lt;/bean&gt;
-
-    &lt;bean id=&quot;LifeCircleClassId&quot; class=&quot;com.newdemo.LifeCircleClass&quot; &gt;&lt;/bean&gt;
-&lt;/beans&gt;</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs plain">&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;UTF-8&quot;?&gt;<br>&lt;beans xmlns&#x3D;&quot;http:&#x2F;&#x2F;www.springframework.org&#x2F;schema&#x2F;beans&quot;<br>      xmlns:xsi&#x3D;&quot;http:&#x2F;&#x2F;www.w3.org&#x2F;2001&#x2F;XMLSchema-instance&quot;<br>      xsi:schemaLocation&#x3D;&quot;http:&#x2F;&#x2F;www.springframework.org&#x2F;schema&#x2F;beans http:&#x2F;&#x2F;www.springframework.org&#x2F;schema&#x2F;beans&#x2F;spring-beans.xsd&quot;<br>default-init-method&#x3D;&quot;init&quot; default-destroy-method&#x3D;&quot;destroy&quot;&gt;<br><br>   	&lt;bean id&#x3D;&quot;ScopeClassId&quot; class&#x3D;&quot;com.newdemo.ScopeClass&quot; scope&#x3D;&quot;prototype&quot;&gt;&lt;&#x2F;bean&gt;<br><br>   	&lt;bean id&#x3D;&quot;LifeCircleClassId&quot; class&#x3D;&quot;com.newdemo.LifeCircleClass&quot; &gt;&lt;&#x2F;bean&gt;<br>&lt;&#x2F;beans&gt;<br></code></pre></td></tr></table></figure>
 <p>新建一个InitClass类并在xml文件中配置，测试：</p>
-<pre><code>public class TestClass &#123;
-    public static void main(String[] args) &#123;
-        ApplicationContext applicationContext = new ClassPathXmlApplicationContext(&quot;newcontext.xml&quot;);
-        InitClass initClass = (InitClass) applicationContext.getBean(&quot;InitClassId&quot;);
-        ((AbstractApplicationContext) applicationContext).close();  //关闭容器
-    &#125;
-&#125;</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs plain">public class TestClass &#123;<br>    public static void main(String[] args) &#123;<br>        ApplicationContext applicationContext &#x3D; new ClassPathXmlApplicationContext(&quot;newcontext.xml&quot;);<br>        InitClass initClass &#x3D; (InitClass) applicationContext.getBean(&quot;InitClassId&quot;);<br>        ((AbstractApplicationContext) applicationContext).close();  &#x2F;&#x2F;关闭容器<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>测试结果相同</p>
 <hr>
 <h2 id="Aware接口"><a href="#Aware接口" class="headerlink" title="Aware接口"></a><strong>Aware接口</strong></h2><p>Spring中有很多继承于Aware接口的字接口，如：</p>
@@ -494,62 +252,18 @@ default-init-method=&quot;init&quot; default-destroy-method=&quot;destroy&quot;&
 <p>aware翻译为感知的，根据字面意思Aware接口应该是具有某些感知的功能</p>
 <p>下面介绍一下ApplicationContextAware接口和BeanNameAware接口</p>
 <p>新建一个AwareClass类，继承BeanNameAware接口</p>
-<pre><code>public class AwareClass implements BeanNameAware &#123;
-    private String BeanName;
-    @Override
-    public void setBeanName(String s) &#123;
-        this.BeanName = s;
-    &#125;
-
-    public String getBeanName() &#123;
-        return BeanName;
-    &#125;
-&#125;</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs plain">public class AwareClass implements BeanNameAware &#123;<br>    private String BeanName;<br>    @Override<br>    public void setBeanName(String s) &#123;<br>        this.BeanName &#x3D; s;<br>    &#125;<br><br>    public String getBeanName() &#123;<br>        return BeanName;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>配置bean</p>
-<pre><code>&lt;bean id=&quot;AwareClassId&quot; class=&quot;com.newdemo.AwareClass&quot;&gt;&lt;/bean&gt;</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plain">&lt;bean id&#x3D;&quot;AwareClassId&quot; class&#x3D;&quot;com.newdemo.AwareClass&quot;&gt;&lt;&#x2F;bean&gt;<br></code></pre></td></tr></table></figure>
 <p>测试</p>
-<pre><code>public class TestClass &#123;
-public static void main(String[] args) &#123;
-        ApplicationContext applicationContext = new ClassPathXmlApplicationContext(&quot;newcontext.xml&quot;);
-        AwareClass awareClass = (AwareClass)applicationContext.getBean(&quot;AwareClassId&quot;);
-        System.out.println(awareClass.getBeanName());
-    &#125;
-&#125;</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs plain">public class TestClass &#123;<br>   public static void main(String[] args) &#123;<br>        ApplicationContext applicationContext &#x3D; new ClassPathXmlApplicationContext(&quot;newcontext.xml&quot;);<br>        AwareClass awareClass &#x3D; (AwareClass)applicationContext.getBean(&quot;AwareClassId&quot;);<br>        System.out.println(awareClass.getBeanName());<br>   	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>输出结果</p>
 <pre><code>AwareClassId</code></pre>
 <p>实现BeanNameAware接口的类通过setter方法可以自动获取配置文件中的beanid</p>
 <p>现在让Aware类继承ApplicationContextAware类</p>
-<pre><code>public class AwareClass implements BeanNameAware, ApplicationContextAware &#123;
-    private String BeanName;
-    private ApplicationContext applicationContext;
-    @Override
-    public void setBeanName(String s) &#123;
-        this.BeanName = s;
-    &#125;
-
-    public String getBeanName() &#123;
-        return BeanName;
-    &#125;
-
-    @Override
-    public void setApplicationContext(ApplicationContext applicationContext) &#123;
-        this.applicationContext = applicationContext;
-    &#125;
-
-    public ApplicationContext getApplicationContext() &#123;
-        return applicationContext;
-    &#125;
-
-&#125;</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs plain">public class AwareClass implements BeanNameAware, ApplicationContextAware &#123;<br>    private String BeanName;<br>    private ApplicationContext applicationContext;<br>    @Override<br>    public void setBeanName(String s) &#123;<br>        this.BeanName &#x3D; s;<br>    &#125;<br><br>    public String getBeanName() &#123;<br>        return BeanName;<br>    &#125;<br><br>    @Override<br>    public void setApplicationContext(ApplicationContext applicationContext) &#123;<br>        this.applicationContext &#x3D; applicationContext;<br>    &#125;<br><br>    public ApplicationContext getApplicationContext() &#123;<br>        return applicationContext;<br>    &#125;<br>   <br>&#125;<br></code></pre></td></tr></table></figure>
 <p>测试</p>
-<pre><code>public class TestClass &#123;
-public static void main(String[] args) &#123;
-        ApplicationContext applicationContext = new ClassPathXmlApplicationContext(&quot;newcontext.xml&quot;);
-        AwareClass awareClass = (AwareClass)applicationContext.getBean(&quot;AwareClassId&quot;);
-        ApplicationContext applicationContext1 = awareClass.getApplicationContext();
-        System.out.println(applicationContext==applicationContext1);
-    &#125;
-&#125;</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs plain">public class TestClass &#123;<br>   public static void main(String[] args) &#123;<br>        ApplicationContext applicationContext &#x3D; new ClassPathXmlApplicationContext(&quot;newcontext.xml&quot;);<br>        AwareClass awareClass &#x3D; (AwareClass)applicationContext.getBean(&quot;AwareClassId&quot;);<br>        ApplicationContext applicationContext1 &#x3D; awareClass.getApplicationContext();<br>        System.out.println(applicationContext&#x3D;&#x3D;applicationContext1);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>此时输出true，说明ApplicationContext接口中的setter方法可以自动获取该实现类所在的容器（上下文）</p>
 <p>同理，其他Aware的子接口也同样具有感知功能</p>
 <hr>
@@ -560,91 +274,14 @@ public static void main(String[] args) &#123;
 <li>byconstructor 构造器列表参数type==属性类型</li>
 </ul>
 <p>定义一个Person类、PersonalInfo类、AddressInfo类</p>
-<pre><code>public class Person &#123;
-    private PersonalInfo personalInfo;
-    private AddressInfo addressInfo;
-
-    public void setPersonalInfo(PersonalInfo personalInfo) &#123;
-        this.personalInfo = personalInfo;
-    &#125;
-
-    public void setAddressInfo(AddressInfo addressInfo) &#123;
-        this.addressInfo = addressInfo;
-    &#125;
-
-    public void show()&#123;
-        System.out.println(personalInfo.getName()+&quot; &quot;+personalInfo.getAge());
-        System.out.println(addressInfo.getProvince()+&quot; &quot;+addressInfo.getCity());
-    &#125;
-&#125;
-
-public class PersonalInfo &#123;
-    private String name;
-    private int age;
-    public void setName(String name) &#123;
-        this.name = name;
-    &#125;
-    public void setAge(int age) &#123;
-        this.age = age;
-    &#125;
-
-    public String getName() &#123;
-        return name;
-    &#125;
-
-    public int getAge() &#123;
-        return age;
-    &#125;
-
-    public int getAge() &#123;
-        return age;
-    &#125;
-&#125;    
-
-public class AddressInfo &#123;
-
-    private String Province;
-    private String city;
-
-    public void setProvince(String province) &#123;
-        Province = province;
-    &#125;
-
-    public void setCity(String city) &#123;
-        this.city = city;
-    &#125;
-
-    public String getProvince() &#123;
-        return Province;
-    &#125;
-
-    public String getCity() &#123;
-        return city;
-    &#125;
-&#125;</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><code class="hljs plain">public class Person &#123;<br>    private PersonalInfo personalInfo;<br>    private AddressInfo addressInfo;<br><br>    public void setPersonalInfo(PersonalInfo personalInfo) &#123;<br>        this.personalInfo &#x3D; personalInfo;<br>    &#125;<br><br>    public void setAddressInfo(AddressInfo addressInfo) &#123;<br>        this.addressInfo &#x3D; addressInfo;<br>    &#125;<br><br>    public void show()&#123;<br>        System.out.println(personalInfo.getName()+&quot; &quot;+personalInfo.getAge());<br>        System.out.println(addressInfo.getProvince()+&quot; &quot;+addressInfo.getCity());<br>    &#125;<br>&#125;<br><br>public class PersonalInfo &#123;<br>    private String name;<br>    private int age;<br>    public void setName(String name) &#123;<br>        this.name &#x3D; name;<br>    &#125;<br>    public void setAge(int age) &#123;<br>        this.age &#x3D; age;<br>    &#125;<br><br>    public String getName() &#123;<br>        return name;<br>    &#125;<br><br>    public int getAge() &#123;<br>        return age;<br>    &#125;<br><br>    public int getAge() &#123;<br>        return age;<br>    &#125;<br>&#125;	<br><br>public class AddressInfo &#123;<br><br>    private String Province;<br>    private String city;<br><br>    public void setProvince(String province) &#123;<br>        Province &#x3D; province;<br>    &#125;<br><br>    public void setCity(String city) &#123;<br>        this.city &#x3D; city;<br>    &#125;<br><br>    public String getProvince() &#123;<br>        return Province;<br>    &#125;<br><br>    public String getCity() &#123;<br>        return city;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 <hr>
 <h3 id="byname"><a href="#byname" class="headerlink" title="byname"></a><strong>byname</strong></h3><p>使用byname自动装配，要求被装配的属性名要与xml文件中某个Bean的beanId相同，否则不进行装配</p>
 <p>在xml中配置bean </p>
 <p><strong><em>注：在配置id的时候尽量配置小写，不然有时候会出错，原因不清楚</em></strong></p>
-<pre><code>&lt;bean id=&quot;personalInfo&quot; class=&quot;com.newdemo.PersonalInfo&quot;&gt;
-    &lt;property name=&quot;name&quot; value=&quot;zll&quot;&gt;&lt;/property&gt;
-    &lt;property name=&quot;age&quot; value=&quot;21&quot;&gt;&lt;/property&gt;
-&lt;/bean&gt;
-
-&lt;bean id=&quot;addressInfo&quot; class=&quot;com.newdemo.AddressInfo&quot;&gt;
-    &lt;property name=&quot;province&quot; value=&quot;GuangDong&quot;&gt;&lt;/property&gt;
-    &lt;property name=&quot;city&quot; value=&quot;GuangZhou&quot;&gt;&lt;/property&gt;
-&lt;/bean&gt;
-
-&lt;bean id=&quot;PersonId&quot; class=&quot;com.newdemo.Person&quot; autowire=&quot;byName&quot;&gt;&lt;/bean&gt;</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs plain">&lt;bean id&#x3D;&quot;personalInfo&quot; class&#x3D;&quot;com.newdemo.PersonalInfo&quot;&gt;<br>       &lt;property name&#x3D;&quot;name&quot; value&#x3D;&quot;zll&quot;&gt;&lt;&#x2F;property&gt;<br>       &lt;property name&#x3D;&quot;age&quot; value&#x3D;&quot;21&quot;&gt;&lt;&#x2F;property&gt;<br>   &lt;&#x2F;bean&gt;<br><br>   &lt;bean id&#x3D;&quot;addressInfo&quot; class&#x3D;&quot;com.newdemo.AddressInfo&quot;&gt;<br>       &lt;property name&#x3D;&quot;province&quot; value&#x3D;&quot;GuangDong&quot;&gt;&lt;&#x2F;property&gt;<br>       &lt;property name&#x3D;&quot;city&quot; value&#x3D;&quot;GuangZhou&quot;&gt;&lt;&#x2F;property&gt;<br>   &lt;&#x2F;bean&gt;<br><br>   &lt;bean id&#x3D;&quot;PersonId&quot; class&#x3D;&quot;com.newdemo.Person&quot; autowire&#x3D;&quot;byName&quot;&gt;&lt;&#x2F;bean&gt;<br></code></pre></td></tr></table></figure>
 <p>测试</p>
-<pre><code>public class TestClass &#123;
-    public static void main(String[] args) &#123;
-        ApplicationContext applicationContext = new ClassPathXmlApplicationContext(&quot;newcontext.xml&quot;);
-        Person person = (Person)applicationContext.getBean(&quot;PersonId&quot;);
-        person.show();
-    &#125;
-&#125;</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs plain">public class TestClass &#123;<br>    public static void main(String[] args) &#123;<br>        ApplicationContext applicationContext &#x3D; new ClassPathXmlApplicationContext(&quot;newcontext.xml&quot;);<br>        Person person &#x3D; (Person)applicationContext.getBean(&quot;PersonId&quot;);<br>        person.show();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>输出结果为：</p>
 <p>zll 21<br>GuangDong GuangZhou</p>
 <hr>
@@ -652,10 +289,7 @@ public class AddressInfo &#123;
 <p>在xml文件中的autowire改为bytype，输出结果相同</p>
 <hr>
 <h3 id="byConstructor"><a href="#byConstructor" class="headerlink" title="byConstructor"></a><strong>byConstructor</strong></h3><p>在Person类中添加构造方法</p>
-<pre><code>    public Person(PersonalInfo personalInfo,AddressInfo addressInfo) &#123;
-        this.personalInfo = personalInfo;
-        this.addressInfo = addressInfo;
-&#125;</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs plain"> public Person(PersonalInfo personalInfo,AddressInfo addressInfo) &#123;<br>    	this.personalInfo &#x3D; personalInfo;<br>    	this.addressInfo &#x3D; addressInfo;<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>在xml文件中的autowire改为bytype，输出结果相同</p>
 <hr>
 <h2 id="注解实现Bean的自动配置"><a href="#注解实现Bean的自动配置" class="headerlink" title="注解实现Bean的自动配置"></a><strong>注解实现Bean的自动配置</strong></h2><p>Spring2.5引入了通过注解来配置bean及注入依赖的方法，使用注解配置时，不再需要通过xml文件配置bean类，简化了配置工作</p>
@@ -664,41 +298,12 @@ public class AddressInfo &#123;
 <p>以上四个注解能够自动装配某个类，相当于在xml文件中手动配置bean，默认的id为类名首字母小写</p>
 <p>@Component的类中属性也会被自动装配（按构造器type自动装配）</p>
 <p><strong><em>注：实现自动配置前，要在xml文件中加上：</em></strong></p>
-<pre><code>    &lt;context:component-scan base-package=&quot;packageName&quot;/&gt;</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plain">&lt;context:component-scan base-package&#x3D;&quot;packageName&quot;&#x2F;&gt;<br></code></pre></td></tr></table></figure>
 <p>否则会出现找不到beanid的异常</p>
 <p>还是上面的Person类，删除Person类在xml中的配置</p>
-<pre><code>@Component
-public class Person &#123;
-    private PersonalInfo personalInfo;
-    private AddressInfo addressInfo;
-
-//    public void setPersonalInfo(PersonalInfo personalInfo) &#123;
-//        this.personalInfo = personalInfo;
-//    &#125;
-//
-//    public void setAddressInfo(AddressInfo addressInfo) &#123;
-//        this.addressInfo = addressInfo;
-//    &#125;
-
-
-    public Person(PersonalInfo personalInfo,AddressInfo addressInfo) &#123;
-        this.personalInfo = personalInfo;
-        this.addressInfo = addressInfo;
-    &#125;
-
-    public void show()&#123;
-        System.out.println(personalInfo.getName()+&quot; &quot;+personalInfo.getAge());
-        System.out.println(addressInfo.getProvince()+&quot; &quot;+addressInfo.getCity());
-    &#125;
-&#125;</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs plain">@Component<br>public class Person &#123;<br>    private PersonalInfo personalInfo;<br>    private AddressInfo addressInfo;<br><br>&#x2F;&#x2F;    public void setPersonalInfo(PersonalInfo personalInfo) &#123;<br>&#x2F;&#x2F;        this.personalInfo &#x3D; personalInfo;<br>&#x2F;&#x2F;    &#125;<br>&#x2F;&#x2F;<br>&#x2F;&#x2F;    public void setAddressInfo(AddressInfo addressInfo) &#123;<br>&#x2F;&#x2F;        this.addressInfo &#x3D; addressInfo;<br>&#x2F;&#x2F;    &#125;<br><br><br>    public Person(PersonalInfo personalInfo,AddressInfo addressInfo) &#123;<br>        this.personalInfo &#x3D; personalInfo;<br>        this.addressInfo &#x3D; addressInfo;<br>    &#125;<br><br>    public void show()&#123;<br>        System.out.println(personalInfo.getName()+&quot; &quot;+personalInfo.getAge());<br>        System.out.println(addressInfo.getProvince()+&quot; &quot;+addressInfo.getCity());<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>测试</p>
-<pre><code>public class TestClass &#123;
-    public static void main(String[] args) &#123;
-        ApplicationContext applicationContext = new ClassPathXmlApplicationContext(&quot;newcontext.xml&quot;);
-        Person person = (Person)applicationContext.getBean(&quot;person&quot;);
-        person.show();
-    &#125;
-&#125;</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs plain">public class TestClass &#123;<br>    public static void main(String[] args) &#123;<br>        ApplicationContext applicationContext &#x3D; new ClassPathXmlApplicationContext(&quot;newcontext.xml&quot;);<br>        Person person &#x3D; (Person)applicationContext.getBean(&quot;person&quot;);<br>        person.show();<br>    &#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
 <p>输出结果</p>
 <p>zll 21<br>GuangDong GuangZhou</p>
 <p>完成Person的自动配置，且Person中的属性也自动装配</p>
@@ -708,79 +313,30 @@ public class Person &#123;
 <p>若不进行配置，则会提示错误：</p>
 <p><img src="/2020/09/24/IOC/1601282519408.jpg" alt="error"></p>
 <p>添加配置即可</p>
-<pre><code>&lt;property name=&quot;name&quot; value=&quot;RequiredName&quot;&gt;&lt;/property&gt;</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plain">&lt;property name&#x3D;&quot;name&quot; value&#x3D;&quot;RequiredName&quot;&gt;&lt;&#x2F;property&gt;<br></code></pre></td></tr></table></figure>
+
+
 <hr>
 <h3 id="Autowired"><a href="#Autowired" class="headerlink" title="@Autowired"></a>@Autowired</h3><p>@Autowired注解的功能是为属性进行自动注入，@Autowired可作用于属性、setter、构造方法，@Autowired通过bytype方法查找上下文中与属性type相同的bean进行配置，@Autowired中默认为Required=true 即强制上下文必须要存在与属性type相同的bean，否则抛出异常，可用required=false消除这种强制性</p>
 <p><strong>作用于属性</strong></p>
 <p>当@Autowired作用于属性时，可以不用在类中添加该属性的setter方法或构造器，也不用在该类的bean中配置属性</p>
 <p>将Person类中的PersonalInfo和AddressInfo都加上@Autowired注解，删除构造方法</p>
-<pre><code>@Component
-public class Person &#123;
-    @Autowired
-    private PersonalInfo personalInfo;
-    @Autowired
-    private AddressInfo addressInfo;
-//    public void setPersonalInfo(PersonalInfo personalInfo) &#123;
-//        this.personalInfo = personalInfo;
-//    &#125;
-//    public void setAddressInfo(AddressInfo addressInfo) &#123;
-//        this.addressInfo = addressInfo;
-//    &#125;
-//    public Person(PersonalInfo personalInfo, AddressInfo addressInfo) &#123;
-//        this.personalInfo = personalInfo;
-//        this.addressInfo = addressInfo;
-//    &#125;
-
-    public void show()&#123;
-        System.out.println(personalInfo.getName()+&quot; &quot;+personalInfo.getAge());
-        System.out.println(addressInfo.getProvince()+&quot; &quot;+addressInfo.getCity());
-    &#125;
-&#125;</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs plain">@Component<br>public class Person &#123;<br>    @Autowired<br>    private PersonalInfo personalInfo;<br>    @Autowired<br>    private AddressInfo addressInfo;<br>&#x2F;&#x2F;    public void setPersonalInfo(PersonalInfo personalInfo) &#123;<br>&#x2F;&#x2F;        this.personalInfo &#x3D; personalInfo;<br>&#x2F;&#x2F;    &#125;<br>&#x2F;&#x2F;    public void setAddressInfo(AddressInfo addressInfo) &#123;<br>&#x2F;&#x2F;        this.addressInfo &#x3D; addressInfo;<br>&#x2F;&#x2F;    &#125;<br>&#x2F;&#x2F;    public Person(PersonalInfo personalInfo, AddressInfo addressInfo) &#123;<br>&#x2F;&#x2F;        this.personalInfo &#x3D; personalInfo;<br>&#x2F;&#x2F;        this.addressInfo &#x3D; addressInfo;<br>&#x2F;&#x2F;    &#125;<br><br>    public void show()&#123;<br>        System.out.println(personalInfo.getName()+&quot; &quot;+personalInfo.getAge());<br>        System.out.println(addressInfo.getProvince()+&quot; &quot;+addressInfo.getCity());<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>测试</p>
-<pre><code>public class TestClass &#123;
-    public static void main(String[] args) &#123;
-        ApplicationContext applicationContext = new ClassPathXmlApplicationContext(&quot;newcontext.xml&quot;);
-        Person person = (Person)applicationContext.getBean(&quot;person&quot;);
-        person.show();
-    &#125;
-&#125;</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs plain">public class TestClass &#123;<br>    public static void main(String[] args) &#123;<br>        ApplicationContext applicationContext &#x3D; new ClassPathXmlApplicationContext(&quot;newcontext.xml&quot;);<br>        Person person &#x3D; (Person)applicationContext.getBean(&quot;person&quot;);<br>        person.show();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>输出结果</p>
 <p>zll 21<br>GuangDong GuangZhou</p>
 <p>此时，如果把xml文件中PersonalInfo的bean配置删除，则会抛出异常， 因为使用@Autowired注解的属性，默认xml文件中必须存在与属性相同类型的bean</p>
 <p>将PersonalInfo的@Autowired注解改为</p>
-<pre><code>@Autowired(required = false)
-private PersonalInfo personalInfo;</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plain">@Autowired(required &#x3D; false)<br>   private PersonalInfo personalInfo;<br></code></pre></td></tr></table></figure>
 <p>此时通过编译，不过会抛出空指针异常，因为上下文无法匹配PersonalInfo这一属性，将Person类中的show函数注释PersonalInfo的输出</p>
-<pre><code>    public void show()&#123;
-//        System.out.println(personalInfo.getName()+&quot; &quot;+personalInfo.getAge());
-        System.out.println(addressInfo.getProvince()+&quot; &quot;+addressInfo.getCity());
-    &#125;</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs plain">    public void show()&#123;<br>&#x2F;&#x2F;        System.out.println(personalInfo.getName()+&quot; &quot;+personalInfo.getAge());<br>        System.out.println(addressInfo.getProvince()+&quot; &quot;+addressInfo.getCity());<br>    &#125;<br></code></pre></td></tr></table></figure>
 <p>输出结果</p>
 <p>GuangDong GuangZhou</p>
 <hr>
 <p><strong>作用于setter方法</strong></p>
 <p>@Autowired作用于setter方法时，不需要在类的bean中配置属性</p>
-<pre><code>public class Person &#123;
-    private PersonalInfo personalInfo;
-    private AddressInfo addressInfo;
-    @Autowired
-    public void setPersonalInfo(PersonalInfo personalInfo) &#123;
-        this.personalInfo = personalInfo;
-    &#125;
-    @Autowired
-    public void setAddressInfo(AddressInfo addressInfo) &#123;
-        this.addressInfo = addressInfo;
-    &#125;
-//    public Person(PersonalInfo personalInfo, AddressInfo addressInfo) &#123;
-//        this.personalInfo = personalInfo;
-//        this.addressInfo = addressInfo;
-//    &#125;
-
-    public void show()&#123;
-        System.out.println(personalInfo.getName()+&quot; &quot;+personalInfo.getAge());
-        System.out.println(addressInfo.getProvince()+&quot; &quot;+addressInfo.getCity());
-    &#125;
-&#125;</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs plain">public class Person &#123;<br>    private PersonalInfo personalInfo;<br>    private AddressInfo addressInfo;<br>    @Autowired<br>    public void setPersonalInfo(PersonalInfo personalInfo) &#123;<br>        this.personalInfo &#x3D; personalInfo;<br>    &#125;<br>    @Autowired<br>    public void setAddressInfo(AddressInfo addressInfo) &#123;<br>        this.addressInfo &#x3D; addressInfo;<br>    &#125;<br>&#x2F;&#x2F;    public Person(PersonalInfo personalInfo, AddressInfo addressInfo) &#123;<br>&#x2F;&#x2F;        this.personalInfo &#x3D; personalInfo;<br>&#x2F;&#x2F;        this.addressInfo &#x3D; addressInfo;<br>&#x2F;&#x2F;    &#125;<br><br>    public void show()&#123;<br>        System.out.println(personalInfo.getName()+&quot; &quot;+personalInfo.getAge());<br>        System.out.println(addressInfo.getProvince()+&quot; &quot;+addressInfo.getCity());<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>输出结果相同，相当于bean中配置autowire=bytype</p>
 <hr>
 <p><strong>作用于构造方法</strong></p>
@@ -788,102 +344,33 @@ private PersonalInfo personalInfo;</code></pre>
 <hr>
 <p><strong>集合的注入</strong></p>
 <p>Person类：</p>
-<pre><code>@Component
-public class Person &#123;
-    private PersonalInfo personalInfo;
-    private AddressInfo addressInfo;
-    private List&lt;PersonalInfo&gt; list;
-
-    @Autowired
-    public void setPersonalInfo(PersonalInfo personalInfo) &#123;
-        this.personalInfo = personalInfo;
-    &#125;
-    @Autowired
-    public void setAddressInfo(AddressInfo addressInfo) &#123;
-        this.addressInfo = addressInfo;
-    &#125;
-
-    @Autowired
-    public void setList(List&lt;PersonalInfo&gt; list) &#123;
-        this.list = list;
-    &#125;
-
-    public void show()&#123;
-        list.forEach(v-&gt; System.out.println(v.getName()+&quot; &quot;+v.getAge()));
-    &#125;
-&#125;    </code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs plain">@Component<br>public class Person &#123;<br>    private PersonalInfo personalInfo;<br>    private AddressInfo addressInfo;<br>    private List&lt;PersonalInfo&gt; list;<br><br>    @Autowired<br>    public void setPersonalInfo(PersonalInfo personalInfo) &#123;<br>        this.personalInfo &#x3D; personalInfo;<br>    &#125;<br>    @Autowired<br>    public void setAddressInfo(AddressInfo addressInfo) &#123;<br>        this.addressInfo &#x3D; addressInfo;<br>    &#125;<br><br>    @Autowired<br>    public void setList(List&lt;PersonalInfo&gt; list) &#123;<br>        this.list &#x3D; list;<br>    &#125;<br><br>    public void show()&#123;<br>		list.forEach(v-&gt; System.out.println(v.getName()+&quot; &quot;+v.getAge()));<br>    &#125;<br>&#125;	<br></code></pre></td></tr></table></figure>
 <p>并在xml文件中再添加一个PersonalInfo的Bean</p>
-<pre><code>&lt;bean id=&quot;personalInfo&quot; class=&quot;com.newdemo.PersonalInfo&quot;&gt;
-    &lt;property name=&quot;name&quot; value=&quot;zll&quot;&gt;&lt;/property&gt;
-    &lt;property name=&quot;age&quot; value=&quot;21&quot;&gt;&lt;/property&gt;
-&lt;/bean&gt;
-
-&lt;bean id=&quot;personalInfo1&quot; class=&quot;com.newdemo.PersonalInfo&quot;&gt;
-    &lt;property name=&quot;name&quot; value=&quot;zlll&quot;&gt;&lt;/property&gt;
-    &lt;property name=&quot;age&quot; value=&quot;211&quot;&gt;&lt;/property&gt;
-&lt;/bean&gt;</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs plain">&lt;bean id&#x3D;&quot;personalInfo&quot; class&#x3D;&quot;com.newdemo.PersonalInfo&quot;&gt;<br>       &lt;property name&#x3D;&quot;name&quot; value&#x3D;&quot;zll&quot;&gt;&lt;&#x2F;property&gt;<br>       &lt;property name&#x3D;&quot;age&quot; value&#x3D;&quot;21&quot;&gt;&lt;&#x2F;property&gt;<br>   &lt;&#x2F;bean&gt;<br>   <br>   &lt;bean id&#x3D;&quot;personalInfo1&quot; class&#x3D;&quot;com.newdemo.PersonalInfo&quot;&gt;<br>       &lt;property name&#x3D;&quot;name&quot; value&#x3D;&quot;zlll&quot;&gt;&lt;&#x2F;property&gt;<br>       &lt;property name&#x3D;&quot;age&quot; value&#x3D;&quot;211&quot;&gt;&lt;&#x2F;property&gt;<br>   &lt;&#x2F;bean&gt;<br></code></pre></td></tr></table></figure>
 <p>测试输出</p>
-<pre><code>public class TestClass &#123;
-    public static void main(String[] args) &#123;
-        ApplicationContext applicationContext = new ClassPathXmlApplicationContext(&quot;newcontext.xml&quot;);
-        Person person = (Person)applicationContext.getBean(&quot;person&quot;);
-        person.show();
-    &#125;
-&#125;</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs plain">public class TestClass &#123;<br>    public static void main(String[] args) &#123;<br>        ApplicationContext applicationContext &#x3D; new ClassPathXmlApplicationContext(&quot;newcontext.xml&quot;);<br>        Person person &#x3D; (Person)applicationContext.getBean(&quot;person&quot;);<br>        person.show();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>输出</p>
 <p>zll 21<br>zlll 211</p>
 <p>说明集合的自动装配中，会自动搜索上下文中与属性类型相同的bean，并把这些所有的bean同时注入集合中</p>
 <p>将属性改为map映射      private Map&lt;String,PersonalInfo&gt; map;</p>
-<pre><code>    public void show()&#123;
-//        System.out.println(personalInfo.getName()+&quot; &quot;+personalInfo.getAge());
-//        System.out.println(addressInfo.getProvince()+&quot; &quot;+addressInfo.getCity());
-//        System.out.println(list);
-        map.forEach((k,v)-&gt; System.out.println(map.get(k).getName()+&quot; &quot;+map.get(k).getAge()));
-        System.out.println();
-        map.forEach((k,v)-&gt; System.out.println(k+&quot; &quot; +v));
-    &#125;</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs plain">    public void show()&#123;<br>&#x2F;&#x2F;        System.out.println(personalInfo.getName()+&quot; &quot;+personalInfo.getAge());<br>&#x2F;&#x2F;        System.out.println(addressInfo.getProvince()+&quot; &quot;+addressInfo.getCity());<br>&#x2F;&#x2F;        System.out.println(list);<br>        map.forEach((k,v)-&gt; System.out.println(map.get(k).getName()+&quot; &quot;+map.get(k).getAge()));<br>        System.out.println();<br>        map.forEach((k,v)-&gt; System.out.println(k+&quot; &quot; +v));<br>    &#125;<br></code></pre></td></tr></table></figure>
 <p>输出</p>
 <p>zll 21<br>zlll 211</p>
 <p>personalInfo com.newdemo.PersonalInfo@1eb5174b<br>personalInfo1 com.newdemo.PersonalInfo@67080771</p>
 <p>说明是将bean的id作为键，对象作为值</p>
 <hr>
 <h3 id="Qualifier"><a href="#Qualifier" class="headerlink" title="@Qualifier"></a><strong>@Qualifier</strong></h3><p>当xml文件中存在多个type相同类型的bean时，若使用自动配置，编译器不知道该匹配哪个则会抛出异常，使用@Qualifier来制定匹配哪个bean</p>
-<pre><code>    &lt;bean id=&quot;personalInfo&quot; class=&quot;com.newdemo.PersonalInfo&quot;&gt;
-    &lt;property name=&quot;name&quot; value=&quot;zll&quot;&gt;&lt;/property&gt;
-    &lt;property name=&quot;age&quot; value=&quot;21&quot;&gt;&lt;/property&gt;
-&lt;/bean&gt;
-&lt;bean id=&quot;personalInfo_Id&quot; class=&quot;com.newdemo.PersonalInfo&quot;&gt;
-    &lt;property name=&quot;name&quot; value=&quot;zllll&quot;&gt;&lt;/property&gt;
-    &lt;property name=&quot;age&quot; value=&quot;2111&quot;&gt;&lt;/property&gt;
-&lt;/bean&gt;
-
-   @Autowired
-@Qualifier(&quot;personalInfo_Id&quot;)
-public void setPersonalInfo(PersonalInfo personalInfo) &#123;
-    this.personalInfo = personalInfo;
-&#125;</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs plain"> &lt;bean id&#x3D;&quot;personalInfo&quot; class&#x3D;&quot;com.newdemo.PersonalInfo&quot;&gt;<br>    &lt;property name&#x3D;&quot;name&quot; value&#x3D;&quot;zll&quot;&gt;&lt;&#x2F;property&gt;<br>    &lt;property name&#x3D;&quot;age&quot; value&#x3D;&quot;21&quot;&gt;&lt;&#x2F;property&gt;<br>&lt;&#x2F;bean&gt;<br>&lt;bean id&#x3D;&quot;personalInfo_Id&quot; class&#x3D;&quot;com.newdemo.PersonalInfo&quot;&gt;<br>    &lt;property name&#x3D;&quot;name&quot; value&#x3D;&quot;zllll&quot;&gt;&lt;&#x2F;property&gt;<br>    &lt;property name&#x3D;&quot;age&quot; value&#x3D;&quot;2111&quot;&gt;&lt;&#x2F;property&gt;<br>&lt;&#x2F;bean&gt;<br><br>   @Autowired<br>@Qualifier(&quot;personalInfo_Id&quot;)<br>public void setPersonalInfo(PersonalInfo personalInfo) &#123;<br>    this.personalInfo &#x3D; personalInfo;<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>输出</p>
 <p>zllll 2111</p>
 <hr>
 <h3 id="Bean"><a href="#Bean" class="headerlink" title="@Bean"></a><strong>@Bean</strong></h3><p>用@Bean注解的方法会配置、实例化一个新的对象，这个对象由IOC容器管理，bean_id为方法名，相当于 <bean id="method-name" class="..."></bean></p>
 <p>新建一个CharacterInfo类</p>
-<pre><code>public class CharacterInfo &#123;
-    public void show()&#123;
-        System.out.println(&quot;Character&#39;show&quot;);
-    &#125;
-&#125;</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs plain">public class CharacterInfo &#123;<br>    public void show()&#123;<br>        System.out.println(&quot;Character&#39;show&quot;);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>在Person类中添加CharacterInfo类属性，并添加getCharacterInfo()方法</p>
-<pre><code>public CharacterInfo getCharacterInfo()&#123;
-    return new CharacterInfo();
-&#125;</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs plain">public CharacterInfo getCharacterInfo()&#123;<br>    return new CharacterInfo();<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>在testClass中测试</p>
-<pre><code>public class TestClass &#123;
-    public static void main(String[] args) &#123;
-        ApplicationContext applicationContext = new ClassPathXmlApplicationContext(&quot;newcontext.xml&quot;);
-        CharacterInfo characterInfo = (CharacterInfo)applicationContext.getBean(&quot;getCharacterInfo&quot;);
-        characterInfo.show();
-    &#125;
-&#125;</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs plain">public class TestClass &#123;<br>    public static void main(String[] args) &#123;<br>        ApplicationContext applicationContext &#x3D; new ClassPathXmlApplicationContext(&quot;newcontext.xml&quot;);<br>        CharacterInfo characterInfo &#x3D; (CharacterInfo)applicationContext.getBean(&quot;getCharacterInfo&quot;);<br>        characterInfo.show();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>输出</p>
 <p>Character’show</p>
 <hr>
@@ -894,35 +381,16 @@ public void setPersonalInfo(PersonalInfo personalInfo) &#123;
 </ul>
 <p>@Scope用来定义bean的作用域，默认单例，相当于<bean id class scope="singleton"></bean></p>
 <p>将@Scope作用在Person类上</p>
-<pre><code>public class TestClass &#123;
-    public static void main(String[] args) &#123;
-        ApplicationContext applicationContext = new ClassPathXmlApplicationContext(&quot;newcontext.xml&quot;);
-        Person person = (Person)applicationContext.getBean(&quot;person&quot;);
-        Person person1 = (Person)applicationContext.getBean(&quot;person&quot;);
-        System.out.println(person);
-        System.out.println(person1);
-    &#125;
-&#125;</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs plain">public class TestClass &#123;<br>    public static void main(String[] args) &#123;<br>        ApplicationContext applicationContext &#x3D; new ClassPathXmlApplicationContext(&quot;newcontext.xml&quot;);<br>        Person person &#x3D; (Person)applicationContext.getBean(&quot;person&quot;);<br>        Person person1 &#x3D; (Person)applicationContext.getBean(&quot;person&quot;);<br>        System.out.println(person);<br>        System.out.println(person1);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>输出</p>
 <p>com.newdemo.Person$$EnhancerBySpringCGLIB$$5578c3b8@6f10d5b6<br>com.newdemo.Person$$EnhancerBySpringCGLIB$$5578c3b8@6f10d5b6</p>
 <hr>
 <h2 id="自定义命名策略"><a href="#自定义命名策略" class="headerlink" title="自定义命名策略"></a><strong>自定义命名策略</strong></h2><p>在Spring中，我们可以实现通过实现BeanNameGenerator接口，然后在xml文件中配置自定义命名类，来完成对bean的自定义命名策略    </p>
 <p>定义MyBeanNameGenerator类，实现BeanNameGenerator接口</p>
-<pre><code>public class MyBeanNameGenerator implements BeanNameGenerator &#123;
-    @Override
-    public String generateBeanName(BeanDefinition beanDefinition, BeanDefinitionRegistry beanDefinitionRegistry) &#123;
-        return beanDefinition.getBeanClassName()+&quot;Id&quot;;
-    &#125;
-&#125;</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs plain">public class MyBeanNameGenerator implements BeanNameGenerator &#123;<br>    @Override<br>    public String generateBeanName(BeanDefinition beanDefinition, BeanDefinitionRegistry beanDefinitionRegistry) &#123;<br>        return beanDefinition.getBeanClassName()+&quot;Id&quot;;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>测试</p>
-<pre><code>public class TestClass &#123;
-    public static void main(String[] args) &#123;
-        ApplicationContext applicationContext = new ClassPathXmlApplicationContext(&quot;newcontext.xml&quot;);
-        Person person = (Person)applicationContext.getBean(&quot;com.newdemo.PersonId&quot;);
-        person.show();
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs plain">public class TestClass &#123;<br>    public static void main(String[] args) &#123;<br>        ApplicationContext applicationContext &#x3D; new ClassPathXmlApplicationContext(&quot;newcontext.xml&quot;);<br>        Person person &#x3D; (Person)applicationContext.getBean(&quot;com.newdemo.PersonId&quot;);<br>        person.show();<br><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
-    &#125;
-&#125;</code></pre>
 <p>输出</p>
 <p>zllll 2111</p>
 </div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:zhangakenug@qq.com">leobro</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://example.com/2020/09/24/IOC/">http://example.com/2020/09/24/IOC/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://example.com" target="_blank">十二点前要睡觉</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Spring/">Spring</a></div><div class="post_share"><div class="addthis_inline_share_toolbox"></div><script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=null" async="async"></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2020/09/25/AOP/"><img class="prev-cover" src="/null" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Spring AOP的两种实现方式（XML、AspectJ）</div></div></a></div><div class="next-post pull-right"><a href="/2020/09/22/Spring/"><img class="next-cover" src="/null" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Spring简介</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2020/10/02/AOP2/" title="AOP的API实现及SpringAOP实现原理"><img class="cover" src="/null"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-10-02</div><div class="title">AOP的API实现及SpringAOP实现原理</div></div></a></div><div><a href="/2020/09/22/Spring/" title="Spring简介"><img class="cover" src="/null"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-09-22</div><div class="title">Spring简介</div></div></a></div><div><a href="/2020/10/04/Servlet/" title="JavaWeb之Servlet"><img class="cover" src="/null"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-10-04</div><div class="title">JavaWeb之Servlet</div></div></a></div><div><a href="/2020/10/12/mvcwrong/" title="MVC Cannot resolve reference to bean 'cacheManager'异常解决"><img class="cover" src="/null"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-10-12</div><div class="title">MVC Cannot resolve reference to bean 'cacheManager'异常解决</div></div></a></div><div><a href="/2020/09/25/AOP/" title="Spring AOP的两种实现方式（XML、AspectJ）"><img class="cover" src="/null"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-09-25</div><div class="title">Spring AOP的两种实现方式（XML、AspectJ）</div></div></a></div><div><a href="/2020/10/04/SpringMVC/" title="SpringMVC入门"><img class="cover" src="/null"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-10-04</div><div class="title">SpringMVC入门</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div><div class="comment-switch"><span class="first-comment">Valine</span><label><input id="switch-comments-btn" type="checkbox"/><span class="slider"></span></label><span class="second-comment"></span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div><div></div></div></div></article></main><footer id="footer" style="background-image: url(/2020/09/24/IOC/Spring,IOC,java)"><div id="footer-wrap"><div class="copyright">&copy;2020 By leobro</div><div class="icp"><a><img class="icp-icon" src="/img/icp.png"/><span></span></a></div></div></footer></div><section id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></section><div class="search-dialog" id="local-search"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"><div id="local-hits"></div><div id="local-stats"><div class="local-search-stats__hr" id="hr"><span>由</span> <a target="_blank" rel="noopener" href="https://github.com/wzpan/hexo-generator-search" style="color:#49B1F5;">hexo-generator-search</a>

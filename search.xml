@@ -967,6 +967,125 @@ print(str)            #12\n312312412412</code></pre>
       </tags>
   </entry>
   <entry>
+    <title>java日志使用</title>
+    <url>/2020/10/24/javarecord/</url>
+    <content><![CDATA[<h1 id="什么是日志"><a href="#什么是日志" class="headerlink" title="什么是日志"></a><strong>什么是日志</strong></h1><p>通常，在平时写代码出现错误的时候，习惯使用debug或者sout来调试错误，但有时候错误很难找，这时候需要排错就显得很困难了，这时候我们就可以使用日志来帮助我们更有效地排错。日志记录了程序的运行轨迹日志，方便查找关键信息，也方便快速定位解决问题，是应用软件中不可缺少的部分</p>
+<h1 id="常用的日志框架"><a href="#常用的日志框架" class="headerlink" title="常用的日志框架"></a><strong>常用的日志框架</strong></h1><p>log4j、log4j2、Logging、commons-logging、slf4j、logback等，重点介绍log4j</p>
+<h1 id="什么是log4j"><a href="#什么是log4j" class="headerlink" title="什么是log4j"></a><strong>什么是log4j</strong></h1><p>log4j是一个日志框架，是apache的一个开源项目，通过log4j可以控制日志信息的输出位置，控制每一条日志的输出格式，还定义每一条日志信息的级别，而且这些操作都可以通过一个配置文件来灵活地进行配置。</p>
+<h2 id="log4j入门实例"><a href="#log4j入门实例" class="headerlink" title="log4j入门实例"></a><strong>log4j入门实例</strong></h2><p>导入依赖</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">&lt;dependency&gt;<br>    &lt;groupId&gt;log4j&lt;&#x2F;groupId&gt;<br>    &lt;artifactId&gt;log4j&lt;&#x2F;artifactId&gt;<br>    &lt;version&gt;1.2.16&lt;&#x2F;version&gt;<br>&lt;&#x2F;dependency&gt;<br></code></pre></td></tr></table></figure>
+
+<p>在resources目录下创建 log4j.properties文件</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain"><br>#将等级为DEBUG的日志信息输出到console和file这两个目的地，console和file的定义在下面的代码中<br>log4j.rootLogger&#x3D;DEBUG,console,file<br><br>#控制台输出的相关设置<br>log4j.appender.console &#x3D; org.apache.log4j.ConsoleAppender<br>log4j.appender.console.Target &#x3D; System.out<br>log4j.appender.console.Threshold&#x3D;DEBUG<br>log4j.appender.console.layout &#x3D; org.apache.log4j.PatternLayout<br>log4j.appender.console.layout.ConversionPattern&#x3D;[%c]-%m%n<br><br>#文件输出的相关配置<br>log4j.appender.file &#x3D; org.apache.log4j.RollingFileAppender<br>log4j.appender.file.File&#x3D;.&#x2F;log&#x2F;loginfo.log<br>log4j.appender.file.MaxFileSize&#x3D;10mb<br>log4j.appender.file.Threshold&#x3D;DEBUG<br>log4j.appender.file.layout&#x3D;org.apache.log4j.PatternLayout<br>log4j.appender.file.layout.ConversionPattern&#x3D;[%p][%d&#123;yy-MM-dd&#125;][%c]%m%n<br><br>#日志输出级别<br>log4j.logger.org.mybatis&#x3D;DEBUG<br>log4j.logger.java.sql&#x3D;DEBUG<br>log4j.logger.java.sql.Statement&#x3D;DEBUG<br>log4j.logger.java.sql.ResultSet&#x3D;DEBUG<br>log4j.logger.java.sql.PreparedStatement&#x3D;DEBUG<br></code></pre></td></tr></table></figure>
+
+
+<p>如果是在mybatis层，则要在mybatis-config.xml中配置settings</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">&lt;settings&gt;<br>	&lt;setting name&#x3D;&quot;logImpl&quot; value&#x3D;&quot;LOG4J&quot;&#x2F;&gt;<br>&lt;&#x2F;settings&gt;<br></code></pre></td></tr></table></figure>
+
+<p>测试类中导入org.apache.log4j.logger类</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">import org.apache.log4j.Logger;<br></code></pre></td></tr></table></figure>
+
+<p>设置静态变量</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">static Logger logger &#x3D; Logger.getLogger(studentMapperTest.class);<br><br></code></pre></td></tr></table></figure>
+
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">@Test<br>public void test()&#123;<br>    Logger logger &#x3D; Logger.getLogger(userTest.class);<br>    logger.info(&quot;info userTest&quot;);<br>    logger.debug(&quot;debug userTest&quot;);<br>    logger.error(&quot;error userTest&quot;);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>控制台输出</p>
+<p>[pojo.userTest]-info userTest<br>[pojo.userTest]-debug userTest<br>[pojo.userTest]-error userTest</p>
+<p>同时，项目目录下生成log目录，log目录下生成loginfo.log文件</p>
+<p><img src="/2020/10/24/javarecord/log.jpg" alt="log"></p>
+<p><img src="/2020/10/24/javarecord/loginfo.jpg" alt="loginfo"></p>
+<h2 id="log4j的基本使用方法"><a href="#log4j的基本使用方法" class="headerlink" title="log4j的基本使用方法"></a><strong>log4j的基本使用方法</strong></h2><p>Log4j由三个重要的组件构成：</p>
+<ul>
+<li><p>日志信息的优先级<br>日志信息的优先级从高到低有ERROR、WARN、 INFO、DEBUG，分别用来指定这条日志信息的重要程度</p>
+</li>
+<li><p>日志信息的输出目的地<br>日志信息的输出目的地指定了日志将打印到控制台还是文件中；</p>
+</li>
+<li><p>日志信息的输出格式。<br>输出格式则控制了日志信息的显 示内容。</p>
+</li>
+</ul>
+<h3 id="定义log4j的配置文件"><a href="#定义log4j的配置文件" class="headerlink" title="定义log4j的配置文件"></a><strong>定义log4j的配置文件</strong></h3><p>Log4j支持两种配置文件格式，一种是XML格式的文件，一种是Java特性文件properties.xml文件，下面介绍使用properties.xml文件做为配置文件的方法</p>
+<h4 id="配置rootLogger"><a href="#配置rootLogger" class="headerlink" title="配置rootLogger"></a><strong>配置rootLogger</strong></h4><figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">log4j.rootLogger&#x3D;level(ERROR WARN INFO DEBUG) appenderName1,appenderName2,...<br></code></pre></td></tr></table></figure>
+<p>level是日志记录的优先级，通过在这里定义的级别，可以控制应用程序中相应级别的日志信息的开关，如配置为INFO，则DEBUG级别的日志就不再输出，若配置为DEBUG，则ERROR WARN INFO DEBUG的信息都会输出</p>
+<p>appenderName是指日志信息将要输出的地方，如console、file等等</p>
+<h4 id="配置日志信息输出的位置"><a href="#配置日志信息输出的位置" class="headerlink" title="配置日志信息输出的位置"></a><strong>配置日志信息输出的位置</strong></h4><p>通过log4j.appender.appenderName = fully.qualified.name.of.appender.class 的方式指定输出目的地</p>
+<p>如：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">log4j.appender.stdout&#x3D;org.apache.log4j.ConsoleAppender<br><br>log4j.appender.console &#x3D; org.apache.log4j.ConsoleAppender<br><br>log4j.appender.file &#x3D; org.apache.log4j.RollingFileAppender<br></code></pre></td></tr></table></figure>
+
+<h4 id="配置appenderName的输出门槛Threshold"><a href="#配置appenderName的输出门槛Threshold" class="headerlink" title="配置appenderName的输出门槛Threshold"></a><strong>配置appenderName的输出门槛Threshold</strong></h4><p>通过log4j.appender.appenderName.Threshold = level(ERROR WARN INFO DEBUG)的方式设置门槛，低于门槛的信息将不再输出</p>
+<h4 id="配置日志信息的布局layout"><a href="#配置日志信息的布局layout" class="headerlink" title="配置日志信息的布局layout"></a><strong>配置日志信息的布局layout</strong></h4><p>通过log4j.appender.appenderName.layout的方式设置布局</p>
+<p>log4j提供的layout有：</p>
+<ul>
+<li>org.apache.log4j.HTMLLayout（以HTML表格形式布局），  </li>
+<li>org.apache.log4j.PatternLayout（可以灵活地指定布局模式），  </li>
+<li>org.apache.log4j.SimpleLayout（包含日志信息的级别和信息字符串），  </li>
+<li>org.apache.log4j.TTCCLayout（包含日志产生的时间、线程、类别等等信息）</li>
+</ul>
+<h4 id="配置日志打印信息的具体格式"><a href="#配置日志打印信息的具体格式" class="headerlink" title="配置日志打印信息的具体格式"></a><strong>配置日志打印信息的具体格式</strong></h4><p>通过log4j.appender.appenderName.layout.ConversionPattern的方式提供具体格式</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">%m 输出代码中指定的消息<br><br>%p 输出优先级，即DEBUG，INFO，WARN，ERROR，FATAL<br><br>%r 输出自应用启动到输出该log信息耗费的毫秒数<br><br>%c 输出所属的类目，通常就是所在类的全名<br><br>%t 输出产生该日志事件的线程名<br><br>%n 输出一个回车换行符，Windows平台为“rn”，Unix平台为“n”<br><br>%d 输出日志时间点的日期或时间，默认格式为ISO8601，也可以在其后指定格式，比如：%d&#123;yyyy MMM dd HH:mm:ss,SSS&#125;，输出类似：2002年10月18日 22：10：28，921<br><br>%l 输出日志事件的发生位置，包括类目名、发生的线程，以及在代码中的行数。<br><br></code></pre></td></tr></table></figure>
+<p>如上面配置中的 </p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">log4j.appender.console.layout.ConversionPattern&#x3D;[%c]-%m%n<br></code></pre></td></tr></table></figure>
+
+<h4 id="当输出目的地为文件的时候"><a href="#当输出目的地为文件的时候" class="headerlink" title="当输出目的地为文件的时候"></a><strong>当输出目的地为文件的时候</strong></h4><p>此时要配置</p>
+<ul>
+<li><p>log4j.appender.file<br>通常为 org.apache.log4j.RollingFileAppender</p>
+</li>
+<li><p>log4j.appender.file.File<br>这个的含义为输出文件的路径，通常取当前项目目录下，如：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">log4j.appender.file.File&#x3D;.&#x2F;log&#x2F;loginfo.log<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>log4j.appender.file.MaxFileSize<br>设置文件大小</p>
+</li>
+</ul>
+<h2 id="一个简单的log4j配置文件"><a href="#一个简单的log4j配置文件" class="headerlink" title="一个简单的log4j配置文件"></a><strong>一个简单的log4j配置文件</strong></h2><figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">#将等级为DEBUG的日志信息输出到console和file这两个目的地，console和file的定义在下面的代码中<br>log4j.rootLogger&#x3D;DEBUG,console,file<br><br>#控制台输出的相关设置<br>log4j.appender.console &#x3D; org.apache.log4j.ConsoleAppender<br>log4j.appender.console.Target &#x3D; System.out<br>log4j.appender.console.Threshold&#x3D;DEBUG<br>log4j.appender.console.layout &#x3D; org.apache.log4j.PatternLayout<br>log4j.appender.console.layout.ConversionPattern&#x3D;[%c]-%m%n<br><br>#文件输出的相关配置<br>log4j.appender.file &#x3D; org.apache.log4j.RollingFileAppender<br>log4j.appender.file.File&#x3D;.&#x2F;log&#x2F;loginfo.log<br>log4j.appender.file.MaxFileSize&#x3D;10mb<br>log4j.appender.file.Threshold&#x3D;DEBUG<br>log4j.appender.file.layout&#x3D;org.apache.log4j.PatternLayout<br>log4j.appender.file.layout.ConversionPattern&#x3D;[%p][%d&#123;yy-MM-dd&#125;][%c]%m%n<br><br>#日志输出级别<br>log4j.logger.org.mybatis&#x3D;DEBUG<br>log4j.logger.java.sql&#x3D;DEBUG<br>log4j.logger.java.sql.Statement&#x3D;DEBUG<br>log4j.logger.java.sql.ResultSet&#x3D;DEBUG<br>log4j.logger.java.sql.PreparedStatement&#x3D;DEBUG<br><br></code></pre></td></tr></table></figure>]]></content>
+      <tags>
+        <tag>java</tag>
+        <tag>日志</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>lombok的使用</title>
+    <url>/2020/10/23/lombok/</url>
+    <content><![CDATA[<h1 id="什么是lombok"><a href="#什么是lombok" class="headerlink" title="什么是lombok"></a><strong>什么是lombok</strong></h1><p>lombok是一个可以通过简单的注解的形式来帮助我们简化消除一些必须有但显得很臃肿的 Java 代码，它是一个java类库，lombok能够达到的效果就是在源码中不需要写一些通用的方法，但是在编译生成的字节码文件中会帮我们生成这些方法。</p>
+<p>有了lombok，就不用再写setter getter等其他方法，通过一个注释，就可实现相同的功能。</p>
+<p>说白了，使用lombok的目的就是为了偷懒</p>
+<h1 id="lombok的使用"><a href="#lombok的使用" class="headerlink" title="lombok的使用"></a><strong>lombok的使用</strong></h1><h2 id="安装lombok"><a href="#安装lombok" class="headerlink" title="安装lombok"></a><strong>安装lombok</strong></h2><p>要使用lombok，首先要安装lombok</p>
+<p><img src="/2020/10/23/lombok/settup.jpg" alt="settup"></p>
+<h2 id="lombok的注解"><a href="#lombok的注解" class="headerlink" title="lombok的注解"></a><strong>lombok的注解</strong></h2><p>lombok的注解：</p>
+<p><img src="/2020/10/23/lombok/annonation.jpg" alt="annonation"></p>
+<p>其中，@Data、@Getter、@Setter、ToString、@xxxConstructor、@EqualsAndHashCode这几个注释是最常用的</p>
+<p>@Data = NoArgsConstructor + getter + setter + ToString + EqualsAndHashCode</p>
+<p>其中，@Getter和@Setter可作用于类或属性，作用于类则自动生成全部getter和setter，属性上则生成属性的getter和setter</p>
+<h2 id="lombok的简单使用"><a href="#lombok的简单使用" class="headerlink" title="lombok的简单使用"></a><strong>lombok的简单使用</strong></h2><p>导入依赖</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">&lt;!-- https:&#x2F;&#x2F;mvnrepository.com&#x2F;artifact&#x2F;org.projectlombok&#x2F;lombok --&gt;<br>&lt;dependency&gt;<br>    &lt;groupId&gt;org.projectlombok&lt;&#x2F;groupId&gt;<br>    &lt;artifactId&gt;lombok&lt;&#x2F;artifactId&gt;<br>    &lt;version&gt;1.18.12&lt;&#x2F;version&gt;<br>    &lt;scope&gt;provided&lt;&#x2F;scope&gt;<br>&lt;&#x2F;dependency&gt;<br></code></pre></td></tr></table></figure>
+
+<p>在pojo包下创建User类</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">package pojo;<br><br>public class User &#123;<br>    private String username;<br>    private String password;<br><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>pojo类添加@Data注释</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">@Data<br>public class User &#123;<br>    private String username;<br>    private String password;<br><br>&#125;<br></code></pre></td></tr></table></figure>
+<p>此时User的结构中自动生成了一些方法</p>
+<p><img src="/2020/10/23/lombok/@Data.jpg" alt="@Data"></p>
+<p>其他方法也一样，添加哪个注释，就会自动生成对应的方法</p>
+<p>@Getter和@Setter作用于属性</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">public class User &#123;<br>    <br>    @Getter<br>    @Setter<br>    private String username;<br>    private String password;<br><br>&#125;<br></code></pre></td></tr></table></figure>
+<p>此时为username自动生成getter和setter</p>
+<p><img src="/2020/10/23/lombok/gs.jpg" alt="gs"></p>
+<p>使用@NoArgsConstructor和@AllArgsConstructor</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">@NoArgsConstructor<br>@AllArgsConstructor<br>public class User &#123;<br>    private String username;<br>    private String password;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><img src="/2020/10/23/lombok/na.jpg" alt="na"></p>
+<p>不过，lombok只能生成无参和全参的构造器，不能生成某个属性或者多个属性的构造器，此时要自己手动生成这类的构造器，如：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">@NoArgsConstructor<br>@AllArgsConstructor<br>public class User &#123;<br>    private String username;<br>    private String password;<br>    public User(String username) &#123;<br>        this.username &#x3D; username;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><img src="/2020/10/23/lombok/naa.jpg" alt="naa"></p>
+]]></content>
+      <tags>
+        <tag>java</tag>
+        <tag>lombok</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>MVC Cannot resolve reference to bean &#39;cacheManager&#39;异常解决</title>
     <url>/2020/10/12/mvcwrong/</url>
     <content><![CDATA[<p>在新建的MVC项目中，要想使用注解驱动，出现异常信息：</p>
@@ -982,6 +1101,44 @@ print(str)            #12\n312312412412</code></pre>
       <tags>
         <tag>Spring</tag>
         <tag>SpringMVC</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>MyBatis之分页</title>
+    <url>/2020/10/24/mybatisPaging/</url>
+    <content><![CDATA[<p>当从数据库中根据查找条件查出数据时，返回的数据量可能非常大，我们都不会希望一次性的将所有的数据一起性读取出来，并且显示在界面上，常用的操作就是对查找到的数据进行分页，每次处理小部分数据，从而减少对数据的处理量</p>
+<h2 id="利用集合-数组实现分页"><a href="#利用集合-数组实现分页" class="headerlink" title="利用集合/数组实现分页"></a><strong>利用集合/数组实现分页</strong></h2><p>studentMapper接口</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">public interface studentMapper &#123;<br>    public List&lt;student&gt; getStudentList();<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>studentMapper.xml</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">&lt;select id&#x3D;&quot;getStudentList&quot; resultMap&#x3D;&quot;studentMap&quot; &gt;<br>    select * from dbtest01.stu;<br>&lt;&#x2F;select&gt;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain"><br>@Test<br>public void test1()&#123;<br><br>    SqlSession sqlSession &#x3D; myBatisUtil.getSqlSession();<br><br>    studentMapper studentMapper &#x3D; sqlSession.getMapper(studentMapper.class);<br><br>    List&lt;student&gt; list &#x3D;  studentMapper.getStudentList().subList(0,2);<br><br>    for(student stu:list)&#123;<br>        System.out.println(stu);<br>    &#125;<br><br>    sqlSession.close();<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<h2 id="在sql中实现分页"><a href="#在sql中实现分页" class="headerlink" title="在sql中实现分页"></a><strong>在sql中实现分页</strong></h2><p>在studentMapper接口中添加getStudentByLimit方法</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">public List&lt;student&gt; getStudentByLimit(Map&lt;String,Integer&gt;map);<br></code></pre></td></tr></table></figure>
+
+<p>Mapper.xml中配置getStudentByLimit的实现</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">&lt;select id&#x3D;&quot;getStudentByLimit&quot; parameterType&#x3D;&quot;map&quot; resultMap&#x3D;&quot;studentMap&quot;&gt;<br>	select * from dbtest01.stu limit $&#123;startIndex&#125;,$&#123;pageSize&#125;;<br>&lt;&#x2F;select&gt;<br></code></pre></td></tr></table></figure>
+
+<p>单元测试</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">public void getStudentByLimit()&#123;<br>    SqlSession sqlSession &#x3D; myBatisUtil.getSqlSession();<br><br>    studentMapper studentMapper &#x3D; sqlSession.getMapper(mybatis.dao.studentMapper.class);<br><br>    Map&lt;String,Integer&gt; map &#x3D; new HashMap&lt;String, Integer&gt;();<br><br>    map.put(&quot;startIndex&quot;,0);<br><br>    map.put(&quot;pageSize&quot;,2);<br><br>    List&lt;student&gt; list &#x3D; studentMapper.getStudentByLimit(map);<br><br>    for (student student : list) &#123;<br>        System.out.println(student);<br>    &#125;<br><br>    sqlSession.close();<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="RowBounds分页"><a href="#RowBounds分页" class="headerlink" title="RowBounds分页"></a><strong>RowBounds分页</strong></h2><p>接口添加方法</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">public List&lt;student&gt; getStudentByRowBound();<br></code></pre></td></tr></table></figure>
+
+<p>xml配置</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">&lt;select id&#x3D;&quot;getStudentByRowBound&quot; resultMap&#x3D;&quot;studentMap&quot;&gt;<br>	select * from dbtest01.stu;<br>&lt;&#x2F;select&gt;<br></code></pre></td></tr></table></figure>
+
+<p>测试方法</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">@Test<br>public void getStudentByRowBound()&#123;<br>    SqlSession sqlSession &#x3D; myBatisUtil.getSqlSession();<br><br>    List&lt;student&gt; students &#x3D; sqlSession.selectList(<br>            &quot;mybatis.dao.studentMapper.getStudentByRowBound&quot;,<br>            null, new RowBounds(1, 2));<br>    for (student student : students) &#123;<br>        System.out.println(student);<br>    &#125;<br>    sqlSession.close();<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+<h2 id="分页插件"><a href="#分页插件" class="headerlink" title="分页插件"></a><strong>分页插件</strong></h2><p>文档传送门： <a href="https://pagehelper.github.io/docs/howtouse/">https://pagehelper.github.io/docs/howtouse/</a></p>
+]]></content>
+      <tags>
+        <tag>数据库</tag>
+        <tag>MyBatis</tag>
       </tags>
   </entry>
   <entry>
@@ -1456,8 +1613,8 @@ import org.springframework.context.support.ClassPathXmlApplicationContext; -->
       <tags>
         <tag>Spring</tag>
         <tag>java</tag>
-        <tag>IOC</tag>
         <tag>SSM框架</tag>
+        <tag>IOC</tag>
       </tags>
   </entry>
   <entry>
@@ -1779,8 +1936,8 @@ import org.springframework.context.support.ClassPathXmlApplicationContext; -->
       <tags>
         <tag>Spring</tag>
         <tag>java</tag>
-        <tag>SpringMVC</tag>
         <tag>SSM框架</tag>
+        <tag>SpringMVC</tag>
       </tags>
   </entry>
   <entry>
@@ -2281,166 +2438,9 @@ import org.springframework.context.support.ClassPathXmlApplicationContext; -->
 ]]></content>
       <tags>
         <tag>java</tag>
-        <tag>数据库</tag>
-        <tag>MyBatis</tag>
         <tag>SSM框架</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>java日志使用</title>
-    <url>/2020/10/24/javarecord/</url>
-    <content><![CDATA[<h1 id="什么是日志"><a href="#什么是日志" class="headerlink" title="什么是日志"></a><strong>什么是日志</strong></h1><p>通常，在平时写代码出现错误的时候，习惯使用debug或者sout来调试错误，但有时候错误很难找，这时候需要排错就显得很困难了，这时候我们就可以使用日志来帮助我们更有效地排错。日志记录了程序的运行轨迹日志，方便查找关键信息，也方便快速定位解决问题，是应用软件中不可缺少的部分</p>
-<h1 id="常用的日志框架"><a href="#常用的日志框架" class="headerlink" title="常用的日志框架"></a><strong>常用的日志框架</strong></h1><p>log4j、log4j2、Logging、commons-logging、slf4j、logback等，重点介绍log4j</p>
-<h1 id="什么是log4j"><a href="#什么是log4j" class="headerlink" title="什么是log4j"></a><strong>什么是log4j</strong></h1><p>log4j是一个日志框架，是apache的一个开源项目，通过log4j可以控制日志信息的输出位置，控制每一条日志的输出格式，还定义每一条日志信息的级别，而且这些操作都可以通过一个配置文件来灵活地进行配置。</p>
-<h2 id="log4j入门实例"><a href="#log4j入门实例" class="headerlink" title="log4j入门实例"></a><strong>log4j入门实例</strong></h2><p>导入依赖</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">&lt;dependency&gt;<br>    &lt;groupId&gt;log4j&lt;&#x2F;groupId&gt;<br>    &lt;artifactId&gt;log4j&lt;&#x2F;artifactId&gt;<br>    &lt;version&gt;1.2.16&lt;&#x2F;version&gt;<br>&lt;&#x2F;dependency&gt;<br></code></pre></td></tr></table></figure>
-
-<p>在resources目录下创建 log4j.properties文件</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain"><br>#将等级为DEBUG的日志信息输出到console和file这两个目的地，console和file的定义在下面的代码中<br>log4j.rootLogger&#x3D;DEBUG,console,file<br><br>#控制台输出的相关设置<br>log4j.appender.console &#x3D; org.apache.log4j.ConsoleAppender<br>log4j.appender.console.Target &#x3D; System.out<br>log4j.appender.console.Threshold&#x3D;DEBUG<br>log4j.appender.console.layout &#x3D; org.apache.log4j.PatternLayout<br>log4j.appender.console.layout.ConversionPattern&#x3D;[%c]-%m%n<br><br>#文件输出的相关配置<br>log4j.appender.file &#x3D; org.apache.log4j.RollingFileAppender<br>log4j.appender.file.File&#x3D;.&#x2F;log&#x2F;loginfo.log<br>log4j.appender.file.MaxFileSize&#x3D;10mb<br>log4j.appender.file.Threshold&#x3D;DEBUG<br>log4j.appender.file.layout&#x3D;org.apache.log4j.PatternLayout<br>log4j.appender.file.layout.ConversionPattern&#x3D;[%p][%d&#123;yy-MM-dd&#125;][%c]%m%n<br><br>#日志输出级别<br>log4j.logger.org.mybatis&#x3D;DEBUG<br>log4j.logger.java.sql&#x3D;DEBUG<br>log4j.logger.java.sql.Statement&#x3D;DEBUG<br>log4j.logger.java.sql.ResultSet&#x3D;DEBUG<br>log4j.logger.java.sql.PreparedStatement&#x3D;DEBUG<br></code></pre></td></tr></table></figure>
-
-
-<p>如果是在mybatis层，则要在mybatis-config.xml中配置settings</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">&lt;settings&gt;<br>	&lt;setting name&#x3D;&quot;logImpl&quot; value&#x3D;&quot;LOG4J&quot;&#x2F;&gt;<br>&lt;&#x2F;settings&gt;<br></code></pre></td></tr></table></figure>
-
-<p>测试类中导入org.apache.log4j.logger类</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">import org.apache.log4j.Logger;<br></code></pre></td></tr></table></figure>
-
-<p>设置静态变量</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">static Logger logger &#x3D; Logger.getLogger(studentMapperTest.class);<br><br></code></pre></td></tr></table></figure>
-
-
-<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">@Test<br>public void test()&#123;<br>    Logger logger &#x3D; Logger.getLogger(userTest.class);<br>    logger.info(&quot;info userTest&quot;);<br>    logger.debug(&quot;debug userTest&quot;);<br>    logger.error(&quot;error userTest&quot;);<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p>控制台输出</p>
-<p>[pojo.userTest]-info userTest<br>[pojo.userTest]-debug userTest<br>[pojo.userTest]-error userTest</p>
-<p>同时，项目目录下生成log目录，log目录下生成loginfo.log文件</p>
-<p><img src="/2020/10/24/javarecord/log.jpg" alt="log"></p>
-<p><img src="/2020/10/24/javarecord/loginfo.jpg" alt="loginfo"></p>
-<h2 id="log4j的基本使用方法"><a href="#log4j的基本使用方法" class="headerlink" title="log4j的基本使用方法"></a><strong>log4j的基本使用方法</strong></h2><p>Log4j由三个重要的组件构成：</p>
-<ul>
-<li><p>日志信息的优先级<br>日志信息的优先级从高到低有ERROR、WARN、 INFO、DEBUG，分别用来指定这条日志信息的重要程度</p>
-</li>
-<li><p>日志信息的输出目的地<br>日志信息的输出目的地指定了日志将打印到控制台还是文件中；</p>
-</li>
-<li><p>日志信息的输出格式。<br>输出格式则控制了日志信息的显 示内容。</p>
-</li>
-</ul>
-<h3 id="定义log4j的配置文件"><a href="#定义log4j的配置文件" class="headerlink" title="定义log4j的配置文件"></a><strong>定义log4j的配置文件</strong></h3><p>Log4j支持两种配置文件格式，一种是XML格式的文件，一种是Java特性文件properties.xml文件，下面介绍使用properties.xml文件做为配置文件的方法</p>
-<h4 id="配置rootLogger"><a href="#配置rootLogger" class="headerlink" title="配置rootLogger"></a><strong>配置rootLogger</strong></h4><figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">log4j.rootLogger&#x3D;level(ERROR WARN INFO DEBUG) appenderName1,appenderName2,...<br></code></pre></td></tr></table></figure>
-<p>level是日志记录的优先级，通过在这里定义的级别，可以控制应用程序中相应级别的日志信息的开关，如配置为INFO，则DEBUG级别的日志就不再输出，若配置为DEBUG，则ERROR WARN INFO DEBUG的信息都会输出</p>
-<p>appenderName是指日志信息将要输出的地方，如console、file等等</p>
-<h4 id="配置日志信息输出的位置"><a href="#配置日志信息输出的位置" class="headerlink" title="配置日志信息输出的位置"></a><strong>配置日志信息输出的位置</strong></h4><p>通过log4j.appender.appenderName = fully.qualified.name.of.appender.class 的方式指定输出目的地</p>
-<p>如：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">log4j.appender.stdout&#x3D;org.apache.log4j.ConsoleAppender<br><br>log4j.appender.console &#x3D; org.apache.log4j.ConsoleAppender<br><br>log4j.appender.file &#x3D; org.apache.log4j.RollingFileAppender<br></code></pre></td></tr></table></figure>
-
-<h4 id="配置appenderName的输出门槛Threshold"><a href="#配置appenderName的输出门槛Threshold" class="headerlink" title="配置appenderName的输出门槛Threshold"></a><strong>配置appenderName的输出门槛Threshold</strong></h4><p>通过log4j.appender.appenderName.Threshold = level(ERROR WARN INFO DEBUG)的方式设置门槛，低于门槛的信息将不再输出</p>
-<h4 id="配置日志信息的布局layout"><a href="#配置日志信息的布局layout" class="headerlink" title="配置日志信息的布局layout"></a><strong>配置日志信息的布局layout</strong></h4><p>通过log4j.appender.appenderName.layout的方式设置布局</p>
-<p>log4j提供的layout有：</p>
-<ul>
-<li>org.apache.log4j.HTMLLayout（以HTML表格形式布局），  </li>
-<li>org.apache.log4j.PatternLayout（可以灵活地指定布局模式），  </li>
-<li>org.apache.log4j.SimpleLayout（包含日志信息的级别和信息字符串），  </li>
-<li>org.apache.log4j.TTCCLayout（包含日志产生的时间、线程、类别等等信息）</li>
-</ul>
-<h4 id="配置日志打印信息的具体格式"><a href="#配置日志打印信息的具体格式" class="headerlink" title="配置日志打印信息的具体格式"></a><strong>配置日志打印信息的具体格式</strong></h4><p>通过log4j.appender.appenderName.layout.ConversionPattern的方式提供具体格式</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">%m 输出代码中指定的消息<br><br>%p 输出优先级，即DEBUG，INFO，WARN，ERROR，FATAL<br><br>%r 输出自应用启动到输出该log信息耗费的毫秒数<br><br>%c 输出所属的类目，通常就是所在类的全名<br><br>%t 输出产生该日志事件的线程名<br><br>%n 输出一个回车换行符，Windows平台为“rn”，Unix平台为“n”<br><br>%d 输出日志时间点的日期或时间，默认格式为ISO8601，也可以在其后指定格式，比如：%d&#123;yyyy MMM dd HH:mm:ss,SSS&#125;，输出类似：2002年10月18日 22：10：28，921<br><br>%l 输出日志事件的发生位置，包括类目名、发生的线程，以及在代码中的行数。<br><br></code></pre></td></tr></table></figure>
-<p>如上面配置中的 </p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">log4j.appender.console.layout.ConversionPattern&#x3D;[%c]-%m%n<br></code></pre></td></tr></table></figure>
-
-<h4 id="当输出目的地为文件的时候"><a href="#当输出目的地为文件的时候" class="headerlink" title="当输出目的地为文件的时候"></a><strong>当输出目的地为文件的时候</strong></h4><p>此时要配置</p>
-<ul>
-<li><p>log4j.appender.file<br>通常为 org.apache.log4j.RollingFileAppender</p>
-</li>
-<li><p>log4j.appender.file.File<br>这个的含义为输出文件的路径，通常取当前项目目录下，如：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">log4j.appender.file.File&#x3D;.&#x2F;log&#x2F;loginfo.log<br></code></pre></td></tr></table></figure>
-</li>
-<li><p>log4j.appender.file.MaxFileSize<br>设置文件大小</p>
-</li>
-</ul>
-<h2 id="一个简单的log4j配置文件"><a href="#一个简单的log4j配置文件" class="headerlink" title="一个简单的log4j配置文件"></a><strong>一个简单的log4j配置文件</strong></h2><figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">#将等级为DEBUG的日志信息输出到console和file这两个目的地，console和file的定义在下面的代码中<br>log4j.rootLogger&#x3D;DEBUG,console,file<br><br>#控制台输出的相关设置<br>log4j.appender.console &#x3D; org.apache.log4j.ConsoleAppender<br>log4j.appender.console.Target &#x3D; System.out<br>log4j.appender.console.Threshold&#x3D;DEBUG<br>log4j.appender.console.layout &#x3D; org.apache.log4j.PatternLayout<br>log4j.appender.console.layout.ConversionPattern&#x3D;[%c]-%m%n<br><br>#文件输出的相关配置<br>log4j.appender.file &#x3D; org.apache.log4j.RollingFileAppender<br>log4j.appender.file.File&#x3D;.&#x2F;log&#x2F;loginfo.log<br>log4j.appender.file.MaxFileSize&#x3D;10mb<br>log4j.appender.file.Threshold&#x3D;DEBUG<br>log4j.appender.file.layout&#x3D;org.apache.log4j.PatternLayout<br>log4j.appender.file.layout.ConversionPattern&#x3D;[%p][%d&#123;yy-MM-dd&#125;][%c]%m%n<br><br>#日志输出级别<br>log4j.logger.org.mybatis&#x3D;DEBUG<br>log4j.logger.java.sql&#x3D;DEBUG<br>log4j.logger.java.sql.Statement&#x3D;DEBUG<br>log4j.logger.java.sql.ResultSet&#x3D;DEBUG<br>log4j.logger.java.sql.PreparedStatement&#x3D;DEBUG<br><br></code></pre></td></tr></table></figure>]]></content>
-      <tags>
-        <tag>java</tag>
-        <tag>日志</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>MyBatis之分页</title>
-    <url>/2020/10/24/mybatisPaging/</url>
-    <content><![CDATA[<p>当从数据库中根据查找条件查出数据时，返回的数据量可能非常大，我们都不会希望一次性的将所有的数据一起性读取出来，并且显示在界面上，常用的操作就是对查找到的数据进行分页，每次处理小部分数据，从而减少对数据的处理量</p>
-<h2 id="利用集合-数组实现分页"><a href="#利用集合-数组实现分页" class="headerlink" title="利用集合/数组实现分页"></a><strong>利用集合/数组实现分页</strong></h2><p>studentMapper接口</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">public interface studentMapper &#123;<br>    public List&lt;student&gt; getStudentList();<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p>studentMapper.xml</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">&lt;select id&#x3D;&quot;getStudentList&quot; resultMap&#x3D;&quot;studentMap&quot; &gt;<br>    select * from dbtest01.stu;<br>&lt;&#x2F;select&gt;<br></code></pre></td></tr></table></figure>
-
-<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain"><br>@Test<br>public void test1()&#123;<br><br>    SqlSession sqlSession &#x3D; myBatisUtil.getSqlSession();<br><br>    studentMapper studentMapper &#x3D; sqlSession.getMapper(studentMapper.class);<br><br>    List&lt;student&gt; list &#x3D;  studentMapper.getStudentList().subList(0,2);<br><br>    for(student stu:list)&#123;<br>        System.out.println(stu);<br>    &#125;<br><br>    sqlSession.close();<br>&#125;<br><br></code></pre></td></tr></table></figure>
-
-<h2 id="在sql中实现分页"><a href="#在sql中实现分页" class="headerlink" title="在sql中实现分页"></a><strong>在sql中实现分页</strong></h2><p>在studentMapper接口中添加getStudentByLimit方法</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">public List&lt;student&gt; getStudentByLimit(Map&lt;String,Integer&gt;map);<br></code></pre></td></tr></table></figure>
-
-<p>Mapper.xml中配置getStudentByLimit的实现</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">&lt;select id&#x3D;&quot;getStudentByLimit&quot; parameterType&#x3D;&quot;map&quot; resultMap&#x3D;&quot;studentMap&quot;&gt;<br>	select * from dbtest01.stu limit $&#123;startIndex&#125;,$&#123;pageSize&#125;;<br>&lt;&#x2F;select&gt;<br></code></pre></td></tr></table></figure>
-
-<p>单元测试</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">public void getStudentByLimit()&#123;<br>    SqlSession sqlSession &#x3D; myBatisUtil.getSqlSession();<br><br>    studentMapper studentMapper &#x3D; sqlSession.getMapper(mybatis.dao.studentMapper.class);<br><br>    Map&lt;String,Integer&gt; map &#x3D; new HashMap&lt;String, Integer&gt;();<br><br>    map.put(&quot;startIndex&quot;,0);<br><br>    map.put(&quot;pageSize&quot;,2);<br><br>    List&lt;student&gt; list &#x3D; studentMapper.getStudentByLimit(map);<br><br>    for (student student : list) &#123;<br>        System.out.println(student);<br>    &#125;<br><br>    sqlSession.close();<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<h2 id="RowBounds分页"><a href="#RowBounds分页" class="headerlink" title="RowBounds分页"></a><strong>RowBounds分页</strong></h2><p>接口添加方法</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">public List&lt;student&gt; getStudentByRowBound();<br></code></pre></td></tr></table></figure>
-
-<p>xml配置</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">&lt;select id&#x3D;&quot;getStudentByRowBound&quot; resultMap&#x3D;&quot;studentMap&quot;&gt;<br>	select * from dbtest01.stu;<br>&lt;&#x2F;select&gt;<br></code></pre></td></tr></table></figure>
-
-<p>测试方法</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">@Test<br>public void getStudentByRowBound()&#123;<br>    SqlSession sqlSession &#x3D; myBatisUtil.getSqlSession();<br><br>    List&lt;student&gt; students &#x3D; sqlSession.selectList(<br>            &quot;mybatis.dao.studentMapper.getStudentByRowBound&quot;,<br>            null, new RowBounds(1, 2));<br>    for (student student : students) &#123;<br>        System.out.println(student);<br>    &#125;<br>    sqlSession.close();<br>&#125;<br></code></pre></td></tr></table></figure>
-
-
-<h2 id="分页插件"><a href="#分页插件" class="headerlink" title="分页插件"></a><strong>分页插件</strong></h2><p>文档传送门： <a href="https://pagehelper.github.io/docs/howtouse/">https://pagehelper.github.io/docs/howtouse/</a></p>
-]]></content>
-      <tags>
         <tag>数据库</tag>
         <tag>MyBatis</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>lombok的使用</title>
-    <url>/2020/10/23/lombok/</url>
-    <content><![CDATA[<h1 id="什么是lombok"><a href="#什么是lombok" class="headerlink" title="什么是lombok"></a><strong>什么是lombok</strong></h1><p>lombok是一个可以通过简单的注解的形式来帮助我们简化消除一些必须有但显得很臃肿的 Java 代码，它是一个java类库，lombok能够达到的效果就是在源码中不需要写一些通用的方法，但是在编译生成的字节码文件中会帮我们生成这些方法。</p>
-<p>有了lombok，就不用再写setter getter等其他方法，通过一个注释，就可实现相同的功能。</p>
-<p>说白了，使用lombok的目的就是为了偷懒</p>
-<h1 id="lombok的使用"><a href="#lombok的使用" class="headerlink" title="lombok的使用"></a><strong>lombok的使用</strong></h1><h2 id="安装lombok"><a href="#安装lombok" class="headerlink" title="安装lombok"></a><strong>安装lombok</strong></h2><p>要使用lombok，首先要安装lombok</p>
-<p><img src="/2020/10/23/lombok/settup.jpg" alt="settup"></p>
-<h2 id="lombok的注解"><a href="#lombok的注解" class="headerlink" title="lombok的注解"></a><strong>lombok的注解</strong></h2><p>lombok的注解：</p>
-<p><img src="/2020/10/23/lombok/annonation.jpg" alt="annonation"></p>
-<p>其中，@Data、@Getter、@Setter、ToString、@xxxConstructor、@EqualsAndHashCode这几个注释是最常用的</p>
-<p>@Data = NoArgsConstructor + getter + setter + ToString + EqualsAndHashCode</p>
-<p>其中，@Getter和@Setter可作用于类或属性，作用于类则自动生成全部getter和setter，属性上则生成属性的getter和setter</p>
-<h2 id="lombok的简单使用"><a href="#lombok的简单使用" class="headerlink" title="lombok的简单使用"></a><strong>lombok的简单使用</strong></h2><p>导入依赖</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">&lt;!-- https:&#x2F;&#x2F;mvnrepository.com&#x2F;artifact&#x2F;org.projectlombok&#x2F;lombok --&gt;<br>&lt;dependency&gt;<br>    &lt;groupId&gt;org.projectlombok&lt;&#x2F;groupId&gt;<br>    &lt;artifactId&gt;lombok&lt;&#x2F;artifactId&gt;<br>    &lt;version&gt;1.18.12&lt;&#x2F;version&gt;<br>    &lt;scope&gt;provided&lt;&#x2F;scope&gt;<br>&lt;&#x2F;dependency&gt;<br></code></pre></td></tr></table></figure>
-
-<p>在pojo包下创建User类</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">package pojo;<br><br>public class User &#123;<br>    private String username;<br>    private String password;<br><br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p>pojo类添加@Data注释</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">@Data<br>public class User &#123;<br>    private String username;<br>    private String password;<br><br>&#125;<br></code></pre></td></tr></table></figure>
-<p>此时User的结构中自动生成了一些方法</p>
-<p><img src="/2020/10/23/lombok/@Data.jpg" alt="@Data"></p>
-<p>其他方法也一样，添加哪个注释，就会自动生成对应的方法</p>
-<p>@Getter和@Setter作用于属性</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">public class User &#123;<br>    <br>    @Getter<br>    @Setter<br>    private String username;<br>    private String password;<br><br>&#125;<br></code></pre></td></tr></table></figure>
-<p>此时为username自动生成getter和setter</p>
-<p><img src="/2020/10/23/lombok/gs.jpg" alt="gs"></p>
-<p>使用@NoArgsConstructor和@AllArgsConstructor</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">@NoArgsConstructor<br>@AllArgsConstructor<br>public class User &#123;<br>    private String username;<br>    private String password;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p><img src="/2020/10/23/lombok/na.jpg" alt="na"></p>
-<p>不过，lombok只能生成无参和全参的构造器，不能生成某个属性或者多个属性的构造器，此时要自己手动生成这类的构造器，如：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">@NoArgsConstructor<br>@AllArgsConstructor<br>public class User &#123;<br>    private String username;<br>    private String password;<br>    public User(String username) &#123;<br>        this.username &#x3D; username;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p><img src="/2020/10/23/lombok/naa.jpg" alt="naa"></p>
-]]></content>
-      <tags>
-        <tag>java</tag>
-        <tag>lombok</tag>
       </tags>
   </entry>
 </search>

@@ -321,6 +321,79 @@ Stream&lt;String&gt; stream = list.stream();</code></pre>
 ]]></content>
   </entry>
   <entry>
+    <title>JavaWeb之Servlet</title>
+    <url>/2020/10/04/Servlet/</url>
+    <content><![CDATA[<p>最近在使用SpringMVC的时候有是要用到Servlet中的方法，也借此机会复习一波Servlet</p>
+<h1 id="什么是Servlet"><a href="#什么是Servlet" class="headerlink" title="什么是Servlet"></a><strong>什么是Servlet</strong></h1><p>Servlet的全称是JavaServlet，是运行在Web服务器或应用服务器上的程序，由Servlet容器统一管理，它是作为来自 Web 浏览器或其他 HTTP 客户端的请求和HTTP服务器上的数据库或应用程序之间的中间层。其主要功能在于交互式地浏览和修改数据，生成动态Web内容。</p>
+<p>Servlet的本质是一个独立的Java类，编写一个Servlet，其实就是按照相应的规范编写一个Java类</p>
+<h1 id="servlet容器"><a href="#servlet容器" class="headerlink" title="servlet容器"></a><strong>servlet容器</strong></h1><p>上面说到servlet是运行在web服务器或应用服务器上的程序，由servlet容器统一管理，servlet容器是web服务器或应用服务器的一部分，Servlet不能独立运行，它必须被部署到Servlet容器中，由容器来实例化和调用Servlet的方法，servlet是由servlet容器统一管理的，它负责管理servlet的生命周期。</p>
+<h1 id="servlet的工作流程"><a href="#servlet的工作流程" class="headerlink" title="servlet的工作流程"></a><strong>servlet的工作流程</strong></h1><p><img src="/2020/10/04/Servlet/servlet.jpg" alt="servlet"></p>
+<h1 id="servlet的使用方法和原理"><a href="#servlet的使用方法和原理" class="headerlink" title="servlet的使用方法和原理"></a><strong>servlet的使用方法和原理</strong></h1><h2 id="servlet的使用"><a href="#servlet的使用" class="headerlink" title="servlet的使用"></a><strong>servlet的使用</strong></h2><p>Servlet技术的核心是Servlet接口，它是所有Servlet类必须直接或者间接实现的一个接口。要想使用servlet，就必须实现servlet接口或者继承实现了servlet接口的类。</p>
+<h2 id="servlet的工作原理"><a href="#servlet的工作原理" class="headerlink" title="servlet的工作原理"></a><strong>servlet的工作原理</strong></h2><p>当客户端有请求时，Servlet容器实例化相对应的servlet，并调用它的service()方法，传入ServletRequest对象和ServletResponse对象，这两个对象是由servlet容器封装好的，ServletRequest对象封装了http的请求，ServletResponse则封装了对http请求的响应。</p>
+<p>对于每一个应用程序，Servlet容器还会创建一个ServletContext对象。这个对象中封装了上下文（应用程序）的环境详情。</p>
+<h1 id="servlet的生命周期"><a href="#servlet的生命周期" class="headerlink" title="servlet的生命周期"></a><strong>servlet的生命周期</strong></h1><p>servlet的生命周期分为init()、service()和destroy()三个过程</p>
+<ul>
+<li>init()</li>
+</ul>
+<p>当Servlet第一次被请求时，Servlet容器就会开始调用这个方法来初始化一个Servlet对象出来，但是这个方法在后续请求中不会再被Servlet容器调用，可以利用init()方法对servlet进行初始化工作</p>
+<ul>
+<li>service()</li>
+</ul>
+<p>每当请求Servlet时，Servlet容器就会调用这个方法</p>
+<ul>
+<li>destroy()</li>
+</ul>
+<p>当要销毁Servlet时，Servlet容器就会调用这个方法，在卸载应用程序或者关闭Servlet容器时，就会发生这种情况，一般在这个方法中会写一些清除代码。</p>
+<h1 id="Servlet、ServletRequest、ServletResponse接口"><a href="#Servlet、ServletRequest、ServletResponse接口" class="headerlink" title="Servlet、ServletRequest、ServletResponse接口"></a><strong>Servlet、ServletRequest、ServletResponse接口</strong></h1><h2 id="Servlet接口："><a href="#Servlet接口：" class="headerlink" title="Servlet接口："></a><strong>Servlet接口：</strong></h2><figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">public interface Servlet &#123;<br>    void init(ServletConfig var1) throws ServletException;<br> <br> &#x2F;&#x2F; 获取配置信息<br>    ServletConfig getServletConfig();<br> <br>    void service(ServletRequest var1, ServletResponse var2) throws ServletException, IOException;<br> <br> &#x2F;&#x2F; 获取servlet信息 传给init（）方法的ServletConfig对象<br>    String getServletInfo();<br> <br>    void destroy();<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="ServletRequest接口"><a href="#ServletRequest接口" class="headerlink" title="ServletRequest接口"></a><strong>ServletRequest接口</strong></h2><p>ServletRequest接口中最常用的一个方法是getParameter方法，用于返回请求参数的值</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">String getParameter(String var1);&#x2F;&#x2F;返回请求参数的值<br></code></pre></td></tr></table></figure>
+<h2 id="ServletResponse接口"><a href="#ServletResponse接口" class="headerlink" title="ServletResponse接口"></a><strong>ServletResponse接口</strong></h2><p> javax.servlet.ServletResponse接口表示一个Servlet响应，在调用Servlet的Service()方法前，Servlet容器会先创建一个ServletResponse对象，并把它作为第二个参数传给Service()方法。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">public interface ServletResponse &#123;<br><br>    String getCharacterEncoding();<br> <br>    String getContentType();<br> <br>    PrintWriter getWriter() throws IOException;<br> <br>    void setCharacterEncoding(String var1);<br> <br>    void setContentLength(int var1);<br> <br> 	&#x2F;&#x2F; ....省略一些方法<br>    void setContentType(String var1);<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>其中最常用的方法是： </p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">PrintWriter getWriter() throws IOException;<br><br>void setContentType(String var1);<br></code></pre></td></tr></table></figure>
+<p>在响应客户端请求时，都先应调用setContentType方法，设置响应的内容类型，并将“text/html”作为一个参数传入，这是在告诉浏览器响应的内容类型为HTML，需要以HTML的方法解释响应内容而不是普通的文本，或者也可以加上“charset=UTF-8”改变响应的编码方式以防止发生中文乱码现象。</p>
+<p>getWriter方法返回一个可以向客户端发送文本的java对象，可以在客户端页面中输出信息</p>
+<h1 id="ServletContext对象"><a href="#ServletContext对象" class="headerlink" title="ServletContext对象"></a><strong>ServletContext对象</strong></h1><p>ServletContext对象表示Servlet应用程序。每个Web应用程序都只有一个ServletContext对象。有了ServletContext对象，就可以共享从应用程序中的所有资料处访问到的信息，并且可以动态注册Web对象。前者将对象保存在ServletContext中的一个内部Map中。保存在ServletContext中的对象被称作属性。</p>
+<p>servletcontext对象中的方法：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">Object getAttribute(String var1);<br> <br>Enumeration&lt;String&gt; getAttributeNames();<br> <br>void setAttribute(String var1, Object var2);<br> <br>void removeAttribute(String var1);<br></code></pre></td></tr></table></figure>
+<h1 id="ServletConfig接口"><a href="#ServletConfig接口" class="headerlink" title="ServletConfig接口"></a><strong>ServletConfig接口</strong></h1><p>当Servlet容器初始化Servlet时，Servlet容器会给Servlet的init()方式传入一个ServletConfig对象。一些方法如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">String getInitParameter(String name) &#x2F;&#x2F;根据初始化参数名，返回对应的初始化参数值<br><br>Enumeration getInitParameterNames()	&#x2F;&#x2F;返回一个Enumeration对象，其中包含所有的初始化参数名<br><br>ServletContext getServletContext()	&#x2F;&#x2F;返回一个代表当前Web应用的，ServletContext对象<br><br>String getServletName()	&#x2F;&#x2F;返回Servlet的名字，即web.xml中元素的值<br></code></pre></td></tr></table></figure>
+<h1 id="HttpServlet、HttpServletRequest、HttpServlelResponse"><a href="#HttpServlet、HttpServletRequest、HttpServlelResponse" class="headerlink" title="HttpServlet、HttpServletRequest、HttpServlelResponse"></a><strong>HttpServlet、HttpServletRequest、HttpServlelResponse</strong></h1><p>在实际应用中，最常用的Servlet类HttpServlet抽象类<br>常用的接口是ServletRequest的子接口HttpServletRequest 和 ServletResponse的子接口HttpServletResponse </p>
+<p>继承关系如下图：</p>
+<p><img src="/2020/10/04/Servlet/relationship.jpg" alt="relationship"></p>
+<h2 id="HttpServlet"><a href="#HttpServlet" class="headerlink" title="HttpServlet"></a><strong>HttpServlet</strong></h2><p>常用Servlet对象是javax.servlet.http包下的HttpServlet抽象类</p>
+<p>HttpServlet抽象类是继承于GenericServlet抽象类而来的。使用HttpServlet抽象类时，还需要借助分别代表Servlet请求和Servlet响应的HttpServletRequest和HttpServletResponse对象</p>
+<p>继承HttpServlet的Servlet类中要实现doXX方法，分别用于客户端的不同请求</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException &#123;<br>&#125;<br><br>...<br><br>protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException &#123;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>HttpServlet类中重写了service()方法，根据客户端请求类型的不同而调用相应的doXX方法</p>
+<h2 id="HttpServletRequest"><a href="#HttpServletRequest" class="headerlink" title="HttpServletRequest"></a><strong>HttpServletRequest</strong></h2><p>HttpServletRequest接口中添加了几个重要方法：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">Cookie[] getCookies();&#x2F;&#x2F;返回一个cookie对象数组<br><br>String getHeader(String var1);&#x2F;&#x2F;返回指定HTTP标题的值<br><br>HttpSession getSession();&#x2F;&#x2F;返回与这个请求相关的会话对象<br></code></pre></td></tr></table></figure>
+<h2 id="HttpServlelResponse"><a href="#HttpServlelResponse" class="headerlink" title="HttpServlelResponse"></a><strong>HttpServlelResponse</strong></h2><p>HttpServlelResponse中添加的重要方法：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">void addCookie(Cookie var1);&#x2F;&#x2F;给这个响应添加一个cookie<br><br>void addHeader(String var1, String var2);&#x2F;&#x2F;给这个请求添加一个响应头<br><br>void sendRedirect(String var1) throws IOException;&#x2F;&#x2F;发送一条响应码，讲浏览器跳转到指定的位置<br><br>void setStatus(int var1);&#x2F;&#x2F;设置响应行的状态码<br></code></pre></td></tr></table></figure>
+
+<h1 id="cookie和session"><a href="#cookie和session" class="headerlink" title="cookie和session"></a><strong>cookie和session</strong></h1><p>会话（Session）跟踪是Web程序中常用的技术，用来跟踪用户的整个会话。常用的会话跟踪技术是Cookie与Session</p>
+<h2 id="cookie"><a href="#cookie" class="headerlink" title="cookie"></a><strong>cookie</strong></h2><p>HTTP协议是无状态的协议。一旦数据交换完毕，客户端与服务器端的连接就会关闭，再次交换数据需要建立新的连接。这就意味着服务器无法从连接上跟踪会话。要跟踪该会话，必须引入一种机制。而cookie就是这样一种机制。</p>
+<p>由于HTTP是一种无状态的协议，服务器单从网络连接上无从知道客户身份。怎么办呢？就给客户端们颁发一个通行证吧，每人一个，无论谁访问都必须携带自己通行证。这样服务器就能从通行证上确认客户身份了。这就是Cookie的工作原理。</p>
+<p>Cookie实际上是一小段的文本信息。客户端请求服务器，如果服务器需要记录该用户状态，就使用response对象的addCookie方法向客户端浏览器颁发一个Cookie。客户端浏览器会把Cookie保存起来。当浏览器再请求该网站时，浏览器把请求的网址连同该Cookie一同提交给服务器。服务器检查该Cookie，以此来辨认用户状态。服务器还可以根据需要修改Cookie的内容。</p>
+<p>Cookie类在javax.servlet.http.Cookie包下</p>
+<p>Cookie对象中常用的方法</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">public void setDomain(String pattern)	&#x2F;&#x2F;该方法设置 cookie 适用的域，例如 xxx.com<br><br>public String getDomain()	&#x2F;&#x2F;该方法获取 cookie 适用的域，例如 xxx.com。<br><br>&#x2F;&#x2F;该方法设置cookie有效时间（以秒为单位）。如果不这样设置，cookie只会在当前session会话中持续有效。<br>public void setMaxAge(int expiry)<br><br>&#x2F;&#x2F;该方法返回 cookie 的最大生存周期（以秒为单位），默认情况下，-1 表示 cookie 将持续下去，直到浏览器关闭。<br>public int getMaxAge()	<br><br>public String getName()	&#x2F;&#x2F;该方法返回 cookie 的名称。名称在创建后不能改变。<br><br>public void setValue(String newValue)	&#x2F;&#x2F;该方法设置与 cookie 关联的值。<br><br>public String getValue() &#x2F;&#x2F;该方法获取与 cookie 关联的值。<br><br>&#x2F;&#x2F;该方法设置 cookie 适用的路径。如果不指定路径，与当前页面相同目录下的（包括子目录下的）所有 URL 都会返回 cookie。<br>public void setPath(String uri)<br><br>public String getPath()	&#x2F;&#x2F;该方法获取 cookie 适用的路径。<br><br>&#x2F;&#x2F;该方法设置布尔值，表示 cookie 是否应该只在加密的（即 SSL）连接上发送。<br>public void setSecure(boolean flag)<br><br>public void setComment(String purpose)	&#x2F;&#x2F;设置cookie的注释。该注释在浏览器向用户呈现 cookie 时非常有用。<br><br>public String getComment()	&#x2F;&#x2F;获取 cookie 的注释，如果 cookie 没有注释则返回 null。<br></code></pre></td></tr></table></figure>
+
+
+<h2 id="session"><a href="#session" class="headerlink" title="session"></a><strong>session</strong></h2><p>Session是另一种记录客户状态的机制，不同的是Cookie保存在客户端浏览器中，而Session保存在服务器上。客户端浏览器访问服务器的时候，服务器把客户端信息以某种形式记录在服务器上。这就是Session。客户端浏览器再次访问时只需要从该Session中查找该客户的状态就可以了。</p>
+<p>Session对应的类为javax.servlet.http.HttpSession类</p>
+<p>Servlet里通过request.getSession()方法获取该客户的Session</p>
+<p>HttpSession对象中常用的方法：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">&#x2F;&#x2F;该方法返回在该 session 会话中具有指定名称的对象，如果没有指定名称的对象，则返回 null。<br>public Object getAttribute(String name)<br><br>&#x2F;&#x2F;该方法使用指定的名称绑定一个对象到该 session 会话。<br>public void setAttribute(String name, Object value)<br><br>&#x2F;&#x2F;该方法返回 String 对象的枚举，String 对象包含所有绑定到该 session 会话的对象的名称。<br>public Enumeration getAttributeNames()<br><br>&#x2F;&#x2F;设置session的超时时间，以秒为单位。<br>public void setMaxInactiveInterval(int interval)<br><br>&#x2F;&#x2F;获取session的超时时间以秒为单位。<br>public int getMaxInactiveInterval()<br><br>&#x2F;&#x2F;该方法返回一个包含分配给该 session 会话的唯一标识符的字符串。<br>public String getId()<br><br>&#x2F;&#x2F;该方法返回客户端最后一次发送与该 session 会话相关的请求的时间自格林尼治标准时间 1970 年 1 月 1 日午夜算起，以毫秒为单位。<br>public long getLastAccessedTime()<br><br>&#x2F;&#x2F;该方法指示该 session 会话无效，并解除绑定到它上面的任何对象。<br>	public void invalidate()<br><br>&#x2F;&#x2F;如果客户端还不知道该 session 会话，或者如果客户选择不参入该 session 会话，则该方法返回 true。<br>	public boolean isNew()<br><br>&#x2F;&#x2F;该方法将从该 session 会话移除指定名称的对象。<br>	public void removeAttribute(String name)<br></code></pre></td></tr></table></figure>]]></content>
+      <tags>
+        <tag>Spring</tag>
+        <tag>JavaWeb</tag>
+        <tag>Servlet</tag>
+        <tag>SpringMVC</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Python入门学习</title>
     <url>/2020/09/21/Python/</url>
     <content><![CDATA[<p>这学期选修了信息检索（python基础入门），所以有必要将python的基础markdown，便于以后学习。语言都具有相似性，下面列举出python与其他语言不同的地方</p>
@@ -487,79 +560,6 @@ print(str)            #12\n312312412412</code></pre>
 <figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">def outer():<br>    num &#x3D; 10<br>    def inner():<br>        nonlocal num<br>        print(num)	#10<br>        num &#x3D; &quot;str&quot;<br>    inner()<br>    print(num)	#str<br>outer()<br></code></pre></td></tr></table></figure>]]></content>
       <tags>
         <tag>python</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>JavaWeb之Servlet</title>
-    <url>/2020/10/04/Servlet/</url>
-    <content><![CDATA[<p>最近在使用SpringMVC的时候有是要用到Servlet中的方法，也借此机会复习一波Servlet</p>
-<h1 id="什么是Servlet"><a href="#什么是Servlet" class="headerlink" title="什么是Servlet"></a><strong>什么是Servlet</strong></h1><p>Servlet的全称是JavaServlet，是运行在Web服务器或应用服务器上的程序，由Servlet容器统一管理，它是作为来自 Web 浏览器或其他 HTTP 客户端的请求和HTTP服务器上的数据库或应用程序之间的中间层。其主要功能在于交互式地浏览和修改数据，生成动态Web内容。</p>
-<p>Servlet的本质是一个独立的Java类，编写一个Servlet，其实就是按照相应的规范编写一个Java类</p>
-<h1 id="servlet容器"><a href="#servlet容器" class="headerlink" title="servlet容器"></a><strong>servlet容器</strong></h1><p>上面说到servlet是运行在web服务器或应用服务器上的程序，由servlet容器统一管理，servlet容器是web服务器或应用服务器的一部分，Servlet不能独立运行，它必须被部署到Servlet容器中，由容器来实例化和调用Servlet的方法，servlet是由servlet容器统一管理的，它负责管理servlet的生命周期。</p>
-<h1 id="servlet的工作流程"><a href="#servlet的工作流程" class="headerlink" title="servlet的工作流程"></a><strong>servlet的工作流程</strong></h1><p><img src="/2020/10/04/Servlet/servlet.jpg" alt="servlet"></p>
-<h1 id="servlet的使用方法和原理"><a href="#servlet的使用方法和原理" class="headerlink" title="servlet的使用方法和原理"></a><strong>servlet的使用方法和原理</strong></h1><h2 id="servlet的使用"><a href="#servlet的使用" class="headerlink" title="servlet的使用"></a><strong>servlet的使用</strong></h2><p>Servlet技术的核心是Servlet接口，它是所有Servlet类必须直接或者间接实现的一个接口。要想使用servlet，就必须实现servlet接口或者继承实现了servlet接口的类。</p>
-<h2 id="servlet的工作原理"><a href="#servlet的工作原理" class="headerlink" title="servlet的工作原理"></a><strong>servlet的工作原理</strong></h2><p>当客户端有请求时，Servlet容器实例化相对应的servlet，并调用它的service()方法，传入ServletRequest对象和ServletResponse对象，这两个对象是由servlet容器封装好的，ServletRequest对象封装了http的请求，ServletResponse则封装了对http请求的响应。</p>
-<p>对于每一个应用程序，Servlet容器还会创建一个ServletContext对象。这个对象中封装了上下文（应用程序）的环境详情。</p>
-<h1 id="servlet的生命周期"><a href="#servlet的生命周期" class="headerlink" title="servlet的生命周期"></a><strong>servlet的生命周期</strong></h1><p>servlet的生命周期分为init()、service()和destroy()三个过程</p>
-<ul>
-<li>init()</li>
-</ul>
-<p>当Servlet第一次被请求时，Servlet容器就会开始调用这个方法来初始化一个Servlet对象出来，但是这个方法在后续请求中不会再被Servlet容器调用，可以利用init()方法对servlet进行初始化工作</p>
-<ul>
-<li>service()</li>
-</ul>
-<p>每当请求Servlet时，Servlet容器就会调用这个方法</p>
-<ul>
-<li>destroy()</li>
-</ul>
-<p>当要销毁Servlet时，Servlet容器就会调用这个方法，在卸载应用程序或者关闭Servlet容器时，就会发生这种情况，一般在这个方法中会写一些清除代码。</p>
-<h1 id="Servlet、ServletRequest、ServletResponse接口"><a href="#Servlet、ServletRequest、ServletResponse接口" class="headerlink" title="Servlet、ServletRequest、ServletResponse接口"></a><strong>Servlet、ServletRequest、ServletResponse接口</strong></h1><h2 id="Servlet接口："><a href="#Servlet接口：" class="headerlink" title="Servlet接口："></a><strong>Servlet接口：</strong></h2><figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">public interface Servlet &#123;<br>    void init(ServletConfig var1) throws ServletException;<br> <br> &#x2F;&#x2F; 获取配置信息<br>    ServletConfig getServletConfig();<br> <br>    void service(ServletRequest var1, ServletResponse var2) throws ServletException, IOException;<br> <br> &#x2F;&#x2F; 获取servlet信息 传给init（）方法的ServletConfig对象<br>    String getServletInfo();<br> <br>    void destroy();<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<h2 id="ServletRequest接口"><a href="#ServletRequest接口" class="headerlink" title="ServletRequest接口"></a><strong>ServletRequest接口</strong></h2><p>ServletRequest接口中最常用的一个方法是getParameter方法，用于返回请求参数的值</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">String getParameter(String var1);&#x2F;&#x2F;返回请求参数的值<br></code></pre></td></tr></table></figure>
-<h2 id="ServletResponse接口"><a href="#ServletResponse接口" class="headerlink" title="ServletResponse接口"></a><strong>ServletResponse接口</strong></h2><p> javax.servlet.ServletResponse接口表示一个Servlet响应，在调用Servlet的Service()方法前，Servlet容器会先创建一个ServletResponse对象，并把它作为第二个参数传给Service()方法。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">public interface ServletResponse &#123;<br><br>    String getCharacterEncoding();<br> <br>    String getContentType();<br> <br>    PrintWriter getWriter() throws IOException;<br> <br>    void setCharacterEncoding(String var1);<br> <br>    void setContentLength(int var1);<br> <br> 	&#x2F;&#x2F; ....省略一些方法<br>    void setContentType(String var1);<br>&#125;<br></code></pre></td></tr></table></figure>
-<p>其中最常用的方法是： </p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">PrintWriter getWriter() throws IOException;<br><br>void setContentType(String var1);<br></code></pre></td></tr></table></figure>
-<p>在响应客户端请求时，都先应调用setContentType方法，设置响应的内容类型，并将“text/html”作为一个参数传入，这是在告诉浏览器响应的内容类型为HTML，需要以HTML的方法解释响应内容而不是普通的文本，或者也可以加上“charset=UTF-8”改变响应的编码方式以防止发生中文乱码现象。</p>
-<p>getWriter方法返回一个可以向客户端发送文本的java对象，可以在客户端页面中输出信息</p>
-<h1 id="ServletContext对象"><a href="#ServletContext对象" class="headerlink" title="ServletContext对象"></a><strong>ServletContext对象</strong></h1><p>ServletContext对象表示Servlet应用程序。每个Web应用程序都只有一个ServletContext对象。有了ServletContext对象，就可以共享从应用程序中的所有资料处访问到的信息，并且可以动态注册Web对象。前者将对象保存在ServletContext中的一个内部Map中。保存在ServletContext中的对象被称作属性。</p>
-<p>servletcontext对象中的方法：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">Object getAttribute(String var1);<br> <br>Enumeration&lt;String&gt; getAttributeNames();<br> <br>void setAttribute(String var1, Object var2);<br> <br>void removeAttribute(String var1);<br></code></pre></td></tr></table></figure>
-<h1 id="ServletConfig接口"><a href="#ServletConfig接口" class="headerlink" title="ServletConfig接口"></a><strong>ServletConfig接口</strong></h1><p>当Servlet容器初始化Servlet时，Servlet容器会给Servlet的init()方式传入一个ServletConfig对象。一些方法如下：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">String getInitParameter(String name) &#x2F;&#x2F;根据初始化参数名，返回对应的初始化参数值<br><br>Enumeration getInitParameterNames()	&#x2F;&#x2F;返回一个Enumeration对象，其中包含所有的初始化参数名<br><br>ServletContext getServletContext()	&#x2F;&#x2F;返回一个代表当前Web应用的，ServletContext对象<br><br>String getServletName()	&#x2F;&#x2F;返回Servlet的名字，即web.xml中元素的值<br></code></pre></td></tr></table></figure>
-<h1 id="HttpServlet、HttpServletRequest、HttpServlelResponse"><a href="#HttpServlet、HttpServletRequest、HttpServlelResponse" class="headerlink" title="HttpServlet、HttpServletRequest、HttpServlelResponse"></a><strong>HttpServlet、HttpServletRequest、HttpServlelResponse</strong></h1><p>在实际应用中，最常用的Servlet类HttpServlet抽象类<br>常用的接口是ServletRequest的子接口HttpServletRequest 和 ServletResponse的子接口HttpServletResponse </p>
-<p>继承关系如下图：</p>
-<p><img src="/2020/10/04/Servlet/relationship.jpg" alt="relationship"></p>
-<h2 id="HttpServlet"><a href="#HttpServlet" class="headerlink" title="HttpServlet"></a><strong>HttpServlet</strong></h2><p>常用Servlet对象是javax.servlet.http包下的HttpServlet抽象类</p>
-<p>HttpServlet抽象类是继承于GenericServlet抽象类而来的。使用HttpServlet抽象类时，还需要借助分别代表Servlet请求和Servlet响应的HttpServletRequest和HttpServletResponse对象</p>
-<p>继承HttpServlet的Servlet类中要实现doXX方法，分别用于客户端的不同请求</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException &#123;<br>&#125;<br><br>...<br><br>protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException &#123;<br>&#125;<br></code></pre></td></tr></table></figure>
-<p>HttpServlet类中重写了service()方法，根据客户端请求类型的不同而调用相应的doXX方法</p>
-<h2 id="HttpServletRequest"><a href="#HttpServletRequest" class="headerlink" title="HttpServletRequest"></a><strong>HttpServletRequest</strong></h2><p>HttpServletRequest接口中添加了几个重要方法：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">Cookie[] getCookies();&#x2F;&#x2F;返回一个cookie对象数组<br><br>String getHeader(String var1);&#x2F;&#x2F;返回指定HTTP标题的值<br><br>HttpSession getSession();&#x2F;&#x2F;返回与这个请求相关的会话对象<br></code></pre></td></tr></table></figure>
-<h2 id="HttpServlelResponse"><a href="#HttpServlelResponse" class="headerlink" title="HttpServlelResponse"></a><strong>HttpServlelResponse</strong></h2><p>HttpServlelResponse中添加的重要方法：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">void addCookie(Cookie var1);&#x2F;&#x2F;给这个响应添加一个cookie<br><br>void addHeader(String var1, String var2);&#x2F;&#x2F;给这个请求添加一个响应头<br><br>void sendRedirect(String var1) throws IOException;&#x2F;&#x2F;发送一条响应码，讲浏览器跳转到指定的位置<br><br>void setStatus(int var1);&#x2F;&#x2F;设置响应行的状态码<br></code></pre></td></tr></table></figure>
-
-<h1 id="cookie和session"><a href="#cookie和session" class="headerlink" title="cookie和session"></a><strong>cookie和session</strong></h1><p>会话（Session）跟踪是Web程序中常用的技术，用来跟踪用户的整个会话。常用的会话跟踪技术是Cookie与Session</p>
-<h2 id="cookie"><a href="#cookie" class="headerlink" title="cookie"></a><strong>cookie</strong></h2><p>HTTP协议是无状态的协议。一旦数据交换完毕，客户端与服务器端的连接就会关闭，再次交换数据需要建立新的连接。这就意味着服务器无法从连接上跟踪会话。要跟踪该会话，必须引入一种机制。而cookie就是这样一种机制。</p>
-<p>由于HTTP是一种无状态的协议，服务器单从网络连接上无从知道客户身份。怎么办呢？就给客户端们颁发一个通行证吧，每人一个，无论谁访问都必须携带自己通行证。这样服务器就能从通行证上确认客户身份了。这就是Cookie的工作原理。</p>
-<p>Cookie实际上是一小段的文本信息。客户端请求服务器，如果服务器需要记录该用户状态，就使用response对象的addCookie方法向客户端浏览器颁发一个Cookie。客户端浏览器会把Cookie保存起来。当浏览器再请求该网站时，浏览器把请求的网址连同该Cookie一同提交给服务器。服务器检查该Cookie，以此来辨认用户状态。服务器还可以根据需要修改Cookie的内容。</p>
-<p>Cookie类在javax.servlet.http.Cookie包下</p>
-<p>Cookie对象中常用的方法</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">public void setDomain(String pattern)	&#x2F;&#x2F;该方法设置 cookie 适用的域，例如 xxx.com<br><br>public String getDomain()	&#x2F;&#x2F;该方法获取 cookie 适用的域，例如 xxx.com。<br><br>&#x2F;&#x2F;该方法设置cookie有效时间（以秒为单位）。如果不这样设置，cookie只会在当前session会话中持续有效。<br>public void setMaxAge(int expiry)<br><br>&#x2F;&#x2F;该方法返回 cookie 的最大生存周期（以秒为单位），默认情况下，-1 表示 cookie 将持续下去，直到浏览器关闭。<br>public int getMaxAge()	<br><br>public String getName()	&#x2F;&#x2F;该方法返回 cookie 的名称。名称在创建后不能改变。<br><br>public void setValue(String newValue)	&#x2F;&#x2F;该方法设置与 cookie 关联的值。<br><br>public String getValue() &#x2F;&#x2F;该方法获取与 cookie 关联的值。<br><br>&#x2F;&#x2F;该方法设置 cookie 适用的路径。如果不指定路径，与当前页面相同目录下的（包括子目录下的）所有 URL 都会返回 cookie。<br>public void setPath(String uri)<br><br>public String getPath()	&#x2F;&#x2F;该方法获取 cookie 适用的路径。<br><br>&#x2F;&#x2F;该方法设置布尔值，表示 cookie 是否应该只在加密的（即 SSL）连接上发送。<br>public void setSecure(boolean flag)<br><br>public void setComment(String purpose)	&#x2F;&#x2F;设置cookie的注释。该注释在浏览器向用户呈现 cookie 时非常有用。<br><br>public String getComment()	&#x2F;&#x2F;获取 cookie 的注释，如果 cookie 没有注释则返回 null。<br></code></pre></td></tr></table></figure>
-
-
-<h2 id="session"><a href="#session" class="headerlink" title="session"></a><strong>session</strong></h2><p>Session是另一种记录客户状态的机制，不同的是Cookie保存在客户端浏览器中，而Session保存在服务器上。客户端浏览器访问服务器的时候，服务器把客户端信息以某种形式记录在服务器上。这就是Session。客户端浏览器再次访问时只需要从该Session中查找该客户的状态就可以了。</p>
-<p>Session对应的类为javax.servlet.http.HttpSession类</p>
-<p>Servlet里通过request.getSession()方法获取该客户的Session</p>
-<p>HttpSession对象中常用的方法：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">&#x2F;&#x2F;该方法返回在该 session 会话中具有指定名称的对象，如果没有指定名称的对象，则返回 null。<br>public Object getAttribute(String name)<br><br>&#x2F;&#x2F;该方法使用指定的名称绑定一个对象到该 session 会话。<br>public void setAttribute(String name, Object value)<br><br>&#x2F;&#x2F;该方法返回 String 对象的枚举，String 对象包含所有绑定到该 session 会话的对象的名称。<br>public Enumeration getAttributeNames()<br><br>&#x2F;&#x2F;设置session的超时时间，以秒为单位。<br>public void setMaxInactiveInterval(int interval)<br><br>&#x2F;&#x2F;获取session的超时时间以秒为单位。<br>public int getMaxInactiveInterval()<br><br>&#x2F;&#x2F;该方法返回一个包含分配给该 session 会话的唯一标识符的字符串。<br>public String getId()<br><br>&#x2F;&#x2F;该方法返回客户端最后一次发送与该 session 会话相关的请求的时间自格林尼治标准时间 1970 年 1 月 1 日午夜算起，以毫秒为单位。<br>public long getLastAccessedTime()<br><br>&#x2F;&#x2F;该方法指示该 session 会话无效，并解除绑定到它上面的任何对象。<br>	public void invalidate()<br><br>&#x2F;&#x2F;如果客户端还不知道该 session 会话，或者如果客户选择不参入该 session 会话，则该方法返回 true。<br>	public boolean isNew()<br><br>&#x2F;&#x2F;该方法将从该 session 会话移除指定名称的对象。<br>	public void removeAttribute(String name)<br></code></pre></td></tr></table></figure>]]></content>
-      <tags>
-        <tag>Spring</tag>
-        <tag>JavaWeb</tag>
-        <tag>Servlet</tag>
-        <tag>SpringMVC</tag>
       </tags>
   </entry>
   <entry>
@@ -2306,7 +2306,6 @@ import org.springframework.context.support.ClassPathXmlApplicationContext; -->
 <h2 id="日志工厂"><a href="#日志工厂" class="headerlink" title="日志工厂"></a><strong>日志工厂</strong></h2><p>回顾config配置文件中的settings配置项，有logImpl这样一个属性，logImpl是一个日志框架，实现方式有SLF4J、LOG4J、LOG4J2、JDK_LOGGING、COMMONS_LOGGING、STDOUT_LOGGING、NO_LOGGING</p>
 <p>其中最常用的有LOG4J、STDOUT_LOGGING</p>
 <p><strong>以STDOUT_LOGGING为例</strong></p>
-<p>log4j的日志实现另开一篇文章</p>
 <p>这个日志的实现不用任何导包或者依赖的配置，直接就可以使用</p>
 <p>配置setting配置项</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">&lt;settings&gt;<br>    &lt;setting name&#x3D;&quot;logImpl&quot; value&#x3D;&quot;STDOUT_LOGGING&quot;&#x2F;&gt;<br>&lt;&#x2F;settings&gt;<br></code></pre></td></tr></table></figure>
@@ -2319,7 +2318,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext; -->
 <p><img src="/2020/10/22/mybatis/jdbc.jpg" alt="jdbc"></p>
 <p>这是真正的日志部分，记录了对数据库的每一个操作</p>
 <p><strong>关于java日志，可以参考另外一篇博客，传送门：<a href="https://zleo-bug.github.io/2020/10/24/javarecord/">https://zleo-bug.github.io/2020/10/24/javarecord/</a></strong></p>
-<h1 id="mybatis实现分页"><a href="#mybatis实现分页" class="headerlink" title="mybatis实现分页"></a><strong>mybatis实现分页</strong></h1><p>传送门：<a href="https://zleo-bug.github.io/2020/10/24/mybatisPaging/">https://zleo-bug.github.io/2020/10/24/mybatisPaging/</a></p>
+<h1 id="mybatis实现分页"><a href="#mybatis实现分页" class="headerlink" title="mybatis实现分页"></a><strong>mybatis实现分页</strong></h1><p>传送门：<strong><a href="https://zleo-bug.github.io/2020/10/24/mybatisPaging/">https://zleo-bug.github.io/2020/10/24/mybatisPaging/</a></strong></p>
 <h1 id="注解开发"><a href="#注解开发" class="headerlink" title="注解开发"></a><strong>注解开发</strong></h1><p>在一些简单的sql语句中，使用注解开发能够简化开发的步骤，利用一个简单的注释即可，不再需要配置接口对应的xml文件，注解的本质是通过反射实现的</p>
 <p>如：</p>
 <p>在studentMapper中添加新方法，并添加注释@Select</p>

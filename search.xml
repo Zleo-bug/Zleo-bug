@@ -2318,8 +2318,8 @@ import org.springframework.context.support.ClassPathXmlApplicationContext; -->
 <p>表示idea进行的一些操作</p>
 <p><img src="/2020/10/22/mybatis/jdbc.jpg" alt="jdbc"></p>
 <p>这是真正的日志部分，记录了对数据库的每一个操作</p>
-<p><strong>关于java日志，可以参考另外一篇博客，传送门：</strong></p>
-<h1 id="mybatis实现分页"><a href="#mybatis实现分页" class="headerlink" title="mybatis实现分页"></a><strong>mybatis实现分页</strong></h1><p>传送门：</p>
+<p><strong>关于java日志，可以参考另外一篇博客，传送门：<a href="https://zleo-bug.github.io/2020/10/24/javarecord/">https://zleo-bug.github.io/2020/10/24/javarecord/</a></strong></p>
+<h1 id="mybatis实现分页"><a href="#mybatis实现分页" class="headerlink" title="mybatis实现分页"></a><strong>mybatis实现分页</strong></h1><p>传送门：<a href="https://zleo-bug.github.io/2020/10/24/mybatisPaging/">https://zleo-bug.github.io/2020/10/24/mybatisPaging/</a></p>
 <h1 id="注解开发"><a href="#注解开发" class="headerlink" title="注解开发"></a><strong>注解开发</strong></h1><p>在一些简单的sql语句中，使用注解开发能够简化开发的步骤，利用一个简单的注释即可，不再需要配置接口对应的xml文件，注解的本质是通过反射实现的</p>
 <p>如：</p>
 <p>在studentMapper中添加新方法，并添加注释@Select</p>

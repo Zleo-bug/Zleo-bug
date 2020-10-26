@@ -2434,6 +2434,32 @@ import org.springframework.context.support.ClassPathXmlApplicationContext; -->
 <figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">&lt;select id&#x3D;&quot;selectBlogForeach&quot; resultType&#x3D;&quot;Blog&quot; parameterType&#x3D;&quot;map&quot;&gt;<br>    select * from blog<br>    &lt;where&gt;<br>        &lt;foreach collection&#x3D;&quot;list&quot; item&#x3D;&quot;id&quot; open&#x3D;&quot;and (&quot; close&#x3D;&quot;)&quot; separator&#x3D;&quot;or&quot;&gt;<br>            id &#x3D; #&#123;id&#125;<br>        &lt;&#x2F;foreach&gt;<br>    &lt;&#x2F;where&gt;<br>&lt;&#x2F;select&gt;<br></code></pre></td></tr></table></figure>
 
 <p>其中，collection为map中的键，item为collection中的元素类型，separator为分隔符</p>
+<h1 id="Mybatis缓存"><a href="#Mybatis缓存" class="headerlink" title="Mybatis缓存"></a><strong>Mybatis缓存</strong></h1><h2 id="什么是缓存"><a href="#什么是缓存" class="headerlink" title="什么是缓存"></a><strong>什么是缓存</strong></h2><p>缓存是临时存在内存中的数据，将用户经常查询的且不经常改变的数据放在缓存中，用户区查询数据就不用从磁盘上查询，而是从缓存中查询</p>
+<h2 id="为什么使用缓存"><a href="#为什么使用缓存" class="headerlink" title="为什么使用缓存"></a><strong>为什么使用缓存</strong></h2><p>连接数据库非常消耗资源，为了减少和数据库的交互次数，减少系统开销，提高查询效率</p>
+<h2 id="Mybatis缓存-1"><a href="#Mybatis缓存-1" class="headerlink" title="Mybatis缓存"></a><strong>Mybatis缓存</strong></h2><p>Mybatis包含了一个非常强大的查询缓存特性，它可以非常方便地定制和配置缓存</p>
+<p>Mybatis中默认定义了两级缓存：<strong>一级缓存</strong> 和 <strong>二级缓存</strong></p>
+<h3 id="一级缓存"><a href="#一级缓存" class="headerlink" title="一级缓存"></a><strong>一级缓存</strong></h3><p>默认情况下开启一级缓存（sqlsession级别），sqlsession在open和close之间有效</p>
+<p>对于selectBlogById查询语句</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">@Test<br>public void selectBlogById()&#123;<br><br>    SqlSession sqlSession &#x3D; myBatisUtils.getSqlSession();<br><br>    BlogMapper mapper &#x3D; sqlSession.getMapper(BlogMapper.class);<br><br>    Blog blog &#x3D; mapper.selectBlogById(1);<br><br>    Blog blog1 &#x3D; mapper.selectBlogById(1);<br><br>    System.out.println(blog&#x3D;&#x3D;blog1);<br><br>    sqlSession.close();<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><img src="/2020/10/22/mybatis/cache1.jpg" alt="cache1"></p>
+<p>从创建连接池到关闭连接池，只执行了一次sql语句</p>
+<p>缓存失效的情况：</p>
+<ul>
+<li>查询不同的信息</li>
+<li>进行增删改操作会刷新原来的缓存，原因是增删改操作可能会改变原有数据</li>
+</ul>
+<h3 id="二级缓存"><a href="#二级缓存" class="headerlink" title="二级缓存"></a><strong>二级缓存</strong></h3><p>二级缓存需要手动开启和配置，它是基于namespace级别的缓存</p>
+<p>要使用二级缓存，先要在核心配置文件中显示开启缓存</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">&lt;settings&gt;<br>    &lt;setting name&#x3D;&quot;logImpl&quot; value&#x3D;&quot;STDOUT_LOGGING&quot;&#x2F;&gt;<br>    &lt;setting name&#x3D;&quot;mapUnderscoreToCamelCase&quot; value&#x3D;&quot;true&quot;&#x2F;&gt;<br>    &lt;setting name&#x3D;&quot;cacheEnabled&quot; value&#x3D;&quot;true&quot;&#x2F;&gt;<br>&lt;&#x2F;settings&gt;<br></code></pre></td></tr></table></figure>
+
+<p>要在xxxMapper.xml文件中加上配置</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">&lt;cache&gt;<br>	properties...<br>&lt;cache&#x2F;&gt;<br></code></pre></td></tr></table></figure>
+<p>当某个sqlsession.close的时候，一级缓存会进入二级缓存中</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">@Test<br>public void selectBlogById()&#123;<br><br>    SqlSession sqlSession &#x3D; myBatisUtils.getSqlSession();<br><br>    SqlSession sqlSession1 &#x3D; myBatisUtils.getSqlSession();<br><br>    BlogMapper mapper &#x3D; sqlSession.getMapper(BlogMapper.class);<br><br>    Blog blog &#x3D; mapper.selectBlogById(1);<br><br>    sqlSession.close();<br><br>    BlogMapper mapper1 &#x3D; sqlSession1.getMapper(BlogMapper.class);<br><br>    Blog blog1 &#x3D; mapper1.selectBlogById(1);<br><br>    System.out.println(blog&#x3D;&#x3D;blog1);<br><br>    sqlSession1.close();<br><br>    &#125;<br> &#96;&#96;&#96; <br><br>![cache2wrong](cache2wrong.jpg)<br><br>此时发现执行了两次查询操作<br><br>若将查询语句放在xml文件中配置<br><br>![cache2true](cache2true.jpg)<br><br>发现二级缓存配置成功<br><br>**原因是：使用基于注解的二级缓存要在 需要开启二级缓存的dao接口中添加如下注释**<br><br></code></pre></td></tr></table></figure>
+<p>@CacheNamespace(blocking = true)</p>
+<pre><code>
+</code></pre>
 ]]></content>
       <tags>
         <tag>java</tag>

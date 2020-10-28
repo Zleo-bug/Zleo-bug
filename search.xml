@@ -321,79 +321,6 @@ Stream&lt;String&gt; stream = list.stream();</code></pre>
 ]]></content>
   </entry>
   <entry>
-    <title>JavaWeb之Servlet</title>
-    <url>/2020/10/04/Servlet/</url>
-    <content><![CDATA[<p>最近在使用SpringMVC的时候有是要用到Servlet中的方法，也借此机会复习一波Servlet</p>
-<h1 id="什么是Servlet"><a href="#什么是Servlet" class="headerlink" title="什么是Servlet"></a><strong>什么是Servlet</strong></h1><p>Servlet的全称是JavaServlet，是运行在Web服务器或应用服务器上的程序，由Servlet容器统一管理，它是作为来自 Web 浏览器或其他 HTTP 客户端的请求和HTTP服务器上的数据库或应用程序之间的中间层。其主要功能在于交互式地浏览和修改数据，生成动态Web内容。</p>
-<p>Servlet的本质是一个独立的Java类，编写一个Servlet，其实就是按照相应的规范编写一个Java类</p>
-<h1 id="servlet容器"><a href="#servlet容器" class="headerlink" title="servlet容器"></a><strong>servlet容器</strong></h1><p>上面说到servlet是运行在web服务器或应用服务器上的程序，由servlet容器统一管理，servlet容器是web服务器或应用服务器的一部分，Servlet不能独立运行，它必须被部署到Servlet容器中，由容器来实例化和调用Servlet的方法，servlet是由servlet容器统一管理的，它负责管理servlet的生命周期。</p>
-<h1 id="servlet的工作流程"><a href="#servlet的工作流程" class="headerlink" title="servlet的工作流程"></a><strong>servlet的工作流程</strong></h1><p><img src="/2020/10/04/Servlet/servlet.jpg" alt="servlet"></p>
-<h1 id="servlet的使用方法和原理"><a href="#servlet的使用方法和原理" class="headerlink" title="servlet的使用方法和原理"></a><strong>servlet的使用方法和原理</strong></h1><h2 id="servlet的使用"><a href="#servlet的使用" class="headerlink" title="servlet的使用"></a><strong>servlet的使用</strong></h2><p>Servlet技术的核心是Servlet接口，它是所有Servlet类必须直接或者间接实现的一个接口。要想使用servlet，就必须实现servlet接口或者继承实现了servlet接口的类。</p>
-<h2 id="servlet的工作原理"><a href="#servlet的工作原理" class="headerlink" title="servlet的工作原理"></a><strong>servlet的工作原理</strong></h2><p>当客户端有请求时，Servlet容器实例化相对应的servlet，并调用它的service()方法，传入ServletRequest对象和ServletResponse对象，这两个对象是由servlet容器封装好的，ServletRequest对象封装了http的请求，ServletResponse则封装了对http请求的响应。</p>
-<p>对于每一个应用程序，Servlet容器还会创建一个ServletContext对象。这个对象中封装了上下文（应用程序）的环境详情。</p>
-<h1 id="servlet的生命周期"><a href="#servlet的生命周期" class="headerlink" title="servlet的生命周期"></a><strong>servlet的生命周期</strong></h1><p>servlet的生命周期分为init()、service()和destroy()三个过程</p>
-<ul>
-<li>init()</li>
-</ul>
-<p>当Servlet第一次被请求时，Servlet容器就会开始调用这个方法来初始化一个Servlet对象出来，但是这个方法在后续请求中不会再被Servlet容器调用，可以利用init()方法对servlet进行初始化工作</p>
-<ul>
-<li>service()</li>
-</ul>
-<p>每当请求Servlet时，Servlet容器就会调用这个方法</p>
-<ul>
-<li>destroy()</li>
-</ul>
-<p>当要销毁Servlet时，Servlet容器就会调用这个方法，在卸载应用程序或者关闭Servlet容器时，就会发生这种情况，一般在这个方法中会写一些清除代码。</p>
-<h1 id="Servlet、ServletRequest、ServletResponse接口"><a href="#Servlet、ServletRequest、ServletResponse接口" class="headerlink" title="Servlet、ServletRequest、ServletResponse接口"></a><strong>Servlet、ServletRequest、ServletResponse接口</strong></h1><h2 id="Servlet接口："><a href="#Servlet接口：" class="headerlink" title="Servlet接口："></a><strong>Servlet接口：</strong></h2><figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">public interface Servlet &#123;<br>    void init(ServletConfig var1) throws ServletException;<br> <br> &#x2F;&#x2F; 获取配置信息<br>    ServletConfig getServletConfig();<br> <br>    void service(ServletRequest var1, ServletResponse var2) throws ServletException, IOException;<br> <br> &#x2F;&#x2F; 获取servlet信息 传给init（）方法的ServletConfig对象<br>    String getServletInfo();<br> <br>    void destroy();<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<h2 id="ServletRequest接口"><a href="#ServletRequest接口" class="headerlink" title="ServletRequest接口"></a><strong>ServletRequest接口</strong></h2><p>ServletRequest接口中最常用的一个方法是getParameter方法，用于返回请求参数的值</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">String getParameter(String var1);&#x2F;&#x2F;返回请求参数的值<br></code></pre></td></tr></table></figure>
-<h2 id="ServletResponse接口"><a href="#ServletResponse接口" class="headerlink" title="ServletResponse接口"></a><strong>ServletResponse接口</strong></h2><p> javax.servlet.ServletResponse接口表示一个Servlet响应，在调用Servlet的Service()方法前，Servlet容器会先创建一个ServletResponse对象，并把它作为第二个参数传给Service()方法。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">public interface ServletResponse &#123;<br><br>    String getCharacterEncoding();<br> <br>    String getContentType();<br> <br>    PrintWriter getWriter() throws IOException;<br> <br>    void setCharacterEncoding(String var1);<br> <br>    void setContentLength(int var1);<br> <br> 	&#x2F;&#x2F; ....省略一些方法<br>    void setContentType(String var1);<br>&#125;<br></code></pre></td></tr></table></figure>
-<p>其中最常用的方法是： </p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">PrintWriter getWriter() throws IOException;<br><br>void setContentType(String var1);<br></code></pre></td></tr></table></figure>
-<p>在响应客户端请求时，都先应调用setContentType方法，设置响应的内容类型，并将“text/html”作为一个参数传入，这是在告诉浏览器响应的内容类型为HTML，需要以HTML的方法解释响应内容而不是普通的文本，或者也可以加上“charset=UTF-8”改变响应的编码方式以防止发生中文乱码现象。</p>
-<p>getWriter方法返回一个可以向客户端发送文本的java对象，可以在客户端页面中输出信息</p>
-<h1 id="ServletContext对象"><a href="#ServletContext对象" class="headerlink" title="ServletContext对象"></a><strong>ServletContext对象</strong></h1><p>ServletContext对象表示Servlet应用程序。每个Web应用程序都只有一个ServletContext对象。有了ServletContext对象，就可以共享从应用程序中的所有资料处访问到的信息，并且可以动态注册Web对象。前者将对象保存在ServletContext中的一个内部Map中。保存在ServletContext中的对象被称作属性。</p>
-<p>servletcontext对象中的方法：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">Object getAttribute(String var1);<br> <br>Enumeration&lt;String&gt; getAttributeNames();<br> <br>void setAttribute(String var1, Object var2);<br> <br>void removeAttribute(String var1);<br></code></pre></td></tr></table></figure>
-<h1 id="ServletConfig接口"><a href="#ServletConfig接口" class="headerlink" title="ServletConfig接口"></a><strong>ServletConfig接口</strong></h1><p>当Servlet容器初始化Servlet时，Servlet容器会给Servlet的init()方式传入一个ServletConfig对象。一些方法如下：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">String getInitParameter(String name) &#x2F;&#x2F;根据初始化参数名，返回对应的初始化参数值<br><br>Enumeration getInitParameterNames()	&#x2F;&#x2F;返回一个Enumeration对象，其中包含所有的初始化参数名<br><br>ServletContext getServletContext()	&#x2F;&#x2F;返回一个代表当前Web应用的，ServletContext对象<br><br>String getServletName()	&#x2F;&#x2F;返回Servlet的名字，即web.xml中元素的值<br></code></pre></td></tr></table></figure>
-<h1 id="HttpServlet、HttpServletRequest、HttpServlelResponse"><a href="#HttpServlet、HttpServletRequest、HttpServlelResponse" class="headerlink" title="HttpServlet、HttpServletRequest、HttpServlelResponse"></a><strong>HttpServlet、HttpServletRequest、HttpServlelResponse</strong></h1><p>在实际应用中，最常用的Servlet类HttpServlet抽象类<br>常用的接口是ServletRequest的子接口HttpServletRequest 和 ServletResponse的子接口HttpServletResponse </p>
-<p>继承关系如下图：</p>
-<p><img src="/2020/10/04/Servlet/relationship.jpg" alt="relationship"></p>
-<h2 id="HttpServlet"><a href="#HttpServlet" class="headerlink" title="HttpServlet"></a><strong>HttpServlet</strong></h2><p>常用Servlet对象是javax.servlet.http包下的HttpServlet抽象类</p>
-<p>HttpServlet抽象类是继承于GenericServlet抽象类而来的。使用HttpServlet抽象类时，还需要借助分别代表Servlet请求和Servlet响应的HttpServletRequest和HttpServletResponse对象</p>
-<p>继承HttpServlet的Servlet类中要实现doXX方法，分别用于客户端的不同请求</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException &#123;<br>&#125;<br><br>...<br><br>protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException &#123;<br>&#125;<br></code></pre></td></tr></table></figure>
-<p>HttpServlet类中重写了service()方法，根据客户端请求类型的不同而调用相应的doXX方法</p>
-<h2 id="HttpServletRequest"><a href="#HttpServletRequest" class="headerlink" title="HttpServletRequest"></a><strong>HttpServletRequest</strong></h2><p>HttpServletRequest接口中添加了几个重要方法：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">Cookie[] getCookies();&#x2F;&#x2F;返回一个cookie对象数组<br><br>String getHeader(String var1);&#x2F;&#x2F;返回指定HTTP标题的值<br><br>HttpSession getSession();&#x2F;&#x2F;返回与这个请求相关的会话对象<br></code></pre></td></tr></table></figure>
-<h2 id="HttpServlelResponse"><a href="#HttpServlelResponse" class="headerlink" title="HttpServlelResponse"></a><strong>HttpServlelResponse</strong></h2><p>HttpServlelResponse中添加的重要方法：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">void addCookie(Cookie var1);&#x2F;&#x2F;给这个响应添加一个cookie<br><br>void addHeader(String var1, String var2);&#x2F;&#x2F;给这个请求添加一个响应头<br><br>void sendRedirect(String var1) throws IOException;&#x2F;&#x2F;发送一条响应码，讲浏览器跳转到指定的位置<br><br>void setStatus(int var1);&#x2F;&#x2F;设置响应行的状态码<br></code></pre></td></tr></table></figure>
-
-<h1 id="cookie和session"><a href="#cookie和session" class="headerlink" title="cookie和session"></a><strong>cookie和session</strong></h1><p>会话（Session）跟踪是Web程序中常用的技术，用来跟踪用户的整个会话。常用的会话跟踪技术是Cookie与Session</p>
-<h2 id="cookie"><a href="#cookie" class="headerlink" title="cookie"></a><strong>cookie</strong></h2><p>HTTP协议是无状态的协议。一旦数据交换完毕，客户端与服务器端的连接就会关闭，再次交换数据需要建立新的连接。这就意味着服务器无法从连接上跟踪会话。要跟踪该会话，必须引入一种机制。而cookie就是这样一种机制。</p>
-<p>由于HTTP是一种无状态的协议，服务器单从网络连接上无从知道客户身份。怎么办呢？就给客户端们颁发一个通行证吧，每人一个，无论谁访问都必须携带自己通行证。这样服务器就能从通行证上确认客户身份了。这就是Cookie的工作原理。</p>
-<p>Cookie实际上是一小段的文本信息。客户端请求服务器，如果服务器需要记录该用户状态，就使用response对象的addCookie方法向客户端浏览器颁发一个Cookie。客户端浏览器会把Cookie保存起来。当浏览器再请求该网站时，浏览器把请求的网址连同该Cookie一同提交给服务器。服务器检查该Cookie，以此来辨认用户状态。服务器还可以根据需要修改Cookie的内容。</p>
-<p>Cookie类在javax.servlet.http.Cookie包下</p>
-<p>Cookie对象中常用的方法</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">public void setDomain(String pattern)	&#x2F;&#x2F;该方法设置 cookie 适用的域，例如 xxx.com<br><br>public String getDomain()	&#x2F;&#x2F;该方法获取 cookie 适用的域，例如 xxx.com。<br><br>&#x2F;&#x2F;该方法设置cookie有效时间（以秒为单位）。如果不这样设置，cookie只会在当前session会话中持续有效。<br>public void setMaxAge(int expiry)<br><br>&#x2F;&#x2F;该方法返回 cookie 的最大生存周期（以秒为单位），默认情况下，-1 表示 cookie 将持续下去，直到浏览器关闭。<br>public int getMaxAge()	<br><br>public String getName()	&#x2F;&#x2F;该方法返回 cookie 的名称。名称在创建后不能改变。<br><br>public void setValue(String newValue)	&#x2F;&#x2F;该方法设置与 cookie 关联的值。<br><br>public String getValue() &#x2F;&#x2F;该方法获取与 cookie 关联的值。<br><br>&#x2F;&#x2F;该方法设置 cookie 适用的路径。如果不指定路径，与当前页面相同目录下的（包括子目录下的）所有 URL 都会返回 cookie。<br>public void setPath(String uri)<br><br>public String getPath()	&#x2F;&#x2F;该方法获取 cookie 适用的路径。<br><br>&#x2F;&#x2F;该方法设置布尔值，表示 cookie 是否应该只在加密的（即 SSL）连接上发送。<br>public void setSecure(boolean flag)<br><br>public void setComment(String purpose)	&#x2F;&#x2F;设置cookie的注释。该注释在浏览器向用户呈现 cookie 时非常有用。<br><br>public String getComment()	&#x2F;&#x2F;获取 cookie 的注释，如果 cookie 没有注释则返回 null。<br></code></pre></td></tr></table></figure>
-
-
-<h2 id="session"><a href="#session" class="headerlink" title="session"></a><strong>session</strong></h2><p>Session是另一种记录客户状态的机制，不同的是Cookie保存在客户端浏览器中，而Session保存在服务器上。客户端浏览器访问服务器的时候，服务器把客户端信息以某种形式记录在服务器上。这就是Session。客户端浏览器再次访问时只需要从该Session中查找该客户的状态就可以了。</p>
-<p>Session对应的类为javax.servlet.http.HttpSession类</p>
-<p>Servlet里通过request.getSession()方法获取该客户的Session</p>
-<p>HttpSession对象中常用的方法：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">&#x2F;&#x2F;该方法返回在该 session 会话中具有指定名称的对象，如果没有指定名称的对象，则返回 null。<br>public Object getAttribute(String name)<br><br>&#x2F;&#x2F;该方法使用指定的名称绑定一个对象到该 session 会话。<br>public void setAttribute(String name, Object value)<br><br>&#x2F;&#x2F;该方法返回 String 对象的枚举，String 对象包含所有绑定到该 session 会话的对象的名称。<br>public Enumeration getAttributeNames()<br><br>&#x2F;&#x2F;设置session的超时时间，以秒为单位。<br>public void setMaxInactiveInterval(int interval)<br><br>&#x2F;&#x2F;获取session的超时时间以秒为单位。<br>public int getMaxInactiveInterval()<br><br>&#x2F;&#x2F;该方法返回一个包含分配给该 session 会话的唯一标识符的字符串。<br>public String getId()<br><br>&#x2F;&#x2F;该方法返回客户端最后一次发送与该 session 会话相关的请求的时间自格林尼治标准时间 1970 年 1 月 1 日午夜算起，以毫秒为单位。<br>public long getLastAccessedTime()<br><br>&#x2F;&#x2F;该方法指示该 session 会话无效，并解除绑定到它上面的任何对象。<br>	public void invalidate()<br><br>&#x2F;&#x2F;如果客户端还不知道该 session 会话，或者如果客户选择不参入该 session 会话，则该方法返回 true。<br>	public boolean isNew()<br><br>&#x2F;&#x2F;该方法将从该 session 会话移除指定名称的对象。<br>	public void removeAttribute(String name)<br></code></pre></td></tr></table></figure>]]></content>
-      <tags>
-        <tag>Spring</tag>
-        <tag>JavaWeb</tag>
-        <tag>Servlet</tag>
-        <tag>SpringMVC</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Python入门学习</title>
     <url>/2020/09/21/Python/</url>
     <content><![CDATA[<p>这学期选修了信息检索（python基础入门），所以有必要将python的基础markdown，便于以后学习。语言都具有相似性，下面列举出python与其他语言不同的地方</p>
@@ -560,6 +487,79 @@ print(str)            #12\n312312412412</code></pre>
 <figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">def outer():<br>    num &#x3D; 10<br>    def inner():<br>        nonlocal num<br>        print(num)	#10<br>        num &#x3D; &quot;str&quot;<br>    inner()<br>    print(num)	#str<br>outer()<br></code></pre></td></tr></table></figure>]]></content>
       <tags>
         <tag>python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>JavaWeb之Servlet</title>
+    <url>/2020/10/04/Servlet/</url>
+    <content><![CDATA[<p>最近在使用SpringMVC的时候有是要用到Servlet中的方法，也借此机会复习一波Servlet</p>
+<h1 id="什么是Servlet"><a href="#什么是Servlet" class="headerlink" title="什么是Servlet"></a><strong>什么是Servlet</strong></h1><p>Servlet的全称是JavaServlet，是运行在Web服务器或应用服务器上的程序，由Servlet容器统一管理，它是作为来自 Web 浏览器或其他 HTTP 客户端的请求和HTTP服务器上的数据库或应用程序之间的中间层。其主要功能在于交互式地浏览和修改数据，生成动态Web内容。</p>
+<p>Servlet的本质是一个独立的Java类，编写一个Servlet，其实就是按照相应的规范编写一个Java类</p>
+<h1 id="servlet容器"><a href="#servlet容器" class="headerlink" title="servlet容器"></a><strong>servlet容器</strong></h1><p>上面说到servlet是运行在web服务器或应用服务器上的程序，由servlet容器统一管理，servlet容器是web服务器或应用服务器的一部分，Servlet不能独立运行，它必须被部署到Servlet容器中，由容器来实例化和调用Servlet的方法，servlet是由servlet容器统一管理的，它负责管理servlet的生命周期。</p>
+<h1 id="servlet的工作流程"><a href="#servlet的工作流程" class="headerlink" title="servlet的工作流程"></a><strong>servlet的工作流程</strong></h1><p><img src="/2020/10/04/Servlet/servlet.jpg" alt="servlet"></p>
+<h1 id="servlet的使用方法和原理"><a href="#servlet的使用方法和原理" class="headerlink" title="servlet的使用方法和原理"></a><strong>servlet的使用方法和原理</strong></h1><h2 id="servlet的使用"><a href="#servlet的使用" class="headerlink" title="servlet的使用"></a><strong>servlet的使用</strong></h2><p>Servlet技术的核心是Servlet接口，它是所有Servlet类必须直接或者间接实现的一个接口。要想使用servlet，就必须实现servlet接口或者继承实现了servlet接口的类。</p>
+<h2 id="servlet的工作原理"><a href="#servlet的工作原理" class="headerlink" title="servlet的工作原理"></a><strong>servlet的工作原理</strong></h2><p>当客户端有请求时，Servlet容器实例化相对应的servlet，并调用它的service()方法，传入ServletRequest对象和ServletResponse对象，这两个对象是由servlet容器封装好的，ServletRequest对象封装了http的请求，ServletResponse则封装了对http请求的响应。</p>
+<p>对于每一个应用程序，Servlet容器还会创建一个ServletContext对象。这个对象中封装了上下文（应用程序）的环境详情。</p>
+<h1 id="servlet的生命周期"><a href="#servlet的生命周期" class="headerlink" title="servlet的生命周期"></a><strong>servlet的生命周期</strong></h1><p>servlet的生命周期分为init()、service()和destroy()三个过程</p>
+<ul>
+<li>init()</li>
+</ul>
+<p>当Servlet第一次被请求时，Servlet容器就会开始调用这个方法来初始化一个Servlet对象出来，但是这个方法在后续请求中不会再被Servlet容器调用，可以利用init()方法对servlet进行初始化工作</p>
+<ul>
+<li>service()</li>
+</ul>
+<p>每当请求Servlet时，Servlet容器就会调用这个方法</p>
+<ul>
+<li>destroy()</li>
+</ul>
+<p>当要销毁Servlet时，Servlet容器就会调用这个方法，在卸载应用程序或者关闭Servlet容器时，就会发生这种情况，一般在这个方法中会写一些清除代码。</p>
+<h1 id="Servlet、ServletRequest、ServletResponse接口"><a href="#Servlet、ServletRequest、ServletResponse接口" class="headerlink" title="Servlet、ServletRequest、ServletResponse接口"></a><strong>Servlet、ServletRequest、ServletResponse接口</strong></h1><h2 id="Servlet接口："><a href="#Servlet接口：" class="headerlink" title="Servlet接口："></a><strong>Servlet接口：</strong></h2><figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">public interface Servlet &#123;<br>    void init(ServletConfig var1) throws ServletException;<br> <br> &#x2F;&#x2F; 获取配置信息<br>    ServletConfig getServletConfig();<br> <br>    void service(ServletRequest var1, ServletResponse var2) throws ServletException, IOException;<br> <br> &#x2F;&#x2F; 获取servlet信息 传给init（）方法的ServletConfig对象<br>    String getServletInfo();<br> <br>    void destroy();<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="ServletRequest接口"><a href="#ServletRequest接口" class="headerlink" title="ServletRequest接口"></a><strong>ServletRequest接口</strong></h2><p>ServletRequest接口中最常用的一个方法是getParameter方法，用于返回请求参数的值</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">String getParameter(String var1);&#x2F;&#x2F;返回请求参数的值<br></code></pre></td></tr></table></figure>
+<h2 id="ServletResponse接口"><a href="#ServletResponse接口" class="headerlink" title="ServletResponse接口"></a><strong>ServletResponse接口</strong></h2><p> javax.servlet.ServletResponse接口表示一个Servlet响应，在调用Servlet的Service()方法前，Servlet容器会先创建一个ServletResponse对象，并把它作为第二个参数传给Service()方法。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">public interface ServletResponse &#123;<br><br>    String getCharacterEncoding();<br> <br>    String getContentType();<br> <br>    PrintWriter getWriter() throws IOException;<br> <br>    void setCharacterEncoding(String var1);<br> <br>    void setContentLength(int var1);<br> <br> 	&#x2F;&#x2F; ....省略一些方法<br>    void setContentType(String var1);<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>其中最常用的方法是： </p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">PrintWriter getWriter() throws IOException;<br><br>void setContentType(String var1);<br></code></pre></td></tr></table></figure>
+<p>在响应客户端请求时，都先应调用setContentType方法，设置响应的内容类型，并将“text/html”作为一个参数传入，这是在告诉浏览器响应的内容类型为HTML，需要以HTML的方法解释响应内容而不是普通的文本，或者也可以加上“charset=UTF-8”改变响应的编码方式以防止发生中文乱码现象。</p>
+<p>getWriter方法返回一个可以向客户端发送文本的java对象，可以在客户端页面中输出信息</p>
+<h1 id="ServletContext对象"><a href="#ServletContext对象" class="headerlink" title="ServletContext对象"></a><strong>ServletContext对象</strong></h1><p>ServletContext对象表示Servlet应用程序。每个Web应用程序都只有一个ServletContext对象。有了ServletContext对象，就可以共享从应用程序中的所有资料处访问到的信息，并且可以动态注册Web对象。前者将对象保存在ServletContext中的一个内部Map中。保存在ServletContext中的对象被称作属性。</p>
+<p>servletcontext对象中的方法：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">Object getAttribute(String var1);<br> <br>Enumeration&lt;String&gt; getAttributeNames();<br> <br>void setAttribute(String var1, Object var2);<br> <br>void removeAttribute(String var1);<br></code></pre></td></tr></table></figure>
+<h1 id="ServletConfig接口"><a href="#ServletConfig接口" class="headerlink" title="ServletConfig接口"></a><strong>ServletConfig接口</strong></h1><p>当Servlet容器初始化Servlet时，Servlet容器会给Servlet的init()方式传入一个ServletConfig对象。一些方法如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">String getInitParameter(String name) &#x2F;&#x2F;根据初始化参数名，返回对应的初始化参数值<br><br>Enumeration getInitParameterNames()	&#x2F;&#x2F;返回一个Enumeration对象，其中包含所有的初始化参数名<br><br>ServletContext getServletContext()	&#x2F;&#x2F;返回一个代表当前Web应用的，ServletContext对象<br><br>String getServletName()	&#x2F;&#x2F;返回Servlet的名字，即web.xml中元素的值<br></code></pre></td></tr></table></figure>
+<h1 id="HttpServlet、HttpServletRequest、HttpServlelResponse"><a href="#HttpServlet、HttpServletRequest、HttpServlelResponse" class="headerlink" title="HttpServlet、HttpServletRequest、HttpServlelResponse"></a><strong>HttpServlet、HttpServletRequest、HttpServlelResponse</strong></h1><p>在实际应用中，最常用的Servlet类HttpServlet抽象类<br>常用的接口是ServletRequest的子接口HttpServletRequest 和 ServletResponse的子接口HttpServletResponse </p>
+<p>继承关系如下图：</p>
+<p><img src="/2020/10/04/Servlet/relationship.jpg" alt="relationship"></p>
+<h2 id="HttpServlet"><a href="#HttpServlet" class="headerlink" title="HttpServlet"></a><strong>HttpServlet</strong></h2><p>常用Servlet对象是javax.servlet.http包下的HttpServlet抽象类</p>
+<p>HttpServlet抽象类是继承于GenericServlet抽象类而来的。使用HttpServlet抽象类时，还需要借助分别代表Servlet请求和Servlet响应的HttpServletRequest和HttpServletResponse对象</p>
+<p>继承HttpServlet的Servlet类中要实现doXX方法，分别用于客户端的不同请求</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException &#123;<br>&#125;<br><br>...<br><br>protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException &#123;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>HttpServlet类中重写了service()方法，根据客户端请求类型的不同而调用相应的doXX方法</p>
+<h2 id="HttpServletRequest"><a href="#HttpServletRequest" class="headerlink" title="HttpServletRequest"></a><strong>HttpServletRequest</strong></h2><p>HttpServletRequest接口中添加了几个重要方法：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">Cookie[] getCookies();&#x2F;&#x2F;返回一个cookie对象数组<br><br>String getHeader(String var1);&#x2F;&#x2F;返回指定HTTP标题的值<br><br>HttpSession getSession();&#x2F;&#x2F;返回与这个请求相关的会话对象<br></code></pre></td></tr></table></figure>
+<h2 id="HttpServlelResponse"><a href="#HttpServlelResponse" class="headerlink" title="HttpServlelResponse"></a><strong>HttpServlelResponse</strong></h2><p>HttpServlelResponse中添加的重要方法：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">void addCookie(Cookie var1);&#x2F;&#x2F;给这个响应添加一个cookie<br><br>void addHeader(String var1, String var2);&#x2F;&#x2F;给这个请求添加一个响应头<br><br>void sendRedirect(String var1) throws IOException;&#x2F;&#x2F;发送一条响应码，讲浏览器跳转到指定的位置<br><br>void setStatus(int var1);&#x2F;&#x2F;设置响应行的状态码<br></code></pre></td></tr></table></figure>
+
+<h1 id="cookie和session"><a href="#cookie和session" class="headerlink" title="cookie和session"></a><strong>cookie和session</strong></h1><p>会话（Session）跟踪是Web程序中常用的技术，用来跟踪用户的整个会话。常用的会话跟踪技术是Cookie与Session</p>
+<h2 id="cookie"><a href="#cookie" class="headerlink" title="cookie"></a><strong>cookie</strong></h2><p>HTTP协议是无状态的协议。一旦数据交换完毕，客户端与服务器端的连接就会关闭，再次交换数据需要建立新的连接。这就意味着服务器无法从连接上跟踪会话。要跟踪该会话，必须引入一种机制。而cookie就是这样一种机制。</p>
+<p>由于HTTP是一种无状态的协议，服务器单从网络连接上无从知道客户身份。怎么办呢？就给客户端们颁发一个通行证吧，每人一个，无论谁访问都必须携带自己通行证。这样服务器就能从通行证上确认客户身份了。这就是Cookie的工作原理。</p>
+<p>Cookie实际上是一小段的文本信息。客户端请求服务器，如果服务器需要记录该用户状态，就使用response对象的addCookie方法向客户端浏览器颁发一个Cookie。客户端浏览器会把Cookie保存起来。当浏览器再请求该网站时，浏览器把请求的网址连同该Cookie一同提交给服务器。服务器检查该Cookie，以此来辨认用户状态。服务器还可以根据需要修改Cookie的内容。</p>
+<p>Cookie类在javax.servlet.http.Cookie包下</p>
+<p>Cookie对象中常用的方法</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">public void setDomain(String pattern)	&#x2F;&#x2F;该方法设置 cookie 适用的域，例如 xxx.com<br><br>public String getDomain()	&#x2F;&#x2F;该方法获取 cookie 适用的域，例如 xxx.com。<br><br>&#x2F;&#x2F;该方法设置cookie有效时间（以秒为单位）。如果不这样设置，cookie只会在当前session会话中持续有效。<br>public void setMaxAge(int expiry)<br><br>&#x2F;&#x2F;该方法返回 cookie 的最大生存周期（以秒为单位），默认情况下，-1 表示 cookie 将持续下去，直到浏览器关闭。<br>public int getMaxAge()	<br><br>public String getName()	&#x2F;&#x2F;该方法返回 cookie 的名称。名称在创建后不能改变。<br><br>public void setValue(String newValue)	&#x2F;&#x2F;该方法设置与 cookie 关联的值。<br><br>public String getValue() &#x2F;&#x2F;该方法获取与 cookie 关联的值。<br><br>&#x2F;&#x2F;该方法设置 cookie 适用的路径。如果不指定路径，与当前页面相同目录下的（包括子目录下的）所有 URL 都会返回 cookie。<br>public void setPath(String uri)<br><br>public String getPath()	&#x2F;&#x2F;该方法获取 cookie 适用的路径。<br><br>&#x2F;&#x2F;该方法设置布尔值，表示 cookie 是否应该只在加密的（即 SSL）连接上发送。<br>public void setSecure(boolean flag)<br><br>public void setComment(String purpose)	&#x2F;&#x2F;设置cookie的注释。该注释在浏览器向用户呈现 cookie 时非常有用。<br><br>public String getComment()	&#x2F;&#x2F;获取 cookie 的注释，如果 cookie 没有注释则返回 null。<br></code></pre></td></tr></table></figure>
+
+
+<h2 id="session"><a href="#session" class="headerlink" title="session"></a><strong>session</strong></h2><p>Session是另一种记录客户状态的机制，不同的是Cookie保存在客户端浏览器中，而Session保存在服务器上。客户端浏览器访问服务器的时候，服务器把客户端信息以某种形式记录在服务器上。这就是Session。客户端浏览器再次访问时只需要从该Session中查找该客户的状态就可以了。</p>
+<p>Session对应的类为javax.servlet.http.HttpSession类</p>
+<p>Servlet里通过request.getSession()方法获取该客户的Session</p>
+<p>HttpSession对象中常用的方法：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">&#x2F;&#x2F;该方法返回在该 session 会话中具有指定名称的对象，如果没有指定名称的对象，则返回 null。<br>public Object getAttribute(String name)<br><br>&#x2F;&#x2F;该方法使用指定的名称绑定一个对象到该 session 会话。<br>public void setAttribute(String name, Object value)<br><br>&#x2F;&#x2F;该方法返回 String 对象的枚举，String 对象包含所有绑定到该 session 会话的对象的名称。<br>public Enumeration getAttributeNames()<br><br>&#x2F;&#x2F;设置session的超时时间，以秒为单位。<br>public void setMaxInactiveInterval(int interval)<br><br>&#x2F;&#x2F;获取session的超时时间以秒为单位。<br>public int getMaxInactiveInterval()<br><br>&#x2F;&#x2F;该方法返回一个包含分配给该 session 会话的唯一标识符的字符串。<br>public String getId()<br><br>&#x2F;&#x2F;该方法返回客户端最后一次发送与该 session 会话相关的请求的时间自格林尼治标准时间 1970 年 1 月 1 日午夜算起，以毫秒为单位。<br>public long getLastAccessedTime()<br><br>&#x2F;&#x2F;该方法指示该 session 会话无效，并解除绑定到它上面的任何对象。<br>	public void invalidate()<br><br>&#x2F;&#x2F;如果客户端还不知道该 session 会话，或者如果客户选择不参入该 session 会话，则该方法返回 true。<br>	public boolean isNew()<br><br>&#x2F;&#x2F;该方法将从该 session 会话移除指定名称的对象。<br>	public void removeAttribute(String name)<br></code></pre></td></tr></table></figure>]]></content>
+      <tags>
+        <tag>Spring</tag>
+        <tag>JavaWeb</tag>
+        <tag>Servlet</tag>
+        <tag>SpringMVC</tag>
       </tags>
   </entry>
   <entry>
@@ -1086,9 +1086,10 @@ print(str)            #12\n312312412412</code></pre>
       </tags>
   </entry>
   <entry>
-    <title>MVC Cannot resolve reference to bean &#39;cacheManager&#39;异常解决</title>
+    <title>MVC 异常解决</title>
     <url>/2020/10/12/mvcwrong/</url>
-    <content><![CDATA[<p>在新建的MVC项目中，要想使用注解驱动，出现异常信息：</p>
+    <content><![CDATA[<p>注解驱动异常：</p>
+<p>在新建的MVC项目中，要想使用注解驱动，出现异常信息：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">12-Oct-2020 17:43:10.828 警告 [RMI TCP Connection(21)-127.0.0.1] org.springframework.web.context.support.XmlWebApplicationContext.refresh Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name &#39;org.springframework.cache.interceptor.CacheInterceptor#0&#39;: Cannot resolve reference to bean &#39;cacheManager&#39; while setting bean property &#39;cacheManager&#39;; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No bean named &#39;cacheManager&#39; available<br>12-Oct-2020 17:43:10.830 严重 [RMI TCP Connection(21)-127.0.0.1] org.springframework.web.servlet.DispatcherServlet.initServletBean Context initialization failed<br>	org.springframework.beans.factory.BeanCreationException: Error creating bean with name &#39;org.springframework.cache.interceptor.CacheInterceptor#0&#39;: Cannot resolve reference to bean &#39;cacheManager&#39; while setting bean property &#39;cacheManager&#39;; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No bean named &#39;cacheManager&#39; available<br>		at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:342)<br>		at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveValueIfNecessary(BeanDefinitionValueResolver.java:113)<br>		at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.applyPropertyValues(AbstractAutowireCapableBeanFactory.java:1699)<br>		at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1444)<br>		at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:594)<br>		at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:517)<br>		at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:323)<br>		at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:222)<br>		at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:321)<br>		at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:202)<br>		at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:879)<br>		at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:878)<br>		at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:550)<br>		at org.springframework.web.servlet.FrameworkServlet.configureAndRefreshWebApplicationContext(FrameworkServlet.java:702)<br>		at org.springframework.web.servlet.FrameworkServlet.createWebApplicationContext(FrameworkServlet.java:668)<br>		at org.springframework.web.servlet.FrameworkServlet.createWebApplicationContext(FrameworkServlet.java:716)<br>		at org.springframework.web.servlet.FrameworkServlet.initWebApplicationContext(FrameworkServlet.java:591)<br>		at org.springframework.web.servlet.FrameworkServlet.initServletBean(FrameworkServlet.java:530)<br>		at org.springframework.web.servlet.HttpServletBean.init(HttpServletBean.java:170)<br>		at javax.servlet.GenericServlet.init(GenericServlet.java:158)<br>		at org.apache.catalina.core.StandardWrapper.initServlet(StandardWrapper.java:1134)<br>		at org.apache.catalina.core.StandardWrapper.loadServlet(StandardWrapper.java:1089)<br>		at org.apache.catalina.core.StandardWrapper.load(StandardWrapper.java:983)<br>		at org.apache.catalina.core.StandardContext.loadOnStartup(StandardContext.java:4864)<br>		at org.apache.catalina.core.StandardContext.startInternal(StandardContext.java:5173)<br>		at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:183)<br>		at org.apache.catalina.core.ContainerBase.addChildInternal(ContainerBase.java:717)<br>		at org.apache.catalina.core.ContainerBase.addChild(ContainerBase.java:690)<br>		at org.apache.catalina.core.StandardHost.addChild(StandardHost.java:706)<br>		at org.apache.catalina.startup.HostConfig.manageApp(HostConfig.java:1727)<br>		at java.base&#x2F;jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)<br>		at java.base&#x2F;jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)<br>		at java.base&#x2F;jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)<br>		at java.base&#x2F;java.lang.reflect.Method.invoke(Method.java:564)<br>		at org.apache.tomcat.util.modeler.BaseModelMBean.invoke(BaseModelMBean.java:288)<br>		at java.management&#x2F;com.sun.jmx.interceptor.DefaultMBeanServerInterceptor.invoke(DefaultMBeanServerInterceptor.java:809)<br>		at java.management&#x2F;com.sun.jmx.mbeanserver.JmxMBeanServer.invoke(JmxMBeanServer.java:801)<br>		at org.apache.catalina.mbeans.MBeanFactory.createStandardContext(MBeanFactory.java:456)<br>		at org.apache.catalina.mbeans.MBeanFactory.createStandardContext(MBeanFactory.java:405)<br>		at java.base&#x2F;jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)<br>		at java.base&#x2F;jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)<br>		at java.base&#x2F;jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)<br>		at java.base&#x2F;java.lang.reflect.Method.invoke(Method.java:564)<br>		at org.apache.tomcat.util.modeler.BaseModelMBean.invoke(BaseModelMBean.java:288)<br>		at java.management&#x2F;com.sun.jmx.interceptor.DefaultMBeanServerInterceptor.invoke(DefaultMBeanServerInterceptor.java:809)<br>		at java.management&#x2F;com.sun.jmx.mbeanserver.JmxMBeanServer.invoke(JmxMBeanServer.java:801)<br>		at java.management&#x2F;com.sun.jmx.remote.security.MBeanServerAccessController.invoke(MBeanServerAccessController.java:468)<br>		at java.management.rmi&#x2F;javax.management.remote.rmi.RMIConnectionImpl.doOperation(RMIConnectionImpl.java:1466)<br>		at java.management.rmi&#x2F;javax.management.remote.rmi.RMIConnectionImpl$PrivilegedOperation.run(RMIConnectionImpl.java:1307)<br>		at java.base&#x2F;java.security.AccessController.doPrivileged(AccessController.java:691)<br>		at java.management.rmi&#x2F;javax.management.remote.rmi.RMIConnectionImpl.doPrivilegedOperation(RMIConnectionImpl.java:1406)<br>		at java.management.rmi&#x2F;javax.management.remote.rmi.RMIConnectionImpl.invoke(RMIConnectionImpl.java:827)<br>		at java.base&#x2F;jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)<br>		at java.base&#x2F;jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)<br>		at java.base&#x2F;jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)<br>		at java.base&#x2F;java.lang.reflect.Method.invoke(Method.java:564)<br>		at java.rmi&#x2F;sun.rmi.server.UnicastServerRef.dispatch(UnicastServerRef.java:359)<br>		at java.rmi&#x2F;sun.rmi.transport.Transport$1.run(Transport.java:200)<br>		at java.rmi&#x2F;sun.rmi.transport.Transport$1.run(Transport.java:197)<br>		at java.base&#x2F;java.security.AccessController.doPrivileged(AccessController.java:691)<br>		at java.rmi&#x2F;sun.rmi.transport.Transport.serviceCall(Transport.java:196)<br>		at java.rmi&#x2F;sun.rmi.transport.tcp.TCPTransport.handleMessages(TCPTransport.java:587)<br>		at java.rmi&#x2F;sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.run0(TCPTransport.java:828)<br>		at java.rmi&#x2F;sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.lambda$run$0(TCPTransport.java:705)<br>		at java.base&#x2F;java.security.AccessController.doPrivileged(AccessController.java:391)<br>		at java.rmi&#x2F;sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.run(TCPTransport.java:704)<br>		at java.base&#x2F;java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1130)<br>		at java.base&#x2F;java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:630)<br>		at java.base&#x2F;java.lang.Thread.run(Thread.java:832)<br>	Caused by: org.springframework.beans.factory.NoSuchBeanDefinitionException: No bean named &#39;cacheManager&#39; available<br>		at org.springframework.beans.factory.support.DefaultListableBeanFactory.getBeanDefinition(DefaultListableBeanFactory.java:805)<br>		at org.springframework.beans.factory.support.AbstractBeanFactory.getMergedLocalBeanDefinition(AbstractBeanFactory.java:1278)<br>		at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:297)<br>		at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:276)<br>		at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:202)<br>		at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:330)<br>		... 68 more<br></code></pre></td></tr></table></figure>
 <p>解决方案：</p>
 <p>在配置Dispatcher的xml文件中，   </p>
@@ -1097,10 +1098,13 @@ print(str)            #12\n312312412412</code></pre>
 <p>因为annotation-driven有几个同名的</p>
 <p><img src="/2020/10/12/mvcwrong/driven.jpg" alt="driven"></p>
 <p>如果要选择注解驱动，要选择第三个</p>
+<p>一个或多个listeners启动失败：</p>
+<p><img src="/2020/10/12/mvcwrong/listener.jpg" alt="listener"></p>
 ]]></content>
       <tags>
         <tag>Spring</tag>
         <tag>SpringMVC</tag>
+        <tag>异常解决</tag>
       </tags>
   </entry>
   <entry>
@@ -1139,6 +1143,47 @@ print(str)            #12\n312312412412</code></pre>
       <tags>
         <tag>数据库</tag>
         <tag>MyBatis</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>mybaits异常解决</title>
+    <url>/2020/10/25/mybatiswrong/</url>
+    <content><![CDATA[<p>org.springframework.jdbc.BadSqlGrammarException</p>
+<p>解决方案：检查表的字段是否正确</p>
+<p>org.apache.ibatis.binding.BindingException</p>
+<p>解决方案：</p>
+<ul>
+<li><p>检查mapper接口是否和.xml在同一目录下</p>
+</li>
+<li><p>检查.xml文件的namespace是否跟mapper接口一样</p>
+</li>
+<li><p>检查接口的返回值和xml中的是否一致</p>
+</li>
+<li><p>检查是否为pom.xml的资源导出问题</p>
+</li>
+</ul>
+<p><img src="/2020/10/25/mybatiswrong/pom.jpg" alt="pom"></p>
+<p>在pom.xml中添加</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">&lt;build&gt;<br>    &lt;resources&gt;<br>        &lt;resource&gt;<br>            &lt;directory&gt;src&#x2F;main&#x2F;resources&lt;&#x2F;directory&gt;<br>            &lt;includes&gt;<br>                &lt;include&gt;**&#x2F;*.properties&lt;&#x2F;include&gt;<br>                &lt;include&gt;**&#x2F;*.xml&lt;&#x2F;include&gt;<br>            &lt;&#x2F;includes&gt;<br>            &lt;filtering&gt;true&lt;&#x2F;filtering&gt;<br>        &lt;&#x2F;resource&gt;<br>        &lt;resource&gt;<br>            &lt;directory&gt;src&#x2F;main&#x2F;java&lt;&#x2F;directory&gt;<br>            &lt;includes&gt;<br>                &lt;include&gt;**&#x2F;*.properties&lt;&#x2F;include&gt;<br>                &lt;include&gt;**&#x2F;*.xml&lt;&#x2F;include&gt;<br>            &lt;&#x2F;includes&gt;<br>            &lt;filtering&gt;true&lt;&#x2F;filtering&gt;<br>        &lt;&#x2F;resource&gt;<br>    &lt;&#x2F;resources&gt;<br>&lt;&#x2F;build&gt;<br></code></pre></td></tr></table></figure>
+
+<p>解决资源导出问题</p>
+<p>c3p0异常：</p>
+<p><img src="/2020/10/25/mybatiswrong/c3p0wrong.jpg" alt="c3p0wrong"></p>
+<p>原来的依赖：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">&lt;dependency&gt;<br>    &lt;groupId&gt;c3p0&lt;&#x2F;groupId&gt;<br>    &lt;artifactId&gt;c3p0&lt;&#x2F;artifactId&gt;<br>    &lt;version&gt;0.9.1.2&lt;&#x2F;version&gt;<br>&lt;&#x2F;dependency&gt;<br></code></pre></td></tr></table></figure>
+
+<p>改为</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">&lt;dependency&gt;<br>    &lt;groupId&gt;com.mchange&lt;&#x2F;groupId&gt;<br>    &lt;artifactId&gt;c3p0&lt;&#x2F;artifactId&gt;<br>    &lt;version&gt;0.9.5.2&lt;&#x2F;version&gt;<br>&lt;&#x2F;dependency&gt;<br></code></pre></td></tr></table></figure>
+
+
+
+<p>Cannot find class [com.mchange.v2.c3p0.ComboPooledDataSource] for bean with name ‘dataSource’ defined in class path resource [spring-dao.xml]</p>
+<p>解决方案：</p>
+<p><img src="/2020/10/25/mybatiswrong/c3p0wrong2.jpg" alt="c3p0wrong2"></p>
+]]></content>
+      <tags>
+        <tag>异常解决</tag>
+        <tag>mybatis</tag>
       </tags>
   </entry>
   <entry>
@@ -1618,6 +1663,448 @@ import org.springframework.context.support.ClassPathXmlApplicationContext; -->
       </tags>
   </entry>
   <entry>
+    <title>计算机操作系统概述</title>
+    <url>/2020/10/28/os/</url>
+    <content><![CDATA[<h1 id="操作系统引论"><a href="#操作系统引论" class="headerlink" title="操作系统引论"></a><strong>操作系统引论</strong></h1><h2 id="什么是操作系统"><a href="#什么是操作系统" class="headerlink" title="什么是操作系统"></a><strong>什么是操作系统</strong></h2><p>操作系统（os）是配置在计算机硬件上的第一层软件，是对硬件系统的首次扩充，os的主要作用是管理好这些设备，提高它们的利用率和系统吞吐量，并为用户和应用程序提供一个简单的接口，便于使用。</p>
+<p>os是现代计算机系统中最基本和最重要的系统软件，其他的编译程序、管理系统等系统软件，以及大量的应用软件，都直接依赖于操作系统的支持和服务</p>
+<h2 id="操作系统的目标和作用"><a href="#操作系统的目标和作用" class="headerlink" title="操作系统的目标和作用"></a><strong>操作系统的目标和作用</strong></h2><h3 id="操作系统的目标"><a href="#操作系统的目标" class="headerlink" title="操作系统的目标"></a><strong>操作系统的目标</strong></h3><p>在计算机上配置操作系统，其主要目标是：</p>
+<ul>
+<li>方便性</li>
+<li>有效性</li>
+<li>可扩充性</li>
+<li>开放性</li>
+</ul>
+<h3 id="操作系统的使用"><a href="#操作系统的使用" class="headerlink" title="操作系统的使用"></a><strong>操作系统的使用</strong></h3><h4 id="os作为用户与计算机硬件系统之间的接口"><a href="#os作为用户与计算机硬件系统之间的接口" class="headerlink" title="os作为用户与计算机硬件系统之间的接口"></a><strong>os作为用户与计算机硬件系统之间的接口</strong></h4><p>os处于用户与计算机硬件系统之间，用户通过os来使用计算机系统</p>
+<p><img src="/2020/10/28/os/osinterface.jpg" alt="osinterface"></p>
+<p>由图看出，用户可以通过 命令方式 、 系统调用方式 、 图标-窗口方式 实现与操作系统之间的通信</p>
+<h4 id="os作为计算机系统资源的管理者"><a href="#os作为计算机系统资源的管理者" class="headerlink" title="os作为计算机系统资源的管理者"></a><strong>os作为计算机系统资源的管理者</strong></h4><p>在计算机系统中，通常包含许多硬件和软件资源，这些资源可分为：</p>
+<ul>
+<li><p>处理机</p>
+</li>
+<li><p>存储器</p>
+</li>
+<li><p>I/O设备</p>
+</li>
+<li><p>文件（数据和程序）</p>
+</li>
+</ul>
+<p>相应地，OS的功能也正是对这四类资源进行有效的管理</p>
+<h4 id="os实现了对计算机资源的抽象"><a href="#os实现了对计算机资源的抽象" class="headerlink" title="os实现了对计算机资源的抽象"></a><strong>os实现了对计算机资源的抽象</strong></h4><p>对于一台完全无软件的计算机系统，由于它向用户提供的仅是硬件接口，因此，用户必须对物理接口的实现细节有充分的了解。为了方便用户使用I/O设备，在裸机上覆盖一层I/O设备管理软件，由它实现对I/O设备的操作细节，这样，用户就无需关心I/O是如何具体实现的，从而更容易地使用计算机硬件资源</p>
+<p>通常把这些覆盖了软件的机器称为扩充机器或虚机器</p>
+<h3 id="推动操作系统发展的动力"><a href="#推动操作系统发展的动力" class="headerlink" title="推动操作系统发展的动力"></a><strong>推动操作系统发展的动力</strong></h3><ul>
+<li><p>不断提高计算机资源的利用率</p>
+</li>
+<li><p>方便用户</p>
+</li>
+<li><p>器件的不断更新</p>
+</li>
+<li><p>计算机体系结构的不断发展</p>
+</li>
+<li><p>不断提出新的应用需求</p>
+</li>
+</ul>
+<h2 id="操作系统的发展过程"><a href="#操作系统的发展过程" class="headerlink" title="操作系统的发展过程"></a><strong>操作系统的发展过程</strong></h2><h3 id="未配置操作系统的计算机系统"><a href="#未配置操作系统的计算机系统" class="headerlink" title="未配置操作系统的计算机系统"></a><strong>未配置操作系统的计算机系统</strong></h3><p>在第一代计算机中，这些计算机还没配置os，对计算机的全部操作都是由用户采取人工操作方式进行</p>
+<p>人机操作方式中严重降低了计算机资源的利用率，更加突出了cpu和I/O设备之间速度不匹配的矛盾</p>
+<ul>
+<li>人工操作方式</li>
+</ul>
+<p>用户独占全机，即一台计算机的全部资源由上机用户所独占</p>
+<p>CPU等待人工操作。当用户进行装带（卡）、卸带（卡）等人工操作时，CPU及内存等资源是空闲的</p>
+<ul>
+<li>脱机输入/输出方式</li>
+</ul>
+<p>程序的输入和输出都是在外围机的控制下完成的，或者说，他们是在脱离主机的的情况下进行的，故称脱机输入/输出</p>
+<p>缺点：减少了CPU的空闲时间</p>
+<p>优点：提高了I/O速度</p>
+<h3 id="单道批处理系统"><a href="#单道批处理系统" class="headerlink" title="单道批处理系统"></a><strong>单道批处理系统</strong></h3><p>为了解决第一代计算机资源利用率的不足，提高资源利用率，尽量保持系统的连续运行，即在处理完一个作业后紧接着处理下一个作业，减少机器的空闲时间，引入了单道批处理系统</p>
+<p>单道批处理系统的处理过程为：</p>
+<ul>
+<li><p>把一批作业以脱机方式输入到磁带上，并在系统中配上监督程序（Monitor)，在它的控制下，使这批作业能一个接一个地连续处理。</p>
+</li>
+<li><p>由监督程序将磁带上的第一个作业装入内存，并把运行控制权交给该作业</p>
+</li>
+<li><p>当该作业处理完成时，又把控制权交还给监督程序，再由监督程序把磁带上的第二个作业调入内存。</p>
+</li>
+</ul>
+<p>计算机系统就这样自动地一个作业紧接一个作业地进行处理，直至磁带上的所有作业全部完成。虽然系统对作业的处理是成批进行的，但是内存中始终只保持一道作业。</p>
+<p>单道批处理系统的缺点：</p>
+<p>最主要的缺点是：系统中的资源得不到充分的利用，因为在内存中只有一道程序，当程序在运行过程中发出I/O请求后，cpu便处于等待状态，必须在I/O请求完成后才能继续运行</p>
+<h3 id="多道批处理系统"><a href="#多道批处理系统" class="headerlink" title="多道批处理系统"></a><strong>多道批处理系统</strong></h3><p>为了提高资源的利用率和系统吞吐量，引入了多道批处理系统</p>
+<p>在多道批处理系统中，用户提交的作业先存放在外存上并排成一个后备队列，由作业调度程序按一定的算法从后备队列中选择若干个作业调入内存，使它们共享cpu和系统中的各种资源，由于内存中存在若干个程序，这样便可以在运行程序A时，利用其因I/O操作而暂停执行时的cpu空闲时间再调度程序B，… 使多道程序可以交替执行，保持cpu处于忙碌状态</p>
+<p>多道批处理程序的优点：</p>
+<ul>
+<li><p>资源利用率高</p>
+</li>
+<li><p>系统吞吐量大</p>
+</li>
+<li><p>平均周转时间长</p>
+</li>
+<li><p>无交互能力</p>
+</li>
+</ul>
+<p>多道批处理程序的需要解决的问题：</p>
+<ul>
+<li><p>处理机争用问题</p>
+</li>
+<li><p>内存分配和保护问题</p>
+</li>
+<li><p>I/O设备分配问题</p>
+</li>
+<li><p>文件的组织和管理问题</p>
+</li>
+<li><p>作业管理问题</p>
+</li>
+<li><p>用户与系统间的接口问题</p>
+</li>
+</ul>
+<h3 id="分时系统"><a href="#分时系统" class="headerlink" title="分时系统"></a><strong>分时系统</strong></h3><p>为了满足人机交互的需求，引入了分时系统</p>
+<p><strong>人机交互</strong></p>
+<p>有时候用户希望能够独占全机并对它进行直接控制，以便能方便地与自己的作业进行交互</p>
+<p><strong>共享主机</strong></p>
+<p>用户们在共享一台计算机时，每个人都希望能向独占时一样，可以随时与计算机进行交互，而且还不会感觉到其他用户的存在</p>
+<p>分时系统是指：在一台主机上连接了多个配有显示器和键盘的终端并由此所组成的系统，该系统允许多个用户同时通过自己的终端，以交互的方式使用计算机，共享主机中的资源</p>
+<p><strong>分时系统需要解决的问题</strong></p>
+<p>为了实现人机交互，必须解决的问题是：实现用户与自己作业的交互</p>
+<ul>
+<li><p>系统为多个用户提供多个终端</p>
+</li>
+<li><p>用户在自己的终端上输入命令，系统及时接受并响应，将结果返回给用户</p>
+</li>
+<li><p>用户根据返回的结果继续输入下一条命令…</p>
+</li>
+<li><p>系统允许多个用户通过自己的终端输入命令，并及时接受和处理用户的全部命令</p>
+</li>
+</ul>
+<p><strong>系统的及时接受与及时处理</strong></p>
+<ul>
+<li><p>及时接受<br>要做到及时接受多个用户的命令，需要在系统中配置多路卡，同时，为每个用户终端配置缓冲区，用来暂时存放用户的命令或数据</p>
+</li>
+<li><p>及时处理<br>要实现人机交互，必须改变原有的批处理系统的运行方式，因为作业是先存放在外存中，而作业是不能在外存中运行的，系统无法做到及时处理，要转用以下方式：</p>
+<ul>
+<li><p>作业直接进入内存</p>
+</li>
+<li><p>采用轮转方式运行：如果一个作业独占CPU连续运行，那么其他作业没法运行。为了避免这种情况，引入了时间片概念。一个时间片是一个很短的时间，系统规定了每个作业每次只能运行一个时间片，然后就暂停该作业的运行，并立即调度下一个作业运行。如果在不长的时间内能使所有的作业都执行一个时间片的时间，便可以使每个用户都能及时地与自己的作业进行交互，从而使用户的请求的到及时响应。</p>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>分时系统的特征</strong></p>
+<ul>
+<li><p>多路性</p>
+</li>
+<li><p>独立性</p>
+</li>
+<li><p>及时性</p>
+</li>
+<li><p>交互性</p>
+</li>
+</ul>
+<h3 id="实时系统"><a href="#实时系统" class="headerlink" title="实时系统"></a><strong>实时系统</strong></h3><p>实时系统是指系统能及时响应外部事件的请求，在规定的时间内完成对该事件的处理，并控制所有实时任务协调一致地运行，实时系统最主要的特征是将<strong>时间</strong>作为关键参数，具有实时特征</p>
+<p><strong>实时系统的类型</strong></p>
+<ul>
+<li><p>工业控制系统</p>
+</li>
+<li><p>信息查询系统</p>
+</li>
+<li><p>多媒体系统</p>
+</li>
+<li><p>嵌入式系统</p>
+</li>
+</ul>
+<p>** 实时任务的类型**</p>
+<ul>
+<li>周期性实时任务</li>
+</ul>
+<p>周期性实时任务是指：外部设备周期性地发出激励信号给计算机，要求计算机按指定周期循环执行，以便周期性地控制外部设备</p>
+<ul>
+<li>非周期性实时任务</li>
+</ul>
+<p>非周期性任务无明显的周期性</p>
+<p>在这两种任务中，都必须关联着一个截止时间（最后期限）</p>
+<ol>
+<li>开始截止时间：指某任务必须开始的最迟时间</li>
+<li>完成截止时间：指某任务必须在某时间前完成</li>
+</ol>
+<ul>
+<li>硬实时任务</li>
+</ul>
+<p>硬实时任务是指系统必须满足任务对截止时间的要求，否则可能出现难以预测的后果</p>
+<ul>
+<li>软实时任务</li>
+</ul>
+<p>软实时任务也关联着一个截止时间，但并不严格，即若偶尔错过了任务的截止时间，对系统产生的影响也不大</p>
+<h3 id="微操作系统"><a href="#微操作系统" class="headerlink" title="微操作系统"></a><strong>微操作系统</strong></h3><ul>
+<li><p>单用户单任务操作系统</p>
+</li>
+<li><p>单用户多任务操作系统</p>
+</li>
+<li><p>多用户多任务操作系统</p>
+</li>
+</ul>
+<h2 id="操作系统的基本特性"><a href="#操作系统的基本特性" class="headerlink" title="操作系统的基本特性"></a><strong>操作系统的基本特性</strong></h2><p>操作系统的基本特性有：并发、共享、虚拟、异步四个基本特征，其中<strong>并发</strong>和<strong>共享</strong>是多用户OS的两个最基本的特征</p>
+<h3 id="并发"><a href="#并发" class="headerlink" title="并发"></a><strong>并发</strong></h3><ul>
+<li><p>并行：指两个或多个事件在同一时刻发生</p>
+</li>
+<li><p>并发：指两个或多个事件在同一个时间间隔发生</p>
+</li>
+</ul>
+<p>在多道程序环境下，并发是指在一段时间内宏观上有多个程序同时运行， 但在单处理系统中，每一时刻却仅有一道程序运行，微观上这些程序只能是分时地交替执行</p>
+<p>若计算机系统有多个处理机，这些并发的程序便可以分配到多个处理机上，实现并行执行</p>
+<p>3.进程</p>
+<p>在一个未引入的进程的系统中，在属于同一个应用程序的多个程序间只能是顺序执行的，为了实现并发，引入了进程，如果为每个程序分别建立一个进程，这些进程间就可以并发执行，并且能极大提高系统资源的利用率和系统的吞吐量</p>
+<p>进程：进程是指在系统中能够独立运行并作为资源分配的基本单位，它是由一组机器指令、数据、堆栈等组成的</p>
+<h3 id="共享"><a href="#共享" class="headerlink" title="共享"></a><strong>共享</strong></h3><p>在OS的环境下的资源共享（资源复用）是指系统中的资源可供内存中多个并发执行的进程共同使用</p>
+<p>实现资源共享的方式主要有两种：</p>
+<ul>
+<li>互斥共享方式</li>
+</ul>
+<p>系统中的某些资源，如打印机、磁带机等，虽然可以提供给多个线程使用，但应规定在一段时间内，只允许一个进程访问该资源。</p>
+<p>当进程A要访问某资源时，必须先提出请求，若此时资源空闲，则分配给进程A使用，此后若再有其他进程也要访问该资源，只要A还没用完就必须等待，仅当A进程访问完并释放该资源后，才允许另一进程对该资源进行访问。</p>
+<p>这种资源共享方式称为互斥共享方式，这种资源称为临界资源</p>
+<ul>
+<li>同时访问方式</li>
+</ul>
+<p>系统中还存在另一类资源，允许在一段时间内由多个进程“同时”对它们进行访问，典型的资源为磁盘设备</p>
+<h3 id="虚拟"><a href="#虚拟" class="headerlink" title="虚拟"></a><strong>虚拟</strong></h3><p>在OS中，把通过某种技术将一个物理实体变为若干个逻辑上对应物的功能称为“虚拟”，前者是实的，后者是虚的，是用户感觉上的东西</p>
+<p>虚拟技术是通过“空分复用”和“时分复用”技术实现的</p>
+<p>1.时分复用</p>
+<p>时分复用技术被广泛用来实现虚拟处理机、虚拟设备等。</p>
+<p>时分复用技术能提高资源利用率的根本原因在于：它利用某设备为一用户服务的空闲时间，又转去为其他用户服务，使设备得到最充分的利用</p>
+<p>1.1 虚拟处理机技术</p>
+<p>在该技术中，利用多道程序设计技术，为毎道程序创建一个进程，让多道程序并发地执行，以此来分时使用一台处理机。此时虽然系统中只有一台处理机，但它能同时为多个用户服务，使每个终端用户都认为是有一个处理机在专门的为自己服务。亦即，利用多道程序设计技术，把一台物理上的处理机虚拟为多台逻辑上的处理机，在每台逻辑处理机上运行一道程序。我们把用户感觉到的处理机称为虚拟处理器。</p>
+<p>1.2 虚拟设备技术</p>
+<p>通过虚拟设备技术，将一台物理I\O设备虚拟为多台逻辑上的I\O设备，并允许每个用户占用同一台逻辑上的I\O设备，这样便可使原来仅允许在一段时间内由一个用户访问的设备（即临界资源），变为在一段时间内允许多个用户同时访问的共享设备。</p>
+<p>2.空分复用</p>
+<p>空分复用技术是利用存储器的空闲空间分区域存放和允许其他的多道程序，以此来提高内存的利用率。</p>
+<p>但是，单纯的空分复用存储器只能提高内存的利用率，并不能实现在逻辑上扩大存储器容量的功能，还必须引入虚拟存储技术。</p>
+<p>虚拟存储技术在本质上是实现内存的分时复用</p>
+<p>应该指出，时分复用和空分复用中，虚拟设备的平均速度和平均空间等于或低于物理设备的1/n</p>
+<h3 id="异步"><a href="#异步" class="headerlink" title="异步"></a><strong>异步</strong></h3><p>异步指进程不是一次性执行完毕，而是走走停停，以不可知的速度向前推进。</p>
+<h2 id="操作系统的主要功能"><a href="#操作系统的主要功能" class="headerlink" title="操作系统的主要功能"></a><strong>操作系统的主要功能</strong></h2><h3 id="处理机管理"><a href="#处理机管理" class="headerlink" title="处理机管理"></a><strong>处理机管理</strong></h3><p>在传统的多道程序系统中，处理机的分配和运行都是以进程为基本单位的，因而对处理机的管理可归结为对进程的管理</p>
+<ul>
+<li>进程控制（进程创建与撤销）</li>
+</ul>
+<p>在多道程序环境下，为使作业能够并发执行，必须为作业创建进程，并为之分配必要的资源。当进程结束后，应该立即撤销进程，以便及时回收资源。</p>
+<p>进程控制的主要功能是为作业创建进程、撤销进程、以及控制进程在运行过程中的状态转换</p>
+<ul>
+<li><p>进程同步：该机制的主要任务是协调多个进程的运行</p>
+<ul>
+<li><p>进程互斥方式</p>
+</li>
+<li><p>进程同步方式</p>
+</li>
+</ul>
+</li>
+<li><p>进程通信：</p>
+</li>
+</ul>
+<p>进程通信的任务是实现相互合作进程之间的信息交换</p>
+<p>当相互合作的进程处于同一计算机系统时，通常采用直接通信方式，由源进程利用发送命令直接将消息挂到目标进程的消息队列上，以后由目标进程利用接受命令从消息队列中去除消息</p>
+<ul>
+<li><p>调度：</p>
+<ul>
+<li><p>作业调度</p>
+</li>
+<li><p>进程调度</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="存储器管理"><a href="#存储器管理" class="headerlink" title="存储器管理"></a><strong>存储器管理</strong></h3><p>存储器管理的主要任务是为多道程序的运行提供良好的环境，提高存储器的利用率，方便用户使用，并能从逻辑上扩充内存</p>
+<ul>
+<li><p>内存分配的主要任务：</p>
+<ul>
+<li><p>为每道程序分配内存空间，使它们“各得其所”</p>
+</li>
+<li><p>提高存储器的利用率，尽量减少不可用的内存空间（碎片）</p>
+</li>
+<li><p>允许正在运行的程序申请附加的内存空间</p>
+</li>
+</ul>
+</li>
+<li><p>内存的分配方式：</p>
+<ul>
+<li><p>静态分配方式：一次性申请空间</p>
+</li>
+<li><p>动态分配方式：动态申请空间</p>
+</li>
+</ul>
+</li>
+<li><p>内存保护</p>
+<ul>
+<li><p>确保用户程序都仅在自己的内存空间内运行，彼此互不干扰，（设置内存保护机制）</p>
+</li>
+<li><p>不允许用户程序访问操作系统的程序和数据</p>
+</li>
+<li><p>不允许用户程序转移到非共享的其他用户程序中去执行</p>
+</li>
+</ul>
+</li>
+<li><p>地址映射</p>
+</li>
+</ul>
+<p>将地址空间中的逻辑地址转换为内存空间中与之对应的物理地址</p>
+<ul>
+<li>内存扩充</li>
+</ul>
+<p>借助于虚拟存储技术，从逻辑上扩充内存容量。</p>
+<p>为了能够在逻辑上扩充内存，系统必须设置内存扩充机制，并实现如下功能：</p>
+<ol>
+<li>请求调入功能</li>
+</ol>
+<p>系统允许在仅装入部分用户程序和数据的情况下便能启动该程序运行，在程序运行过程中，若发现继续运行时所需的程序和数据尚未装入内存，则请求OS将所需部分调入内存</p>
+<ol start="2">
+<li>置换功能</li>
+</ol>
+<p>若发现在内存中无足够的空间装入需要调度的程序和数据时，系统将内存中一部分暂时不用的程序和数据调至硬盘上腾出空间</p>
+<h3 id="设备管理"><a href="#设备管理" class="headerlink" title="设备管理"></a><strong>设备管理</strong></h3><p>设备管理的主要任务如下：</p>
+<ol>
+<li><p>完成用户提出的I/O请求，为进程分配所需的I/O设备，并完成指定的I/O操作</p>
+</li>
+<li><p>提高cpu和I/O设备的利用率，提高I/O速度，方便用户使用I/O设备</p>
+</li>
+</ol>
+<ul>
+<li>缓冲管理</li>
+</ul>
+<p>在I/O设备和cpu间引入缓冲，可有效地缓和cpu和I/O设备速度不匹配的矛盾，提高cpu利用率，进而提高系统吞吐量</p>
+<ul>
+<li>设备分配</li>
+</ul>
+<p>设备分配的基本任务是根据用户进程的I/O请求、系统的现有资源情况以及按照某种设备分配策略，为之分配其所需的设备</p>
+<ul>
+<li>设备处理</li>
+</ul>
+<p>设备处理程序又称为设备驱动程序，基本任务是用于实现cpu和设备控制器间的通信</p>
+<h3 id="文件管理"><a href="#文件管理" class="headerlink" title="文件管理"></a><strong>文件管理</strong></h3><ul>
+<li><p>文件存储空间的管理</p>
+</li>
+<li><p>目录管理</p>
+</li>
+<li><p>文件的读/写管理和保护</p>
+</li>
+</ul>
+<h3 id="向用户提供方便的用户接口"><a href="#向用户提供方便的用户接口" class="headerlink" title="向用户提供方便的用户接口"></a><strong>向用户提供方便的用户接口</strong></h3><p>为方便用户对操作系统的使用，向用户提供用户与操作系统的接口</p>
+<ul>
+<li><p>用户接口</p>
+<ul>
+<li><p>用户联机接口：为联机用户提供</p>
+</li>
+<li><p>脱机用户接口：为批处理作业的用户提供</p>
+</li>
+<li><p>图形用户接口：提供图形化的操作页面</p>
+</li>
+</ul>
+</li>
+<li><p>程序接口</p>
+</li>
+</ul>
+<p>为用户程序在执行过程中提供访问系统资源的唯一路径</p>
+]]></content>
+      <tags>
+        <tag>操作系统</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ssm框架整合</title>
+    <url>/2020/10/26/ssmintegration/</url>
+    <content><![CDATA[<p>在学习完ssm三层架构之后，就要开始对这三大块进行整合了</p>
+<p>下面以一个简单的例子，对ssm进行整合</p>
+<p>创建数据库表书籍表book</p>
+<p><img src="/2020/10/26/ssmintegration/booktable.jpg" alt="booktable"></p>
+<p>创建maven项目，导入依赖</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">&lt;dependencies&gt;<br><br>        &lt;dependency&gt;<br>            &lt;groupId&gt;org.springframework&lt;&#x2F;groupId&gt;<br>            &lt;artifactId&gt;spring-core&lt;&#x2F;artifactId&gt;<br>            &lt;version&gt;4.3.29.RELEASE&lt;&#x2F;version&gt;<br>        &lt;&#x2F;dependency&gt;<br><br>        &lt;dependency&gt;<br>            &lt;groupId&gt;javax.servlet&lt;&#x2F;groupId&gt;<br>            &lt;artifactId&gt;javax.servlet-api&lt;&#x2F;artifactId&gt;<br>            &lt;version&gt;4.0.1&lt;&#x2F;version&gt;<br>        &lt;&#x2F;dependency&gt;<br>        &lt;dependency&gt;<br>            &lt;groupId&gt;org.springframework&lt;&#x2F;groupId&gt;<br>            &lt;artifactId&gt;spring-webmvc&lt;&#x2F;artifactId&gt;<br>            &lt;version&gt;3.2.8.RELEASE&lt;&#x2F;version&gt;<br>        &lt;&#x2F;dependency&gt;<br>        &lt;!--        单元测试--&gt;<br>        &lt;dependency&gt;<br>            &lt;groupId&gt;org.junit.jupiter&lt;&#x2F;groupId&gt;<br>            &lt;artifactId&gt;junit-jupiter-api&lt;&#x2F;artifactId&gt;<br>            &lt;version&gt;5.7.0&lt;&#x2F;version&gt;<br>        &lt;&#x2F;dependency&gt;<br>        &lt;!--        数据库--&gt;<br>        &lt;dependency&gt;<br>            &lt;groupId&gt;mysql&lt;&#x2F;groupId&gt;<br>            &lt;artifactId&gt;mysql-connector-java&lt;&#x2F;artifactId&gt;<br>            &lt;version&gt;8.0.22&lt;&#x2F;version&gt;<br>        &lt;&#x2F;dependency&gt;<br>        &lt;!--        mybatis--&gt;<br>        &lt;dependency&gt;<br>            &lt;groupId&gt;org.mybatis&lt;&#x2F;groupId&gt;<br>            &lt;artifactId&gt;mybatis&lt;&#x2F;artifactId&gt;<br>            &lt;version&gt;3.5.6&lt;&#x2F;version&gt;<br>        &lt;&#x2F;dependency&gt;<br>        &lt;!--        mybaits-spring--&gt;<br>        &lt;dependency&gt;<br>            &lt;groupId&gt;org.mybatis&lt;&#x2F;groupId&gt;<br>            &lt;artifactId&gt;mybatis-spring&lt;&#x2F;artifactId&gt;<br>            &lt;version&gt;2.0.5&lt;&#x2F;version&gt;<br>        &lt;&#x2F;dependency&gt;<br>        &lt;dependency&gt;<br>            &lt;groupId&gt;org.springframework&lt;&#x2F;groupId&gt;<br>            &lt;artifactId&gt;spring-jdbc&lt;&#x2F;artifactId&gt;<br>            &lt;version&gt;4.3.29.RELEASE&lt;&#x2F;version&gt;<br>        &lt;&#x2F;dependency&gt;<br>        &lt;dependency&gt;<br>            &lt;groupId&gt;org.projectlombok&lt;&#x2F;groupId&gt;<br>            &lt;artifactId&gt;lombok&lt;&#x2F;artifactId&gt;<br>            &lt;version&gt;1.18.16&lt;&#x2F;version&gt;<br>        &lt;&#x2F;dependency&gt;<br>        &lt;dependency&gt;<br>            &lt;groupId&gt;com.mchange&lt;&#x2F;groupId&gt;<br>            &lt;artifactId&gt;c3p0&lt;&#x2F;artifactId&gt;<br>            &lt;version&gt;0.9.5.2&lt;&#x2F;version&gt;<br>        &lt;&#x2F;dependency&gt;<br><br>        &lt;dependency&gt;<br>            &lt;groupId&gt;com.fasterxml.jackson.core&lt;&#x2F;groupId&gt;<br>            &lt;artifactId&gt;jackson-annotations&lt;&#x2F;artifactId&gt;<br>            &lt;version&gt;2.12.0-rc1&lt;&#x2F;version&gt;<br>        &lt;&#x2F;dependency&gt;<br>        &lt;dependency&gt;<br>          &lt;groupId&gt;com.fasterxml.jackson.core&lt;&#x2F;groupId&gt;<br>          &lt;artifactId&gt;jackson-core&lt;&#x2F;artifactId&gt;<br>          &lt;version&gt;2.8.1&lt;&#x2F;version&gt;<br>        &lt;&#x2F;dependency&gt;<br>        &lt;dependency&gt;<br>          &lt;groupId&gt;com.fasterxml.jackson.core&lt;&#x2F;groupId&gt;<br>          &lt;artifactId&gt;jackson-databind&lt;&#x2F;artifactId&gt;<br>          &lt;version&gt;2.8.1&lt;&#x2F;version&gt;<br>        &lt;&#x2F;dependency&gt;<br>        &lt;dependency&gt;<br>          &lt;groupId&gt;com.fasterxml.jackson.core&lt;&#x2F;groupId&gt;<br>          &lt;artifactId&gt;jackson-annotations&lt;&#x2F;artifactId&gt;<br>          &lt;version&gt;2.8.1&lt;&#x2F;version&gt;<br>        &lt;&#x2F;dependency&gt;<br><br>    &lt;&#x2F;dependencies&gt;<br></code></pre></td></tr></table></figure>
+
+<p>进行资源过滤：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">&lt;build&gt;<br>    &lt;resources&gt;<br>        &lt;resource&gt;<br>            &lt;directory&gt;src&#x2F;main&#x2F;resources&lt;&#x2F;directory&gt;<br>            &lt;includes&gt;<br>                &lt;include&gt;**&#x2F;*.properties&lt;&#x2F;include&gt;<br>                &lt;include&gt;**&#x2F;*.xml&lt;&#x2F;include&gt;<br>            &lt;&#x2F;includes&gt;<br>            &lt;filtering&gt;true&lt;&#x2F;filtering&gt;<br>        &lt;&#x2F;resource&gt;<br>        &lt;resource&gt;<br>            &lt;directory&gt;src&#x2F;main&#x2F;java&lt;&#x2F;directory&gt;<br>            &lt;includes&gt;<br>                &lt;include&gt;**&#x2F;*.properties&lt;&#x2F;include&gt;<br>                &lt;include&gt;**&#x2F;*.xml&lt;&#x2F;include&gt;<br>            &lt;&#x2F;includes&gt;<br>            &lt;filtering&gt;true&lt;&#x2F;filtering&gt;<br>        &lt;&#x2F;resource&gt;<br>    &lt;&#x2F;resources&gt;<br>&lt;&#x2F;build&gt;<br><br></code></pre></td></tr></table></figure>
+
+
+<p>连接数据库</p>
+<p>配置spring、mybatis核心配置文件</p>
+<p>applicationContext.xml</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;UTF-8&quot;?&gt;<br>&lt;beans xmlns&#x3D;&quot;http:&#x2F;&#x2F;www.springframework.org&#x2F;schema&#x2F;beans&quot;<br>       xmlns:xsi&#x3D;&quot;http:&#x2F;&#x2F;www.w3.org&#x2F;2001&#x2F;XMLSchema-instance&quot;<br>       xmlns:context&#x3D;&quot;http:&#x2F;&#x2F;www.springframework.org&#x2F;schema&#x2F;context&quot;<br>       xsi:schemaLocation&#x3D;&quot;http:&#x2F;&#x2F;www.springframework.org&#x2F;schema&#x2F;beans http:&#x2F;&#x2F;www.springframework.org&#x2F;schema&#x2F;beans&#x2F;spring-beans.xsd http:&#x2F;&#x2F;www.springframework.org&#x2F;schema&#x2F;context https:&#x2F;&#x2F;www.springframework.org&#x2F;schema&#x2F;context&#x2F;spring-context.xsd&quot;&gt;<br><br><br>&lt;&#x2F;beans&gt;<br><br></code></pre></td></tr></table></figure>
+
+<p>dbbase.properties</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">driver&#x3D;com.mysql.cj.jdbc.Driver<br>url&#x3D;jdbc:mysql:&#x2F;&#x2F;localhost:3306&#x2F;ssmintegration?characterEncoding&#x3D;utf-8&amp;serverTimezone&#x3D;GMT%2B8&amp;useServerPrepStmts&#x3D;true&amp;cachePrepStmts&#x3D;true<br>username&#x3D;root<br>password&#x3D;111111<br></code></pre></td></tr></table></figure>
+
+
+<p>mybatis-config.xml</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;UTF-8&quot; ?&gt;<br>&lt;!DOCTYPE configuration<br>        PUBLIC &quot;-&#x2F;&#x2F;mybatis.org&#x2F;&#x2F;DTD Config 3.0&#x2F;&#x2F;EN&quot;<br>        &quot;http:&#x2F;&#x2F;mybatis.org&#x2F;dtd&#x2F;mybatis-3-config.dtd&quot;&gt;<br>&lt;configuration&gt;<br>    &lt;properties resource&#x3D;&quot;dbbase.properties&quot;&gt;&lt;&#x2F;properties&gt;<br><br>    &lt;settings&gt;<br>        &lt;setting name&#x3D;&quot;logImpl&quot; value&#x3D;&quot;STDOUT_LOGGING&quot;&#x2F;&gt;<br>    &lt;&#x2F;settings&gt;<br><br>    &lt;typeAliases&gt;<br>        &lt;typeAlias type&#x3D;&quot;com.pojo.Book&quot; alias&#x3D;&quot;book&quot;&gt;&lt;&#x2F;typeAlias&gt;<br>    &lt;&#x2F;typeAliases&gt;<br><br><br>    &lt;environments default&#x3D;&quot;development&quot;&gt;<br>        &lt;environment id&#x3D;&quot;development&quot;&gt;<br>            &lt;transactionManager type&#x3D;&quot;JDBC&quot;&gt;&lt;&#x2F;transactionManager&gt;<br>            &lt;dataSource type&#x3D;&quot;POOLED&quot;&gt;<br>                &lt;property name&#x3D;&quot;driver&quot; value&#x3D;&quot;$&#123;driver&#125;&quot;&#x2F;&gt;<br>                &lt;property name&#x3D;&quot;url&quot; value&#x3D;&quot;$&#123;url&#125;&quot;&#x2F;&gt;<br>                &lt;property name&#x3D;&quot;username&quot; value&#x3D;&quot;$&#123;username&#125;&quot;&#x2F;&gt;<br>                &lt;property name&#x3D;&quot;password&quot; value&#x3D;&quot;$&#123;password&#125;&quot;&#x2F;&gt;<br>            &lt;&#x2F;dataSource&gt;<br>        &lt;&#x2F;environment&gt;<br>    &lt;&#x2F;environments&gt;<br><br><br>    &lt;mappers&gt;<br>        &lt;!--资源文件的路径--&gt;<br>        &lt;package name&#x3D;&quot;com.dao&quot;&#x2F;&gt;<br>    &lt;&#x2F;mappers&gt;<br><br>&lt;&#x2F;configuration&gt;<br></code></pre></td></tr></table></figure>
+
+<p>创建实体类com.pojo.Book</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">package com.pojo;<br><br><br>import lombok.AllArgsConstructor;<br>import lombok.Data;<br>import lombok.NoArgsConstructor;<br><br>@Data<br>@AllArgsConstructor<br>@NoArgsConstructor<br>public class Book &#123;<br>    private int bookId;<br>    private String bookName;<br>    private int bookCounts;<br>    private String detail;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<p>创建dao接口和对应的.xml文件</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">public interface BookMapper &#123;<br><br>    public int insertBook(Book book);<br><br>    public int deleteBookById(int bookId);<br><br>    public Book queryBookById(@Param(&quot;bookId&quot;) int bookId);<br><br>    public int updateBook(Map map);<br><br>    public List&lt;Book&gt; queryAllBooks();<br>&#125;<br><br></code></pre></td></tr></table></figure>
+<p>BookMapper.xml</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;UTF-8&quot; ?&gt;<br>&lt;!DOCTYPE mapper<br>        PUBLIC &quot;-&#x2F;&#x2F;mybatis.org&#x2F;&#x2F;DTD Config 3.0&#x2F;&#x2F;EN&quot;<br>        &quot;http:&#x2F;&#x2F;mybatis.org&#x2F;dtd&#x2F;mybatis-3-mapper.dtd&quot;&gt;<br>&lt;mapper namespace&#x3D;&quot;com.dao.BookMapper&quot;&gt;<br><br>    &lt;insert id&#x3D;&quot;insertBook&quot; parameterType&#x3D;&quot;book&quot;&gt;<br>        insert into books values(#&#123;bookId&#125;,#&#123;bookName&#125;,#&#123;bookCounts&#125;,#&#123;detail&#125;);<br>    &lt;&#x2F;insert&gt;<br><br>    &lt;delete id&#x3D;&quot;deleteBookById&quot; &gt;<br>        delete from books where bookId &#x3D; #&#123;bookId&#125;;<br>    &lt;&#x2F;delete&gt;<br><br>    &lt;update id&#x3D;&quot;updateBook&quot; parameterType&#x3D;&quot;map&quot;&gt;<br>        update books set bookName &#x3D; #&#123;bookName&#125;,bookCounts &#x3D; #&#123;bookCounts&#125;,detail &#x3D; #&#123;datail&#125;;<br>    &lt;&#x2F;update&gt;<br>    <br>    &lt;select id&#x3D;&quot;queryBookById&quot; resultType&#x3D;&quot;book&quot;&gt;<br>        select * from books where bookId &#x3D; #&#123;bookId&#125;;<br>    &lt;&#x2F;select&gt;<br>    <br>    &lt;select id&#x3D;&quot;queryAllBooks&quot; resultType&#x3D;&quot;book&quot;&gt;<br>        select * from books;<br>    &lt;&#x2F;select&gt;<br><br>&lt;&#x2F;mapper&gt;<br></code></pre></td></tr></table></figure>
+
+<p>创建业务接口和实现类</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">public interface BookService &#123;<br><br>    public int insertBook(Book book);<br><br>    public int deleteBookById(int bookId);<br><br>    public Book queryBookById(int bookId);<br><br>    public int updateBook(Map map);<br><br>    public List&lt;Book&gt; queryAllBooks();<br><br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">@Data<br>@AllArgsConstructor<br>@NoArgsConstructor<br>public class BookServiceImpl implements BookService &#123;<br><br>&#x2F;&#x2F;    service 通过 dao 调用dao层<br>    private BookMapper bookMapper;<br><br>    @Override<br>    public int insertBook(Book book) &#123;<br>        return bookMapper.insertBook(book);<br>    &#125;<br><br>    @Override<br>    public int deleteBookById(int bookId) &#123;<br>        return bookMapper.deleteBookById(bookId);<br>    &#125;<br><br>    @Override<br>    public Book queryBookById(int bookId) &#123;<br>        return bookMapper.queryBookById(bookId);<br>    &#125;<br><br>    @Override<br>    public int updateBook(Map map) &#123;<br>        return bookMapper.updateBook(map);<br>    &#125;<br><br>    @Override<br>    public List&lt;Book&gt; queryAllBooks() &#123;<br>        return bookMapper.queryAllBooks();<br>    &#125;<br><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>至此，mybatis层和service业务已经搭建完毕，现在搭建spring层与mybatis层的连接</p>
+<p>将MyBatis与Spring进行整合，主要解决的问题就是将SqlSessionFactory对象交由Spring容器来管理，所以该整合只需要将SqlSessionFactory的对象生成器SqlSessionFactoryBean注册在Spring容器中，再将其注入给Dao的实现类即可完成整合。</p>
+<p>编写spring-dao.xml文件，将SqlSessionFactory交给spring容器管理</p>
+<p>spring-dao.xml</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;UTF-8&quot;?&gt;<br>&lt;beans xmlns&#x3D;&quot;http:&#x2F;&#x2F;www.springframework.org&#x2F;schema&#x2F;beans&quot;<br>       xmlns:xsi&#x3D;&quot;http:&#x2F;&#x2F;www.w3.org&#x2F;2001&#x2F;XMLSchema-instance&quot;<br>       xmlns:context&#x3D;&quot;http:&#x2F;&#x2F;www.springframework.org&#x2F;schema&#x2F;context&quot;<br>       xsi:schemaLocation&#x3D;&quot;http:&#x2F;&#x2F;www.springframework.org&#x2F;schema&#x2F;beans http:&#x2F;&#x2F;www.springframework.org&#x2F;schema&#x2F;beans&#x2F;spring-beans.xsd http:&#x2F;&#x2F;www.springframework.org&#x2F;schema&#x2F;context https:&#x2F;&#x2F;www.springframework.org&#x2F;schema&#x2F;context&#x2F;spring-context.xsd&quot;&gt;<br><br>    &lt;!--    关联数据库配置文件--&gt;<br>    &lt;context:property-placeholder location&#x3D;&quot;classpath:dbbase.properties&quot;&#x2F;&gt;<br><br>    &lt;!--    &lt;context:component-scan base-package&#x3D;&quot;com.dao&quot;&gt;&lt;&#x2F;context:component-scan&gt;--&gt;<br><br><br>    &lt;!--    数据库连接池--&gt;<br>    &lt;bean id&#x3D;&quot;dataSource&quot; class&#x3D;&quot;com.mchange.v2.c3p0.ComboPooledDataSource&quot;&gt;<br>        &lt;property name&#x3D;&quot;driverClass&quot; value&#x3D;&quot;$&#123;driver&#125;&quot;&gt;&lt;&#x2F;property&gt;<br>        &lt;property name&#x3D;&quot;jdbcUrl&quot; value&#x3D;&quot;$&#123;url&#125;&quot;&gt;&lt;&#x2F;property&gt;<br>        &lt;property name&#x3D;&quot;user&quot; value&#x3D;&quot;$&#123;username&#125;&quot;&gt;&lt;&#x2F;property&gt;<br>        &lt;property name&#x3D;&quot;password&quot; value&#x3D;&quot;$&#123;password&#125;&quot;&gt;&lt;&#x2F;property&gt;<br>    &lt;&#x2F;bean&gt;<br><br>    &lt;!--    配置sqlSessionFactory--&gt;<br>    &lt;bean id&#x3D;&quot;sqlSessionFactory&quot; class&#x3D;&quot;org.mybatis.spring.SqlSessionFactoryBean&quot;&gt;<br>        &lt;property name&#x3D;&quot;dataSource&quot; ref&#x3D;&quot;dataSource&quot;&gt;&lt;&#x2F;property&gt;<br>        &lt;!--        绑定mybatis的配置文件--&gt;<br>        &lt;property name&#x3D;&quot;configLocation&quot; value&#x3D;&quot;classpath:mybatis-config.xml&quot;&gt;&lt;&#x2F;property&gt;<br>    &lt;&#x2F;bean&gt;<br><br><br>    &lt;bean class&#x3D;&quot;org.mybatis.spring.mapper.MapperScannerConfigurer&quot;&gt;<br>        &lt;!--        注入sqlSessionFactory--&gt;<br>        &lt;property name&#x3D;&quot;sqlSessionFactoryBeanName&quot; value&#x3D;&quot;sqlSessionFactory&quot;&gt;&lt;&#x2F;property&gt;<br>        &lt;!--        要扫描的dao包--&gt;<br>        &lt;property name&#x3D;&quot;basePackage&quot; value&#x3D;&quot;com.dao&quot;&gt;&lt;&#x2F;property&gt;<br>    &lt;&#x2F;bean&gt;<br>&lt;&#x2F;beans&gt;<br></code></pre></td></tr></table></figure>
+
+<p>编写spring-service.xml文件</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;UTF-8&quot;?&gt;<br>&lt;beans xmlns&#x3D;&quot;http:&#x2F;&#x2F;www.springframework.org&#x2F;schema&#x2F;beans&quot;<br>       xmlns:xsi&#x3D;&quot;http:&#x2F;&#x2F;www.w3.org&#x2F;2001&#x2F;XMLSchema-instance&quot;<br>       xmlns:context&#x3D;&quot;http:&#x2F;&#x2F;www.springframework.org&#x2F;schema&#x2F;context&quot;<br>       xsi:schemaLocation&#x3D;&quot;http:&#x2F;&#x2F;www.springframework.org&#x2F;schema&#x2F;beans http:&#x2F;&#x2F;www.springframework.org&#x2F;schema&#x2F;beans&#x2F;spring-beans.xsd http:&#x2F;&#x2F;www.springframework.org&#x2F;schema&#x2F;context https:&#x2F;&#x2F;www.springframework.org&#x2F;schema&#x2F;context&#x2F;spring-context.xsd&quot;&gt;<br><br>    &lt;!--    扫描service下的包--&gt;<br>    &lt;context:component-scan base-package&#x3D;&quot;com.service&quot;&gt;&lt;&#x2F;context:component-scan&gt;<br>    &lt;!--将业务类注入spring--&gt;<br>    &lt;bean id&#x3D;&quot;BookServiceImpl&quot; class&#x3D;&quot;com.service.BookServiceImpl&quot;&gt;<br>        &lt;property name&#x3D;&quot;bookMapper&quot; ref&#x3D;&quot;bookMapper&quot;&gt;&lt;&#x2F;property&gt;<br>    &lt;&#x2F;bean&gt;<br>&lt;!--    声明事务--&gt;<br>    &lt;bean id&#x3D;&quot;transactionManager&quot; class&#x3D;&quot;org.springframework.jdbc.datasource.DataSourceTransactionManager&quot;&gt;<br>&lt;!--        注入数据源--&gt;<br>        &lt;property name&#x3D;&quot;dataSource&quot; ref&#x3D;&quot;dataSource&quot;&gt;&lt;&#x2F;property&gt;<br>    &lt;&#x2F;bean&gt;<br>&lt;&#x2F;beans&gt;<br><br></code></pre></td></tr></table></figure>
+
+<p>至此，spring-mybatis的整合完毕</p>
+<p>下面开始整合spring-springmvc</p>
+<p>添加web支持</p>
+<p><img src="/2020/10/26/ssmintegration/mvc.jpg" alt="mvc"></p>
+<p>编写spring-mvc.xml</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;UTF-8&quot;?&gt;<br>&lt;beans xmlns&#x3D;&quot;http:&#x2F;&#x2F;www.springframework.org&#x2F;schema&#x2F;beans&quot;<br>       xmlns:xsi&#x3D;&quot;http:&#x2F;&#x2F;www.w3.org&#x2F;2001&#x2F;XMLSchema-instance&quot;<br>       xmlns:mvc&#x3D;&quot;http:&#x2F;&#x2F;www.springframework.org&#x2F;schema&#x2F;mvc&quot;<br>       xmlns:context&#x3D;&quot;http:&#x2F;&#x2F;www.springframework.org&#x2F;schema&#x2F;context&quot;<br>       xsi:schemaLocation&#x3D;&quot;http:&#x2F;&#x2F;www.springframework.org&#x2F;schema&#x2F;beans<br>       http:&#x2F;&#x2F;www.springframework.org&#x2F;schema&#x2F;beans&#x2F;spring-beans.xsd<br>        http:&#x2F;&#x2F;www.springframework.org&#x2F;schema&#x2F;mvc<br>        https:&#x2F;&#x2F;www.springframework.org&#x2F;schema&#x2F;mvc&#x2F;spring-mvc.xsd<br>        http:&#x2F;&#x2F;www.springframework.org&#x2F;schema&#x2F;context<br>        http:&#x2F;&#x2F;www.springframework.org&#x2F;schema&#x2F;context&#x2F;spring-context.xsd&quot;&gt;<br><br>    &lt;!--        注解驱动--&gt;<br>    &lt;mvc:annotation-driven&#x2F;&gt;<br><br>    &lt;!--    扫描controller包--&gt;<br><br>    &lt;context:component-scan base-package&#x3D;&quot;com.controller&quot;&#x2F;&gt;<br>    &lt;!--    试图解析器--&gt;<br><br>    &lt;bean id&#x3D;&quot;internalResourceViewResolver&quot; class&#x3D;&quot;org.springframework.web.servlet.view.InternalResourceViewResolver&quot;&gt;<br>        &lt;property name&#x3D;&quot;prefix&quot; value&#x3D;&quot;&#x2F;WEB-INF&#x2F;&quot;&gt;&lt;&#x2F;property&gt;<br>        &lt;property name&#x3D;&quot;suffix&quot; value&#x3D;&quot;.jsp&quot;&gt;&lt;&#x2F;property&gt;<br>    &lt;&#x2F;bean&gt;<br><br>    &lt;mvc:annotation-driven&gt;<br>        &lt;mvc:message-converters register-defaults&#x3D;&quot;true&quot;&gt;<br>            &lt;bean class&#x3D;&quot;org.springframework.http.converter.StringHttpMessageConverter&quot;&gt;<br>                &lt;constructor-arg value&#x3D;&quot;UTF-8&quot;&#x2F;&gt;<br>            &lt;&#x2F;bean&gt;<br>            &lt;bean class&#x3D;&quot;org.springframework.http.converter.json.MappingJackson2HttpMessageConverter&quot;&gt;<br>                &lt;property name&#x3D;&quot;objectMapper&quot;&gt;<br>                    &lt;bean class&#x3D;&quot;org.springframework.http.converter.json.Jackson2ObjectMapperFactoryBean&quot;&gt;<br>                        &lt;property name&#x3D;&quot;failOnEmptyBeans&quot; value&#x3D;&quot;false&quot;&#x2F;&gt;<br>                    &lt;&#x2F;bean&gt;<br>                &lt;&#x2F;property&gt;<br>            &lt;&#x2F;bean&gt;<br>        &lt;&#x2F;mvc:message-converters&gt;<br>    &lt;&#x2F;mvc:annotation-driven&gt;<br><br><br><br>&lt;&#x2F;beans&gt;<br></code></pre></td></tr></table></figure>
+
+<p>修改applicationContext.xml文件</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;UTF-8&quot;?&gt;<br>&lt;beans xmlns&#x3D;&quot;http:&#x2F;&#x2F;www.springframework.org&#x2F;schema&#x2F;beans&quot;<br>       xmlns:xsi&#x3D;&quot;http:&#x2F;&#x2F;www.w3.org&#x2F;2001&#x2F;XMLSchema-instance&quot;<br>       xmlns:context&#x3D;&quot;http:&#x2F;&#x2F;www.springframework.org&#x2F;schema&#x2F;context&quot;<br>       xsi:schemaLocation&#x3D;&quot;http:&#x2F;&#x2F;www.springframework.org&#x2F;schema&#x2F;beans http:&#x2F;&#x2F;www.springframework.org&#x2F;schema&#x2F;beans&#x2F;spring-beans.xsd http:&#x2F;&#x2F;www.springframework.org&#x2F;schema&#x2F;context https:&#x2F;&#x2F;www.springframework.org&#x2F;schema&#x2F;context&#x2F;spring-context.xsd&quot;&gt;<br>    &lt;import resource&#x3D;&quot;classpath:spring-dao.xml&quot;&gt;&lt;&#x2F;import&gt;<br>    &lt;import resource&#x3D;&quot;classpath:spring-service.xml&quot;&gt;&lt;&#x2F;import&gt;<br>    &lt;import resource&#x3D;&quot;classpath:spring-mvc.xml&quot;&gt;&lt;&#x2F;import&gt;<br>&lt;&#x2F;beans&gt;<br><br></code></pre></td></tr></table></figure>
+
+<p><strong>注：这四个xml文件要关联在一起</strong></p>
+<p><img src="/2020/10/26/ssmintegration/applicationContext.xml.jpg" alt="applicationContext.xml"></p>
+<p>编写web.xml文件</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain"><br>&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;UTF-8&quot;?&gt;<br>&lt;web-app xmlns&#x3D;&quot;http:&#x2F;&#x2F;xmlns.jcp.org&#x2F;xml&#x2F;ns&#x2F;javaee&quot;<br>         xmlns:xsi&#x3D;&quot;http:&#x2F;&#x2F;www.w3.org&#x2F;2001&#x2F;XMLSchema-instance&quot;<br>         xsi:schemaLocation&#x3D;&quot;http:&#x2F;&#x2F;xmlns.jcp.org&#x2F;xml&#x2F;ns&#x2F;javaee http:&#x2F;&#x2F;xmlns.jcp.org&#x2F;xml&#x2F;ns&#x2F;javaee&#x2F;web-app_4_0.xsd&quot;<br>         version&#x3D;&quot;4.0&quot;&gt;<br><br>    &lt;servlet&gt;<br>        &lt;servlet-name&gt;springmvc&lt;&#x2F;servlet-name&gt;<br>        &lt;servlet-class&gt;org.springframework.web.servlet.DispatcherServlet&lt;&#x2F;servlet-class&gt;<br>        &lt;init-param&gt;<br>            &lt;param-name&gt;contextConfigLocation&lt;&#x2F;param-name&gt;<br>            &lt;param-value&gt;classpath:spring-mvc.xml&lt;&#x2F;param-value&gt;<br>        &lt;&#x2F;init-param&gt;<br>    &lt;&#x2F;servlet&gt;<br><br>    &lt;servlet-mapping&gt;<br>        &lt;servlet-name&gt;springmvc&lt;&#x2F;servlet-name&gt;<br>        &lt;url-pattern&gt;&#x2F;&lt;&#x2F;url-pattern&gt;<br>    &lt;&#x2F;servlet-mapping&gt;<br>    &lt;filter&gt;<br>        &lt;filter-name&gt;encodingFilter&lt;&#x2F;filter-name&gt;<br>        &lt;filter-class&gt;org.springframework.web.filter.CharacterEncodingFilter&lt;&#x2F;filter-class&gt;<br>        &lt;init-param&gt;<br>            &lt;param-name&gt;encoding&lt;&#x2F;param-name&gt;<br>            &lt;param-value&gt;utf-8&lt;&#x2F;param-value&gt;<br>        &lt;&#x2F;init-param&gt;<br>    &lt;&#x2F;filter&gt;<br>    &lt;filter-mapping&gt;<br>        &lt;filter-name&gt;encodingFilter&lt;&#x2F;filter-name&gt;<br>        &lt;url-pattern&gt;&#x2F;*&lt;&#x2F;url-pattern&gt;<br>    &lt;&#x2F;filter-mapping&gt;<br><br>&lt;&#x2F;web-app&gt;<br><br></code></pre></td></tr></table></figure>
+
+<p>至此，三层架构整合完毕</p>
+<p>编写BookController</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">@Controller<br>public class BookController &#123;<br><br>    @Autowired<br>    private BookService bookService;<br><br>    @RequestMapping(&quot;&#x2F;result&quot;)<br>    public String list()&#123;<br>        return &quot;result&quot;;<br><br>    &#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<p>进行测试，此时出现异常，发现bookservice注入失败</p>
+<p><img src="/2020/10/26/ssmintegration/beanwrong1.jpg" alt="beanwrong1"></p>
+<p><img src="/2020/10/26/ssmintegration/beanwrong2.jpg" alt="beanwrong2"></p>
+<p>进行排查：</p>
+<ol>
+<li>发现此时BookService的实现类是手动配置，排除注入注入失败的问题！</li>
+</ol>
+<p><img src="/2020/10/26/ssmintegration/dealbeanwrong.jpg" alt="dealbeanwrong"></p>
+<ol start="2">
+<li>进行单元测试，查看是否能查出数据库中的值</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">@Test<br>    public void test()&#123;<br>        ApplicationContext applicationContext &#x3D; new ClassPathXmlApplicationContext(&quot;applicationContext.xml&quot;);<br><br>        BookService bookServiceImpl &#x3D; (BookService) applicationContext.getBean(&quot;BookServiceImpl&quot;);<br><br>        Book book &#x3D; bookServiceImpl.queryBookById(1);<br><br>        System.out.println(book);<br>    &#125;<br></code></pre></td></tr></table></figure>
+
+<p>输出成功</p>
+<ol start="3">
+<li><p>由于是在controller中调用的BookService，检查spring-mvc.xml，发现没有配置BookService的实现类</p>
+</li>
+<li><p>最终检查出原因，原因是因为在web.xml文件中，前端控制器绑定的是spring-mvc.xml文件，而spring-mvc.xml文件中没有注册这个bean，所以出现错误</p>
+</li>
+</ol>
+<p>解决方案：</p>
+<p>修改web.xml文件的绑定</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">&lt;servlet&gt;<br>    &lt;servlet-name&gt;springmvc&lt;&#x2F;servlet-name&gt;<br>    &lt;servlet-class&gt;org.springframework.web.servlet.DispatcherServlet&lt;&#x2F;servlet-class&gt;<br>    &lt;init-param&gt;<br>        &lt;param-name&gt;contextConfigLocation&lt;&#x2F;param-name&gt;<br>        &lt;param-value&gt;classpath:spring-mvc.xml&lt;&#x2F;param-value&gt;<br>    &lt;&#x2F;init-param&gt;<br>&lt;&#x2F;servlet&gt;<br></code></pre></td></tr></table></figure>
+
+<p>再次进行测试：成功解决异常</p>
+<p><img src="/2020/10/26/ssmintegration/success.jpg" alt="success"></p>
+]]></content>
+      <tags>
+        <tag>SSM框架</tag>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>SpringMVC入门</title>
     <url>/2020/10/04/SpringMVC/</url>
     <content><![CDATA[<h1 id="什么是MVC框架"><a href="#什么是MVC框架" class="headerlink" title="什么是MVC框架"></a><strong>什么是MVC框架</strong></h1><p>MVC的全名是Model View Controller，是模型(model)－视图(view)－控制器(controller)的缩写，是在WEB模型中一种很流行的框架，通过把Model，View，Controller分离，把较为复杂的web应用分成逻辑清晰的几部分，是为了简化开发，增强开发人员间的配合，减少出错，MVC是一种分层工作的方法。</p>
@@ -1655,8 +2142,12 @@ import org.springframework.context.support.ClassPathXmlApplicationContext; -->
 <p>配置dispatcher-servlet.xml文件，为前端处理器添加处理器映射：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;UTF-8&quot; ?&gt;<br>&lt;!DOCTYPE beans PUBLIC &quot;-&#x2F;&#x2F;SPRING&#x2F;&#x2F;DTD BEAN&#x2F;&#x2F;EN&quot; &quot;http:&#x2F;&#x2F;www.springframework.org&#x2F;dtd&#x2F;spring-beans.dtd&quot;&gt;<br>&lt;beans&gt;<br>    &lt;bean id&#x3D;&quot;simpleUrlHandlerMapping&quot;<br>          class&#x3D;&quot;org.springframework.web.servlet.handler.SimpleUrlHandlerMapping&quot;&gt;<br>        &lt;property name&#x3D;&quot;mappings&quot;&gt;<br>            &lt;props&gt;<br>&lt;!--                这里HelloWorldController使用的是后边bean的id--&gt;<br>                &lt;prop key&#x3D;&quot;&#x2F;index&quot;&gt;HelloWorldController&lt;&#x2F;prop&gt;<br>            &lt;&#x2F;props&gt;<br>        &lt;&#x2F;property&gt;<br>    &lt;&#x2F;bean&gt;<br>    &lt;bean id&#x3D;&quot;HelloWorldController&quot; class&#x3D;&quot;springmvc.controller.HelloWorldController&quot;&gt;&lt;&#x2F;bean&gt;<br>&lt;&#x2F;beans&gt;<br></code></pre></td></tr></table></figure>
 
+<p>绑定前端控制器，也可以使用如下方式：</p>
+<p>在resources目录下编写xxx.xml文件，然后使用如下方式</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">&lt;servlet&gt;<br>    &lt;servlet-name&gt;springmvc&lt;&#x2F;servlet-name&gt;<br>    &lt;servlet-class&gt;org.springframework.web.servlet.DispatcherServlet&lt;&#x2F;servlet-class&gt;<br>    &lt;init-param&gt;<br>        &lt;param-name&gt;contextConfigLocation&lt;&#x2F;param-name&gt;<br>        &lt;param-value&gt;classpath:applicationContext.xml&lt;&#x2F;param-value&gt;<br>    &lt;&#x2F;init-param&gt;<br>&lt;&#x2F;servlet&gt;<br></code></pre></td></tr></table></figure>
+
 <p>配置web.xml文件：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;UTF-8&quot;?&gt;<br>&lt;web-app version&#x3D;&quot;2.4&quot; xmlns&#x3D;&quot;http:&#x2F;&#x2F;java.sun.com&#x2F;xml&#x2F;ns&#x2F;j2ee&quot;<br>         xmlns:xsi&#x3D;&quot;http:&#x2F;&#x2F;www.w3.org&#x2F;2001&#x2F;XMLSchema-instance&quot;<br>         xsi:schemaLocation&#x3D;&quot;http:&#x2F;&#x2F;java.sun.com&#x2F;xml&#x2F;ns&#x2F;j2ee<br>http:&#x2F;&#x2F;java.sun.com&#x2F;xml&#x2F;ns&#x2F;j2ee&#x2F;web-app_2_4.xsd&quot;&gt;<br>    &lt;servlet&gt;<br><br>&lt;!--        会自动使用这个name到WEB-INF中找***-servlet.xml 的文件，所以xml文件名为dispatcher-servlet.xml，而这里的servlet-name为dispatcher--&gt;<br><br>        &lt;servlet-name&gt;dispatcher&lt;&#x2F;servlet-name&gt;<br>        &lt;servlet-class&gt;<br>            org.springframework.web.servlet.DispatcherServlet<br>        &lt;&#x2F;servlet-class&gt;<br>        &lt;load-on-startup&gt;1&lt;&#x2F;load-on-startup&gt;<br>    &lt;&#x2F;servlet&gt;<br>    &lt;servlet-mapping&gt;<br>        &lt;servlet-name&gt;dispatcher&lt;&#x2F;servlet-name&gt;<br>        &lt;!--这里将url设置为&#x2F;，处理所有的url        --&gt;<br>        &lt;url-pattern&gt;&#x2F;&lt;&#x2F;url-pattern&gt;	<br>    &lt;&#x2F;servlet-mapping&gt;<br>&lt;&#x2F;web-app&gt;<br></code></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;UTF-8&quot;?&gt;<br>&lt;web-app version&#x3D;&quot;2.4&quot; xmlns&#x3D;&quot;http:&#x2F;&#x2F;java.sun.com&#x2F;xml&#x2F;ns&#x2F;j2ee&quot;<br>         xmlns:xsi&#x3D;&quot;http:&#x2F;&#x2F;www.w3.org&#x2F;2001&#x2F;XMLSchema-instance&quot;<br>         xsi:schemaLocation&#x3D;&quot;http:&#x2F;&#x2F;java.sun.com&#x2F;xml&#x2F;ns&#x2F;j2ee<br>http:&#x2F;&#x2F;java.sun.com&#x2F;xml&#x2F;ns&#x2F;j2ee&#x2F;web-app_2_4.xsd&quot;&gt;<br>    &lt;servlet&gt;<br><br>&lt;!--        会自动使用这个name到WEB-INF中找***-servlet.xml 的文件，所以xml文件名为dispatcher-servlet.xml，而这里的servlet-name为dispatcher--&gt;<br><br>        &lt;servlet-name&gt;dispatcher&lt;&#x2F;servlet-name&gt;<br>        &lt;servlet-class&gt;<br>            org.springframework.web.servlet.DispatcherServlet<br>        &lt;&#x2F;servlet-class&gt;<br>        &lt;load-on-startup&gt;1&lt;&#x2F;load-on-startup&gt;<br>    &lt;&#x2F;servlet&gt;<br>    &lt;servlet-mapping&gt;<br>        &lt;servlet-name&gt;dispatcher&lt;&#x2F;servlet-name&gt;<br>        &lt;!--这里将url设置为&#x2F;，处理所有的url        --&gt;<br>        &lt;url-pattern&gt;&#x2F;&lt;&#x2F;url-pattern&gt;	<br>    &lt;&#x2F;servlet-mapping&gt;<br><br>    &#x2F;&#x2F;解决乱码<br>    &lt;filter&gt;<br>	    &lt;filter-name&gt;encodingFilter&lt;&#x2F;filter-name&gt;<br>	    &lt;filter-class&gt;org.springframework.web.filter.CharacterEncodingFilter&lt;&#x2F;filter-class&gt;<br>	    &lt;init-param&gt;<br>	        &lt;param-name&gt;encoding&lt;&#x2F;param-name&gt;<br>	        &lt;param-value&gt;utf-8&lt;&#x2F;param-value&gt;<br>	    &lt;&#x2F;init-param&gt;<br>	&lt;&#x2F;filter&gt;<br>	&lt;filter-mapping&gt;<br>	    &lt;filter-name&gt;encodingFilter&lt;&#x2F;filter-name&gt;<br>	    &lt;url-pattern&gt;&#x2F;*&lt;&#x2F;url-pattern&gt;<br>	&lt;&#x2F;filter-mapping&gt;<br>&lt;&#x2F;web-app&gt;<br></code></pre></td></tr></table></figure>
 
 <p>修改index.jsp文件：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">&lt;%@ page contentType&#x3D;&quot;text&#x2F;html;charset&#x3D;UTF-8&quot; language&#x3D;&quot;java&quot; %&gt;<br>&lt;html&gt;<br>  &lt;head&gt;<br>    &lt;title&gt;$Title$&lt;&#x2F;title&gt;<br>  &lt;&#x2F;head&gt;<br>  &lt;body&gt;<br>  &lt;h1&gt;welcome to login&lt;&#x2F;h1&gt;<br>  &lt;&#x2F;body&gt;<br>&lt;&#x2F;html&gt;<br></code></pre></td></tr></table></figure>
@@ -1671,7 +2162,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext; -->
 <figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">mav.addObject(&quot;message&quot;,&quot;helloworld!&quot;); <br></code></pre></td></tr></table></figure>
 <p>或者Model类型对象的 addAttribute()方法处理数据，然后在相应的view层使用${}显示数据即可。</p>
 <p>如果在Dispatcher中配置视图解析器</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">&lt;bean id&#x3D;&quot;internalResourceViewResolver&quot; class&#x3D;&quot;org.springframework.web.servlet.view.InternalResourceViewResolver&quot;&gt;<br>       &lt;property name&#x3D;&quot;prefix&quot; value&#x3D;&quot;&#x2F;WEB-INF&#x2F;&quot;&gt;&lt;&#x2F;property&gt;<br>       &lt;property name&#x3D;&quot;suffix&quot; value&#x3D;&quot;.jsp&quot;&gt;&lt;&#x2F;property&gt;<br>   &lt;&#x2F;bean&gt;<br></code></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">&lt;bean id&#x3D;&quot;internalResourceViewResolver&quot; class&#x3D;&quot;org.springframework.web.servlet.view.InternalResourceViewResolver&quot;&gt;<br>    &lt;property name&#x3D;&quot;prefix&quot; value&#x3D;&quot;&#x2F;WEB-INF&#x2F;&quot;&gt;&lt;&#x2F;property&gt;<br>    &lt;property name&#x3D;&quot;suffix&quot; value&#x3D;&quot;.jsp&quot;&gt;&lt;&#x2F;property&gt;<br>&lt;&#x2F;bean&gt;<br></code></pre></td></tr></table></figure>
 <p>则Controller中的返回对象ModelAndView中指定的视图不用添加前缀和后缀</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">mav.setViewName(&quot;result&quot;);<br></code></pre></td></tr></table></figure>
 <p>将返回同样的结果</p>
@@ -1688,13 +2179,13 @@ import org.springframework.context.support.ClassPathXmlApplicationContext; -->
 <h3 id="类级别注解"><a href="#类级别注解" class="headerlink" title="类级别注解"></a>类级别注解</h3><p>在类级别注解的情况下，控制器类中的所有方法都将映射为类级别的请求。</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">@Controller<br>@RequestMapping(&quot;&#x2F;init&quot;)<br>public class LoginController &#123;<br>    @RequestMapping(&quot;&#x2F;login&quot;)<br>    public String login()&#123;<br>        return &quot;login&quot;;<br>    &#125;<br>    @RequestMapping(value &#x3D; &quot;&#x2F;result&quot;)<br>    public String result()&#123;<br>        return &quot;result&quot;;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>此时，浏览器打开<a href="http://localhost:8080/init/login">http://localhost:8080/init/login</a> 将会成功显示登陆界面</p>
-<h2 id="接收请求参数"><a href="#接收请求参数" class="headerlink" title="接收请求参数"></a><strong>接收请求参数</strong></h2><h3 id="直接把表单数据写在参数列表中"><a href="#直接把表单数据写在参数列表中" class="headerlink" title="直接把表单数据写在参数列表中"></a><strong>直接把表单数据写在参数列表中</strong></h3><figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">   @Controller<br>public class LoginController &#123;<br>    @RequestMapping(&quot;&#x2F;login&quot;)<br>    public String login()&#123;<br>        return &quot;login&quot;;<br>    &#125;<br>    @RequestMapping(value &#x3D; &quot;&#x2F;result&quot;)<br>    public String result(String name,String id,int age,Model model)&#123;<br>        model.addAttribute(&quot;id&quot;,id);<br>        model.addAttribute(&quot;name&quot;,name);<br>        model.addAttribute(&quot;age&quot;,age);<br>        return &quot;result&quot;;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h2 id="接收请求参数"><a href="#接收请求参数" class="headerlink" title="接收请求参数"></a><strong>接收请求参数</strong></h2><h3 id="直接把表单数据写在参数列表中"><a href="#直接把表单数据写在参数列表中" class="headerlink" title="直接把表单数据写在参数列表中"></a><strong>直接把表单数据写在参数列表中</strong></h3><figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">@Controller<br>public class LoginController &#123;<br>    @RequestMapping(&quot;&#x2F;login&quot;)<br>    public String login()&#123;<br>        return &quot;login&quot;;<br>    &#125;<br>    @RequestMapping(value &#x3D; &quot;&#x2F;result&quot;)<br>    public String result(String name,String id,int age,Model model)&#123;<br>        model.addAttribute(&quot;id&quot;,id);<br>        model.addAttribute(&quot;name&quot;,name);<br>        model.addAttribute(&quot;age&quot;,age);<br>        return &quot;result&quot;;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <h3 id="HttpServletRequest获得参数"><a href="#HttpServletRequest获得参数" class="headerlink" title="HttpServletRequest获得参数"></a><strong>HttpServletRequest获得参数</strong></h3><p>如Model接口和javax.servlet.http.HttpServletRequest组合可以像ModelAndView那样返回客户端的值</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">@RequestMapping(value &#x3D; &quot;&#x2F;result&quot;)<br>   public String result(Model model,javax.servlet.http.HttpServletRequest httpServletRequest)&#123;<br>       model.addAttribute(&quot;id&quot;,httpServletRequest.getParameter(&quot;id&quot;));<br>       model.addAttribute(&quot;name&quot;,httpServletRequest.getParameter(&quot;name&quot;));<br>       model.addAttribute(&quot;age&quot;,httpServletRequest.getParameter(&quot;age&quot;));<br>       return &quot;result&quot;;<br>   &#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">@RequestMapping(value &#x3D; &quot;&#x2F;result&quot;)<br>public String result(Model model,javax.servlet.http.HttpServletRequest httpServletRequest)&#123;<br>    model.addAttribute(&quot;id&quot;,httpServletRequest.getParameter(&quot;id&quot;));<br>    model.addAttribute(&quot;name&quot;,httpServletRequest.getParameter(&quot;name&quot;));<br>    model.addAttribute(&quot;age&quot;,httpServletRequest.getParameter(&quot;age&quot;));<br>    return &quot;result&quot;;<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <h3 id="通过实体Bean接收请求参数"><a href="#通过实体Bean接收请求参数" class="headerlink" title="通过实体Bean接收请求参数"></a><strong>通过实体Bean接收请求参数</strong></h3><p>student类：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">@Component<br>public class student &#123;<br>    private String id;<br>    private String name;<br>    private int age;<br>    &#x2F;&#x2F;省略getter和setter<br>    public String toString()&#123;<br>       	return &quot;[id&#x3D;&quot;+id+&quot;,name&#x3D;&quot;+name+&quot;,age&#x3D;&quot;+age+&quot;]&quot;;<br>   	&#125;<br>&#125;<br><br>   @RequestMapping(value &#x3D; &quot;&#x2F;result&quot;)<br>   public String result(student stu,Model model)&#123;<br>       model.addAttribute(&quot;id&quot;,stu.getId());<br>       model.addAttribute(&quot;name&quot;,stu.getName());<br>       model.addAttribute(&quot;age&quot;,stu.getAge());<br>       return &quot;result&quot;;<br>   &#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">@Component<br>public class student &#123;<br>    private String id;<br>    private String name;<br>    private int age;<br>    &#x2F;&#x2F;省略getter和setter<br>    public String toString()&#123;<br>    	return &quot;[id&#x3D;&quot;+id+&quot;,name&#x3D;&quot;+name+&quot;,age&#x3D;&quot;+age+&quot;]&quot;;<br>	&#125;<br>&#125;<br><br>@RequestMapping(value &#x3D; &quot;&#x2F;result&quot;)<br>public String result(student stu,Model model)&#123;<br>    model.addAttribute(&quot;id&quot;,stu.getId());<br>    model.addAttribute(&quot;name&quot;,stu.getName());<br>    model.addAttribute(&quot;age&quot;,stu.getAge());<br>    return &quot;result&quot;;<br>&#125;<br></code></pre></td></tr></table></figure>
 <h3 id="RequestParam"><a href="#RequestParam" class="headerlink" title="@RequestParam"></a><strong>@RequestParam</strong></h3><figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">@RequestMapping(value &#x3D; &quot;&#x2F;result&quot;)<br>public String result(student stu, Model model, @RequestParam String name, @RequestParam String id)&#123;<br>        System.out.println(id + &quot; &quot; + name);<br>        model.addAttribute(&quot;id&quot;, stu.getId());<br>        model.addAttribute(&quot;name&quot;, stu.getName());<br>        model.addAttribute(&quot;age&quot;, stu.getAge());<br>    return &quot;result&quot;;<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <h3 id="ModelAttribute"><a href="#ModelAttribute" class="headerlink" title="@ModelAttribute"></a><strong>@ModelAttribute</strong></h3><p>当 @ModelAttribute 注解放在处理方法的形参上时，用于将多个请求参数封装到一个实体对象，从而简化数据绑定流程，而且自动暴露为模型数据，在视图页面展示时使用。而“通过实体Bean接收请求参数”中只是将多个请求参数封装到一个实体对象，并不能暴露为模型数据（需要使用 model.addAttribute 语句才能暴露为模型数据)</p>
@@ -1706,7 +2197,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext; -->
 
 <p>ModelAttribute作用于无返回值的方法，被@ModelAttribute注释的方法会在此controller每个方法执行前被执行</p>
 <p>在控制器中添加show方法，想要把请求参数显示在result.jsp中</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">@ModelAttribute<br>   public void show(Model model,@RequestParam String name)&#123;<br>       model.addAttribute(&quot;name&quot;,name);<br>   &#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">@ModelAttribute<br>public void show(Model model,@RequestParam String name)&#123;<br>    model.addAttribute(&quot;name&quot;,name);<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>运行发现，name请求参数成功显示在页面中</p>
 <h1 id="Service和-AutoWired"><a href="#Service和-AutoWired" class="headerlink" title="@Service和@AutoWired"></a>@Service和@AutoWired</h1><p>在springmvc.controller包下创建ServiceInterface接口</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">public interface ServiceInterface &#123;<br>    public void service(student stu);<br>&#125;<br></code></pre></td></tr></table></figure>
@@ -1726,7 +2217,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext; -->
 <p>在UserController中添加json方法</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">@RequestMapping(&quot;&#x2F;json&quot;)<br>@ResponseBody<br>public String json()&#123;<br>    return new student(&quot;123&quot;,&quot;张三&quot;,12).toString();<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>或者使用ObjectMapper对象的writeValueAsString方法，将对象解析为字符串</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">@RequestMapping(value &#x3D; &quot;&#x2F;json&quot;)<br>@ResponseBody<br>public String json() throws IOException &#123;<br>    student stu &#x3D;  new student(&quot;123&quot;,&quot;张三&quot;,12);<br>    ObjectMapper objectMapper &#x3D; new ObjectMapper();<br>    String str &#x3D; objectMapper.writeValueAsString(stu);<br>    return str;<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">@RequestMapping(value &#x3D; &quot;&#x2F;json&quot;)<br>@ResponseBody<br>public String json() throws IOException &#123;<br>    student stu &#x3D;  new student(&quot;123&quot;,&quot;张三&quot;,12);<br>    ObjectMapper objectMapper &#x3D; new ObjectMapper();<br>    String str &#x3D; objectMapper.writeValueAsString(stu);<br>    return str;<br>    &#125;<br></code></pre></td></tr></table></figure>
 <p>另外，用@ResponseBody作用于方法返回字符串给请求，@RequestBody作用于参数用于接受Json对象字符串后自动转换为对象</p>
 <p>postman测试，网页中出现[id=123,name=??,age=12]，出现乱码</p>
 <p><strong>JSON乱码解决</strong></p>
@@ -1735,7 +2226,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext; -->
 </ul>
 <p>此时返回[id=123,name=张三,age=12]</p>
 <ul>
-<li>在dispatcher-servlet中添加如下配置统一解决问题<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">&lt;mvc: annotation-driven&gt;<br>    &lt;mvc: message-converters register-defaults&#x3D;&quot;true&quot;&gt;<br>        &lt;bean class&#x3D;&quot;org.springframework.http.converter.StringHttpMessageConverter&quot;&gt;<br>            &lt;constructor-arg value&#x3D;&quot;UTF-8&quot;&#x2F;&gt;<br>        &lt;&#x2F;bean&gt;<br>        &lt;bean class&#x3D;&quot;org.springframework.http.converter.json.MappingJackson2HttpMessageConverter&quot;&gt;<br>            &lt;property name&#x3D;&quot;objectMapper&quot;&gt;<br>                &lt;bean class&#x3D;&quot;org.springframework.http.converter.json.Jackson2ObjectMapperFactoryBean&quot;&gt;<br>                    &lt;property name&#x3D;&quot;failOnEmptyBeans&quot; value&#x3D;&quot;false&quot;&#x2F;&gt;<br>                &lt;&#x2F;bean&gt;<br>            &lt;&#x2F;property&gt;<br>        &lt;&#x2F;bean&gt;<br>    &lt;&#x2F;mvc: message-converters&gt;<br>&lt;&#x2F;mvc: annotation-driven&gt;<br></code></pre></td></tr></table></figure></li>
+<li>在dispatcher-servlet中添加如下配置统一解决问题<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">&lt;mvc:annotation-driven&gt;<br>    &lt;mvc:message-converters register-defaults&#x3D;&quot;true&quot;&gt;<br>        &lt;bean class&#x3D;&quot;org.springframework.http.converter.StringHttpMessageConverter&quot;&gt;<br>            &lt;constructor-arg value&#x3D;&quot;UTF-8&quot;&#x2F;&gt;<br>        &lt;&#x2F;bean&gt;<br>        &lt;bean class&#x3D;&quot;org.springframework.http.converter.json.MappingJackson2HttpMessageConverter&quot;&gt;<br>            &lt;property name&#x3D;&quot;objectMapper&quot;&gt;<br>                &lt;bean class&#x3D;&quot;org.springframework.http.converter.json.Jackson2ObjectMapperFactoryBean&quot;&gt;<br>                    &lt;property name&#x3D;&quot;failOnEmptyBeans&quot; value&#x3D;&quot;false&quot;&#x2F;&gt;<br>                &lt;&#x2F;bean&gt;<br>            &lt;&#x2F;property&gt;<br>        &lt;&#x2F;bean&gt;<br>    &lt;&#x2F;mvc:message-converters&gt;<br>&lt;&#x2F;mvc:annotation-driven&gt;<br></code></pre></td></tr></table></figure></li>
 <li>将控制器注解位@RestController</li>
 </ul>
 <p>此时控制器类的所有处理方法都返回一个JSON字符串，不再进行视图解析</p>
@@ -1770,14 +2261,14 @@ import org.springframework.context.support.ClassPathXmlApplicationContext; -->
 <figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">&lt;mvc:interceptors&gt;<br>       &lt;bean class&#x3D;&quot;springmvc.controller.MyInterceptor&quot;&gt;&lt;&#x2F;bean&gt;<br>   &lt;&#x2F;mvc:interceptors&gt;<br></code></pre></td></tr></table></figure>
 <p>&lt;mvc： interceptors&gt; 元素用于配置一组拦截器，其子元素 <bean> 定义的是全局拦截器，即拦截所有的请求。</bean></p>
 <p>若还要定义其他拦截器，可在里面加上</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">&lt;mvc:interceptor&gt;<br>       &lt;!-- 配置拦截器作用的路径 --&gt;<br>       &lt;mvc:mapping path&#x3D;&quot;&quot; &#x2F;&gt;<br>       &lt;!-- 配置不需要拦截作用的路径 --&gt;<br>       &lt;mvc:exclude-mapping path&#x3D;&quot;&quot; &#x2F;&gt;<br>       &lt;!-- 定义&lt;mvc:interceptor&gt;元素中，表示匹配指定路径的请求才进行拦截 --&gt;<br>       &lt;bean class&#x3D;&quot;&quot;&#x2F;&gt;<br>   &lt;&#x2F;mvc:interceptor&gt;<br></code></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">&lt;mvc:interceptor&gt;<br>    &lt;!-- 配置拦截器作用的路径 --&gt;<br>    &lt;mvc:mapping path&#x3D;&quot;&quot; &#x2F;&gt;<br>    &lt;!-- 配置不需要拦截作用的路径 --&gt;<br>    &lt;mvc:exclude-mapping path&#x3D;&quot;&quot; &#x2F;&gt;<br>    &lt;!-- 定义&lt;mvc:interceptor&gt;元素中，表示匹配指定路径的请求才进行拦截 --&gt;<br>    &lt;bean class&#x3D;&quot;&quot;&#x2F;&gt;<br>&lt;&#x2F;mvc:interceptor&gt;<br></code></pre></td></tr></table></figure>
 <p>&lt;mvc： interceptor&gt; 元素的子元素必须按照 &lt;mvc： mapping…/&gt;、&lt;mvc： exclude-mapping…/&gt;、&lt;bean…/&gt; 的顺序配置。</p>
 <p>运行程序，输出端输出：</p>
 <p>preHandle<br>springmvc.controller.LoginController<br>postHandle<br>afterCompletion</p>
 <h2 id="拦截器的执行流程"><a href="#拦截器的执行流程" class="headerlink" title="拦截器的执行流程"></a><strong>拦截器的执行流程</strong></h2><p>若配置文件中只定义了一个拦截器，则根据 preHandle -&gt; ControllerMethod -&gt; postHandle -&gt; afterCompletion执行</p>
 <p>若配置了多个拦截器，则它们的 preHandle 方法将按照配置文件中拦截器的配置顺序执行，而它们的 postHandle 方法和 afterCompletion 方法则按照配置顺序的反序执行</p>
 <p>定义一个类MyInterceptor1，和类MyInterceptor一样，MyInterceptor类中的三个方法输出1，MyInterceptor1的三个方法输出2，在springmvc配置文件中定义两个拦截器interceptor、interceptor1</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">    &lt;mvc:interceptors&gt;<br>&lt;!--        &lt;bean class&#x3D;&quot;springmvc.controller.MyInterceptor&quot;&gt;&lt;&#x2F;bean&gt;--&gt;<br>        &lt;mvc:interceptor&gt;<br>            &lt;mvc:mapping path&#x3D;&quot;&#x2F;**&quot;&#x2F;&gt;<br>            &lt;bean class&#x3D;&quot;springmvc.controller.MyInterceptor&quot;&gt;&lt;&#x2F;bean&gt;<br>        &lt;&#x2F;mvc:interceptor&gt;<br>        &lt;mvc:interceptor&gt;<br>            &lt;mvc:mapping path&#x3D;&quot;&#x2F;login&quot;&#x2F;&gt;<br>            &lt;bean class&#x3D;&quot;springmvc.controller.MyInterceptor1&quot;&gt;&lt;&#x2F;bean&gt;<br>        &lt;&#x2F;mvc:interceptor&gt;<br>    &lt;&#x2F;mvc:interceptors&gt;<br></code></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">&lt;mvc:interceptors&gt;<br>&lt;!--        &lt;bean class&#x3D;&quot;springmvc.controller.MyInterceptor&quot;&gt;&lt;&#x2F;bean&gt;--&gt;<br>    &lt;mvc:interceptor&gt;<br>        &lt;mvc:mapping path&#x3D;&quot;&#x2F;**&quot;&#x2F;&gt;<br>        &lt;bean class&#x3D;&quot;springmvc.controller.MyInterceptor&quot;&gt;&lt;&#x2F;bean&gt;<br>    &lt;&#x2F;mvc:interceptor&gt;<br>    &lt;mvc:interceptor&gt;<br>        &lt;mvc:mapping path&#x3D;&quot;&#x2F;login&quot;&#x2F;&gt;<br>        &lt;bean class&#x3D;&quot;springmvc.controller.MyInterceptor1&quot;&gt;&lt;&#x2F;bean&gt;<br>    &lt;&#x2F;mvc:interceptor&gt;<br>&lt;&#x2F;mvc:interceptors&gt;<br></code></pre></td></tr></table></figure>
 
 <p>输出端输出：</p>
 <p>preHandle 1<br>preHandle 2<br>postHandle 2<br>postHandle 1<br>afterCompletion 2<br>afterCompletion 1</p>
@@ -1785,7 +2276,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext; -->
 <p>在springmvc.interceptor包下添加User类</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">public class User &#123;<br><br>    private String users;<br><br>    private String passwords;<br><br>    &#x2F;&#x2F;省略getter和setter方法<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>UserController控制器</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">@Controller<br>public class UserController &#123;<br>    @RequestMapping(&quot;&#x2F;tologin&quot;)<br>    public String tologin()&#123;<br>        return &quot;login&quot;;<br>    &#125;<br>    @RequestMapping(&quot;&#x2F;login&quot;)<br>    public String login(User user, HttpSession session, Model model)&#123;<br>        System.out.println(user.getUsers()+&quot; &quot;+user.getPasswords());<br>        if(&quot;123&quot;.equals(user.getUsers())&amp;&amp;&quot;123&quot;.equals(user.getPasswords()))&#123;<br>            session.setAttribute(&quot;user&quot;,user);<br>            return &quot;redirect:result&quot;;<br>        &#125;<br>        model.addAttribute(&quot;msg&quot;,&quot;用户名或密码错误，请重新登录！&quot;);<br>        return &quot;login&quot;;<br>    &#125;<br>    @RequestMapping(&quot;&#x2F;result&quot;)<br>    public String result()&#123;<br>        return &quot;result&quot;;<br>    &#125;<br><br>    @RequestMapping(&quot;&#x2F;exit&quot;)<br>   	public String exit(HttpServletRequest request,HttpSession session)&#123;<br>       session.invalidate();<br>       return &quot;login&quot;;<br>   &#125;<br><br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">@Controller<br>public class UserController &#123;<br>    @RequestMapping(&quot;&#x2F;tologin&quot;)<br>    public String tologin()&#123;<br>        return &quot;login&quot;;<br>    &#125;<br>    @RequestMapping(&quot;&#x2F;login&quot;)<br>    public String login(User user, HttpSession session, Model model)&#123;<br>        System.out.println(user.getUsers()+&quot; &quot;+user.getPasswords());<br>        if(&quot;123&quot;.equals(user.getUsers())&amp;&amp;&quot;123&quot;.equals(user.getPasswords()))&#123;<br>            session.setAttribute(&quot;user&quot;,user);<br>            return &quot;redirect:result&quot;;<br>        &#125;<br>        model.addAttribute(&quot;msg&quot;,&quot;用户名或密码错误，请重新登录！&quot;);<br>        return &quot;login&quot;;<br>    &#125;<br>    @RequestMapping(&quot;&#x2F;result&quot;)<br>    public String result()&#123;<br>        return &quot;result&quot;;<br>    &#125;<br><br>    @RequestMapping(&quot;&#x2F;exit&quot;)<br>	public String exit(HttpServletRequest request,HttpSession session)&#123;<br>    session.invalidate();<br>    return &quot;login&quot;;<br>&#125;<br><br>&#125;<br></code></pre></td></tr></table></figure>
 <p>创建拦截器loginInterceptor</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">public class loginInterceptor implements HandlerInterceptor &#123;<br><br>    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception &#123;<br>        System.out.println(&quot;123&quot;);<br>        StringBuffer url &#x3D; request.getRequestURL();<br>        if(url.indexOf(&quot;&#x2F;tologin&quot;)&gt;&#x3D;0||url.indexOf(&quot;&#x2F;login&quot;)&gt;&#x3D;0) return true;<br>        HttpSession session &#x3D; request.getSession();<br>        Object obj &#x3D; session.getAttribute(&quot;user&quot;);<br>        if(obj !&#x3D; null) return true;<br>        request.setAttribute(&quot;msg&quot;,&quot;请登录！&quot;);<br>        request.getRequestDispatcher(&quot;&#x2F;WEB-INF&#x2F;login.jsp&quot;).forward(request,response);<br>        return false;<br>    &#125;<br><br>    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception &#123;<br><br>    &#125;<br><br>    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception &#123;<br><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>配置Dispatcher-servlet.xml</p>
@@ -1811,7 +2302,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext; -->
 <p>在springmvc.validator包下创建MyValidator类，实现Validator接口</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">@Component<br>public class MyValidator implements Validator &#123;<br>    public boolean supports(Class&lt;?&gt; aClass) &#123;<br>        return User.class.isAssignableFrom(aClass);<br>    &#125;<br><br>    public void validate(Object o, Errors errors) &#123;<br>        User user &#x3D; (User)o;<br>        ValidationUtils.rejectIfEmpty(errors,&quot;users&quot;,&quot;user.users.required&quot;);<br>        ValidationUtils.rejectIfEmpty(errors,&quot;passwords&quot;,&quot;passwords.invalid&quot;);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>在interceptor-servlet.xml中添加对validator包的自动扫描机制</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">        &lt;context:component-scan base-package&#x3D;&quot;springmvc.validator&quot;&gt;&lt;&#x2F;context:component-scan&gt;<br><br>修改UserController中的login处理方法<br><br>    public String login(@ModelAttribute User user, HttpSession session, Model model, BindingResult result)&#123;<br>        MyValidator myValidator &#x3D; new MyValidator();<br>        if(myValidator.supports(User.class))&#123;<br>        	myValidator.validate(user,result);<br>            List&lt;ObjectError&gt; list &#x3D; result.getAllErrors();<br>            for(ObjectError error:list)&#123;<br>                System.out.println(error.getCode());<br>            &#125;<br>        &#125;<br>        if(result.hasErrors())  return &quot;redirect:tologin&quot;;<br>        if(&quot;123&quot;.equals(user.getUsers())&amp;&amp;&quot;123&quot;.equals(user.getPasswords()))&#123;<br>            session.setAttribute(&quot;user&quot;,user);<br>            return &quot;redirect:result&quot;;<br>        &#125;<br>        model.addAttribute(&quot;msg&quot;,&quot;用户名或密码错误，请重新登录！&quot;);<br>        return &quot;login&quot;;<br>    &#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">    &lt;context:component-scan base-package&#x3D;&quot;springmvc.validator&quot;&gt;&lt;&#x2F;context:component-scan&gt;<br><br>修改UserController中的login处理方法<br><br>public String login(@ModelAttribute User user, HttpSession session, Model model, BindingResult result)&#123;<br>    MyValidator myValidator &#x3D; new MyValidator();<br>    if(myValidator.supports(User.class))&#123;<br>    	myValidator.validate(user,result);<br>        List&lt;ObjectError&gt; list &#x3D; result.getAllErrors();<br>        for(ObjectError error:list)&#123;<br>            System.out.println(error.getCode());<br>        &#125;<br>    &#125;<br>    if(result.hasErrors())  return &quot;redirect:tologin&quot;;<br>    if(&quot;123&quot;.equals(user.getUsers())&amp;&amp;&quot;123&quot;.equals(user.getPasswords()))&#123;<br>        session.setAttribute(&quot;user&quot;,user);<br>        return &quot;redirect:result&quot;;<br>    &#125;<br>    model.addAttribute(&quot;msg&quot;,&quot;用户名或密码错误，请重新登录！&quot;);<br>    return &quot;login&quot;;<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>此时，若不输入账号密码直接登录，则终端输出</p>
 <p>user.users.required<br>passwords.invalid</p>
 <p>##<strong>Spring MVC JSR-303验证框架之Hibernate-Validator</strong></p>
@@ -1820,7 +2311,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext; -->
 <p><strong>注：要使用Hibernate-Validator进行验证，需要在配置文件中加上</strong></p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">&lt;mvc:annotation-driven&#x2F;&gt;  <br></code></pre></td></tr></table></figure>
 <p><strong>并添加依赖：</strong></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">dependency&gt;<br>           &lt;groupId&gt;org.hibernate&lt;&#x2F;groupId&gt;<br>           &lt;artifactId&gt;hibernate-validator&lt;&#x2F;artifactId&gt;<br>           &lt;version&gt;6.1.6.Final&lt;&#x2F;version&gt;<br>   &lt;&#x2F;dependency&gt;<br></code></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">dependency&gt;<br>        &lt;groupId&gt;org.hibernate&lt;&#x2F;groupId&gt;<br>        &lt;artifactId&gt;hibernate-validator&lt;&#x2F;artifactId&gt;<br>        &lt;version&gt;6.1.6.Final&lt;&#x2F;version&gt;<br>&lt;&#x2F;dependency&gt;<br></code></pre></td></tr></table></figure>
 
 <p>使用Hibernate-Validator进行验证，可以在要验证的 类的属性 或 getter方法加上相应的注解</p>
 <table>
@@ -1909,7 +2400,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext; -->
 </tbody></table>
 <p>如：</p>
 <p>在User的字段中添加标签</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">public class User &#123;<br><br>    @NotBlank(message &#x3D; &quot;用户名不能为空&quot;)<br>    private String users;<br><br>    @NotBlank(message &#x3D; &quot;密码不能为空&quot;)<br>   	@Length(min &#x3D; 3,max &#x3D; 8,message &#x3D; &quot;密码位数为3-8位&quot;)<br>    private String passwords;<br><br>    &#x2F;&#x2F;省略getter和setter方法<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">public class User &#123;<br><br>    @NotBlank(message &#x3D; &quot;用户名不能为空&quot;)<br>    private String users;<br><br>    @NotBlank(message &#x3D; &quot;密码不能为空&quot;)<br>	@Length(min &#x3D; 3,max &#x3D; 8,message &#x3D; &quot;密码位数为3-8位&quot;)<br>    private String passwords;<br><br>    &#x2F;&#x2F;省略getter和setter方法<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <p>在UserController添加test处理方法</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">@RequestMapping(&quot;&#x2F;test&quot;)<br>public String test(@Valid User user,BindingResult result)&#123;<br>    if(result.hasErrors())&#123;<br>        for (ObjectError error:result.getAllErrors())&#123;<br>            System.out.println(error.getDefaultMessage());<br>        &#125;<br>    &#125;<br>    return &quot;test&quot;;<br>&#125;<br></code></pre></td></tr></table></figure>
@@ -1925,7 +2416,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext; -->
 <p><a href="http://localhost:8080/login/123/123">http://localhost:8080/login/123/123</a></p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">@RequestMapping(&quot;&#x2F;test&#x2F;&#123;name&#125;&#x2F;&#123;passwords&#125;&quot;)<br>public String login(@PathVariable int name,@PathVariable String passwords)&#123;<br>    System.out.println(name);<br>    System.out.println(passwords);<br>    return &quot;newresult&quot;;<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>newresult页面为新jsp</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">&lt;%@ page contentType&#x3D;&quot;text&#x2F;html;charset&#x3D;UTF-8&quot; language&#x3D;&quot;java&quot; %&gt;<br>&lt;html&gt;<br>&lt;head&gt;<br>    &lt;title&gt;Title&lt;&#x2F;title&gt;<br>&lt;&#x2F;head&gt;<br>&lt;body&gt;<br>    &lt;h1&gt;登录成功&lt;&#x2F;h1&gt;<br>    $&#123;name&#125;<br>    &lt;br&gt;<br>    $&#123;passwords&#125;<br>&lt;&#x2F;body&gt;<br>&lt;&#x2F;html&gt;<br></code></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">&lt;%@ page contentType&#x3D;&quot;text&#x2F;html;charset&#x3D;UTF-8&quot; language&#x3D;&quot;java&quot; %&gt;<br>&lt;html&gt;<br>&lt;head&gt;<br>    &lt;title&gt;Title&lt;&#x2F;title&gt;<br>&lt;&#x2F;head&gt;<br>&lt;body&gt;<br>    &lt;h1&gt;登录成功&lt;&#x2F;h1&gt;<br>    $&#123;name&#125;<br>    &lt;br&gt;<br>    $&#123;passwords&#125;<br>&lt;&#x2F;body&gt;<br>	&lt;&#x2F;html&gt;<br></code></pre></td></tr></table></figure>
 
 <p>还可以使用对应于表单中的请求方式</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">@RequestMapping(&quot;&#x2F;test&quot;,method &#x3D; RequestMethod.POST)<br>public String login(@PathVariable int name,@PathVariable String passwords)&#123;<br>    System.out.println(name);<br>    System.out.println(passwords);<br>    return &quot;newresult&quot;;<br>&#125;<br></code></pre></td></tr></table></figure>

@@ -315,12 +315,6 @@ Stream&lt;String&gt; stream = list.stream();</code></pre>
       </tags>
   </entry>
   <entry>
-    <title>我的第一篇博文</title>
-    <url>/2020/09/21/NewPassage/</url>
-    <content><![CDATA[<p>这是我的第一篇博文，以后要把学习过程中的知识点写在自己的博客上😎</p>
-]]></content>
-  </entry>
-  <entry>
     <title>Python入门学习</title>
     <url>/2020/09/21/Python/</url>
     <content><![CDATA[<p>这学期选修了信息检索（python基础入门），所以有必要将python的基础markdown，便于以后学习。语言都具有相似性，下面列举出python与其他语言不同的地方</p>
@@ -2000,7 +1994,14 @@ import org.springframework.context.support.ClassPathXmlApplicationContext; -->
 </li>
 </ul>
 <p>为用户程序在执行过程中提供访问系统资源的唯一路径</p>
-]]></content>
+<h1 id="进程的描述与控制"><a href="#进程的描述与控制" class="headerlink" title="进程的描述与控制"></a><strong>进程的描述与控制</strong></h1><h2 id="前趋图和程序执行"><a href="#前趋图和程序执行" class="headerlink" title="前趋图和程序执行"></a><strong>前趋图和程序执行</strong></h2><h3 id="前趋图"><a href="#前趋图" class="headerlink" title="前趋图"></a><strong>前趋图</strong></h3><p>前趋图是一个有向无环图（DAG），它用于描述进程之间执行的先后顺序，图中的每个节点可用来表示一个进程或程序段，乃至一条语句，节点间的有向边表示两个节点间存在偏序关系（前趋关系）</p>
+<ul>
+<li><p>初始节点：没有前趋的节点</p>
+</li>
+<li><p>终止节点：没有后继的节点</p>
+</li>
+</ul>
+<h2 id="进程的描述"><a href="#进程的描述" class="headerlink" title="**进程的描述"></a>**进程的描述</h2>]]></content>
       <tags>
         <tag>操作系统</tag>
       </tags>
@@ -2957,6 +2958,266 @@ import org.springframework.context.support.ClassPathXmlApplicationContext; -->
         <tag>SSM框架</tag>
         <tag>数据库</tag>
         <tag>MyBatis</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>html常用标签</title>
+    <url>/2020/09/15/htmllabel/</url>
+    <content><![CDATA[<h2 id="结构标签"><a href="#结构标签" class="headerlink" title="结构标签"></a><strong>结构标签</strong></h2><figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">&lt;!DOCTYPE html&gt;<br>&lt;html&gt;<br>	&lt;head&gt;<br>		&lt;meta charset&#x3D;&quot;UTF-8&quot;&gt;<br>		&lt;title&gt;&lt;&#x2F;title&gt;<br>	&lt;&#x2F;head&gt;<br>	&lt;body&gt;<br>	&lt;&#x2F;body&gt;<br>&lt;&#x2F;html&gt;<br><br></code></pre></td></tr></table></figure>
+
+<h2 id="标题"><a href="#标题" class="headerlink" title="标题"></a><strong>标题</strong></h2><figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">&lt;h1&gt;&lt;&#x2F;h1&gt;<br>...<br>&lt;h6&gt;&lt;&#x2F;h6&gt;<br></code></pre></td></tr></table></figure>
+
+
+<h2 id="容器标签"><a href="#容器标签" class="headerlink" title="容器标签"></a><strong>容器标签</strong></h2><figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">&lt;div&gt;&lt;&#x2F;div&gt;<br><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">&lt;span&gt;&lt;&#x2F;span&gt;<br></code></pre></td></tr></table></figure>
+
+<h2 id="列表标签"><a href="#列表标签" class="headerlink" title="列表标签"></a><strong>列表标签</strong></h2><h3 id="有序列表"><a href="#有序列表" class="headerlink" title="有序列表"></a><strong>有序列表</strong></h3><figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">&lt;ul&gt;<br>	&lt;li&gt;...&lt;&#x2F;li&gt;<br>	...<br>	&lt;li&gt;...&lt;&#x2F;li&gt;<br>&lt;&#x2F;ul&gt;<br></code></pre></td></tr></table></figure>
+
+<h3 id="无序列表"><a href="#无序列表" class="headerlink" title="无序列表"></a><strong>无序列表</strong></h3><figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">&lt;ol type&#x3D;&quot;&quot;&gt;<br>	&lt;li&gt;...&lt;&#x2F;li&gt;<br>	...<br>	&lt;li&gt;...&lt;&#x2F;li&gt;<br>&lt;&#x2F;ol&gt;<br></code></pre></td></tr></table></figure>
+
+<h3 id="自定义列表"><a href="#自定义列表" class="headerlink" title="自定义列表"></a><strong>自定义列表</strong></h3><figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">&lt;dl&gt;<br>	&lt;dt&gt;1&lt;&#x2F;dt&gt;<br>	&lt;dd&gt;1.1&lt;&#x2F;dd&gt;<br>	&lt;dt&gt;2&lt;&#x2F;dt&gt;<br>	&lt;dd&gt;2.1&lt;&#x2F;dd&gt;<br>&lt;&#x2F;dl&gt;<br></code></pre></td></tr></table></figure>
+
+<h2 id="图片标签"><a href="#图片标签" class="headerlink" title="图片标签"></a><strong>图片标签</strong></h2><figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">&lt;img properties&#x2F;&gt;<br></code></pre></td></tr></table></figure>
+
+<p>常用属性：</p>
+<p>src：图片地址</p>
+<p>width:宽度</p>
+<p>height:高度</p>
+<p>border:边框</p>
+<p>align:对齐方式，代表图片与相邻的文本的相当位置（有三个属性值：top middle bottom）</p>
+<p>alt:图片的文字说明</p>
+<h2 id="链接标签"><a href="#链接标签" class="headerlink" title="链接标签"></a><strong>链接标签</strong></h2><figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">&lt;a href&#x3D;&quot;&quot;&gt; &lt;&#x2F;a&gt;<br></code></pre></td></tr></table></figure>
+
+<h2 id="表格标签"><a href="#表格标签" class="headerlink" title="表格标签"></a><strong>表格标签</strong></h2><figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">&lt;table&gt;<br>	<br>	&lt;tr&gt;<br>		&lt;th&gt;&lt;&#x2F;th&gt;		&#x2F;&#x2F;表头<br>		&lt;th&gt;&lt;&#x2F;th&gt;<br>	&lt;tr&gt;<br>		&lt;td&gt;&lt;&#x2F;td&gt;<br>		...<br>		&lt;td&gt;&lt;&#x2F;td&gt;<br>	&lt;&#x2F;tr&gt;<br><br>	...<br><br>&lt;&#x2F;table&gt;<br><br></code></pre></td></tr></table></figure>
+
+<p>分列</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">&lt;td colspan&#x3D;&quot;&quot;&gt;&lt;&#x2F;td&gt;<br><br></code></pre></td></tr></table></figure>
+
+<p>分行</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">&lt;th rowspan&#x3D;&quot;&quot;&gt;&lt;&#x2F;th&gt;<br></code></pre></td></tr></table></figure>
+
+<h2 id="表单"><a href="#表单" class="headerlink" title="表单"></a><strong>表单</strong></h2><figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">&lt;form properties&#x3D;&quot;&quot;&gt;<br><br>&lt;&#x2F;form&gt;<br><br></code></pre></td></tr></table></figure>
+
+<p>常用属性：</p>
+<p>action：表示动作，把表单的数据提交到该地址上处理</p>
+<p>method:请求方式：get、post</p>
+<h3 id="input"><a href="#input" class="headerlink" title="input"></a><strong>input</strong></h3><figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">&lt;input type&#x3D;&quot;&quot; name&#x3D;&quot;&quot; id&#x3D;&quot;&quot; value&#x3D;&quot;&quot; &#x2F;&gt;<br><br></code></pre></td></tr></table></figure>
+
+<p>name属性：表单元素名字，只有name属性才能提交给服务器。</p>
+<p>常用的type：</p>
+<p>text 文本框</p>
+<p>password  密码框 </p>
+<p>radio 表示是单选，name必须一致；value：提交给服务器的数据</p>
+<p>checkbox  表示多选 ，name必须一致</p>
+<p>file ：表示上传控件</p>
+<p>以上具有输入性质的必须要有name属性,一开始写value表示是默认值(以后获取输入框的内容要根据name来取)<br>以下按钮不具有输入性质，不需要name属性，但是按钮上的文字提示使用value属性</p>
+<p>submit   提交</p>
+<p>reset   重置</p>
+<p>button 普通按钮</p>
+<p>hidden  表示隐藏域，该框的内容服务器需要，但是不想让用户知道(不想清楚的显示在界面上)</p>
+<h3 id="select"><a href="#select" class="headerlink" title="select"></a><strong>select</strong></h3><figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">&lt;select name&#x3D;&quot;&quot;&gt;<br>	&lt;optgroup label&#x3D;&quot;&quot;&gt;<br>		&lt;option value&#x3D;&quot;&quot;&gt;&lt;&#x2F;option&gt;<br>		&lt;option value&#x3D;&quot;&quot;selected&#x3D;&quot;selected&quot;&gt;&lt;&#x2F;option&gt;<br>		....<br>	&lt;&#x2F;optgroup&gt;<br>	...<br><br>&lt;&#x2F;select&gt;<br></code></pre></td></tr></table></figure>
+
+<h3 id="textarea"><a href="#textarea" class="headerlink" title="textarea"></a><strong>textarea</strong></h3><figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">&lt;textarea cols&#x3D;&quot;100&quot; rows&#x3D;&quot;5&quot;&gt;  表示5行100列的区域可以输入内容<br></code></pre></td></tr></table></figure>
+
+<h2 id="特殊字符"><a href="#特殊字符" class="headerlink" title="特殊字符"></a><strong>特殊字符</strong></h2><figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">&lt; 小于号  <br>&gt; 大于号<br>&amp; 与字符<br>&quot; 引号 <br>&amp;reg; 己注册<br>&amp;copy; 版权<br>&amp;trade; 商标<br>&amp;nbsp; 空格   <br></code></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>html</tag>
+        <tag>前端</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>javaScript入门</title>
+    <url>/2020/09/16/js/</url>
+    <content><![CDATA[<p>JavaScript（js）是目前web开发中不可缺少的脚本语言，js不需要编译即可运行，运行在客户端，需要通过浏览器来解析执行JavaScript代码。</p>
+<p>js文档工具：<a href="https://jquery.cuishifeng.cn/index.html">https://jquery.cuishifeng.cn/index.html</a></p>
+<p>js是一门很随意的语言</p>
+<p>下面介绍js的基本语法</p>
+<h1 id="引入javascript"><a href="#引入javascript" class="headerlink" title="引入javascript"></a><strong>引入javascript</strong></h1><ol>
+<li>内部标签</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">&lt;script&gt;&lt;&#x2F;script&gt;<br></code></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>外部引入</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">&lt;script src&#x3D;&quot;xxx.js&quot;&gt;&lt;&#x2F;script&gt;<br></code></pre></td></tr></table></figure>
+
+<p>js标签可以放在 head部分 或者 body部分 </p>
+<h1 id="js输出"><a href="#js输出" class="headerlink" title="js输出"></a><strong>js输出</strong></h1><ul>
+<li><p>使用 window.alert() 弹出警告框。</p>
+</li>
+<li><p>使用 document.write() 方法将内容写到 HTML 文档中。</p>
+</li>
+<li><p>使用 innerHTML 写入到 HTML 元素。</p>
+</li>
+<li><p>使用 console.log() 写入到浏览器的控制台。</p>
+</li>
+</ul>
+<h1 id="js基本语法"><a href="#js基本语法" class="headerlink" title="js基本语法"></a><strong>js基本语法</strong></h1><h2 id="基本数据类型"><a href="#基本数据类型" class="headerlink" title="基本数据类型"></a><strong>基本数据类型</strong></h2><p>在了解基本数据类型之前，有必要了解一下js的严格检查模式</p>
+<p>严格检查模式用来预防js的随意性导致产生的一些问题，使用了严格检查模式，就不能不通过var 声明变量了</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">’use strict&#39;<br></code></pre></td></tr></table></figure>
+
+<hr>
+<p>在js中，基本数据类型用 var 进行定义，js拥有动态类型，这意味着相同的变量可用作不同的类型：</p>
+<p>如：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">var x;     <br>var x &#x3D; 1000;        <br>var x &#x3D; &quot;abc&quot;;<br><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>Number</li>
+</ul>
+<p>Number类型可以是整数、小数或者是科学计数</p>
+<ul>
+<li>String</li>
+</ul>
+<p>单引号或者双引号包围字符</p>
+<ul>
+<li>布尔值</li>
+</ul>
+<p>true or false</p>
+<ul>
+<li>数组</li>
+</ul>
+<p>定义数组：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">var arr &#x3D; new Array();<br><br>var arr &#x3D; [&quot;123&quot;,&quot;456&quot;,789]<br></code></pre></td></tr></table></figure>
+<p>js的数组可以包含不同的数据类型</p>
+<ul>
+<li>Undefined 和 Null</li>
+</ul>
+<p>Undefined表示未定义</p>
+<p>Null表示值为空</p>
+<ul>
+<li>NaN</li>
+</ul>
+<p>表示变量不是数字类型</p>
+<ul>
+<li>JavaScript对象</li>
+</ul>
+<p>在js中，js的对象为一个键值对的集合，所有的键都为字符串</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">var person &#x3D; &#123;<br>	name:&quot;zl&quot;,<br>	age:21,<br>	sex:&quot;boy&quot;,<br>	getprofession:function(profession)&#123;<br>		document.write(profession + &quot;&lt;br &#x2F;&gt;&quot;)<br>	&#125;,<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<p>js的对象可以进行对属性的动态添加和删除，可以用xx in xx的方法判断某属性是否在对象中</p>
+<p>在js的对象中，this关键字默认指向调用它的那个对象</p>
+<h2 id="JavaScript函数"><a href="#JavaScript函数" class="headerlink" title="JavaScript函数"></a><strong>JavaScript函数</strong></h2><figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain"><br>function functionName()&#123;<br><br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain"><br>var functionName &#x3D; function()&#123;<br><br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<p>两种方式等效</p>
+<p>其中，在函数的参数中，有一个关键词 arguments ，表示传入函数的参数的集合</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain"><br>for(var i&#x3D;0;i&lt;arguments.length;i++)&#123;<br><br>&#125;<br><br></code></pre></td></tr></table></figure>
+<p>另外，在参数中，可以使用 …rest 来获取除了已声明的参数之外的所有参数</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">function exp(a,b,c,...rest)<br></code></pre></td></tr></table></figure>
+
+
+<h2 id="变量作用域"><a href="#变量作用域" class="headerlink" title="变量作用域"></a><strong>变量作用域</strong></h2><ul>
+<li>全局变量</li>
+</ul>
+<p>其中，window.xxx 会自动绑定 全局变量</p>
+<ul>
+<li>局部变量</li>
+</ul>
+<p>let关键字：</p>
+<p>let关键字的作用是解决局部作用域的冲突问题</p>
+<p>如：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">for(var i&#x3D;0;i&lt;100;i++)&#123;<br>&#125;<br>console.log(i+1)<br></code></pre></td></tr></table></figure>
+<p>此时输出101</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">for(let i&#x3D;0;i&lt;100;i++)&#123;<br>&#125;<br>console.log(i+1)<br></code></pre></td></tr></table></figure>
+<p>此时不能输出</p>
+<ul>
+<li>块级作用域</li>
+</ul>
+<h2 id="JavaScript事件"><a href="#JavaScript事件" class="headerlink" title="JavaScript事件"></a><strong>JavaScript事件</strong></h2><h1 id="json"><a href="#json" class="headerlink" title="json"></a><strong>json</strong></h1><p>json是一种轻量级的数据交换格式</p>
+<p>在js中，任何js支持的类型都可以用json来表示</p>
+<p>格式：</p>
+<ul>
+<li><p>对象用{}</p>
+</li>
+<li><p>数组用[]</p>
+</li>
+<li><p>键值对用key：value</p>
+</li>
+</ul>
+<h2 id="对象与字符串的相互转换"><a href="#对象与字符串的相互转换" class="headerlink" title="对象与字符串的相互转换"></a><strong>对象与字符串的相互转换</strong></h2><figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">var person &#x3D; &#123;<br>	name:&quot;zl&quot;,<br>	age:21,<br>	sex:&quot;boy&quot;,<br>	getprofession:function(profession)&#123;<br>		document.write(profession + &quot;&lt;br &#x2F;&gt;&quot;)<br>	&#125;,<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>对象转换为字符串</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">JSON.stringify()<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>字符串转换为对象</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">JSON.parse(object)<br></code></pre></td></tr></table></figure>
+
+<h1 id="操作Bom元素"><a href="#操作Bom元素" class="headerlink" title="操作Bom元素"></a><strong>操作Bom元素</strong></h1><p>Bom：浏览器对象模型</p>
+<p>可以通过操作Bom来获取浏览器的一些重要信息</p>
+<h2 id="window"><a href="#window" class="headerlink" title="window"></a><strong>window</strong></h2><p>window代表当前浏览器窗口</p>
+<p>可以通过window对象，获取浏览器的一些重要信息</p>
+<p><img src="/2020/09/16/js/window.jpg" alt="window"></p>
+<h2 id="location"><a href="#location" class="headerlink" title="location"></a><strong>location</strong></h2><p>location代表当前页面的url信息</p>
+<p><img src="/2020/09/16/js/location.jpg" alt="location"></p>
+<h2 id="document"><a href="#document" class="headerlink" title="document"></a><strong>document</strong></h2><p>document代表当前页面的文档信息(html 文档数)</p>
+<p><img src="/2020/09/16/js/document.jpg" alt="document"></p>
+<p><img src="/2020/09/16/js/documentcookie.jpg" alt="documentcookie"></p>
+<h1 id="操作Dom元素"><a href="#操作Dom元素" class="headerlink" title="操作Dom元素"></a><strong>操作Dom元素</strong></h1><p>DOM：文档对象模型</p>
+<p>整个浏览器网页就是一个DOM树形节点，通过操作DOM元素，可以对浏览器的DOM进行增删查改操作</p>
+<p><img src="/2020/09/16/js/domtree.jpg" alt="domtree"></p>
+<p>其中每个节点都表示一个dom节点</p>
+<p>在js中，document对象表示一个文档树</p>
+<h2 id="获得dom节点"><a href="#获得dom节点" class="headerlink" title="获得dom节点"></a><strong>获得dom节点</strong></h2><figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">&lt;!DOCTYPE html&gt;<br>&lt;html&gt;<br>	&lt;head&gt;<br>		&lt;meta charset&#x3D;&quot;&#123;CHARSET&#125;&quot;&gt;<br>		&lt;title&gt;&lt;&#x2F;title&gt;<br>	&lt;&#x2F;head&gt;<br>	&lt;body&gt;<br>		&lt;h1&gt;h1&lt;&#x2F;h1&gt;<br>		&lt;p id&#x3D;&quot;p1&quot;&gt;p1&lt;&#x2F;p&gt;<br>		&lt;p id&#x3D;&quot;p2&quot;&gt;p2&lt;&#x2F;p&gt;<br>		&lt;p class&#x3D;&quot;p3&quot;&gt;p3&lt;&#x2F;p&gt;<br>		&lt;script&gt;<br>			document.getElementsByTagName(&quot;h1&quot;)<br>		&lt;&#x2F;script&gt;<br>	&lt;&#x2F;body&gt;<br>&lt;&#x2F;html&gt;<br><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">document.getElementsByTagName(&quot;h1&quot;)<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">document.getElementById(&quot;p1&quot;)<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">document.getElementsByClassName(&quot;p3&quot;)<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">&lt;!DOCTYPE html&gt;<br>&lt;html&gt;<br>	&lt;head&gt;<br>		&lt;meta charset&#x3D;&quot;&#123;CHARSET&#125;&quot;&gt;<br>		&lt;title&gt;&lt;&#x2F;title&gt;<br>	&lt;&#x2F;head&gt;<br>	&lt;body&gt;<br>		&lt;h1&gt;h1&lt;&#x2F;h1&gt;<br>		&lt;form&gt;<br>			&lt;input type&#x3D;&quot;password&quot; id&#x3D;&quot;input&quot;&#x2F;&gt;<br>		&lt;&#x2F;form&gt;<br>		&lt;script&gt;<br>			var val &#x3D; document.getElementById(&quot;input&quot;).value;<br>			document.write(val)<br>		&lt;&#x2F;script&gt;<br>	&lt;&#x2F;body&gt;<br>&lt;&#x2F;html&gt;<br></code></pre></td></tr></table></figure>
+
+<h2 id="更新节点"><a href="#更新节点" class="headerlink" title="更新节点"></a><strong>更新节点</strong></h2><p>修改文本值</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">document.getElementById(&quot;p1&quot;).innerText &#x3D; &quot;123&quot;<br></code></pre></td></tr></table></figure>
+
+<p>解析html文本</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">document.getElementById(&quot;p1&quot;).innerHTML &#x3D; &quot;&lt;strong&gt;123&lt;&#x2F;strong&gt;&quot;<br></code></pre></td></tr></table></figure>
+
+<p>也可以操作css样式</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">document.getElementById(&quot;p1&quot;).style.color &#x3D; &quot;red&quot;<br></code></pre></td></tr></table></figure>
+
+<h2 id="删除节点"><a href="#删除节点" class="headerlink" title="删除节点"></a><strong>删除节点</strong></h2><p>步骤：先获取父节点，再删除节点</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">&lt;!DOCTYPE html&gt;<br>&lt;html&gt;<br>	&lt;head&gt;<br>		&lt;meta charset&#x3D;&quot;&#123;CHARSET&#125;&quot;&gt;<br>		&lt;title&gt;&lt;&#x2F;title&gt;<br>	&lt;&#x2F;head&gt;<br>	&lt;body&gt;<br>		&lt;div id&#x3D;&quot;div1&quot;&gt;<br>			&lt;p id&#x3D;&quot;p1&quot;&gt;&lt;&#x2F;p&gt;<br>			&lt;p id&#x3D;&quot;p2&quot;&gt;&lt;&#x2F;p&gt;<br>		&lt;&#x2F;div&gt;<br>		&lt;script&gt;<br>			var div &#x3D; document.getElementById(&quot;div1&quot;);<br>			var p &#x3D; document.getElementById(&quot;p1&quot;);<br>		&lt;&#x2F;script&gt;<br>	&lt;&#x2F;body&gt;<br>&lt;&#x2F;html&gt;<br><br><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">div.removeChild(p1)<br></code></pre></td></tr></table></figure>
+
+<p>或者</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">var self &#x3D; document.getElementById(&quot;p1&quot;);<br>var father &#x3D; p1.parentElement;<br>father.removeChild(p1);<br><br></code></pre></td></tr></table></figure>
+
+<h2 id="插入节点"><a href="#插入节点" class="headerlink" title="插入节点"></a><strong>插入节点</strong></h2><p>在获取某个dom节点时，假如节点是空的，就可以通过innerHTML增加一个节点，否则则会产生覆盖</p>
+<p>通常采用追加append操作进行插入</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">&lt;!DOCTYPE html&gt;<br>&lt;html&gt;<br>	&lt;head&gt;<br>		&lt;meta charset&#x3D;&quot;&#123;CHARSET&#125;&quot;&gt;<br>		&lt;title&gt;&lt;&#x2F;title&gt;<br>	&lt;&#x2F;head&gt;<br>	&lt;body&gt;<br>		&lt;p id&#x3D;&quot;js&quot;&gt;javascript&lt;&#x2F;p&gt;<br>		&lt;div id&#x3D;&quot;div1&quot;&gt;<br>			&lt;p id&#x3D;&quot;se&quot;&gt;javase&lt;&#x2F;p&gt;<br>			&lt;p id&#x3D;&quot;ee&quot;&gt;javaee&lt;&#x2F;p&gt;<br>			&lt;p id&#x3D;&quot;me&quot;&gt;javame&lt;&#x2F;p&gt;<br>		&lt;&#x2F;div&gt;<br>		&lt;script&gt;<br>			var p &#x3D; document.getElementById(&quot;js&quot;);<br>			var div &#x3D; document.getElementById(&quot;div1&quot;);	<br>		&lt;&#x2F;script&gt;<br>	&lt;&#x2F;body&gt;<br>&lt;&#x2F;html&gt;<br><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">div.appendChild(js);<br><br></code></pre></td></tr></table></figure>
+
+<p>创建新节点：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">var newp &#x3D; document.createElement(&quot;p&quot;);<br>newp.id &#x3D; &quot;hh&quot;;<br>newp.innerText &#x3D; &quot;hh&quot;;<br>div.appendChild(newp);<br></code></pre></td></tr></table></figure>
+
+<h1 id="JQuery"><a href="#JQuery" class="headerlink" title="JQuery"></a><strong>JQuery</strong></h1><p>JQuery是js的一个库，里面存在大量的js函数</p>
+<p>使用jQuery前，要引入JQuery的cdn</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">&lt;script src&#x3D;&quot;https:&#x2F;&#x2F;cdn.bootcdn.net&#x2F;ajax&#x2F;libs&#x2F;jquery&#x2F;1.10.0&#x2F;jquery.min.js&quot;&gt;&lt;&#x2F;script&gt;<br></code></pre></td></tr></table></figure>
+
+<h2 id="jquery的使用"><a href="#jquery的使用" class="headerlink" title="jquery的使用"></a><strong>jquery的使用</strong></h2><p>jquery的使用非常简单，只要使用如下公式就行，不用再使用document</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">&lt;!DOCTYPE html&gt;<br>&lt;html&gt;<br>	&lt;head&gt;<br>		&lt;meta charset&#x3D;&quot;utf-8&quot;&gt;<br>		&lt;script src&#x3D;&quot;https:&#x2F;&#x2F;cdn.bootcdn.net&#x2F;ajax&#x2F;libs&#x2F;jquery&#x2F;1.10.0&#x2F;jquery.min.js&quot;&gt;&lt;&#x2F;script&gt;		&lt;title&gt;&lt;&#x2F;title&gt;<br>	&lt;&#x2F;head&gt;<br>	&lt;body&gt;<br>		&lt;button id&#x3D;&quot;button&quot;&gt;点我&lt;&#x2F;button&gt;<br>		&lt;script&gt;<br>			$(&quot;#button&quot;).click(<br>				function()&#123;<br>					alert(&quot;hello&quot;);<br>				&#125;<br>			)<br>		&lt;&#x2F;script&gt;<br>	&lt;&#x2F;body&gt;<br>&lt;&#x2F;html&gt;<br></code></pre></td></tr></table></figure>
+
+<h2 id="jquery操作dom元素"><a href="#jquery操作dom元素" class="headerlink" title="jquery操作dom元素"></a><strong>jquery操作dom元素</strong></h2><figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">&lt;!DOCTYPE html&gt;<br>&lt;html&gt;<br>	&lt;head&gt;<br>		&lt;meta charset&#x3D;&quot;utf-8&quot;&gt;<br>		&lt;script src&#x3D;&quot;https:&#x2F;&#x2F;cdn.bootcdn.net&#x2F;ajax&#x2F;libs&#x2F;jquery&#x2F;1.10.0&#x2F;jquery.min.js&quot;&gt;&lt;&#x2F;script&gt;		&lt;title&gt;&lt;&#x2F;title&gt;<br>	&lt;&#x2F;head&gt;<br>	&lt;body&gt;<br>		&lt;ul id&#x3D;&quot;ul&quot;&gt;<br>			&lt;li name&#x3D;&quot;java&quot;&gt;java&lt;&#x2F;li&gt;<br>			&lt;li name&#x3D;&quot;js&quot;&gt;js&lt;&#x2F;li&gt;<br>		&lt;&#x2F;ul&gt;<br>		&lt;script&gt;<br>			var val &#x3D; $(&quot;#ul li[name&#x3D;java]&quot;).text();<br>			document.write(val)<br>			$(&quot;#ul li[name&#x3D;js]&quot;).text(&quot;123&quot;);<br>		&lt;&#x2F;script&gt;<br>	&lt;&#x2F;body&gt;<br>&lt;&#x2F;html&gt;<br><br></code></pre></td></tr></table></figure>
+
+<p>显示和隐藏dom元素</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">$(&quot;#ul li[name&#x3D;js]&quot;).hide();<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">$(&quot;#ul li[name&#x3D;js]&quot;).show();<br></code></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>前端</tag>
+        <tag>javaScript</tag>
       </tags>
   </entry>
 </search>

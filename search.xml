@@ -921,6 +921,59 @@
 <p>当一个线程完成了自己的任务后，或是线程在运行中出现异常情况而须被强行终止时，由终止线程通过调用相应的函数（或系统调用）对它执行终止操作。但有些线程（主要是系统线程），它们一旦被建立起来之后，便一直运行下去而不被终止。</p>
 <p>在大多数的OS中，线程被中止后并不立即释放它所占有的资源，只有当进程中的其它线程执行了分离函数后，被终止的线程才与资源分离，此时的资源才能被其它线程利用。</p>
 <p>虽已被终止但尚未释放资源的线程仍可以被需要它的线程所调用，以使被终止线程重新恢复运行。为此，调用线程须调用一条被称为“等待线程终止”的连接命令来与该线程进行连接。如果在一个调用者线程调用“等待线程终止”的连接命令，试图与指定线程连接时，若指定线程尚未被终止，则调用连接命令的线程将会阻塞，直至指定线程被终止后，才能实现它与调用者线程的连接并继续执行：若指定线程已被终止，则调用者线程不会被阻塞而是继续执行。</p>
+<h1 id="处理机调度与死锁"><a href="#处理机调度与死锁" class="headerlink" title="处理机调度与死锁"></a><strong>处理机调度与死锁</strong></h1><p>在多道程序环境下，内存中存在着多个进程，其数目往往多于处理机数目。这就要求系统能按某种算法，动态地将处理机分配给处于就绪状态的一个进程，使之执行。分配处理机的任务是由处理机调度程序完成的。</p>
+<p>在多道程序系统中，调度的实质是一种资源分配，处理机调度是对处理机资源进行分配。在多道批处理系统中，一个作业从提交到获得处理机执行，直至作业运行完毕，可能需要经历多级处理机调度</p>
+<h2 id="处理机调度的层次和调度算法的目标"><a href="#处理机调度的层次和调度算法的目标" class="headerlink" title="处理机调度的层次和调度算法的目标"></a><strong>处理机调度的层次和调度算法的目标</strong></h2><h3 id="处理机调度层次（三层）"><a href="#处理机调度层次（三层）" class="headerlink" title="处理机调度层次（三层）"></a><strong>处理机调度层次（三层）</strong></h3><ul>
+<li>高级调度</li>
+</ul>
+<p>高级调度又称长程调度或作业调度，它的调度对象是作业。其主要功能是根据某种算法，决定将外存上处于后备队列中的哪几个作业调入内存，为它们创建进程、分配必要的资源，并将它们放入就绪队列。高级调度主要用于多道批处理系统中，而在分时和实时系统中不设置高级调度。</p>
+<ul>
+<li>低级调度</li>
+</ul>
+<p>低级调度又称为进程调度或短程调度，其所调度的对象是进程(或内核级线程)。其主要功能是，根据某种算法，决定就绪队列中的哪个进程应获得处理机，并由分派程序将处理机分配给被选中的进程。进程调度是最基本的一种调度，在多道批处理、分时和实时三种类型的OS中，都必须配置这级调度。</p>
+<ul>
+<li>中级调度</li>
+</ul>
+<p>中级调度又称为内存调度。引入中级调度的主要目的是，提高内存利用率和系统吞吐量。为此，应把那些暂时不能运行的进程，调至外存等待，此时进程的状态称为就绪驻外存状态(或挂起状态)。当它们已具备运行条件且内存又稍有空闲时，由中级调度来决定，把外存上的那些已具备运行条件的就绪进程再重新调入内存，并修改其状态为就绪状态， </p>
+<p>上述三种调度中，进程调度的运行频率最高，作业调度的运行频率最低，中级调度的运行频率介于两者中间</p>
+<h3 id="处理机调度算法的目标"><a href="#处理机调度算法的目标" class="headerlink" title="处理机调度算法的目标"></a><strong>处理机调度算法的目标</strong></h3><ul>
+<li><p>处理机调度算法的共同目标</p>
+<ul>
+<li><p>提高资源利用率：cpu利用率 = cpu有效工作时间/（cpu有效工作时间+cpu等待空闲时间）</p>
+</li>
+<li><p>公平性：防止饥饿现象</p>
+</li>
+<li><p>平衡性：保持系统资源的使用平衡</p>
+</li>
+<li><p>策略强制执行：如安全策略</p>
+</li>
+</ul>
+</li>
+<li><p>批处理系统的目标</p>
+<ul>
+<li><p>平均周转时间短</p>
+<p>周转时间：指作业被提交给系统开始，到作业完成为之的这段时间间隔，分为：</p>
+<ul>
+<li><p>作业在外存后备队列的等待时间</p>
+</li>
+<li><p>进程在就绪队列等待进程调度的时间</p>
+</li>
+<li><p>进程在cpu执行的时间</p>
+</li>
+<li><p>进程等待i/o操作完成的时间</p>
+</li>
+</ul>
+<p>平均周转时间：∑Ti/n</p>
+<p>带权周转时间：（∑Ti/Ts）/n，Ti：作业周转时间，Ts：作业获得的服务时间</p>
+</li>
+<li><p>系统吞吐量高</p>
+<p>吞吐量：单位时间内完成的作业数，与批处理作业的平均作业长度有关</p>
+</li>
+<li><p>处理机利用率高</p>
+</li>
+</ul>
+</li>
+</ul>
 ]]></content>
       <tags>
         <tag>操作系统</tag>
@@ -1179,7 +1232,7 @@
 ]]></content>
       <tags>
         <tag>数据库</tag>
-        <tag>MyBatis</tag>
+        <tag>mybatis</tag>
       </tags>
   </entry>
   <entry>
@@ -1826,7 +1879,7 @@
         <tag>java</tag>
         <tag>SSM框架</tag>
         <tag>数据库</tag>
-        <tag>MyBatis</tag>
+        <tag>mybatis</tag>
       </tags>
   </entry>
   <entry>
@@ -2578,6 +2631,117 @@
         <tag>java</tag>
         <tag>SSM框架</tag>
         <tag>SpringMVC</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>java网络编程基础</title>
+    <url>/2020/10/03/internetprogram/</url>
+    <content><![CDATA[<h1 id="计算机网络"><a href="#计算机网络" class="headerlink" title="计算机网络"></a><strong>计算机网络</strong></h1><p>计算机网络是指将地理位置不同的具有独立功能的多台计算机及其外部设备，通过通信线路连接起来，在网络操作系统、网络管理软件及网络通信协议的管理和协调下，实现资源共享和信息传递的计算机系统。</p>
+<h1 id="实现网络通信的要素"><a href="#实现网络通信的要素" class="headerlink" title="实现网络通信的要素"></a><strong>实现网络通信的要素</strong></h1><h2 id="通信双方地址"><a href="#通信双方地址" class="headerlink" title="通信双方地址"></a><strong>通信双方地址</strong></h2><h3 id="ip地址"><a href="#ip地址" class="headerlink" title="ip地址"></a><strong>ip地址</strong></h3><p>ip：唯一定义一台网络上的计算机</p>
+<p>如：127.0.0.1表示 本机 localhost</p>
+<p>ip地址的分类：</p>
+<ul>
+<li><p>ipv4/ipv6：</p>
+<ul>
+<li><p>ipv4：4个字节组成</p>
+</li>
+<li><p>ipv6：8个无符号整数表示 </p>
+</li>
+</ul>
+</li>
+<li><p>公网/私网</p>
+<ul>
+<li><p>公网：互联网</p>
+</li>
+<li><p>私网：局域网 192.168.xx.xx</p>
+</li>
+</ul>
+</li>
+<li><p>域名</p>
+</li>
+</ul>
+<p>在java中，InetAddress是一个表示ip的对象</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">try &#123;<br>&#x2F;&#x2F;            获取本机ip地址<br>    InetAddress inetAddress1 &#x3D; InetAddress.getByName(&quot;127.0.0.1&quot;);<br>    InetAddress inetAddress2 &#x3D; InetAddress.getByName(&quot;localhost&quot;);<br>    InetAddress inetAddress3 &#x3D; InetAddress.getLocalHost();<br><br>    System.out.println(inetAddress1);<br>    System.out.println(inetAddress2);<br>    System.out.println(inetAddress3);<br><br>&#125; catch (UnknownHostException e) &#123;<br>    e.printStackTrace();<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="端口"><a href="#端口" class="headerlink" title="端口"></a><strong>端口</strong></h3><p>端口表示计算机上的一个程序的进程，不同的进程有不同的端口号，端口被规定0～65535，同一个协议下端口不能相同</p>
+<p>端口分类：</p>
+<ul>
+<li><p>公有端口 0～1023</p>
+<ul>
+<li><p>http：80</p>
+</li>
+<li><p>https：443</p>
+</li>
+<li><p>ftp：21</p>
+</li>
+<li><p>telent：23</p>
+</li>
+</ul>
+</li>
+<li><p>程序注册端口：1024-49151，分配用户或程序</p>
+<ul>
+<li><p>tomcat：8080</p>
+</li>
+<li><p>mysql：3306</p>
+</li>
+<li><p>oracle：1521</p>
+</li>
+</ul>
+</li>
+<li><p>动态/私有端口：49152～65535</p>
+</li>
+</ul>
+<p>win下查看所有端口<code>netstat -ano</code> </p>
+<p>查看指定端口：<code>netstat -ano|findstr &quot;端口号&quot;</code></p>
+<p>查看指定进程：<code>tasklist | findstr &quot;端口号&quot;</code></p>
+<p>mac下查看所有端口</p>
+<p><img src="/2020/10/03/internetprogram/macport.jpg" alt="macport"></p>
+<p>查看指定端口<code>lsof -i tcp:端口号</code></p>
+<p>杀死端口<code>kill java后的那串端口号</code></p>
+<p>在java中，InetSocketAddress对象表示一个套接字（ip+端口）</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">InetAddress inetAddress1 &#x3D; InetAddress.getByName(&quot;127.0.0.1&quot;);<br>InetSocketAddress inetSocketAddress &#x3D; new InetSocketAddress(inetAddress1,4000);<br>System.out.println(inetSocketAddress);<br>System.out.println(inetSocketAddress);<br>System.out.println(inetSocketAddress.getAddress());<br>System.out.println(inetSocketAddress.getHostName());<br>System.out.println(inetSocketAddress.getPort());<br></code></pre></td></tr></table></figure>
+
+<h2 id="通信协议"><a href="#通信协议" class="headerlink" title="通信协议"></a><strong>通信协议</strong></h2><p><img src="/2020/10/03/internetprogram/depth.png" alt="depth"></p>
+<p>在网络编程中，主要是针对传输层中的TCP/UDP进行编程</p>
+<p>通信协议是指双方实体完成通信或服务所必须遵循的规则和约定。</p>
+<p>TCP：用户传输协议</p>
+<p>通信前需要进行连接（三次握手，四次挥手），连接稳定，用于客户端和服务端间的连接</p>
+<p>UDP：用户数据报协议</p>
+<p>通信前不需要连接，连接不稳定，不需明确通讯双方</p>
+<h1 id="socket"><a href="#socket" class="headerlink" title="socket"></a><strong>socket</strong></h1><p>Socket是应用层与TCP/IP协议族通信的中间软件抽象层，它是一组接口，它把复杂的TCP/IP协议族隐藏在Socket接口后面，对用户来说，一组简单的接口就是全部，让Socket去组织数据，以符合指定的协议。在网络编程中，都是通过socket这一核心来进行网络的通信</p>
+<h1 id="TCP"><a href="#TCP" class="headerlink" title="TCP"></a><strong>TCP</strong></h1><h2 id="TCP实现通信"><a href="#TCP实现通信" class="headerlink" title="TCP实现通信"></a><strong>TCP实现通信</strong></h2><p>使用TCP模拟客户端与服务端的通信，核心是通过serverSocket和socket进行连接</p>
+<p>serverSocket建立端口服务，通过socket进行通讯</p>
+<p>服务端</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">try &#123;<br>    while(true)&#123;<br>&#x2F;&#x2F;                提供进程（端口）服务<br>        ServerSocket serverSocket &#x3D; new ServerSocket(9999);<br>&#x2F;&#x2F;                接受客户端消息<br>        Socket socket &#x3D; serverSocket.accept();<br>        InputStream is &#x3D; socket.getInputStream();<br>&#x2F;&#x2F;                流接口<br>        ByteArrayOutputStream baos &#x3D; new ByteArrayOutputStream();<br>        byte[] buffer &#x3D; new byte[1024];<br>        int len;<br>        while((len&#x3D;is.read(buffer))!&#x3D;-1)&#123;<br>            baos.write(buffer,0,len);<br>        &#125;<br>        System.out.println(baos.toString());<br>        baos.close();<br>        is.close();<br>        socket.close();<br>        serverSocket.close();<br>    &#125;<br><br>&#125; catch (IOException e) &#123;<br>    e.printStackTrace();<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>客户端</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">try &#123;<br>&#x2F;&#x2F;            获取主机地址<br>    InetAddress inetAddress &#x3D; InetAddress.getByName(&quot;127.0.0.1&quot;);<br>&#x2F;&#x2F;            端口号<br>    int port &#x3D; 9999;<br>&#x2F;&#x2F;            通信机制<br>    Socket socket &#x3D; new Socket(inetAddress,port);<br>&#x2F;&#x2F;            发送消息<br>    OutputStream os &#x3D; socket.getOutputStream();<br>    os.write(&quot;测试测试123&quot;.getBytes());<br>    os.close();<br>    socket.close();<br><br>&#125; catch (UnknownHostException e) &#123;<br>    e.printStackTrace();<br>&#125; catch (IOException e) &#123;<br>    e.printStackTrace();<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h1 id="UDP"><a href="#UDP" class="headerlink" title="UDP"></a><strong>UDP</strong></h1><p>在UDP中，双方进行通信的核心是DatagramSocket和DatagramPacket</p>
+<p>其中DatagramPacket中封装了消息、ip和端口号</p>
+<p>客户端服务端通过DatagramSocket发送和接受DatagramPacket对象</p>
+<h2 id="UDP实现通信"><a href="#UDP实现通信" class="headerlink" title="UDP实现通信"></a><strong>UDP实现通信</strong></h2><p>服务端</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">try &#123;<br>    DatagramSocket socket &#x3D; new DatagramSocket(9999);<br>    byte[] buffer &#x3D; new byte[1024];<br>    DatagramPacket packet &#x3D; new DatagramPacket(buffer,0,buffer.length);<br>    socket.receive(packet);<br><br>    System.out.println(packet.getAddress());<br>    System.out.println(new String(packet.getData()));<br><br>    socket.close();<br><br>&#125; catch (Exception e) &#123;<br>    e.printStackTrace();<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>客户端</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">try &#123;<br><br>    DatagramSocket socket &#x3D; new DatagramSocket();<br>    InetAddress inetAddress &#x3D; InetAddress.getByName(&quot;127.0.0.1&quot;);<br>    int port &#x3D; 9999;<br>    String msg &#x3D; &quot;hello!&quot;;<br>    DatagramPacket packet &#x3D; new DatagramPacket(msg.getBytes(),0,msg.getBytes().length,inetAddress,port);<br>    socket.send(packet);<br><br>    socket.close();<br><br>&#125; catch (Exception e) &#123;<br>    e.printStackTrace();<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="聊天功能实现"><a href="#聊天功能实现" class="headerlink" title="聊天功能实现"></a><strong>聊天功能实现</strong></h2><p>在聊天功能中，需要用线程实现，因为每个参与聊天的人都有 发送、接受 两个线程</p>
+<p>sender：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">public class sender implements Runnable &#123;<br><br>    private int fromPort;<br><br>    private String local;<br><br>    private int toPort;<br><br>    private DatagramSocket socket &#x3D; null;<br><br>    private DatagramPacket packet &#x3D; null;<br><br>    public sender(int fromPort, String local, int toPort) &#123;<br>        this.fromPort &#x3D; fromPort;<br>        this.local &#x3D; local;<br>        this.toPort &#x3D; toPort;<br><br>        try &#123;<br><br>            socket &#x3D; new DatagramSocket(fromPort);<br><br>        &#125; catch (SocketException e) &#123;<br>            e.printStackTrace();<br>        &#125;<br>    &#125;<br><br>    @Override<br>    public void run() &#123;<br><br>        BufferedReader reader &#x3D; new BufferedReader(new InputStreamReader(System.in));<br><br>        while(true)&#123;<br><br>            try &#123;<br><br>                String msg &#x3D; reader.readLine();<br><br>                packet &#x3D; new DatagramPacket(msg.getBytes(),0,msg.getBytes().length,new InetSocketAddress(local,toPort));<br><br>                socket.send(packet);<br><br>                if(msg.equals(&quot;bye&quot;))&#123;<br>                    break;<br>                &#125;<br><br><br>            &#125; catch (IOException e) &#123;<br>                e.printStackTrace();<br>            &#125;<br><br>        &#125;<br><br>        try &#123;<br><br>            reader.close();<br>            socket.close();<br><br>        &#125; catch (IOException e) &#123;<br>            e.printStackTrace();<br>        &#125;<br><br><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>receiver</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">public class receiver implements Runnable&#123;<br><br><br>    private int fromPort;<br><br>    private DatagramSocket socket &#x3D; null;<br><br>    public receiver(int fromPort) &#123;<br>        this.fromPort &#x3D; fromPort;<br><br>        try &#123;<br><br>            socket &#x3D; new DatagramSocket(fromPort);<br><br>        &#125; catch (SocketException e) &#123;<br>            e.printStackTrace();<br>        &#125;<br><br>    &#125;<br><br>    @Override<br>    public void run() &#123;<br><br><br>        while(true)&#123;<br><br>            byte[] bytes &#x3D; new byte[1024];<br><br>            DatagramPacket packet &#x3D; new DatagramPacket(bytes,0,bytes.length);<br><br>            try &#123;<br><br>                socket.receive(packet);<br><br>                byte[] receiveData &#x3D; packet.getData();<br><br>                String receiveMsg &#x3D; new String(receiveData,0,receiveData.length);<br><br>                System.out.println(receiveMsg);<br>                if(receiveMsg.contains(&quot;bye&quot;))  break;<br><br>            &#125; catch (IOException e) &#123;<br>                e.printStackTrace();<br>            &#125;<br><br><br>        &#125;<br><br>        socket.close();<br><br><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>聊天参与者person1、person2</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">public class person1 &#123;<br>    public static void main(String[] args) &#123;<br>        new Thread(new sender(8888,&quot;localhost&quot;,7777)).start();<br>        new Thread(new receiver(9999)).start();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">public class person2 &#123;<br>    public static void main(String[] args) &#123;<br>        new Thread(new sender(5555,&quot;localhost&quot;,9999)).start();<br>        new Thread(new receiver(7777)).start();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>java</tag>
+        <tag>网络编程</tag>
       </tags>
   </entry>
   <entry>

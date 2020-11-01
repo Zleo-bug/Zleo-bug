@@ -1,0 +1,284 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>java网络编程基础 | 十二点前要睡觉</title><meta name="keywords" content="java,网络编程"><meta name="author" content="leobro,zhangakenug@qq.com"><meta name="copyright" content="leobro"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="description" content="计算机网络计算机网络是指将地理位置不同的具有独立功能的多台计算机及其外部设备，通过通信线路连接起来，在网络操作系统、网络管理软件及网络通信协议的管理和协调下，实现资源共享和信息传递的计算机系统。 实现网络通信的要素通信双方地址ip地址ip：唯一定义一台网络上的计算机 如：127.0.0.1表示 本机 localhost ip地址的分类：  ipv4&#x2F;ipv6：  ipv4：4个字节组成  ipv6">
+<meta property="og:type" content="article">
+<meta property="og:title" content="java网络编程基础">
+<meta property="og:url" content="http://example.com/2020/10/03/internetprogram/index.html">
+<meta property="og:site_name" content="十二点前要睡觉">
+<meta property="og:description" content="计算机网络计算机网络是指将地理位置不同的具有独立功能的多台计算机及其外部设备，通过通信线路连接起来，在网络操作系统、网络管理软件及网络通信协议的管理和协调下，实现资源共享和信息传递的计算机系统。 实现网络通信的要素通信双方地址ip地址ip：唯一定义一台网络上的计算机 如：127.0.0.1表示 本机 localhost ip地址的分类：  ipv4&#x2F;ipv6：  ipv4：4个字节组成  ipv6">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/WechatIMG68.jpeg">
+<meta property="article:published_time" content="2020-10-03T05:39:50.000Z">
+<meta property="article:modified_time" content="2020-11-01T14:13:26.972Z">
+<meta property="article:author" content="leobro">
+<meta property="article:tag" content="java">
+<meta property="article:tag" content="网络编程">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/WechatIMG68.jpeg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2020/10/03/internetprogram/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  hexoversion: '5.2.0',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  ClickShowText: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+};
+
+var saveToLocal = {
+  set: function setWithExpiry(key, value, ttl) {
+    const now = new Date()
+    const expiryDay = ttl * 86400000
+    const item = {
+      value: value,
+      expiry: now.getTime() + expiryDay,
+    }
+    localStorage.setItem(key, JSON.stringify(item))
+  },
+
+  get: function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
+
+    if (!itemStr) {
+      return undefined
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
+
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key)
+      return undefined
+    }
+    return item.value
+  }
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isSidebar: true,
+  postUpdate: '2020-11-01 22:13:26'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>var activateDarkMode = function () {
+  document.documentElement.setAttribute('data-theme', 'dark')
+  if (document.querySelector('meta[name="theme-color"]') !== null) {
+    document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+  }
+}
+var activateLightMode = function () {
+  document.documentElement.setAttribute('data-theme', 'light')
+  if (document.querySelector('meta[name="theme-color"]') !== null) {
+    document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+  }
+}
+
+var autoChangeMode = 'false'
+var t = saveToLocal.get('theme')
+if (autoChangeMode === '1') {
+  var isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+  var isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+  var isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+  var hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+  if (t === undefined) {
+    if (isLightMode) activateLightMode()
+    else if (isDarkMode) activateDarkMode()
+    else if (isNotSpecified || hasNoSupport) {
+      var now = new Date()
+      var hour = now.getHours()
+      var isNight = hour <= 6 || hour >= 18
+      isNight ? activateDarkMode() : activateLightMode()
+    }
+    window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+      if (saveToLocal.get('theme') === undefined) {
+        e.matches ? activateDarkMode() : activateLightMode()
+      }
+    })
+  } else if (t === 'light') activateLightMode()
+  else activateDarkMode()
+} else if (autoChangeMode === '2') {
+  now = new Date()
+  hour = now.getHours()
+  isNight = hour <= 6 || hour >= 18
+  if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+  else if (t === 'light') activateLightMode()
+  else activateDarkMode()
+} else {
+  if (t === 'dark') activateDarkMode()
+  else if (t === 'light') activateLightMode()
+}</script><meta name="generator" content="Hexo 5.2.0"></head><body><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="/img/WechatIMG68.jpeg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">文章</div><div class="length_num">24</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/tags/"><div class="headline">标签</div><div class="length_num">25</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></div><div class="menus_item"><a class="site-page" href="/messageboard/"><i class="fa-fw fa fa-link"></i><span> 留言板</span></a></div></div></div></div><div id="body-wrap"><div id="sidebar"><i class="fas fa-arrow-right on" id="toggle-sidebar"></i><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C"><span class="toc-number">1.</span> <span class="toc-text">计算机网络</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0%E7%BD%91%E7%BB%9C%E9%80%9A%E4%BF%A1%E7%9A%84%E8%A6%81%E7%B4%A0"><span class="toc-number">2.</span> <span class="toc-text">实现网络通信的要素</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%9A%E4%BF%A1%E5%8F%8C%E6%96%B9%E5%9C%B0%E5%9D%80"><span class="toc-number">2.1.</span> <span class="toc-text">通信双方地址</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ip%E5%9C%B0%E5%9D%80"><span class="toc-number">2.1.1.</span> <span class="toc-text">ip地址</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AB%AF%E5%8F%A3"><span class="toc-number">2.1.2.</span> <span class="toc-text">端口</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE"><span class="toc-number">2.2.</span> <span class="toc-text">通信协议</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#socket"><span class="toc-number">3.</span> <span class="toc-text">socket</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#TCP"><span class="toc-number">4.</span> <span class="toc-text">TCP</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#TCP%E5%AE%9E%E7%8E%B0%E9%80%9A%E4%BF%A1"><span class="toc-number">4.1.</span> <span class="toc-text">TCP实现通信</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#UDP"><span class="toc-number">5.</span> <span class="toc-text">UDP</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#UDP%E5%AE%9E%E7%8E%B0%E9%80%9A%E4%BF%A1"><span class="toc-number">5.1.</span> <span class="toc-text">UDP实现通信</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%81%8A%E5%A4%A9%E5%8A%9F%E8%83%BD%E5%AE%9E%E7%8E%B0"><span class="toc-number">5.2.</span> <span class="toc-text">聊天功能实现</span></a></li></ol></li></ol></div></div></div><header class="post-bg" id="page-header"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">十二点前要睡觉</a></span><span id="menus"><div id="search_button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></div><div class="menus_item"><a class="site-page" href="/messageboard/"><i class="fa-fw fa fa-link"></i><span> 留言板</span></a></div></div><span class="close" id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="post-info"><div id="post-title"><div class="posttitle">java网络编程基础</div></div><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="fa-fw post-meta-icon far fa-calendar-alt"></i><span class="post-meta-label">发表于</span><time datetime="2020-10-03T05:39:50.000Z" title="undefined 2020-10-03 13:39:50">2020-10-03</time></span></div><div class="meta-secondline"> <span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">1.4k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>6分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout_post" id="content-inner"><article id="post"><div class="post-content" id="article-container"><h1 id="计算机网络"><a href="#计算机网络" class="headerlink" title="计算机网络"></a><strong>计算机网络</strong></h1><p>计算机网络是指将地理位置不同的具有独立功能的多台计算机及其外部设备，通过通信线路连接起来，在网络操作系统、网络管理软件及网络通信协议的管理和协调下，实现资源共享和信息传递的计算机系统。</p>
+<h1 id="实现网络通信的要素"><a href="#实现网络通信的要素" class="headerlink" title="实现网络通信的要素"></a><strong>实现网络通信的要素</strong></h1><h2 id="通信双方地址"><a href="#通信双方地址" class="headerlink" title="通信双方地址"></a><strong>通信双方地址</strong></h2><h3 id="ip地址"><a href="#ip地址" class="headerlink" title="ip地址"></a><strong>ip地址</strong></h3><p>ip：唯一定义一台网络上的计算机</p>
+<p>如：127.0.0.1表示 本机 localhost</p>
+<p>ip地址的分类：</p>
+<ul>
+<li><p>ipv4/ipv6：</p>
+<ul>
+<li><p>ipv4：4个字节组成</p>
+</li>
+<li><p>ipv6：8个无符号整数表示 </p>
+</li>
+</ul>
+</li>
+<li><p>公网/私网</p>
+<ul>
+<li><p>公网：互联网</p>
+</li>
+<li><p>私网：局域网 192.168.xx.xx</p>
+</li>
+</ul>
+</li>
+<li><p>域名</p>
+</li>
+</ul>
+<p>在java中，InetAddress是一个表示ip的对象</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs plain">try &#123;<br>&#x2F;&#x2F;            获取本机ip地址<br>    InetAddress inetAddress1 &#x3D; InetAddress.getByName(&quot;127.0.0.1&quot;);<br>    InetAddress inetAddress2 &#x3D; InetAddress.getByName(&quot;localhost&quot;);<br>    InetAddress inetAddress3 &#x3D; InetAddress.getLocalHost();<br><br>    System.out.println(inetAddress1);<br>    System.out.println(inetAddress2);<br>    System.out.println(inetAddress3);<br><br>&#125; catch (UnknownHostException e) &#123;<br>    e.printStackTrace();<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="端口"><a href="#端口" class="headerlink" title="端口"></a><strong>端口</strong></h3><p>端口表示计算机上的一个程序的进程，不同的进程有不同的端口号，端口被规定0～65535，同一个协议下端口不能相同</p>
+<p>端口分类：</p>
+<ul>
+<li><p>公有端口 0～1023</p>
+<ul>
+<li><p>http：80</p>
+</li>
+<li><p>https：443</p>
+</li>
+<li><p>ftp：21</p>
+</li>
+<li><p>telent：23</p>
+</li>
+</ul>
+</li>
+<li><p>程序注册端口：1024-49151，分配用户或程序</p>
+<ul>
+<li><p>tomcat：8080</p>
+</li>
+<li><p>mysql：3306</p>
+</li>
+<li><p>oracle：1521</p>
+</li>
+</ul>
+</li>
+<li><p>动态/私有端口：49152～65535</p>
+</li>
+</ul>
+<p>win下查看所有端口<code>netstat -ano</code> </p>
+<p>查看指定端口：<code>netstat -ano|findstr &quot;端口号&quot;</code></p>
+<p>查看指定进程：<code>tasklist | findstr &quot;端口号&quot;</code></p>
+<p>mac下查看所有端口</p>
+<p><img src="/2020/10/03/internetprogram/macport.jpg" alt="macport"></p>
+<p>查看指定端口<code>lsof -i tcp:端口号</code></p>
+<p>杀死端口<code>kill java后的那串端口号</code></p>
+<p>在java中，InetSocketAddress对象表示一个套接字（ip+端口）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs plain">InetAddress inetAddress1 &#x3D; InetAddress.getByName(&quot;127.0.0.1&quot;);<br>InetSocketAddress inetSocketAddress &#x3D; new InetSocketAddress(inetAddress1,4000);<br>System.out.println(inetSocketAddress);<br>System.out.println(inetSocketAddress);<br>System.out.println(inetSocketAddress.getAddress());<br>System.out.println(inetSocketAddress.getHostName());<br>System.out.println(inetSocketAddress.getPort());<br></code></pre></td></tr></table></figure>
+
+<h2 id="通信协议"><a href="#通信协议" class="headerlink" title="通信协议"></a><strong>通信协议</strong></h2><p><img src="/2020/10/03/internetprogram/depth.png" alt="depth"></p>
+<p>在网络编程中，主要是针对传输层中的TCP/UDP进行编程</p>
+<p>通信协议是指双方实体完成通信或服务所必须遵循的规则和约定。</p>
+<p>TCP：用户传输协议</p>
+<p>通信前需要进行连接（三次握手，四次挥手），连接稳定，用于客户端和服务端间的连接</p>
+<p>UDP：用户数据报协议</p>
+<p>通信前不需要连接，连接不稳定，不需明确通讯双方</p>
+<h1 id="socket"><a href="#socket" class="headerlink" title="socket"></a><strong>socket</strong></h1><p>Socket是应用层与TCP/IP协议族通信的中间软件抽象层，它是一组接口，它把复杂的TCP/IP协议族隐藏在Socket接口后面，对用户来说，一组简单的接口就是全部，让Socket去组织数据，以符合指定的协议。在网络编程中，都是通过socket这一核心来进行网络的通信</p>
+<h1 id="TCP"><a href="#TCP" class="headerlink" title="TCP"></a><strong>TCP</strong></h1><h2 id="TCP实现通信"><a href="#TCP实现通信" class="headerlink" title="TCP实现通信"></a><strong>TCP实现通信</strong></h2><p>使用TCP模拟客户端与服务端的通信，核心是通过serverSocket和socket进行连接</p>
+<p>serverSocket建立端口服务，通过socket进行通讯</p>
+<p>服务端</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs plain">try &#123;<br>    while(true)&#123;<br>&#x2F;&#x2F;                提供进程（端口）服务<br>        ServerSocket serverSocket &#x3D; new ServerSocket(9999);<br>&#x2F;&#x2F;                接受客户端消息<br>        Socket socket &#x3D; serverSocket.accept();<br>        InputStream is &#x3D; socket.getInputStream();<br>&#x2F;&#x2F;                流接口<br>        ByteArrayOutputStream baos &#x3D; new ByteArrayOutputStream();<br>        byte[] buffer &#x3D; new byte[1024];<br>        int len;<br>        while((len&#x3D;is.read(buffer))!&#x3D;-1)&#123;<br>            baos.write(buffer,0,len);<br>        &#125;<br>        System.out.println(baos.toString());<br>        baos.close();<br>        is.close();<br>        socket.close();<br>        serverSocket.close();<br>    &#125;<br><br>&#125; catch (IOException e) &#123;<br>    e.printStackTrace();<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>客户端</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs plain">try &#123;<br>&#x2F;&#x2F;            获取主机地址<br>    InetAddress inetAddress &#x3D; InetAddress.getByName(&quot;127.0.0.1&quot;);<br>&#x2F;&#x2F;            端口号<br>    int port &#x3D; 9999;<br>&#x2F;&#x2F;            通信机制<br>    Socket socket &#x3D; new Socket(inetAddress,port);<br>&#x2F;&#x2F;            发送消息<br>    OutputStream os &#x3D; socket.getOutputStream();<br>    os.write(&quot;测试测试123&quot;.getBytes());<br>    os.close();<br>    socket.close();<br><br>&#125; catch (UnknownHostException e) &#123;<br>    e.printStackTrace();<br>&#125; catch (IOException e) &#123;<br>    e.printStackTrace();<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h1 id="UDP"><a href="#UDP" class="headerlink" title="UDP"></a><strong>UDP</strong></h1><p>在UDP中，双方进行通信的核心是DatagramSocket和DatagramPacket</p>
+<p>其中DatagramPacket中封装了消息、ip和端口号</p>
+<p>客户端服务端通过DatagramSocket发送和接受DatagramPacket对象</p>
+<h2 id="UDP实现通信"><a href="#UDP实现通信" class="headerlink" title="UDP实现通信"></a><strong>UDP实现通信</strong></h2><p>服务端</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs plain">try &#123;<br>    DatagramSocket socket &#x3D; new DatagramSocket(9999);<br>    byte[] buffer &#x3D; new byte[1024];<br>    DatagramPacket packet &#x3D; new DatagramPacket(buffer,0,buffer.length);<br>    socket.receive(packet);<br><br>    System.out.println(packet.getAddress());<br>    System.out.println(new String(packet.getData()));<br><br>    socket.close();<br><br>&#125; catch (Exception e) &#123;<br>    e.printStackTrace();<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>客户端</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs plain">try &#123;<br><br>    DatagramSocket socket &#x3D; new DatagramSocket();<br>    InetAddress inetAddress &#x3D; InetAddress.getByName(&quot;127.0.0.1&quot;);<br>    int port &#x3D; 9999;<br>    String msg &#x3D; &quot;hello!&quot;;<br>    DatagramPacket packet &#x3D; new DatagramPacket(msg.getBytes(),0,msg.getBytes().length,inetAddress,port);<br>    socket.send(packet);<br><br>    socket.close();<br><br>&#125; catch (Exception e) &#123;<br>    e.printStackTrace();<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="聊天功能实现"><a href="#聊天功能实现" class="headerlink" title="聊天功能实现"></a><strong>聊天功能实现</strong></h2><p>在聊天功能中，需要用线程实现，因为每个参与聊天的人都有 发送、接受 两个线程</p>
+<p>sender：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><code class="hljs plain">public class sender implements Runnable &#123;<br><br>    private int fromPort;<br><br>    private String local;<br><br>    private int toPort;<br><br>    private DatagramSocket socket &#x3D; null;<br><br>    private DatagramPacket packet &#x3D; null;<br><br>    public sender(int fromPort, String local, int toPort) &#123;<br>        this.fromPort &#x3D; fromPort;<br>        this.local &#x3D; local;<br>        this.toPort &#x3D; toPort;<br><br>        try &#123;<br><br>            socket &#x3D; new DatagramSocket(fromPort);<br><br>        &#125; catch (SocketException e) &#123;<br>            e.printStackTrace();<br>        &#125;<br>    &#125;<br><br>    @Override<br>    public void run() &#123;<br><br>        BufferedReader reader &#x3D; new BufferedReader(new InputStreamReader(System.in));<br><br>        while(true)&#123;<br><br>            try &#123;<br><br>                String msg &#x3D; reader.readLine();<br><br>                packet &#x3D; new DatagramPacket(msg.getBytes(),0,msg.getBytes().length,new InetSocketAddress(local,toPort));<br><br>                socket.send(packet);<br><br>                if(msg.equals(&quot;bye&quot;))&#123;<br>                    break;<br>                &#125;<br><br><br>            &#125; catch (IOException e) &#123;<br>                e.printStackTrace();<br>            &#125;<br><br>        &#125;<br><br>        try &#123;<br><br>            reader.close();<br>            socket.close();<br><br>        &#125; catch (IOException e) &#123;<br>            e.printStackTrace();<br>        &#125;<br><br><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>receiver</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><code class="hljs plain">public class receiver implements Runnable&#123;<br><br><br>    private int fromPort;<br><br>    private DatagramSocket socket &#x3D; null;<br><br>    public receiver(int fromPort) &#123;<br>        this.fromPort &#x3D; fromPort;<br><br>        try &#123;<br><br>            socket &#x3D; new DatagramSocket(fromPort);<br><br>        &#125; catch (SocketException e) &#123;<br>            e.printStackTrace();<br>        &#125;<br><br>    &#125;<br><br>    @Override<br>    public void run() &#123;<br><br><br>        while(true)&#123;<br><br>            byte[] bytes &#x3D; new byte[1024];<br><br>            DatagramPacket packet &#x3D; new DatagramPacket(bytes,0,bytes.length);<br><br>            try &#123;<br><br>                socket.receive(packet);<br><br>                byte[] receiveData &#x3D; packet.getData();<br><br>                String receiveMsg &#x3D; new String(receiveData,0,receiveData.length);<br><br>                System.out.println(receiveMsg);<br>                if(receiveMsg.contains(&quot;bye&quot;))  break;<br><br>            &#125; catch (IOException e) &#123;<br>                e.printStackTrace();<br>            &#125;<br><br><br>        &#125;<br><br>        socket.close();<br><br><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>聊天参与者person1、person2</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs plain">public class person1 &#123;<br>    public static void main(String[] args) &#123;<br>        new Thread(new sender(8888,&quot;localhost&quot;,7777)).start();<br>        new Thread(new receiver(9999)).start();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs plain">public class person2 &#123;<br>    public static void main(String[] args) &#123;<br>        new Thread(new sender(5555,&quot;localhost&quot;,9999)).start();<br>        new Thread(new receiver(7777)).start();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+</div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:zhangakenug@qq.com">leobro</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://example.com/2020/10/03/internetprogram/">http://example.com/2020/10/03/internetprogram/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://example.com" target="_blank">十二点前要睡觉</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/java/">java</a><a class="post-meta__tags" href="/tags/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/">网络编程</a></div><div class="post_share"><div class="addthis_inline_share_toolbox"></div><script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=null" async="async"></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2020/10/04/SpringMVC/"><img class="prev-cover" src="/null" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">SpringMVC入门</div></div></a></div><div class="next-post pull-right"><a href="/2020/10/02/AOP2/"><img class="next-cover" src="/null" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">AOP的API实现及SpringAOP实现原理</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2020/10/24/javarecord/" title="java日志使用"><img class="cover" src="/null"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-10-24</div><div class="title">java日志使用</div></div></a></div><div><a href="/2020/10/23/lombok/" title="lombok的使用"><img class="cover" src="/null"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-10-23</div><div class="title">lombok的使用</div></div></a></div><div><a href="/2020/10/22/mybatis/" title="MyBatis入门"><img class="cover" src="/null"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-10-22</div><div class="title">MyBatis入门</div></div></a></div><div><a href="/2020/10/20/javadb/" title="java jdbc的基本使用"><img class="cover" src="/null"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-10-20</div><div class="title">java jdbc的基本使用</div></div></a></div><div><a href="/2020/10/04/SpringMVC/" title="SpringMVC入门"><img class="cover" src="/null"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-10-04</div><div class="title">SpringMVC入门</div></div></a></div><div><a href="/2020/10/02/AOP2/" title="AOP的API实现及SpringAOP实现原理"><img class="cover" src="/null"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-10-02</div><div class="title">AOP的API实现及SpringAOP实现原理</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div><div class="comment-switch"><span class="first-comment">Valine</span><label><input id="switch-comments-btn" type="checkbox"/><span class="slider"></span></label><span class="second-comment"></span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div><div></div></div></div></article></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 By leobro</div><div class="icp"><a><img class="icp-icon" src="/img/icp.png"/><span></span></a></div></div></footer></div><section id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></section><div class="search-dialog" id="local-search"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"><div id="local-hits"></div><div id="local-stats"><div class="local-search-stats__hr" id="hr"><span>由</span> <a target="_blank" rel="noopener" href="https://github.com/wzpan/hexo-generator-search" style="color:#49B1F5;">hexo-generator-search</a>
+ <span>提供支持</span></div></div></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>function loadValine () {
+  function initValine () {
+    const initData = {
+      el: '#vcomment',
+      appId: 'o54aCaKzTFHPaGNnITdvAfOS-gzGzoHsz',
+      appKey: 'jvbQisVTLo4YUOsf7ftzcPAn',
+      placeholder: '',
+      avatar: 'monsterid',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'en',
+      recordIP: false,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: false,
+      path: window.location.pathname,
+    }
+
+    if (false) { 
+      initData.requiredFields= (''.split(','))
+    }
+
+    const valine = new Valine(initData)
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else $.getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js', initValine)
+}
+
+if ('Valine' === 'Valine' || !true) {
+  if (true) btf.loadComment(document.querySelector('#vcomment'),loadValine)
+  else setTimeout(() => loadValine(), 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/gh/metowolf/MetingJS@1.2/dist/Meting.min.js"></script></div></body></html>

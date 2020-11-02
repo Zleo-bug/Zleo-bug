@@ -2634,117 +2634,6 @@
       </tags>
   </entry>
   <entry>
-    <title>java网络编程基础</title>
-    <url>/2020/10/03/internetprogram/</url>
-    <content><![CDATA[<h1 id="计算机网络"><a href="#计算机网络" class="headerlink" title="计算机网络"></a><strong>计算机网络</strong></h1><p>计算机网络是指将地理位置不同的具有独立功能的多台计算机及其外部设备，通过通信线路连接起来，在网络操作系统、网络管理软件及网络通信协议的管理和协调下，实现资源共享和信息传递的计算机系统。</p>
-<h1 id="实现网络通信的要素"><a href="#实现网络通信的要素" class="headerlink" title="实现网络通信的要素"></a><strong>实现网络通信的要素</strong></h1><h2 id="通信双方地址"><a href="#通信双方地址" class="headerlink" title="通信双方地址"></a><strong>通信双方地址</strong></h2><h3 id="ip地址"><a href="#ip地址" class="headerlink" title="ip地址"></a><strong>ip地址</strong></h3><p>ip：唯一定义一台网络上的计算机</p>
-<p>如：127.0.0.1表示 本机 localhost</p>
-<p>ip地址的分类：</p>
-<ul>
-<li><p>ipv4/ipv6：</p>
-<ul>
-<li><p>ipv4：4个字节组成</p>
-</li>
-<li><p>ipv6：8个无符号整数表示 </p>
-</li>
-</ul>
-</li>
-<li><p>公网/私网</p>
-<ul>
-<li><p>公网：互联网</p>
-</li>
-<li><p>私网：局域网 192.168.xx.xx</p>
-</li>
-</ul>
-</li>
-<li><p>域名</p>
-</li>
-</ul>
-<p>在java中，InetAddress是一个表示ip的对象</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">try &#123;<br>&#x2F;&#x2F;            获取本机ip地址<br>    InetAddress inetAddress1 &#x3D; InetAddress.getByName(&quot;127.0.0.1&quot;);<br>    InetAddress inetAddress2 &#x3D; InetAddress.getByName(&quot;localhost&quot;);<br>    InetAddress inetAddress3 &#x3D; InetAddress.getLocalHost();<br><br>    System.out.println(inetAddress1);<br>    System.out.println(inetAddress2);<br>    System.out.println(inetAddress3);<br><br>&#125; catch (UnknownHostException e) &#123;<br>    e.printStackTrace();<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<h3 id="端口"><a href="#端口" class="headerlink" title="端口"></a><strong>端口</strong></h3><p>端口表示计算机上的一个程序的进程，不同的进程有不同的端口号，端口被规定0～65535，同一个协议下端口不能相同</p>
-<p>端口分类：</p>
-<ul>
-<li><p>公有端口 0～1023</p>
-<ul>
-<li><p>http：80</p>
-</li>
-<li><p>https：443</p>
-</li>
-<li><p>ftp：21</p>
-</li>
-<li><p>telent：23</p>
-</li>
-</ul>
-</li>
-<li><p>程序注册端口：1024-49151，分配用户或程序</p>
-<ul>
-<li><p>tomcat：8080</p>
-</li>
-<li><p>mysql：3306</p>
-</li>
-<li><p>oracle：1521</p>
-</li>
-</ul>
-</li>
-<li><p>动态/私有端口：49152～65535</p>
-</li>
-</ul>
-<p>win下查看所有端口<code>netstat -ano</code> </p>
-<p>查看指定端口：<code>netstat -ano|findstr &quot;端口号&quot;</code></p>
-<p>查看指定进程：<code>tasklist | findstr &quot;端口号&quot;</code></p>
-<p>mac下查看所有端口</p>
-<p><img src="/2020/10/03/internetprogram/macport.jpg" alt="macport"></p>
-<p>查看指定端口<code>lsof -i tcp:端口号</code></p>
-<p>杀死端口<code>kill java后的那串端口号</code></p>
-<p>在java中，InetSocketAddress对象表示一个套接字（ip+端口）</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">InetAddress inetAddress1 &#x3D; InetAddress.getByName(&quot;127.0.0.1&quot;);<br>InetSocketAddress inetSocketAddress &#x3D; new InetSocketAddress(inetAddress1,4000);<br>System.out.println(inetSocketAddress);<br>System.out.println(inetSocketAddress);<br>System.out.println(inetSocketAddress.getAddress());<br>System.out.println(inetSocketAddress.getHostName());<br>System.out.println(inetSocketAddress.getPort());<br></code></pre></td></tr></table></figure>
-
-<h2 id="通信协议"><a href="#通信协议" class="headerlink" title="通信协议"></a><strong>通信协议</strong></h2><p><img src="/2020/10/03/internetprogram/depth.png" alt="depth"></p>
-<p>在网络编程中，主要是针对传输层中的TCP/UDP进行编程</p>
-<p>通信协议是指双方实体完成通信或服务所必须遵循的规则和约定。</p>
-<p>TCP：用户传输协议</p>
-<p>通信前需要进行连接（三次握手，四次挥手），连接稳定，用于客户端和服务端间的连接</p>
-<p>UDP：用户数据报协议</p>
-<p>通信前不需要连接，连接不稳定，不需明确通讯双方</p>
-<h1 id="socket"><a href="#socket" class="headerlink" title="socket"></a><strong>socket</strong></h1><p>Socket是应用层与TCP/IP协议族通信的中间软件抽象层，它是一组接口，它把复杂的TCP/IP协议族隐藏在Socket接口后面，对用户来说，一组简单的接口就是全部，让Socket去组织数据，以符合指定的协议。在网络编程中，都是通过socket这一核心来进行网络的通信</p>
-<h1 id="TCP"><a href="#TCP" class="headerlink" title="TCP"></a><strong>TCP</strong></h1><h2 id="TCP实现通信"><a href="#TCP实现通信" class="headerlink" title="TCP实现通信"></a><strong>TCP实现通信</strong></h2><p>使用TCP模拟客户端与服务端的通信，核心是通过serverSocket和socket进行连接</p>
-<p>serverSocket建立端口服务，通过socket进行通讯</p>
-<p>服务端</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">try &#123;<br>    while(true)&#123;<br>&#x2F;&#x2F;                提供进程（端口）服务<br>        ServerSocket serverSocket &#x3D; new ServerSocket(9999);<br>&#x2F;&#x2F;                接受客户端消息<br>        Socket socket &#x3D; serverSocket.accept();<br>        InputStream is &#x3D; socket.getInputStream();<br>&#x2F;&#x2F;                流接口<br>        ByteArrayOutputStream baos &#x3D; new ByteArrayOutputStream();<br>        byte[] buffer &#x3D; new byte[1024];<br>        int len;<br>        while((len&#x3D;is.read(buffer))!&#x3D;-1)&#123;<br>            baos.write(buffer,0,len);<br>        &#125;<br>        System.out.println(baos.toString());<br>        baos.close();<br>        is.close();<br>        socket.close();<br>        serverSocket.close();<br>    &#125;<br><br>&#125; catch (IOException e) &#123;<br>    e.printStackTrace();<br>&#125;<br></code></pre></td></tr></table></figure>
-<p>客户端</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">try &#123;<br>&#x2F;&#x2F;            获取主机地址<br>    InetAddress inetAddress &#x3D; InetAddress.getByName(&quot;127.0.0.1&quot;);<br>&#x2F;&#x2F;            端口号<br>    int port &#x3D; 9999;<br>&#x2F;&#x2F;            通信机制<br>    Socket socket &#x3D; new Socket(inetAddress,port);<br>&#x2F;&#x2F;            发送消息<br>    OutputStream os &#x3D; socket.getOutputStream();<br>    os.write(&quot;测试测试123&quot;.getBytes());<br>    os.close();<br>    socket.close();<br><br>&#125; catch (UnknownHostException e) &#123;<br>    e.printStackTrace();<br>&#125; catch (IOException e) &#123;<br>    e.printStackTrace();<br>&#125;<br></code></pre></td></tr></table></figure>
-
-
-
-<h1 id="UDP"><a href="#UDP" class="headerlink" title="UDP"></a><strong>UDP</strong></h1><p>在UDP中，双方进行通信的核心是DatagramSocket和DatagramPacket</p>
-<p>其中DatagramPacket中封装了消息、ip和端口号</p>
-<p>客户端服务端通过DatagramSocket发送和接受DatagramPacket对象</p>
-<h2 id="UDP实现通信"><a href="#UDP实现通信" class="headerlink" title="UDP实现通信"></a><strong>UDP实现通信</strong></h2><p>服务端</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">try &#123;<br>    DatagramSocket socket &#x3D; new DatagramSocket(9999);<br>    byte[] buffer &#x3D; new byte[1024];<br>    DatagramPacket packet &#x3D; new DatagramPacket(buffer,0,buffer.length);<br>    socket.receive(packet);<br><br>    System.out.println(packet.getAddress());<br>    System.out.println(new String(packet.getData()));<br><br>    socket.close();<br><br>&#125; catch (Exception e) &#123;<br>    e.printStackTrace();<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p>客户端</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">try &#123;<br><br>    DatagramSocket socket &#x3D; new DatagramSocket();<br>    InetAddress inetAddress &#x3D; InetAddress.getByName(&quot;127.0.0.1&quot;);<br>    int port &#x3D; 9999;<br>    String msg &#x3D; &quot;hello!&quot;;<br>    DatagramPacket packet &#x3D; new DatagramPacket(msg.getBytes(),0,msg.getBytes().length,inetAddress,port);<br>    socket.send(packet);<br><br>    socket.close();<br><br>&#125; catch (Exception e) &#123;<br>    e.printStackTrace();<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<h2 id="聊天功能实现"><a href="#聊天功能实现" class="headerlink" title="聊天功能实现"></a><strong>聊天功能实现</strong></h2><p>在聊天功能中，需要用线程实现，因为每个参与聊天的人都有 发送、接受 两个线程</p>
-<p>sender：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">public class sender implements Runnable &#123;<br><br>    private int fromPort;<br><br>    private String local;<br><br>    private int toPort;<br><br>    private DatagramSocket socket &#x3D; null;<br><br>    private DatagramPacket packet &#x3D; null;<br><br>    public sender(int fromPort, String local, int toPort) &#123;<br>        this.fromPort &#x3D; fromPort;<br>        this.local &#x3D; local;<br>        this.toPort &#x3D; toPort;<br><br>        try &#123;<br><br>            socket &#x3D; new DatagramSocket(fromPort);<br><br>        &#125; catch (SocketException e) &#123;<br>            e.printStackTrace();<br>        &#125;<br>    &#125;<br><br>    @Override<br>    public void run() &#123;<br><br>        BufferedReader reader &#x3D; new BufferedReader(new InputStreamReader(System.in));<br><br>        while(true)&#123;<br><br>            try &#123;<br><br>                String msg &#x3D; reader.readLine();<br><br>                packet &#x3D; new DatagramPacket(msg.getBytes(),0,msg.getBytes().length,new InetSocketAddress(local,toPort));<br><br>                socket.send(packet);<br><br>                if(msg.equals(&quot;bye&quot;))&#123;<br>                    break;<br>                &#125;<br><br><br>            &#125; catch (IOException e) &#123;<br>                e.printStackTrace();<br>            &#125;<br><br>        &#125;<br><br>        try &#123;<br><br>            reader.close();<br>            socket.close();<br><br>        &#125; catch (IOException e) &#123;<br>            e.printStackTrace();<br>        &#125;<br><br><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p>receiver</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">public class receiver implements Runnable&#123;<br><br><br>    private int fromPort;<br><br>    private DatagramSocket socket &#x3D; null;<br><br>    public receiver(int fromPort) &#123;<br>        this.fromPort &#x3D; fromPort;<br><br>        try &#123;<br><br>            socket &#x3D; new DatagramSocket(fromPort);<br><br>        &#125; catch (SocketException e) &#123;<br>            e.printStackTrace();<br>        &#125;<br><br>    &#125;<br><br>    @Override<br>    public void run() &#123;<br><br><br>        while(true)&#123;<br><br>            byte[] bytes &#x3D; new byte[1024];<br><br>            DatagramPacket packet &#x3D; new DatagramPacket(bytes,0,bytes.length);<br><br>            try &#123;<br><br>                socket.receive(packet);<br><br>                byte[] receiveData &#x3D; packet.getData();<br><br>                String receiveMsg &#x3D; new String(receiveData,0,receiveData.length);<br><br>                System.out.println(receiveMsg);<br>                if(receiveMsg.contains(&quot;bye&quot;))  break;<br><br>            &#125; catch (IOException e) &#123;<br>                e.printStackTrace();<br>            &#125;<br><br><br>        &#125;<br><br>        socket.close();<br><br><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p>聊天参与者person1、person2</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">public class person1 &#123;<br>    public static void main(String[] args) &#123;<br>        new Thread(new sender(8888,&quot;localhost&quot;,7777)).start();<br>        new Thread(new receiver(9999)).start();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">public class person2 &#123;<br>    public static void main(String[] args) &#123;<br>        new Thread(new sender(5555,&quot;localhost&quot;,9999)).start();<br>        new Thread(new receiver(7777)).start();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-]]></content>
-      <tags>
-        <tag>java</tag>
-        <tag>网络编程</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>AOP的API实现及SpringAOP实现原理</title>
     <url>/2020/10/02/AOP2/</url>
     <content><![CDATA[<h1 id="AOP的API实现"><a href="#AOP的API实现" class="headerlink" title="AOP的API实现"></a>AOP的API实现</h1><p>基于接口的aop实现一般为一下步骤：</p>
@@ -4034,6 +3923,225 @@ print(str)            #12\n312312412412</code></pre>
       <tags>
         <tag>html</tag>
         <tag>前端</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>java网络编程基础</title>
+    <url>/2020/09/13/internetprogram/</url>
+    <content><![CDATA[<h1 id="计算机网络"><a href="#计算机网络" class="headerlink" title="计算机网络"></a><strong>计算机网络</strong></h1><p>计算机网络是指将地理位置不同的具有独立功能的多台计算机及其外部设备，通过通信线路连接起来，在网络操作系统、网络管理软件及网络通信协议的管理和协调下，实现资源共享和信息传递的计算机系统。</p>
+<h1 id="实现网络通信的要素"><a href="#实现网络通信的要素" class="headerlink" title="实现网络通信的要素"></a><strong>实现网络通信的要素</strong></h1><h2 id="通信双方地址"><a href="#通信双方地址" class="headerlink" title="通信双方地址"></a><strong>通信双方地址</strong></h2><h3 id="ip地址"><a href="#ip地址" class="headerlink" title="ip地址"></a><strong>ip地址</strong></h3><p>ip：唯一定义一台网络上的计算机</p>
+<p>如：127.0.0.1表示 本机 localhost</p>
+<p>ip地址的分类：</p>
+<ul>
+<li><p>ipv4/ipv6：</p>
+<ul>
+<li><p>ipv4：4个字节组成</p>
+</li>
+<li><p>ipv6：8个无符号整数表示 </p>
+</li>
+</ul>
+</li>
+<li><p>公网/私网</p>
+<ul>
+<li><p>公网：互联网</p>
+</li>
+<li><p>私网：局域网 192.168.xx.xx</p>
+</li>
+</ul>
+</li>
+<li><p>域名</p>
+</li>
+</ul>
+<p>在java中，InetAddress是一个表示ip的对象</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">try &#123;<br>&#x2F;&#x2F;            获取本机ip地址<br>    InetAddress inetAddress1 &#x3D; InetAddress.getByName(&quot;127.0.0.1&quot;);<br>    InetAddress inetAddress2 &#x3D; InetAddress.getByName(&quot;localhost&quot;);<br>    InetAddress inetAddress3 &#x3D; InetAddress.getLocalHost();<br><br>    System.out.println(inetAddress1);<br>    System.out.println(inetAddress2);<br>    System.out.println(inetAddress3);<br><br>&#125; catch (UnknownHostException e) &#123;<br>    e.printStackTrace();<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="端口"><a href="#端口" class="headerlink" title="端口"></a><strong>端口</strong></h3><p>端口表示计算机上的一个程序的进程，不同的进程有不同的端口号，端口被规定0～65535，同一个协议下端口不能相同</p>
+<p>端口分类：</p>
+<ul>
+<li><p>公有端口 0～1023</p>
+<ul>
+<li><p>http：80</p>
+</li>
+<li><p>https：443</p>
+</li>
+<li><p>ftp：21</p>
+</li>
+<li><p>telent：23</p>
+</li>
+</ul>
+</li>
+<li><p>程序注册端口：1024-49151，分配用户或程序</p>
+<ul>
+<li><p>tomcat：8080</p>
+</li>
+<li><p>mysql：3306</p>
+</li>
+<li><p>oracle：1521</p>
+</li>
+</ul>
+</li>
+<li><p>动态/私有端口：49152～65535</p>
+</li>
+</ul>
+<p>win下查看所有端口<code>netstat -ano</code> </p>
+<p>查看指定端口：<code>netstat -ano|findstr &quot;端口号&quot;</code></p>
+<p>查看指定进程：<code>tasklist | findstr &quot;端口号&quot;</code></p>
+<p>mac下查看所有端口</p>
+<p><img src="/2020/09/13/internetprogram/macport.jpg" alt="macport"></p>
+<p>查看指定端口<code>lsof -i tcp:端口号</code></p>
+<p>杀死端口<code>kill java后的那串端口号</code></p>
+<p>在java中，InetSocketAddress对象表示一个套接字（ip+端口）</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">InetAddress inetAddress1 &#x3D; InetAddress.getByName(&quot;127.0.0.1&quot;);<br>InetSocketAddress inetSocketAddress &#x3D; new InetSocketAddress(inetAddress1,4000);<br>System.out.println(inetSocketAddress);<br>System.out.println(inetSocketAddress);<br>System.out.println(inetSocketAddress.getAddress());<br>System.out.println(inetSocketAddress.getHostName());<br>System.out.println(inetSocketAddress.getPort());<br></code></pre></td></tr></table></figure>
+
+<h2 id="通信协议"><a href="#通信协议" class="headerlink" title="通信协议"></a><strong>通信协议</strong></h2><p><img src="/2020/09/13/internetprogram/depth.png" alt="depth"></p>
+<p>在网络编程中，主要是针对传输层中的TCP/UDP进行编程</p>
+<p>通信协议是指双方实体完成通信或服务所必须遵循的规则和约定。</p>
+<p>TCP：用户传输协议</p>
+<p>通信前需要进行连接（三次握手，四次挥手），连接稳定，用于客户端和服务端间的连接</p>
+<p>UDP：用户数据报协议</p>
+<p>通信前不需要连接，连接不稳定，不需明确通讯双方</p>
+<h1 id="socket"><a href="#socket" class="headerlink" title="socket"></a><strong>socket</strong></h1><p>Socket是应用层与TCP/IP协议族通信的中间软件抽象层，它是一组接口，它把复杂的TCP/IP协议族隐藏在Socket接口后面，对用户来说，一组简单的接口就是全部，让Socket去组织数据，以符合指定的协议。在网络编程中，都是通过socket这一核心来进行网络的通信</p>
+<h1 id="TCP"><a href="#TCP" class="headerlink" title="TCP"></a><strong>TCP</strong></h1><h2 id="TCP实现通信"><a href="#TCP实现通信" class="headerlink" title="TCP实现通信"></a><strong>TCP实现通信</strong></h2><p>使用TCP模拟客户端与服务端的通信，核心是通过serverSocket和socket进行连接</p>
+<p>serverSocket建立端口服务，通过socket进行通讯</p>
+<p>服务端</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">try &#123;<br>    while(true)&#123;<br>&#x2F;&#x2F;                提供进程（端口）服务<br>        ServerSocket serverSocket &#x3D; new ServerSocket(9999);<br>&#x2F;&#x2F;                接受客户端消息<br>        Socket socket &#x3D; serverSocket.accept();<br>        InputStream is &#x3D; socket.getInputStream();<br>&#x2F;&#x2F;                流接口<br>        ByteArrayOutputStream baos &#x3D; new ByteArrayOutputStream();<br>        byte[] buffer &#x3D; new byte[1024];<br>        int len;<br>        while((len&#x3D;is.read(buffer))!&#x3D;-1)&#123;<br>            baos.write(buffer,0,len);<br>        &#125;<br>        System.out.println(baos.toString());<br>        baos.close();<br>        is.close();<br>        socket.close();<br>        serverSocket.close();<br>    &#125;<br><br>&#125; catch (IOException e) &#123;<br>    e.printStackTrace();<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>客户端</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">try &#123;<br>&#x2F;&#x2F;            获取主机地址<br>    InetAddress inetAddress &#x3D; InetAddress.getByName(&quot;127.0.0.1&quot;);<br>&#x2F;&#x2F;            端口号<br>    int port &#x3D; 9999;<br>&#x2F;&#x2F;            通信机制<br>    Socket socket &#x3D; new Socket(inetAddress,port);<br>&#x2F;&#x2F;            发送消息<br>    OutputStream os &#x3D; socket.getOutputStream();<br>    os.write(&quot;测试测试123&quot;.getBytes());<br>    os.close();<br>    socket.close();<br><br>&#125; catch (UnknownHostException e) &#123;<br>    e.printStackTrace();<br>&#125; catch (IOException e) &#123;<br>    e.printStackTrace();<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h1 id="UDP"><a href="#UDP" class="headerlink" title="UDP"></a><strong>UDP</strong></h1><p>在UDP中，双方进行通信的核心是DatagramSocket和DatagramPacket</p>
+<p>其中DatagramPacket中封装了消息、ip和端口号</p>
+<p>客户端服务端通过DatagramSocket发送和接受DatagramPacket对象</p>
+<h2 id="UDP实现通信"><a href="#UDP实现通信" class="headerlink" title="UDP实现通信"></a><strong>UDP实现通信</strong></h2><p>服务端</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">try &#123;<br>    DatagramSocket socket &#x3D; new DatagramSocket(9999);<br>    byte[] buffer &#x3D; new byte[1024];<br>    DatagramPacket packet &#x3D; new DatagramPacket(buffer,0,buffer.length);<br>    socket.receive(packet);<br><br>    System.out.println(packet.getAddress());<br>    System.out.println(new String(packet.getData()));<br><br>    socket.close();<br><br>&#125; catch (Exception e) &#123;<br>    e.printStackTrace();<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>客户端</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">try &#123;<br><br>    DatagramSocket socket &#x3D; new DatagramSocket();<br>    InetAddress inetAddress &#x3D; InetAddress.getByName(&quot;127.0.0.1&quot;);<br>    int port &#x3D; 9999;<br>    String msg &#x3D; &quot;hello!&quot;;<br>    DatagramPacket packet &#x3D; new DatagramPacket(msg.getBytes(),0,msg.getBytes().length,inetAddress,port);<br>    socket.send(packet);<br><br>    socket.close();<br><br>&#125; catch (Exception e) &#123;<br>    e.printStackTrace();<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="聊天功能实现"><a href="#聊天功能实现" class="headerlink" title="聊天功能实现"></a><strong>聊天功能实现</strong></h2><p>在聊天功能中，需要用线程实现，因为每个参与聊天的人都有 发送、接受 两个线程</p>
+<p>sender：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">public class sender implements Runnable &#123;<br><br>    private int fromPort;<br><br>    private String local;<br><br>    private int toPort;<br><br>    private DatagramSocket socket &#x3D; null;<br><br>    private DatagramPacket packet &#x3D; null;<br><br>    public sender(int fromPort, String local, int toPort) &#123;<br>        this.fromPort &#x3D; fromPort;<br>        this.local &#x3D; local;<br>        this.toPort &#x3D; toPort;<br><br>        try &#123;<br><br>            socket &#x3D; new DatagramSocket(fromPort);<br><br>        &#125; catch (SocketException e) &#123;<br>            e.printStackTrace();<br>        &#125;<br>    &#125;<br><br>    @Override<br>    public void run() &#123;<br><br>        BufferedReader reader &#x3D; new BufferedReader(new InputStreamReader(System.in));<br><br>        while(true)&#123;<br><br>            try &#123;<br><br>                String msg &#x3D; reader.readLine();<br><br>                packet &#x3D; new DatagramPacket(msg.getBytes(),0,msg.getBytes().length,new InetSocketAddress(local,toPort));<br><br>                socket.send(packet);<br><br>                if(msg.equals(&quot;bye&quot;))&#123;<br>                    break;<br>                &#125;<br><br><br>            &#125; catch (IOException e) &#123;<br>                e.printStackTrace();<br>            &#125;<br><br>        &#125;<br><br>        try &#123;<br><br>            reader.close();<br>            socket.close();<br><br>        &#125; catch (IOException e) &#123;<br>            e.printStackTrace();<br>        &#125;<br><br><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>receiver</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">public class receiver implements Runnable&#123;<br><br><br>    private int fromPort;<br><br>    private DatagramSocket socket &#x3D; null;<br><br>    public receiver(int fromPort) &#123;<br>        this.fromPort &#x3D; fromPort;<br><br>        try &#123;<br><br>            socket &#x3D; new DatagramSocket(fromPort);<br><br>        &#125; catch (SocketException e) &#123;<br>            e.printStackTrace();<br>        &#125;<br><br>    &#125;<br><br>    @Override<br>    public void run() &#123;<br><br><br>        while(true)&#123;<br><br>            byte[] bytes &#x3D; new byte[1024];<br><br>            DatagramPacket packet &#x3D; new DatagramPacket(bytes,0,bytes.length);<br><br>            try &#123;<br><br>                socket.receive(packet);<br><br>                byte[] receiveData &#x3D; packet.getData();<br><br>                String receiveMsg &#x3D; new String(receiveData,0,receiveData.length);<br><br>                System.out.println(receiveMsg);<br>                if(receiveMsg.contains(&quot;bye&quot;))  break;<br><br>            &#125; catch (IOException e) &#123;<br>                e.printStackTrace();<br>            &#125;<br><br><br>        &#125;<br><br>        socket.close();<br><br><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>聊天参与者person1、person2</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">public class person1 &#123;<br>    public static void main(String[] args) &#123;<br>        new Thread(new sender(8888,&quot;localhost&quot;,7777)).start();<br>        new Thread(new receiver(9999)).start();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">public class person2 &#123;<br>    public static void main(String[] args) &#123;<br>        new Thread(new sender(5555,&quot;localhost&quot;,9999)).start();<br>        new Thread(new receiver(7777)).start();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>java</tag>
+        <tag>网络编程</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>java之I/O流</title>
+    <url>/2020/09/10/IOstream/</url>
+    <content><![CDATA[<h1 id="流的概念和作用"><a href="#流的概念和作用" class="headerlink" title="流的概念和作用"></a><strong>流的概念和作用</strong></h1><p>流代表任何有能力产出数据的数据源对象或者是有能力接受数据的接收端对象，通过流为数据源和目的地建立一个输送通道</p>
+<h1 id="I-O流的分类"><a href="#I-O流的分类" class="headerlink" title="I/O流的分类"></a><strong>I/O流的分类</strong></h1><ul>
+<li><p>按数据流的方向分为</p>
+<ul>
+<li><p>输入流：指由程序外输入到程序中</p>
+</li>
+<li><p>输出流：指由程序输出到程序外</p>
+</li>
+</ul>
+</li>
+<li><p>按处理数据的单位分为</p>
+<ul>
+<li><p>字符流</p>
+</li>
+<li><p>字节流</p>
+</li>
+</ul>
+</li>
+<li><p>按功能不同分为</p>
+<ul>
+<li><p>节点流</p>
+</li>
+<li><p>处理流</p>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="常用的I-O流"><a href="#常用的I-O流" class="headerlink" title="常用的I/O流"></a><strong>常用的I/O流</strong></h1><p>四个基本抽象类：</p>
+<p>输入流：InputStream（字节流）、Reader（字符流）</p>
+<p>输出流：OutputStream（字节流）、Writer（字符流）</p>
+<p>InputStream的继承关系如下：</p>
+<p><img src="/2020/09/10/IOstream/inputstream.jpg" alt="inputstream"></p>
+<p>其中最常用的是FileInputStream</p>
+<p>OutputStream的继承关系如下：</p>
+<p><img src="/2020/09/10/IOstream/outputstream.jpg" alt="outputstream"></p>
+<p>其中最常用的是FileOutputStream</p>
+<p>Reader的继承关系：</p>
+<p><img src="/2020/09/10/IOstream/reader.jpg" alt="reader"></p>
+<p>其中常用的是InputStreamReader 和 BufferedReader</p>
+<p>其中</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">BufferedReader &#x3D; new BufferedReader(FileReader)<br><br>或<br><br>BufferedReader &#x3D; new BufferedReader(InputStreamReader) <br></code></pre></td></tr></table></figure>
+
+<p>Writer的继承关系</p>
+<p><img src="/2020/09/10/IOstream/writer.jpg" alt="writer"></p>
+<p>其中常用的是OutputStreamWriter 和 BufferedWriter</p>
+<p>其中</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">BufferedWriter &#x3D; new BufferedReader(FileWriter)<br><br>或<br><br>BufferedWriter &#x3D; new BufferedReader(FileOutputStream)<br></code></pre></td></tr></table></figure>
+
+
+<h1 id="流的选择和区别"><a href="#流的选择和区别" class="headerlink" title="流的选择和区别"></a><strong>流的选择和区别</strong></h1><h2 id="流的选择"><a href="#流的选择" class="headerlink" title="流的选择"></a><strong>流的选择</strong></h2><p>字符流：</p>
+<ul>
+<li>处理纯文本</li>
+</ul>
+<p>字节流：</p>
+<ul>
+<li>图像、视频、ppt</li>
+</ul>
+<h2 id="字符流与字节流的区别"><a href="#字符流与字节流的区别" class="headerlink" title="字符流与字节流的区别"></a><strong>字符流与字节流的区别</strong></h2><ol>
+<li>字节流没有缓冲区，是直接输出的，而字符流是输出到缓冲区的。因此在输出时，字节流不调用colse()方法时，信息已经输出了，而字符流只有在调用close()方法关闭缓冲区时，信息才输出。要想字符流在未关闭时输出信息，则需要手动调用flush()方法。</li>
+</ol>
+<ol start="2">
+<li>字节流以字节为单位，字符流以字符为单位</li>
+</ol>
+<h2 id="字符流与字节流的转换"><a href="#字符流与字节流的转换" class="headerlink" title="字符流与字节流的转换"></a><strong>字符流与字节流的转换</strong></h2><figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">InputStreamReader isr &#x3D; new InputStreamReader(InputStream);<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">OutputStreamWriter osw &#x3D; new OutputStreamWriter(OutputStream);<br></code></pre></td></tr></table></figure>
+
+
+
+<h1 id="io流对文件的操作"><a href="#io流对文件的操作" class="headerlink" title="io流对文件的操作"></a><strong>io流对文件的操作</strong></h1><h2 id="创建文件"><a href="#创建文件" class="headerlink" title="创建文件"></a><strong>创建文件</strong></h2><figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">File file &#x3D; new File(&quot;&#x2F;Users&#x2F;apple&#x2F;Desktop&#x2F;filetest.txt&quot;);<br><br>String name &#x3D; file.getName();<br><br>System.out.println(name);<br><br>try&#123;<br>    file.createNewFile();<br>    System.out.println(&quot;Success!!!&quot;);<br>&#125;<br>catch (IOException e)&#123;<br>    e.printStackTrace();<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="创建文件夹"><a href="#创建文件夹" class="headerlink" title="创建文件夹"></a><strong>创建文件夹</strong></h2><figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">File file &#x3D; new File(&quot;&#x2F;Users&#x2F;apple&#x2F;Desktop&#x2F;newfile1&#x2F;subfile1&#x2F;subfile2&quot;);<br>if(!file.exists())&#123;<br>    file.mkdirs();<br>    System.out.println(&quot;success!&quot;);<br>&#125;<br>else &#123;<br>    System.out.println(&quot;exists!&quot;);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="读取文件数据"><a href="#读取文件数据" class="headerlink" title="读取文件数据"></a><strong>读取文件数据</strong></h2><p>字节流：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">FileInputStream fis &#x3D; new FileInputStream(file);<br><br>&#x2F;&#x2F;接口<br>ByteArrayOutputStream baos &#x3D; new ByteArrayOutputStream();<br><br>int len;<br><br>byte[] buffer &#x3D; new byte[1024];<br><br>while((len&#x3D;fis.read(buffer))!&#x3D;-1)&#123;<br><br>    baos.write(buffer,0,len);<br><br>&#125;<br><br>System.out.println(baos.toString());<br></code></pre></td></tr></table></figure>
+
+<p>字符流：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">FileReader fr &#x3D; new FileReader(file);<br><br>char[] buffer &#x3D; new char[1024];<br><br>while(fr.read()!&#x3D;-1)&#123;<br><br>    fr.read(buffer);<br><br>&#125;<br><br>System.out.println(new String(buffer));<br><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">FileReader fr &#x3D; new FileReader(&quot;&#x2F;Users&#x2F;apple&#x2F;Desktop&#x2F;filetest.txt&quot;);<br><br>BufferedReader bufferedReader &#x3D; new BufferedReader(fr);<br><br>char[] buffer &#x3D; new char[1024];<br><br>while(bufferedReader.read()!&#x3D;-1)&#123;<br><br>    bufferedReader.read(buffer);<br><br>&#125;<br><br>System.out.println(new String(buffer));<br><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">FileInputStream fis &#x3D; new FileInputStream(&quot;&#x2F;Users&#x2F;apple&#x2F;Desktop&#x2F;filetest.txt&quot;);<br><br>InputStreamReader isr &#x3D; new InputStreamReader(fis);<br><br>BufferedReader bufferedReader &#x3D; new BufferedReader(isr);<br><br>char[] buffer &#x3D; new char[1024];<br><br>while(bufferedReader.read()!&#x3D;-1)&#123;<br><br>    bufferedReader.read(buffer);<br><br>&#125;<br><br>System.out.println(new String(buffer));<br><br></code></pre></td></tr></table></figure>
+
+<h2 id="向文件写入数据"><a href="#向文件写入数据" class="headerlink" title="向文件写入数据"></a><strong>向文件写入数据</strong></h2><p>字节流：</p>
+<p>在FileOutputStream的构造方法中，有一个布尔值类型的参数，true代表追加内容，false代表覆盖原文</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">FileOutputStream fileOutputStream &#x3D; new FileOutputStream(&quot;&#x2F;Users&#x2F;apple&#x2F;Desktop&#x2F;filetest.txt&quot;,true);<br><br>String msg &#x3D; &quot; hello&quot;;<br><br>fileOutputStream.write(msg.getBytes(),0,msg.getBytes().length);<br><br></code></pre></td></tr></table></figure>
+
+<p>字符流：</p>
+<p>在使用字符流写入数据时，要将字符流关闭才可以写入数据（此时数据在缓冲区中），或者使用flush方法在字符流关闭前写入数据</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain"><br>FileWriter fileWriter &#x3D; new FileWriter(&quot;&#x2F;Users&#x2F;apple&#x2F;Desktop&#x2F;filetest.txt&quot;,true);<br><br>String msg &#x3D; &quot; hello&quot;;<br><br>fileWriter.write(msg);<br><br>fileWriter.flush();<br><br>&#x2F;&#x2F;fileWriter.close();<br><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">FileOutputStream fos &#x3D; new FileOutputStream(&quot;&#x2F;Users&#x2F;apple&#x2F;Desktop&#x2F;filetest.txt&quot;,true);<br><br>OutputStreamWriter osw &#x3D; new OutputStreamWriter(fos);<br><br>FileWriter fileWriter &#x3D; new FileWriter(&quot;&#x2F;Users&#x2F;apple&#x2F;Desktop&#x2F;filetest.txt&quot;,true);<br><br>&#x2F;&#x2F;            BufferedWriter bw &#x3D; new BufferedWriter(fileWriter);<br><br>BufferedWriter bw &#x3D; new BufferedWriter(osw);<br><br>String msg &#x3D; &quot; hello&quot;;<br><br>bw.write(msg);<br><br>bw.flush();<br><br></code></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+]]></content>
+      <tags>
+        <tag>java</tag>
+        <tag>IO流</tag>
       </tags>
   </entry>
 </search>

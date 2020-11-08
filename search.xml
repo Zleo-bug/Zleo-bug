@@ -1079,7 +1079,7 @@ private int age;</code></pre>
 <p>乱码解决:</p>
 <p>settings -&gt; FileEncoding 设置统一编码</p>
 <p><img src="/2020/11/03/springboot/properties.jpg" alt="properties"></p>
-<h3 id="使用yaml"><a href="#使用yaml" class="headerlink" title="** 使用yaml **"></a>** 使用yaml **</h3><figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">@Data<br>@AllArgsConstructor<br>@NoArgsConstructor<br>@Component<br>@ConfigurationProperties(prefix &#x3D; &quot;person&quot;)<br>public class person &#123;<br><br>    private String name;<br>    private String age;<br>    private List hobby;<br>    private Map&lt;String,Object&gt; map;<br>    private dog dog;<br><br>&#125;<br></code></pre></td></tr></table></figure>
+<h3 id="使用yaml"><a href="#使用yaml" class="headerlink" title="使用yaml"></a><strong>使用yaml</strong></h3><figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">@Data<br>@AllArgsConstructor<br>@NoArgsConstructor<br>@Component<br>@ConfigurationProperties(prefix &#x3D; &quot;person&quot;)<br>public class person &#123;<br><br>    private String name;<br>    private String age;<br>    private List hobby;<br>    private Map&lt;String,Object&gt; map;<br>    private dog dog;<br><br>&#125;<br></code></pre></td></tr></table></figure>
 
 <p>application.yaml</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">person:<br>  name: asd<br>  age: 10<br>  hobby: [1,2,3]<br>  map: &#123;name: asdasd, age: 10&#125;<br>  dog:<br>    name: wangwang<br>    age: 10<br><br></code></pre></td></tr></table></figure>
@@ -1157,14 +1157,22 @@ private int age;</code></pre>
 <figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">&lt;html xmlns:th&#x3D;&quot;http:&#x2F;&#x2F;www.thymeleaf.org&quot;&gt;<br></code></pre></td></tr></table></figure>
 
 <p>thymeleaf的语法和vue的语法很相似    <a href="https://blog.csdn.net/malimingwq/article/details/79329921">https://blog.csdn.net/malimingwq/article/details/79329921</a></p>
-<h3 id="mvc的配置和扩展"><a href="#mvc的配置和扩展" class="headerlink" title="mvc的配置和扩展"></a><strong>mvc的配置和扩展</strong></h3><p>springboot为我们配置好了默认的mvc框架，如果我们想保持mvc的特征并且为mvc添加一些特定配置，如配置 拦截器、过滤器、改变视图解析器等等，我们可以用<code>@Configuration</code>作用于某个bean并且让它实现<code>WebMvcConfigurer</code>接口中方法即可</p>
+<h3 id="mvc的配置和扩展"><a href="#mvc的配置和扩展" class="headerlink" title="mvc的配置和扩展"></a><strong>mvc的配置和扩展</strong></h3><p>springboot为我们配置好了默认的mvc框架，如果我们想保持mvc的特征并且为mvc添加一些特定配置，如配置 拦截器、过滤器、改变视图解析器等等，我们可以用<code>@Configuration</code>作用于某个bean并且让它实现<code>WebMvcConfigurer</code>接口中方法即可，如果要往spring容器中添加组件，则添加一个带@Bean的方法即可</p>
 <p>WebMvcConfigurer接口中的方法如下：</p>
 <p><img src="/2020/11/03/springboot/webmvcconfigurer.jpg" alt="webmvcconfigurer"></p>
 <p>如配置拦截器：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">@Configuration<br>public class myconfiguration implements WebMvcConfigurer &#123;<br><br>    @Override<br>    public void addInterceptors(InterceptorRegistry registry) &#123;<br>        registry.addInterceptor(new HandlerInterceptor() &#123;<br>            @Override<br>            public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception &#123;<br>                return false;<br>            &#125;<br><br>            @Override<br>            public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception &#123;<br><br>            &#125;<br><br>            @Override<br>            public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception &#123;<br><br>            &#125;<br>        &#125;).addPathPatterns();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <p>定制首页：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">@Configuration<br>public class myconfiguration implements WebMvcConfigurer &#123;<br><br>    @Override<br>    public void addViewControllers(ViewControllerRegistry registry) &#123;<br>        registry.addViewController(&quot;&quot;).setViewName(&quot;&quot;);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>]]></content>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">@Configuration<br>public class myconfiguration implements WebMvcConfigurer &#123;<br><br>    @Override<br>    public void addViewControllers(ViewControllerRegistry registry) &#123;<br>        registry.addViewController(&quot;&quot;).setViewName(&quot;&quot;);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>配置定制视图解析器：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">public class MyReviewResolver implements ViewResolver &#123;<br>    @Override<br>    public View resolveViewName(String s, Locale locale) throws Exception &#123;<br>        return null;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">@Configuration<br>public class myconfiguration implements WebMvcConfigurer &#123;<br>    <br>    @Bean<br>    public MyReviewResolver reviewResolver()&#123;<br>        return new MyReviewResolver();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="异常页面处理"><a href="#异常页面处理" class="headerlink" title="异常页面处理"></a><strong>异常页面处理</strong></h3><p>springboot中处理404非常简单，只要在templates下添加子目录error，将404页面放进error目录即可，500页面也一样，<strong>注：html页面的名字必须为404 或 500</strong></p>
+]]></content>
       <tags>
         <tag>springboot</tag>
       </tags>

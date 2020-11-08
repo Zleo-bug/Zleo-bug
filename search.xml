@@ -980,6 +980,196 @@
       </tags>
   </entry>
   <entry>
+    <title>springboot入门</title>
+    <url>/2020/11/03/springboot/</url>
+    <content><![CDATA[<h1 id="什么是springboot"><a href="#什么是springboot" class="headerlink" title="什么是springboot"></a><strong>什么是springboot</strong></h1><p>springboot是由Pivotal团队提供的框架，其设计目的是用来简化新Spring应用的初始搭建以及开发过程。该框架使用了特定的方式(继承starter，约定优先于配置)来进行配置，从而使开发人员不再需要定义样板化的配置。springboot的核心是<strong>自动装配</strong></p>
+<p>springboot不是什么新的框架！它是spring基础上的进一步简化，默认配置了很多框架的使用方式，就像maven整合了所有的jar包，springboot整合了spring的框架并且进一步简化了配置</p>
+<p>回顾mvc和ssm整合阶段，每个项目都需要大量的配置文件，如果项目只是一个非常小型的应用，如果还要配置像mvc和ssm这样配置这么多文件，这工作量无疑是巨大的，但使用springboot，便可省去大量的配置文件，从而使开发变得更加简单</p>
+<h1 id="springboot框架的生成方式"><a href="#springboot框架的生成方式" class="headerlink" title="springboot框架的生成方式"></a><strong>springboot框架的生成方式</strong></h1><p>生成springboot项目的方式有两种：</p>
+<ol>
+<li>官网生成<br>springboot快速生成：<a href="https://start.spring.io/">https://start.spring.io</a><br><img src="/2020/11/03/springboot/fastsb1.png" alt="fastsb1"><br><img src="/2020/11/03/springboot/fastsb2.png" alt="fastsb2"><br>创建后在idea导入项目即可</li>
+</ol>
+<ol start="2">
+<li>idea生成<br><img src="/2020/11/03/springboot/idea.jpg" alt="idea"><br>生成项目后，会自动生成springboot的一些核心配置：<br>xxxApplication：springboot程序的入口，通过运行该类启动项目，其中启动类必须要加上注解<code>@SpringBootApplication</code><br>application.properties：springboot的核心配置文件，可以在该文件内修改springboot的默认配置<br>springboot的核心依赖<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;UTF-8&quot;?&gt;<br>&lt;project xmlns&#x3D;&quot;http:&#x2F;&#x2F;maven.apache.org&#x2F;POM&#x2F;4.0.0&quot; xmlns:xsi&#x3D;&quot;http:&#x2F;&#x2F;www.w3.org&#x2F;2001&#x2F;XMLSchema-instance&quot;<br>	xsi:schemaLocation&#x3D;&quot;http:&#x2F;&#x2F;maven.apache.org&#x2F;POM&#x2F;4.0.0 https:&#x2F;&#x2F;maven.apache.org&#x2F;xsd&#x2F;maven-4.0.0.xsd&quot;&gt;<br>	&lt;modelVersion&gt;4.0.0&lt;&#x2F;modelVersion&gt;<br>	&lt;parent&gt;<br>		&lt;groupId&gt;org.springframework.boot&lt;&#x2F;groupId&gt;<br>		&lt;artifactId&gt;spring-boot-starter-parent&lt;&#x2F;artifactId&gt;<br>		&lt;version&gt;2.3.5.RELEASE&lt;&#x2F;version&gt;<br>		&lt;relativePath&#x2F;&gt; &lt;!-- lookup parent from repository --&gt;<br>	&lt;&#x2F;parent&gt;<br>	&lt;groupId&gt;com.sprintbootTest&lt;&#x2F;groupId&gt;<br>	&lt;artifactId&gt;demo1&lt;&#x2F;artifactId&gt;<br>	&lt;version&gt;0.0.1-SNAPSHOT&lt;&#x2F;version&gt;<br>	&lt;name&gt;demo1&lt;&#x2F;name&gt;<br>	&lt;description&gt;Demo project for Spring Boot&lt;&#x2F;description&gt;<br><br>	&lt;properties&gt;<br>		&lt;java.version&gt;11&lt;&#x2F;java.version&gt;<br>	&lt;&#x2F;properties&gt;<br><br>	&lt;dependencies&gt;<br><br>&lt;!--		web依赖：tomcat、web.xml、dispatcher、springmvc.xml--&gt;<br>		&lt;dependency&gt;<br>			&lt;groupId&gt;org.springframework.boot&lt;&#x2F;groupId&gt;<br>			&lt;artifactId&gt;spring-boot-starter-web&lt;&#x2F;artifactId&gt;<br>		&lt;&#x2F;dependency&gt;<br><br>&lt;!--所有的springboot依赖都是spring-boot-stater-xxx--&gt;<br><br><br>&lt;!--		单元测试--&gt;<br>		&lt;dependency&gt;<br>			&lt;groupId&gt;org.springframework.boot&lt;&#x2F;groupId&gt;<br>			&lt;artifactId&gt;spring-boot-starter-test&lt;&#x2F;artifactId&gt;<br>			&lt;scope&gt;test&lt;&#x2F;scope&gt;<br>			&lt;exclusions&gt;<br>				&lt;exclusion&gt;<br>					&lt;groupId&gt;org.junit.vintage&lt;&#x2F;groupId&gt;<br>					&lt;artifactId&gt;junit-vintage-engine&lt;&#x2F;artifactId&gt;<br>				&lt;&#x2F;exclusion&gt;<br>			&lt;&#x2F;exclusions&gt;<br>		&lt;&#x2F;dependency&gt;<br>	&lt;&#x2F;dependencies&gt;<br><br><br>&lt;!--	打包插件：打包成可执行的jar文件--&gt;<br>	&lt;build&gt;<br>		&lt;plugins&gt;<br>			&lt;plugin&gt;<br>				&lt;groupId&gt;org.springframework.boot&lt;&#x2F;groupId&gt;<br>				&lt;artifactId&gt;spring-boot-maven-plugin&lt;&#x2F;artifactId&gt;<br>			&lt;&#x2F;plugin&gt;<br>		&lt;&#x2F;plugins&gt;<br>	&lt;&#x2F;build&gt;<br><br>&lt;&#x2F;project&gt;<br><br></code></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p>可以看到，在springboot中，依赖都是spring-boot-starter-xxx的格式</p>
+<p>spring-boot-starter地址：<a href="https://docs.spring.io/spring-boot/docs/1.5.12.RELEASE/reference/htmlsingle/#using-boot-starter">https://docs.spring.io/spring-boot/docs/1.5.12.RELEASE/reference/htmlsingle/#using-boot-starter</a></p>
+<h1 id="第一个springboot程序"><a href="#第一个springboot程序" class="headerlink" title="第一个springboot程序"></a><strong>第一个springboot程序</strong></h1><p>目录结构：</p>
+<p><img src="/2020/11/03/springboot/first.png" alt="first"></p>
+<p><strong>注：要在xxxApplication的同级上下文中写controller、mapper、pojo和service</strong></p>
+<p>controller:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">@Controller<br>@ResponseBody<br>public class HelloController &#123;<br><br>    @RequestMapping(&quot;hello&quot;)<br>    public String hello()&#123;<br>        return &quot;hello world!&quot;;<br>    &#125;<br><br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<p>Demo1Application：程序入口，</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">@SpringBootApplication<br>public class Demo1Application &#123;<br><br>	public static void main(String[] args) &#123;<br>		SpringApplication.run(Demo1Application.class, args);<br>	&#125;<br><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>可以发现：springboot已经帮我们内置了tomcat并且配置好了dispatcher</p>
+<p><img src="/2020/11/03/springboot/tomcat.jpg" alt="tomcat"></p>
+<p>可以看到，springboot帮我们简化了很多配置，更加简化了开发</p>
+<h1 id="springboot的核心配置文件"><a href="#springboot的核心配置文件" class="headerlink" title="springboot的核心配置文件"></a><strong>springboot的核心配置文件</strong></h1><p>在springboot中，可以通过修改核心配置文件来修改springboot的默认配置。</p>
+<p>springboot的核心配置文件application有两种：</p>
+<ul>
+<li>application.properties</li>
+</ul>
+<p>语法结构为：key=value</p>
+<ul>
+<li>application.yaml</li>
+</ul>
+<p>语法结构为：key:空格value</p>
+<p><strong>spring官网不推荐使用properties这种配置文件，而是使用yaml格式的配置文件</strong></p>
+<p>但是两种配置文件可以同时存在，但名字必须相同</p>
+<h2 id="properties和yaml语法"><a href="#properties和yaml语法" class="headerlink" title="properties和yaml语法"></a><strong>properties和yaml语法</strong></h2><h3 id="properties"><a href="#properties" class="headerlink" title="properties"></a><strong>properties</strong></h3><figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain"><br>name&#x3D;十二点前要睡觉<br><br>student.name&#x3D;十二点前要睡觉<br><br>student.age&#x3D;3<br><br></code></pre></td></tr></table></figure>
+
+<h3 id="yaml"><a href="#yaml" class="headerlink" title="yaml"></a><strong>yaml</strong></h3><figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">name: 十二点前要睡觉<br><br># 在yaml中，还可以存储对象<br><br>student: <br>	name: 十二点前要睡觉<br>	age: 3<br><br>student: &#123;name: 十二点要睡觉,age: 3&#125;<br><br>arr: [1,2,3,4]<br></code></pre></td></tr></table></figure>
+
+<p><strong>注：yaml中，对空格的要求很严格</strong></p>
+<p>在同一层次的属性中，必须保证空格数相同</p>
+<p>如：student中，name和age都表示为student中的属性：student.name(age)</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">student: <br>	name: 十二点前要睡觉<br>	age: 3<br>&#96;&#96;&#96;		<br><br>## **给实体类赋值的几种方式**<br><br></code></pre></td></tr></table></figure>
+<p>@Data<br>@AllArgsConstructor<br>@NoArgsConstructor<br>@Component<br>public class dog {</p>
+<pre><code>private String name;
+private int age;</code></pre>
+<p>}</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain"><br></code></pre></td></tr></table></figure>
+<p>@Data<br>@AllArgsConstructor<br>@NoArgsConstructor<br>public class person {</p>
+<pre><code>private String name;
+private String age;
+private List hobby;
+private Map&lt;String,Object&gt; map;
+private dog dog;</code></pre>
+<p>}</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain"><br>### ** @Value（spring）**<br><br><br></code></pre></td></tr></table></figure>
+<p>@Data<br>@AllArgsConstructor<br>@NoArgsConstructor<br>@Component<br>public class dog {</p>
+<pre><code>@Value(&quot;汪汪&quot;)
+private String name;
+@Value(&quot;3&quot;)
+private int age;</code></pre>
+<p>}</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain"><br></code></pre></td></tr></table></figure>
+<p>@SpringBootTest<br>class Demo1ApplicationTests {</p>
+<pre><code>@Autowired
+private dog dog;
+
+@Test
+public void Test()&#123;
+
+    System.out.println(dog);
+
+&#125;</code></pre>
+<p>}</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain"><br><br>### ** 使用properties文件 **<br><br>加载指定.properties配置文件，可以使用spel表达式 @Value($&#123;&quot;&quot;&#125;)对属性赋值<br><br><br><br></code></pre></td></tr></table></figure>
+<p>@Data<br>@AllArgsConstructor<br>@NoArgsConstructor<br>@Component<br>@PropertySource(value = “classpath:application.properties”)<br>public class dog {</p>
+<pre><code>@Value(&quot;$&#123;name&#125;&quot;)
+private String name;
+@Value(&quot;$&#123;age&#125;&quot;)
+private int age;</code></pre>
+<p>}</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain"><br>&#96;&#96;&#96;properties<br>name&#x3D;wangwang<br>age&#x3D;10<br></code></pre></td></tr></table></figure>
+
+<p><strong>注：在使用@Value后，配置文件中的属性名要与类中的属性名一致！</strong></p>
+<p>另外，还可以在properties文件中使用如下方式进行绑定：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">@Data<br>@AllArgsConstructor<br>@NoArgsConstructor<br>@Component<br>@ConfigurationProperties(prefix &#x3D; &quot;person&quot;)<br>@PropertySource(value &#x3D; &quot;classpath:application.properties&quot;)<br>public class person &#123;<br><br>    private String name;<br>    private String age;<br>    private List hobby;<br>    private Map&lt;String,Object&gt; map;<br>    private dog dog;<br><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight properties"><table><tr><td class="code"><pre><code class="hljs properties"><span class="hljs-meta">person.name</span>=<span class="hljs-string">asd</span><br><span class="hljs-meta">person.age</span>=<span class="hljs-string">10</span><br><span class="hljs-meta">person.hobby</span>=<span class="hljs-string">[1,2,3,4]</span><br><span class="hljs-meta">person.map.name</span>=<span class="hljs-string">awsl</span><br><span class="hljs-meta">person.map.age</span>=<span class="hljs-string">100</span><br><span class="hljs-meta">person.dog.name</span>=<span class="hljs-string">wangwang</span><br><span class="hljs-meta">person.dog.age</span>=<span class="hljs-string">10</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>@ConfigurationProperties(prefix = “”)将配置文件中指定prefix的属性 与 类中的属性进行绑定</strong></p>
+<p>不过使用properties有可能会出现乱码：</p>
+<p>乱码解决:</p>
+<p>settings -&gt; FileEncoding 设置统一编码</p>
+<p><img src="/2020/11/03/springboot/properties.jpg" alt="properties"></p>
+<h3 id="使用yaml"><a href="#使用yaml" class="headerlink" title="** 使用yaml **"></a>** 使用yaml **</h3><figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">@Data<br>@AllArgsConstructor<br>@NoArgsConstructor<br>@Component<br>@ConfigurationProperties(prefix &#x3D; &quot;person&quot;)<br>public class person &#123;<br><br>    private String name;<br>    private String age;<br>    private List hobby;<br>    private Map&lt;String,Object&gt; map;<br>    private dog dog;<br><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>application.yaml</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">person:<br>  name: asd<br>  age: 10<br>  hobby: [1,2,3]<br>  map: &#123;name: asdasd, age: 10&#125;<br>  dog:<br>    name: wangwang<br>    age: 10<br><br></code></pre></td></tr></table></figure>
+
+<p>以下错误不用理会，或者去根据官网指令添加相应依赖即可</p>
+<p><img src="/2020/11/03/springboot/wrong.jpg" alt="wrong"></p>
+<p><strong>注：yaml中的属性字段要与类中的字段一致！</strong></p>
+<p>另外，yaml还支持松散绑定：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">dog:</span><br>  <span class="hljs-attr">dog-name:</span> <span class="hljs-string">wangwang</span><br>  <span class="hljs-attr">age:</span> <span class="hljs-number">10</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight yaml"><table><tr><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">dog:</span><br>  <span class="hljs-attr">dog_name:</span> <span class="hljs-string">wangwang</span><br>  <span class="hljs-attr">age:</span> <span class="hljs-number">10</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">@Data<br>@AllArgsConstructor<br>@NoArgsConstructor<br>@Component<br>@PropertySource(value &#x3D; &quot;classpath:application.yaml&quot;)<br>@ConfigurationProperties(prefix &#x3D; &quot;dog&quot;)<br>public class dog &#123;<br><br>    private String dogName;<br>    private int age;<br><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="Value和-Configuration对比"><a href="#Value和-Configuration对比" class="headerlink" title="@Value和@Configuration对比"></a><strong>@Value和@Configuration对比</strong></h3><p><img src="/2020/11/03/springboot/compare.png" alt="compare"></p>
+<p>可以看到，@Configuration支持更为复杂的功能</p>
+<h2 id="多环境配置及配置文件位置"><a href="#多环境配置及配置文件位置" class="headerlink" title="多环境配置及配置文件位置"></a><strong>多环境配置及配置文件位置</strong></h2><h3 id="文件位置"><a href="#文件位置" class="headerlink" title="文件位置"></a><strong>文件位置</strong></h3><p>配置文件的位置有四种：</p>
+<ul>
+<li>file:./config/</li>
+</ul>
+<p>项目的config目录下</p>
+<ul>
+<li>file:./</li>
+</ul>
+<p>项目下</p>
+<ul>
+<li>classpath:/config/</li>
+</ul>
+<p>类路径的config目录下</p>
+<ul>
+<li>classpath:/</li>
+</ul>
+<p>类路径下</p>
+<p>位置及优先级如图所示</p>
+<p><img src="/2020/11/03/springboot/yamladdress.jpg" alt="yamladdress"></p>
+<h3 id="多环境切换"><a href="#多环境切换" class="headerlink" title="多环境切换"></a><strong>多环境切换</strong></h3><p>在真实项目中，可能会有多套环境，比如测试环境、开发环境等等，那这个时候怎么选择指定的环境呢</p>
+<ul>
+<li><p>如果使用的是properties文件<br><img src="/2020/11/03/springboot/mulproperties.jpg" alt="mulproperties"><br>只需要在默认的properties文件中进行指定选择</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">spring.profiles.active&#x3D;dev<br><br>或<br><br>spring.profiles.active&#x3D;test<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>如果使用的是yaml文件<br>yaml可以使用多文档模块，在yaml中使用<code>---</code>分割多个文档</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">spring:<br>  profiles:<br>    active: dev<br><br>---<br><br>server:<br>  port: 8081<br>spring:<br>  profiles: dev<br><br>---<br><br>server:<br>  port: 8082<br>spring:<br>  profiles: test<br><br></code></pre></td></tr></table></figure>
+
+<h1 id="springboot的web开发"><a href="#springboot的web开发" class="headerlink" title="springboot的web开发"></a><strong>springboot的web开发</strong></h1><p>在springboot中，可以使用以下方法处理静态资源</p>
+<h2 id="处理静态资源"><a href="#处理静态资源" class="headerlink" title="处理静态资源"></a><strong>处理静态资源</strong></h2><h3 id="webjars"><a href="#webjars" class="headerlink" title="webjars"></a><strong>webjars</strong></h3><p>webjars官网：<a href="https://www.webjars.org/">https://www.webjars.org/</a></p>
+<p>访问localhost:8080/webjars/… 便可以获取静态资源</p>
+<p>如：添加jquery的webjars后，访问<a href="http://localhost:8081/webjars/jquery/3.5.1/jquery.js%E5%B0%B1%E5%8F%AF%E4%BB%A5%E8%8E%B7%E5%BE%97jquery.js%E7%9A%84%E8%B5%84%E6%BA%90">http://localhost:8081/webjars/jquery/3.5.1/jquery.js就可以获得jquery.js的资源</a></p>
+<p><img src="/2020/11/03/springboot/jquerywebjars.jpg" alt="jquerywebjars"></p>
+<h3 id="resources-xx"><a href="#resources-xx" class="headerlink" title="resources/xx"></a><strong>resources/xx</strong></h3><ul>
+<li><p>resources/public：localhost:8080/</p>
+</li>
+<li><p>resources/static：localhost:8080/</p>
+</li>
+<li><p>resources/resources：localhost:8080/</p>
+</li>
+</ul>
+<p>可以在resources目录下创建以上三个文件，访问localhost:8080/xx 都可以获得静态资源</p>
+<p>优先级：resources、public、static</p>
+<p>通常将静态资源放入以上目录下，相当于mvc中/WEB-INF目录</p>
+<h2 id="Thymeleaf模版"><a href="#Thymeleaf模版" class="headerlink" title="Thymeleaf模版"></a><strong>Thymeleaf模版</strong></h2><p>Thymeleaf是用来开发Web和独立环境项目的服务器端的Java模版引擎，能够处理HTML，XML，JavaScript，CSS 甚至纯文本。一些常用的模版引擎有JSP、Freemarker、Thymeleaf等等，而springboot并不支持jsp这种模版引擎。</p>
+<p>Thymeleaf 官网：<a href="https://www.thymeleaf.org/">https://www.thymeleaf.org/</a></p>
+<p>Thymeleaf 在 Github 的主页：<a href="https://github.com/thymeleaf/thymeleaf">https://github.com/thymeleaf/thymeleaf</a></p>
+<p>导入依赖</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">&lt;dependency&gt;<br>	&lt;groupId&gt;org.thymeleaf&lt;&#x2F;groupId&gt;<br>	&lt;artifactId&gt;thymeleaf-spring5&lt;&#x2F;artifactId&gt;<br>&lt;&#x2F;dependency&gt;<br>&lt;dependency&gt;<br>	&lt;groupId&gt;org.thymeleaf.extras&lt;&#x2F;groupId&gt;<br>	&lt;artifactId&gt;thymeleaf-extras-java8time&lt;&#x2F;artifactId&gt;<br>&lt;&#x2F;dependency&gt;<br><br></code></pre></td></tr></table></figure>
+
+<p><strong>注意导入的thymeleaf是3.x版本的</strong></p>
+<p><img src="/2020/11/03/springboot/thymeleafproperties.jpg" alt="thymeleafproperties"></p>
+<p>可以看到，thymeleaf已经帮我们生成好了视图解析器，且默认路径为resources/templates，所以视图应该放在templates目录下，以便默认的视图解析器生效</p>
+<p>thymeleaf关闭缓存：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">spring:<br>  thymeleaf:<br>    cache: false<br></code></pre></td></tr></table></figure>
+
+<h3 id="thymeleaf语法"><a href="#thymeleaf语法" class="headerlink" title="thymeleaf语法"></a><strong>thymeleaf语法</strong></h3><p>要在html文件中使用thymeleaf，要在html中加上</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">&lt;html xmlns:th&#x3D;&quot;http:&#x2F;&#x2F;www.thymeleaf.org&quot;&gt;<br></code></pre></td></tr></table></figure>
+
+<p>thymeleaf的语法和vue的语法很相似    <a href="https://blog.csdn.net/malimingwq/article/details/79329921">https://blog.csdn.net/malimingwq/article/details/79329921</a></p>
+<h3 id="mvc的配置和扩展"><a href="#mvc的配置和扩展" class="headerlink" title="mvc的配置和扩展"></a><strong>mvc的配置和扩展</strong></h3><p>springboot为我们配置好了默认的mvc框架，如果我们想保持mvc的特征并且为mvc添加一些特定配置，如配置 拦截器、过滤器、改变视图解析器等等，我们可以用<code>@Configuration</code>作用于某个bean并且让它实现<code>WebMvcConfigurer</code>接口中方法即可</p>
+<p>WebMvcConfigurer接口中的方法如下：</p>
+<p><img src="/2020/11/03/springboot/webmvcconfigurer.jpg" alt="webmvcconfigurer"></p>
+<p>如配置拦截器：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">@Configuration<br>public class myconfiguration implements WebMvcConfigurer &#123;<br><br>    @Override<br>    public void addInterceptors(InterceptorRegistry registry) &#123;<br>        registry.addInterceptor(new HandlerInterceptor() &#123;<br>            @Override<br>            public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception &#123;<br>                return false;<br>            &#125;<br><br>            @Override<br>            public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception &#123;<br><br>            &#125;<br><br>            @Override<br>            public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception &#123;<br><br>            &#125;<br>        &#125;).addPathPatterns();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>定制首页：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">@Configuration<br>public class myconfiguration implements WebMvcConfigurer &#123;<br><br>    @Override<br>    public void addViewControllers(ViewControllerRegistry registry) &#123;<br>        registry.addViewController(&quot;&quot;).setViewName(&quot;&quot;);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>]]></content>
+      <tags>
+        <tag>springboot</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>vue入门</title>
     <url>/2020/10/29/vue/</url>
     <content><![CDATA[<h1 id="什么是vue"><a href="#什么是vue" class="headerlink" title="什么是vue"></a><strong>什么是vue</strong></h1><p>vue是一款渐进式的JavaScript框架 vue = （Angular+React）</p>
@@ -2224,8 +2414,25 @@
 <p>因为annotation-driven有几个同名的</p>
 <p><img src="/2020/10/12/mvcwrong/driven.jpg" alt="driven"></p>
 <p>如果要选择注解驱动，要选择第三个</p>
-<p>一个或多个listeners启动失败：</p>
+<ol>
+<li><p>一个或多个listeners启动失败：</p>
+</li>
+<li></li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">04-Nov-2020 10:55:18.460 严重 [RMI TCP Connection(2)-127.0.0.1] org.apache.catalina.core.StandardContext.startInternal 一个或多个筛选器启动失败。完整的详细信息将在相应的容器日志文件中找到<br>04-Nov-2020 10:55:18.461 严重 [RMI TCP Connection(2)-127.0.0.1] org.apache.catalina.core.StandardContext.startInternal 由于之前的错误，Context[]启动失败<br></code></pre></td></tr></table></figure>
+
 <p><img src="/2020/10/12/mvcwrong/listener.jpg" alt="listener"></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">org.springframework.beans.factory.BeanDefinitionStoreException: Failed to read candidate component class: file<br></code></pre></td></tr></table></figure>
+
+<ol>
+<li>修改maven</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">&lt;properties&gt;<br>    &lt;maven.compiler.source&gt;1.7&lt;&#x2F;maven.compiler.source&gt;<br>    &lt;maven.compiler.target&gt;1.7&lt;&#x2F;maven.compiler.target&gt;<br>&lt;&#x2F;properties&gt;<br></code></pre></td></tr></table></figure>
+
+<ol start="2">
+<li><p><img src="/2020/10/12/mvcwrong/dispatcher.jpg" alt="dispatcher"></p>
+</li>
+</ol>
 ]]></content>
       <tags>
         <tag>Spring</tag>
@@ -2507,13 +2714,12 @@
 <figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">    &lt;context:component-scan base-package&#x3D;&quot;springmvc.validator&quot;&gt;&lt;&#x2F;context:component-scan&gt;<br><br>修改UserController中的login处理方法<br><br>public String login(@ModelAttribute User user, HttpSession session, Model model, BindingResult result)&#123;<br>    MyValidator myValidator &#x3D; new MyValidator();<br>    if(myValidator.supports(User.class))&#123;<br>    	myValidator.validate(user,result);<br>        List&lt;ObjectError&gt; list &#x3D; result.getAllErrors();<br>        for(ObjectError error:list)&#123;<br>            System.out.println(error.getCode());<br>        &#125;<br>    &#125;<br>    if(result.hasErrors())  return &quot;redirect:tologin&quot;;<br>    if(&quot;123&quot;.equals(user.getUsers())&amp;&amp;&quot;123&quot;.equals(user.getPasswords()))&#123;<br>        session.setAttribute(&quot;user&quot;,user);<br>        return &quot;redirect:result&quot;;<br>    &#125;<br>    model.addAttribute(&quot;msg&quot;,&quot;用户名或密码错误，请重新登录！&quot;);<br>    return &quot;login&quot;;<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>此时，若不输入账号密码直接登录，则终端输出</p>
 <p>user.users.required<br>passwords.invalid</p>
-<p>##<strong>Spring MVC JSR-303验证框架之Hibernate-Validator</strong></p>
-<p>JSR-303是一个数据验证的规范，JSR-303的校验是基于注解的，Spring中没有对这一规范进行实现，所以在SpringMVC中使用JSR-303的时候就需要提供一个对JSR-303规范的实现，而Hibernate-Validator是实现了这一规范的，使用Hibernate-Validator进行验证，不再需要实现Validator接口</p>
+<h2 id="Spring-MVC-JSR-303验证框架之Hibernate-Validator"><a href="#Spring-MVC-JSR-303验证框架之Hibernate-Validator" class="headerlink" title="Spring MVC JSR-303验证框架之Hibernate-Validator"></a><strong>Spring MVC JSR-303验证框架之Hibernate-Validator</strong></h2><p>JSR-303是一个数据验证的规范，JSR-303的校验是基于注解的，Spring中没有对这一规范进行实现，所以在SpringMVC中使用JSR-303的时候就需要提供一个对JSR-303规范的实现，而Hibernate-Validator是实现了这一规范的，使用Hibernate-Validator进行验证，不再需要实现Validator接口</p>
 <p>Hibernate-Validator内部已经定义好了一系列的限制注解，我们只需要把这些注解标记在需要验证的实体类的属性上或是其对应的get方法上</p>
 <p><strong>注：要使用Hibernate-Validator进行验证，需要在配置文件中加上</strong></p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">&lt;mvc:annotation-driven&#x2F;&gt;  <br></code></pre></td></tr></table></figure>
 <p><strong>并添加依赖：</strong></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">dependency&gt;<br>        &lt;groupId&gt;org.hibernate&lt;&#x2F;groupId&gt;<br>        &lt;artifactId&gt;hibernate-validator&lt;&#x2F;artifactId&gt;<br>        &lt;version&gt;6.1.6.Final&lt;&#x2F;version&gt;<br>&lt;&#x2F;dependency&gt;<br></code></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">&lt;dependency&gt;<br>        &lt;groupId&gt;org.hibernate&lt;&#x2F;groupId&gt;<br>        &lt;artifactId&gt;hibernate-validator&lt;&#x2F;artifactId&gt;<br>        &lt;version&gt;6.1.6.Final&lt;&#x2F;version&gt;<br>&lt;&#x2F;dependency&gt;<br></code></pre></td></tr></table></figure>
 
 <p>使用Hibernate-Validator进行验证，可以在要验证的 类的属性 或 getter方法加上相应的注解</p>
 <table>
@@ -2741,13 +2947,14 @@
   <entry>
     <title>Spring AOP的两种实现方式（XML、AspectJ）</title>
     <url>/2020/09/25/AOP/</url>
-    <content><![CDATA[<h2 id="基于XML配置的AOP实例："><a href="#基于XML配置的AOP实例：" class="headerlink" title="基于XML配置的AOP实例："></a>基于XML配置的AOP实例：</h2><p>要使用配置实现AOP编程，要在xml文件中使用<a href="aop:config">aop:config</a>来声明，这种声明方式使用了大量的自动代理方式<br><strong>注：环境可能会缺少必要的包，如aopalliance.jar、aspectweaver.jar</strong></p>
-<p>在<a href="aop:config">aop:config</a>中使用&lt;aop:aspect id=”” ref=””&gt;来配置一个切面，&lt;aop:pointcut id expression/&gt;来配置一个切入点，&lt;aop:before(or other) method=”” pointcut=””&gt;配置一个增强，这三个就组成了一个完整的切面</p>
+    <content><![CDATA[<h1 id="基于XML配置的AOP实例"><a href="#基于XML配置的AOP实例" class="headerlink" title="基于XML配置的AOP实例"></a>基于XML配置的AOP实例</h1><p>要使用配置实现AOP编程，要在xml文件中使用<code>&lt;aop:config&gt;&lt;/aop:config&gt;</code>来声明，这种声明方式使用了大量的自动代理方式</p>
+<p><strong>注：环境可能会缺少必要的包，如aopalliance.jar、aspectweaver.jar</strong></p>
+<p>在<code>&lt;aop:config&gt;&lt;/aop:config&gt;</code>中使用<code>&lt;aop:aspect id=&quot;&quot; ref=&quot;&quot;&gt;&lt;/aop:aspect&gt;</code>来配置一个切面，<code>&lt;aop:pointcut id expression/&gt;</code>来配置一个切入点，<code>&lt;aop:before(or other) method=&quot;&quot; pointcut=&quot;&quot;&gt;&lt;/aop:before&gt;</code>配置一个增强，这三个就组成了一个完整的切面</p>
 <p>下面介绍如何配置一个切面和切面中的几种增强</p>
 <p>定义一个业务类ServiceClass：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">@Component<br>public class ServiceClass &#123;<br>    public void service()&#123;<br>        System.out.println(&quot;this is service&quot;);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>定义一个MyAspect切面类，生成配置文件newcontext.xml，其中，MyAspect类使用Component注解配置</p>
-<h3 id="before"><a href="#before" class="headerlink" title="before"></a>before</h3><p><strong>before是业务方法执行前进行的操作</strong></p>
+<h2 id="before"><a href="#before" class="headerlink" title="before"></a>before</h2><p><strong>before是业务方法执行前进行的操作</strong></p>
 <p>在切面类中添加before方法：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">@Component<br>public class MyAspect &#123;<br>    public void before()&#123;<br>        System.out.println(&quot;MyAspect&#39;s before&quot;);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>newcontext.xml文件：</p>
@@ -2757,39 +2964,41 @@
 <figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">public class TestClass &#123;<br>    public static void main(String[] args) &#123;<br>        ApplicationContext applicationContext &#x3D; new ClassPathXmlApplicationContext(&quot;newcontext.xml&quot;);<br>        ServiceClass serviceClass &#x3D; (ServiceClass)applicationContext.getBean(&quot;serviceClass&quot;);<br>        serviceClass.service();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>输出结果：</p>
 <p>MyAspect’s before<br>this is service</p>
-<h3 id="after"><a href="#after" class="headerlink" title="after"></a>after</h3><p><strong>业务方法执行完毕进行的操作，通常用于释放资源</strong></p>
+<h2 id="after"><a href="#after" class="headerlink" title="after"></a>after</h2><p><strong>业务方法执行完毕进行的操作，通常用于释放资源</strong></p>
 <p>在切面类中添加after方法：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">public void after()&#123;<br>        System.out.println(&quot;MyAspect&#39;s after&quot;);<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>添加配置：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">&lt;aop:after method&#x3D;&quot;after&quot; pointcut-ref&#x3D;&quot;pointcut&quot;&gt;&lt;&#x2F;aop:after&gt;<br></code></pre></td></tr></table></figure>
 <p>输出结果：</p>
 <p>MyAspect’s before<br>this is service<br>MyAspect’s after</p>
-<h3 id="after-returing"><a href="#after-returing" class="headerlink" title="after-returing"></a>after-returing</h3><p><strong>after-returing是业务方法返回前进行的操作</strong></p>
+<h2 id="after-returing"><a href="#after-returing" class="headerlink" title="after-returing"></a>after-returing</h2><p><strong>after-returing是业务方法返回前进行的操作</strong></p>
 <p>在切面类中添加after-returning方法：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">public void afterReturning()&#123;<br>        System.out.println(&quot;MyAspect&#39;s afterReturning&quot;);<br>&#125;<br></code></pre></td></tr></table></figure>
+
 <p>添加配置：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">&lt;aop:after-returning method&#x3D;&quot;afterReturning&quot; pointcut-ref&#x3D;&quot;pointcut&quot;&gt;&lt;&#x2F;aop:after-returning&gt;<br></code></pre></td></tr></table></figure>
 <p>输出结果：</p>
 <p>MyAspect’s before<br>this is service<br>MyAspect’s after<br>MyAspect’s afterReturning</p>
-<h3 id="after-throwing"><a href="#after-throwing" class="headerlink" title="after-throwing"></a>after-throwing</h3><p><strong>after-throwing是业务方法抛出异常后进行的操作</strong></p>
+<h2 id="after-throwing"><a href="#after-throwing" class="headerlink" title="after-throwing"></a>after-throwing</h2><p><strong>after-throwing是业务方法抛出异常后进行的操作</strong></p>
 <p>切面类添加afterthrowing方法：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">public void afterThrowing()&#123;<br>       System.out.println(&quot;MyAspect&#39;s afterThrowing&quot;);<br>   &#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">public void afterThrowing()&#123;<br>    System.out.println(&quot;MyAspect&#39;s afterThrowing&quot;);<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>在业务类ServiceClass的service方法中抛出异常：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">public void service() throws Exception&#123;<br>       System.out.println(&quot;this is service&quot;);<br>       throw new Exception();<br>   &#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">public void service() throws Exception&#123;<br>    System.out.println(&quot;this is service&quot;);<br>    throw new Exception();<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>添加配置：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">&lt;aop:after-throwing method&#x3D;&quot;afterThrowing&quot; pointcut-ref&#x3D;&quot;pointcut&quot;&gt;&lt;&#x2F;aop:after-throwing&gt;<br></code></pre></td></tr></table></figure>
 <p>测试类：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">public class TestClass &#123;<br>    public static void main(String[] args) &#123;<br>        ApplicationContext applicationContext &#x3D; new ClassPathXmlApplicationContext(&quot;newcontext.xml&quot;);<br>        ServiceClass serviceClass &#x3D; (ServiceClass)applicationContext.getBean(&quot;serviceClass&quot;);<br>        try &#123;<br>            serviceClass.service();<br>        &#125;<br>        catch (Exception e)&#123;<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>输出结果：</p>
 <p>MyAspect’s before<br>this is service<br>MyAspect’s after<br>MyAspect’s afterThrowing</p>
-<h3 id="around"><a href="#around" class="headerlink" title="around"></a>around</h3><p><strong>around：Advice最强操作，可以综合前面四种advice</strong></p>
+<h2 id="around"><a href="#around" class="headerlink" title="around"></a>around</h2><p><strong>around：Advice最强操作，可以综合前面四种advice</strong></p>
 <p>around方法必须有Object返回值，且第一个形参必须为ProceedingJoinPoint类型，around既可以在执行业务方法之前增强动作，也能在执行业务方法之后进行增强的执行，around增强可以决定业务方法在什么时候执行，在around方法体内，只有调用ProceedingJoinPoint参数的procedd()方法才会执行业务方法</p>
 <p>在切面类中添加around方法：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">public Object around(ProceedingJoinPoint pjp)&#123;<br>    Object object &#x3D; null;<br>    try&#123;<br>        object &#x3D; pjp.proceed();<br>        System.out.println(&quot;MyAspect&#39;s around&quot;);<br>    &#125;<br>    catch (Throwable throwable) &#123;<br><br>    &#125;<br>    return object;<br>&#125;<br></code></pre></td></tr></table></figure>
+
 <p>添加配置：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;UTF-8&quot;?&gt;<br>&lt;beans xmlns&#x3D;&quot;http:&#x2F;&#x2F;www.springframework.org&#x2F;schema&#x2F;beans&quot;<br>       xmlns:xsi&#x3D;&quot;http:&#x2F;&#x2F;www.w3.org&#x2F;2001&#x2F;XMLSchema-instance&quot;<br>       xmlns:context&#x3D;&quot;http:&#x2F;&#x2F;www.springframework.org&#x2F;schema&#x2F;context&quot;<br>       xmlns:aop&#x3D;&quot;http:&#x2F;&#x2F;www.springframework.org&#x2F;schema&#x2F;aop&quot;<br>       xsi:schemaLocation&#x3D;&quot;http:&#x2F;&#x2F;www.springframework.org&#x2F;schema&#x2F;beans http:&#x2F;&#x2F;www.springframework.org&#x2F;schema&#x2F;beans&#x2F;spring-beans.xsd http:&#x2F;&#x2F;www.springframework.org&#x2F;schema&#x2F;context https:&#x2F;&#x2F;www.springframework.org&#x2F;schema&#x2F;context&#x2F;spring-context.xsd http:&#x2F;&#x2F;www.springframework.org&#x2F;schema&#x2F;aop https:&#x2F;&#x2F;www.springframework.org&#x2F;schema&#x2F;aop&#x2F;spring-aop.xsd&quot;&gt;<br>    &lt;context:component-scan base-package&#x3D;&quot;newdemo&quot;&gt;&lt;&#x2F;context:component-scan&gt;<br>    &lt;aop:config&gt;<br>        &lt;aop:aspect id&#x3D;&quot;aspect&quot; ref&#x3D;&quot;myAspect&quot;&gt;<br>            &lt;aop:pointcut id&#x3D;&quot;pointcut&quot; expression&#x3D;&quot;execution(* newdemo.ServiceClass.*(..))&quot;&#x2F;&gt;<br>            &lt;aop:around method&#x3D;&quot;around&quot; pointcut-ref&#x3D;&quot;pointcut&quot;&gt;&lt;&#x2F;aop:around&gt;<br>        &lt;&#x2F;aop:aspect&gt;<br>    &lt;&#x2F;aop:config&gt;<br>&lt;&#x2F;beans&gt;<br><br></code></pre></td></tr></table></figure>
 <p>测试类：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">public class TestClass &#123;<br>   public static void main(String[] args) &#123;<br>       ApplicationContext applicationContext &#x3D; new ClassPathXmlApplicationContext(&quot;newcontext.xml&quot;);<br>       ServiceClass serviceClass &#x3D; (ServiceClass)applicationContext.getBean(&quot;serviceClass&quot;);<br>       serviceClass.service();<br>   	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">public class TestClass &#123;<br>public static void main(String[] args) &#123;<br>    ApplicationContext applicationContext &#x3D; new ClassPathXmlApplicationContext(&quot;newcontext.xml&quot;);<br>    ServiceClass serviceClass &#x3D; (ServiceClass)applicationContext.getBean(&quot;serviceClass&quot;);<br>    serviceClass.service();<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>输出结果：</p>
 <p>this is service<br>MyAspect’s around</p>
 <p>改变around方法中两条语句的位置：</p>
@@ -2797,75 +3006,69 @@
 <p>输出结果：</p>
 <p>MyAspect’s around<br>this is service</p>
 <p>说明只有在执行ProceedingJoinPoint对象的proceed方法后，才会执行业务方法</p>
-<ul>
-<li>advice-parameters：可以往增强方法中传入业务方法中的参数，在切入点配置好参数类型和属性名即可</li>
-</ul>
+<p><strong>advice-parameters：可以往增强方法中传入业务方法中的参数，在切入点配置好参数类型和属性名即可</strong></p>
 <p><strong>下面用around来模拟前面的advice</strong></p>
 <p>切面类：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">@Component<br>public class MyAspect &#123;<br>    public Object around(ProceedingJoinPoint pjp)&#123;<br>        Object object &#x3D; null;<br>        System.out.println(&quot;before&quot;);       &#x2F;&#x2F;此时还未执行pjp的proceed方法，业务方法不会执行，所以相当于实现advice增强<br>        try&#123;<br>            object &#x3D; pjp.proceed();<br>        &#125;<br>        catch (Throwable throwable) &#123;       &#x2F;&#x2F;pjp.proceed()方法若捕捉异常，则说明业务方法会抛出一个异常<br>        &#125;<br>        finally &#123;<br>        	System.out.println(&quot;after&quot;);    &#x2F;&#x2F;此时捕捉异常，业务方法执行完毕，所以相当于实现after增强<br>        &#125;<br>        System.out.println(&quot;after throwing&quot;);   &#x2F;&#x2F;这就模拟after-throwing增强<br>        return object;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>配置：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;UTF-8&quot;?&gt;<br>&lt;beans xmlns&#x3D;&quot;http:&#x2F;&#x2F;www.springframework.org&#x2F;schema&#x2F;beans&quot;<br>       xmlns:xsi&#x3D;&quot;http:&#x2F;&#x2F;www.w3.org&#x2F;2001&#x2F;XMLSchema-instance&quot;<br>       xmlns:context&#x3D;&quot;http:&#x2F;&#x2F;www.springframework.org&#x2F;schema&#x2F;context&quot;<br>       xmlns:aop&#x3D;&quot;http:&#x2F;&#x2F;www.springframework.org&#x2F;schema&#x2F;aop&quot;<br>       xsi:schemaLocation&#x3D;&quot;http:&#x2F;&#x2F;www.springframework.org&#x2F;schema&#x2F;beans http:&#x2F;&#x2F;www.springframework.org&#x2F;schema&#x2F;beans&#x2F;spring-beans.xsd http:&#x2F;&#x2F;www.springframework.org&#x2F;schema&#x2F;context https:&#x2F;&#x2F;www.springframework.org&#x2F;schema&#x2F;context&#x2F;spring-context.xsd http:&#x2F;&#x2F;www.springframework.org&#x2F;schema&#x2F;aop https:&#x2F;&#x2F;www.springframework.org&#x2F;schema&#x2F;aop&#x2F;spring-aop.xsd&quot;&gt;<br>    &lt;context:component-scan base-package&#x3D;&quot;newdemo&quot;&gt;&lt;&#x2F;context:component-scan&gt;<br>    &lt;aop:config&gt;<br>        &lt;aop:aspect id&#x3D;&quot;aspect&quot; ref&#x3D;&quot;myAspect&quot;&gt;<br>            &lt;aop:pointcut id&#x3D;&quot;pointcut&quot; expression&#x3D;&quot;execution(* newdemo.ServiceClass.*(..))&quot;&#x2F;&gt;<br>            &lt;aop:around method&#x3D;&quot;around&quot; pointcut-ref&#x3D;&quot;pointcut&quot;&gt;&lt;&#x2F;aop:around&gt;<br>        &lt;&#x2F;aop:aspect&gt;<br>    &lt;&#x2F;aop:config&gt;<br>&lt;&#x2F;beans&gt;<br></code></pre></td></tr></table></figure>
+
 <p>测试类：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">public class TestClass &#123;<br>    public static void main(String[] args) &#123;<br>        ApplicationContext applicationContext &#x3D; new ClassPathXmlApplicationContext(&quot;newcontext.xml&quot;);<br>        ServiceClass serviceClass &#x3D; (ServiceClass)applicationContext.getBean(&quot;serviceClass&quot;);<br>        try &#123;<br>            serviceClass.service();<br>        &#125;<br>        catch (Exception e)&#123;<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-<p>输出结果：</p>
-<p>before<br>this is service<br>after<br>after throwing</p>
-<h3 id="advice-parameters"><a href="#advice-parameters" class="headerlink" title="advice-parameters"></a>advice-parameters</h3><p>在pointcut的expression中指定方法参数，可以获取业务方法中的参数，从而使增强方法中能使用这些参数</p>
+
+<h2 id="advice-parameters"><a href="#advice-parameters" class="headerlink" title="advice-parameters"></a>advice-parameters</h2><p>在pointcut的expression中指定方法参数，可以获取业务方法中的参数，从而使增强方法中能使用这些参数</p>
 <p>ServiceClass类：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">	@Component<br>	public class ServiceClass &#123;<br>	    public void parametersService(String name,int age)&#123;<br>	        System.out.println(&quot;parametersService&#39;s&quot;+name+&quot; &quot;+age);<br>	    &#125;<br>	&#125;<br>&#96;&#96;&#96;	<br>切面类中添加ParametersMethod方法：<br></code></pre></td></tr></table></figure>
-<pre><code>public void ParametersMethod(String name,int age)&#123;
-    System.out.println(&quot;ParametersMethod&#39;s&quot;+name+&quot; &quot;+age);
-&#125;</code></pre>
-<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">添加配置：<br></code></pre></td></tr></table></figure>
-<pre><code>&lt;aop:before method=&quot;ParametersMethod&quot; pointcut=&quot;execution(* newdemo.ServiceClass.parametersService(String,int)) and args(name,age)&quot;&gt;&lt;/aop:before&gt;</code></pre>
-<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">测试：<br></code></pre></td></tr></table></figure>
-<pre><code>public class TestClass &#123;
-    public static void main(String[] args) &#123;
-        ApplicationContext applicationContext = new ClassPathXmlApplicationContext(&quot;newcontext.xml&quot;);
-        ServiceClass serviceClass = (ServiceClass)applicationContext.getBean(&quot;serviceClass&quot;);
-        serviceClass.parametersService(&quot;zzzz&quot;,21);
-    &#125;
-&#125;</code></pre>
-<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">输出结果<br><br>ParametersMethod&#39;szzzz 21<br>parametersService&#39;szzzz 21<br><br><br>### Introduction 引入<br><br>Introduction允许将一个切面声明一个实现指定接口的通知对象，并且提供了一个接口实现类来代表这些对象<br><br>由 &lt;aop: declare-parents&gt;元素声明 <br><br>定义一个MyInterface接口<br></code></pre></td></tr></table></figure>
-<pre><code>public interface MyInterface &#123;
-    public void show();
-&#125;</code></pre>
-<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">接口实现类MyInterfaceImpl<br></code></pre></td></tr></table></figure>
-<pre><code>public class MyInterfaceImpl implements MyInterface&#123;
-    @Override
-    public void show() &#123;
-        System.out.println(&quot;this is my interface&quot;);
-    &#125;
-&#125;</code></pre>
-<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">添加配置：<br></code></pre></td></tr></table></figure>
-<pre><code>aop:declare-parents types-matching=&quot;newdemo.ServiceClass&quot; implement-interface=&quot;newdemo.MyInterface&quot;
-                             default-impl=&quot;newdemo.MyInterfaceImpl&quot;&gt;&lt;/aop:declare-parents&gt;</code></pre>
-<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">测试类：<br></code></pre></td></tr></table></figure>
-<pre><code>public class TestClass &#123;
-    public static void main(String[] args) &#123;
-        ApplicationContext applicationContext = new ClassPathXmlApplicationContext(&quot;newcontext.xml&quot;);
-        MyInterface myInterface = (MyInterface)applicationContext.getBean(&quot;serviceClass&quot;);
-        myInterface.show();
-    &#125;
-&#125;</code></pre>
-<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">输出结果：<br>	<br>this is my interface<br><br>introduction的作用是强行为ServiceClass添加一个父类，即MyInterface接口，由ServiceClass作为接口的实现类<br><br><br>## 基于@AspectJ注解的AOP实例<br><br>@AspectJ是预编译的AOP实现方式，@AspecJ的风格类似纯java注解的普通java类，@AspectJ是指明aspects的另一种风格，像基于注解的IOC一样，基于注解的配置能让开发变得更加方便。<br><br>对@AspectJ的支持可以使用XML或java注释风格的配置，两种方法的作用是一样的<br><br>* 使用XMl，要在配置文件中加上<br>&#96;&#96;&#96;	<br>	&lt;aop: aspectj-autoproxy&gt;&lt;&#x2F;aop: aspectj-autoproxy&gt;<br></code></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">@Component<br>public class ServiceClass &#123;<br>    public void parametersService(String name,int age)&#123;<br>        System.out.println(&quot;parametersService&#39;s&quot;+name+&quot; &quot;+age);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>切面类中添加ParametersMethod方法：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">public void ParametersMethod(String name,int age)&#123;<br>    System.out.println(&quot;ParametersMethod&#39;s&quot;+name+&quot; &quot;+age);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>添加配置：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">&lt;aop:before method&#x3D;&quot;ParametersMethod&quot; <br>pointcut&#x3D;&quot;execution(* newdemo.ServiceClass.parametersService(String,int)) and args(name,age)&quot;&gt;&lt;&#x2F;aop:before&gt;<br></code></pre></td></tr></table></figure>
+
+<p>测试：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">public class TestClass &#123;<br>    public static void main(String[] args) &#123;<br>        ApplicationContext applicationContext &#x3D; new ClassPathXmlApplicationContext(&quot;newcontext.xml&quot;);<br>        ServiceClass serviceClass &#x3D; (ServiceClass)applicationContext.getBean(&quot;serviceClass&quot;);<br>        serviceClass.parametersService(&quot;zzzz&quot;,21);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+<h2 id="Introduction-引入"><a href="#Introduction-引入" class="headerlink" title="Introduction 引入"></a>Introduction 引入</h2><p>Introduction允许将一个切面声明一个实现指定接口的通知对象，并且提供了一个接口实现类来代表这些对象</p>
+<p>由 <code>&lt;aop: declae-parents&gt;</code>元素声明 </p>
+<p>定义一个MyInterface接口</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">public interface MyInterface &#123;<br>    public void show();<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>接口实现类MyInterfaceImpl</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">public class MyInterfaceImpl implements MyInterface&#123;<br>    @Override<br>    public void show() &#123;<br>        System.out.println(&quot;this is my interface&quot;);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>添加配置：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">&lt;aop:declare-parents types-matching&#x3D;&quot;newdemo.ServiceClass&quot; implement-interface&#x3D;&quot;newdemo.MyInterface&quot; default-impl&#x3D;&quot;newdemo.MyInterfaceImpl&quot;&gt;&lt;&#x2F;aop:declare-parents&gt;<br></code></pre></td></tr></table></figure>
+<p>测试类：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">public class TestClass &#123;<br>    public static void main(String[] args) &#123;<br>        ApplicationContext applicationContext &#x3D; new ClassPathXmlApplicationContext(&quot;newcontext.xml&quot;);<br>        MyInterface myInterface &#x3D; (MyInterface)applicationContext.getBean(&quot;serviceClass&quot;);<br>        myInterface.show();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>introduction的作用是强行为ServiceClass添加一个父类，即MyInterface接口，由ServiceClass作为接口的实现类</p>
+<h1 id="基于-AspectJ注解的AOP实例"><a href="#基于-AspectJ注解的AOP实例" class="headerlink" title="基于@AspectJ注解的AOP实例"></a><strong>基于@AspectJ注解的AOP实例</strong></h1><p>@AspectJ是预编译的AOP实现方式，@AspecJ的风格类似纯java注解的普通java类，@AspectJ是指明aspects的另一种风格，像基于注解的IOC一样，基于注解的配置能让开发变得更加方便。</p>
+<p>对@AspectJ的支持可以使用XML或java注释风格的配置，两种方法的作用是一样的</p>
+<ul>
+<li>使用XMl，要在配置文件中加上</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">&lt;aop: aspectj-autoproxy&gt;&lt;&#x2F;aop: aspectj-autoproxy&gt;<br></code></pre></td></tr></table></figure>
+
 <ul>
 <li>java注释风格的配置</li>
 </ul>
 <p>在切面类中添加注释</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">@Configuration<br>@EnableAspectJAutoProxy<br></code></pre></td></tr></table></figure>
+
 <p><strong>下面使用XML文件配置的方式。</strong></p>
 <p>实现一个业务类ServiceCLass</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">public class ServiceCLass &#123;<br>	    public void service()&#123;<br>       	System.out.println(&quot;service&quot;);<br>   	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">public class ServiceCLass &#123;<br>	    public void service()&#123;<br>    	System.out.println(&quot;service&quot;);<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
 <p>生成配置文件AspectJContext.xml：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;UTF-8&quot;?&gt;<br>&lt;beans xmlns&#x3D;&quot;http:&#x2F;&#x2F;www.springframework.org&#x2F;schema&#x2F;beans&quot;<br>       xmlns:xsi&#x3D;&quot;http:&#x2F;&#x2F;www.w3.org&#x2F;2001&#x2F;XMLSchema-instance&quot;<br>       xmlns:context&#x3D;&quot;http:&#x2F;&#x2F;www.springframework.org&#x2F;schema&#x2F;context&quot;<br>       xmlns:aop&#x3D;&quot;http:&#x2F;&#x2F;www.springframework.org&#x2F;schema&#x2F;aop&quot;<br>       xsi:schemaLocation&#x3D;&quot;http:&#x2F;&#x2F;www.springframework.org&#x2F;schema&#x2F;beans http:&#x2F;&#x2F;www.springframework.org&#x2F;schema&#x2F;beans&#x2F;spring-beans.xsd http:&#x2F;&#x2F;www.springframework.org&#x2F;schema&#x2F;context https:&#x2F;&#x2F;www.springframework.org&#x2F;schema&#x2F;context&#x2F;spring-context.xsd http:&#x2F;&#x2F;www.springframework.org&#x2F;schema&#x2F;aop https:&#x2F;&#x2F;www.springframework.org&#x2F;schema&#x2F;aop&#x2F;spring-aop.xsd&quot;&gt;<br><br>    &lt;context:component-scan base-package&#x3D;&quot;NewAspectJ&quot;&gt;&lt;&#x2F;context:component-scan&gt;<br>    &lt;aop:aspectj-autoproxy&gt;&lt;&#x2F;aop:aspectj-autoproxy&gt;<br>&lt;&#x2F;beans&gt;<br></code></pre></td></tr></table></figure>
 
-<h3 id="Aspect"><a href="#Aspect" class="headerlink" title="@Aspect"></a>@Aspect</h3><p>拥有@Aspect的任何bean都会被Spring自动识别并应用</p>
+<h2 id="Aspect"><a href="#Aspect" class="headerlink" title="@Aspect"></a>@Aspect</h2><p>拥有@Aspect的任何bean都会被Spring自动识别并应用</p>
 <p>用@Aspect注解的类可以有字段和方法，也可以有切入点、通知、引入等</p>
 <p>@Aspect要和@Component一起使用，@Component是自动配置一个bean，而@Aspect是自动将这个bean配置为切面（或者在XML中手动配置bean）</p>
 <p>定义切面类：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">@Component<br>@Aspect<br>public class MyAspect &#123;<br>&#125;<br></code></pre></td></tr></table></figure>
 
-<h3 id="Pointcut"><a href="#Pointcut" class="headerlink" title="@Pointcut"></a>@Pointcut</h3><p>@Pointcut = 表达式+签名</p>
+<h2 id="Pointcut"><a href="#Pointcut" class="headerlink" title="@Pointcut"></a>@Pointcut</h2><p>@Pointcut = 表达式+签名</p>
 <p><strong>@Pointcut的表达式标签有10中：</strong></p>
 <ul>
 <li>execution：用于匹配方法执行的连接点</li>
@@ -2885,63 +3088,39 @@
 <p>等效于在配置文件中的</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">&lt;aop:pointcut id&#x3D;&quot;pointcut&quot; expression&#x3D;&quot;execution(* NewAspectJ.ServiceCLass.service(..))&quot;&#x2F;&gt;<br></code></pre></td></tr></table></figure>
 <p>Pointcut定义时，还可以使用&amp;&amp;、||、！这三种运算</p>
-<pre><code>@Pointcut(&quot;within(NewAspectJ.ServiceCLass)&quot;)
-public void pointcut1()&#123;&#125;
-@Pointcut(&quot;execution(public * *(..))&quot;)
-public void pointcut2()&#123;&#125;
-@Pointcut(&quot;pointcut1()&amp;&amp;pointcut2()&quot;)
-public void pointcut3()&#123;&#125;</code></pre>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">@Pointcut(&quot;within(NewAspectJ.ServiceCLass)&quot;)<br>public void pointcut1()&#123;&#125;<br>@Pointcut(&quot;execution(public * *(..))&quot;)<br>public void pointcut2()&#123;&#125;<br>@Pointcut(&quot;pointcut1()&amp;&amp;pointcut2()&quot;)<br>public void pointcut3()&#123;&#125;<br></code></pre></td></tr></table></figure>
 <p>pointcut3表示切点为NewAspect.ServiceClass类中的所有public方法</p>
-<h3 id="Adivce"><a href="#Adivce" class="headerlink" title="@Adivce"></a>@Adivce</h3><ul>
-<li>@Before</li>
-</ul>
-<p>在切面类中添加before方法：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">@Before(&quot;pointcut()&quot;)<br>   public void before()&#123;<br>       System.out.println(&quot;before&quot;);<br>   &#125;<br></code></pre></td></tr></table></figure>
+<h2 id="Adivce"><a href="#Adivce" class="headerlink" title="@Adivce"></a>@Adivce</h2><h3 id="Before"><a href="#Before" class="headerlink" title="@Before"></a><strong>@Before</strong></h3><p>在切面类中添加before方法：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">@Before(&quot;pointcut()&quot;)<br>public void before()&#123;<br>    System.out.println(&quot;before&quot;);<br>&#125;<br></code></pre></td></tr></table></figure>
+
 <p>等效于在配置文件中的：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">&lt;aop:before method&#x3D;&quot;before&quot; pointcut-ref&#x3D;&quot;pointcut&quot;&gt;&lt;&#x2F;aop:before&gt;<br></code></pre></td></tr></table></figure>
-<p>在测试类TestClass中测试，输出</p>
-<p>before<br>service</p>
+
 <p>其他advice同理</p>
-<ul>
-<li>@AfterReturning</li>
-</ul>
-<p>有时候需要在通知体内得到返回的实际值，可使用@AfterReturning绑定返回值的形式</p>
+<h3 id="AfterReturning"><a href="#AfterReturning" class="headerlink" title="@AfterReturning"></a><strong>@AfterReturning</strong></h3><p>有时候需要在通知体内得到返回的实际值，可使用@AfterReturning绑定返回值的形式</p>
 <p>在业务类中添加serviceResult方法，用于返回result值</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">public String serviceResult()&#123;<br>       return &quot;success&quot;;<br>   &#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">public String serviceResult()&#123;<br>    return &quot;success&quot;;<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>在切面类中添加新的切点</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">@Pointcut(&quot;execution(* NewAspectJ.ServiceClass.serviceResult(..))&quot;)<br>   public void pointcut4()&#123;&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">@Pointcut(&quot;execution(* NewAspectJ.ServiceClass.serviceResult(..))&quot;)<br>public void pointcut4()&#123;&#125;<br></code></pre></td></tr></table></figure>
 <p>切面类中添加AfterReturning方法</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">@AfterReturning(&quot;pointcut4(),returning &#x3D; &quot;Result&quot;&quot;)<br>public void AfterReturning(String Result)&#123;<br>    System.out.println(&quot;AfterReturning &#39;s &quot; + Result);<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>输出结果：</p>
-<pre><code>AfterReturning &#39;s success</code></pre>
-<ul>
-<li>@AfterThrowing</li>
-</ul>
-<p>有时候需要在通知体内得到抛出的异常，可使用像@AfterReturning那样的绑定返回值的形式</p>
+<p>AfterReturning ‘s success</p>
+<h3 id="AfterThrowing"><a href="#AfterThrowing" class="headerlink" title="@AfterThrowing"></a><strong>@AfterThrowing</strong></h3><p>有时候需要在通知体内得到抛出的异常，可使用像@AfterReturning那样的绑定返回值的形式</p>
 <p>在service方法中抛出异常</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">public void service() throws Exception&#123;<br>        System.out.println(&quot;service&quot;);<br>        throw new Exception(&quot;failed&quot;);<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>切面类添加AfterThrowing方法</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">@AfterThrowing(value &#x3D; &quot;pointcut()&quot;,throwing &#x3D; &quot;e&quot;)<br>   public void AfterThrowing(Exception e)&#123;<br>       System.out.println(e.getMessage());<br>   &#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">@AfterThrowing(value &#x3D; &quot;pointcut()&quot;,throwing &#x3D; &quot;e&quot;)<br>public void AfterThrowing(Exception e)&#123;<br>    System.out.println(e.getMessage());<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>结果：</p>
-<pre><code>before
-service
-failed</code></pre>
-<ul>
-<li><p>@After<br>与aop::after相同</p>
-</li>
-<li><p>@Around<br>与aop:around相同</p>
-</li>
-<li><p>@给advice传递参数</p>
-</li>
-</ul>
-<p>在advice中使用advice(pointcut&amp;&amp;args)的方式将参数传给advice，若有重载方法，则会自动根据参数匹配</p>
+<p>before<br>service<br>failed</p>
+<h3 id="After"><a href="#After" class="headerlink" title="@After"></a><strong>@After</strong></h3><p>与aop::after相同</p>
+<h3 id="Around"><a href="#Around" class="headerlink" title="@Around"></a><strong>@Around</strong></h3><p>与aop:around相同</p>
+<h3 id="给advice传递参数"><a href="#给advice传递参数" class="headerlink" title="@给advice传递参数"></a><strong>@给advice传递参数</strong></h3><p>在advice中使用advice(pointcut&amp;&amp;args)的方式将参数传给advice，若有重载方法，则会自动根据参数匹配</p>
 <p>也可以使用Around中的ProceedingJoinPoint对象的getArgs方法返回参数数组</p>
 <p>业务类中重载service方法：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">public void service(String users,String passwords)&#123;<br>       System.out.println(&quot;service &#39;s &quot; + users + &quot; &quot;+passwords);<br>   &#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">public void service(String users,String passwords)&#123;<br>    System.out.println(&quot;service &#39;s &quot; + users + &quot; &quot;+passwords);<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>切面类实现around的advice：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">@Around(&quot;pointcut()&amp;&amp;args(users,passwords)&quot;)<br>   public Object Around(ProceedingJoinPoint pjp,String users,String passwords)&#123;<br>       Object object &#x3D; null;<br>       System.out.println(&quot;Around&#39;s &quot; + users +&quot; &quot; + passwords);<br>       try&#123;<br>           object &#x3D; pjp.proceed();<br>           Object[] objects &#x3D; pjp.getArgs();<br>           System.out.println(&quot;也可以通过pjp.getArgs()获得参数&quot;);<br>           System.out.println(Arrays.toString(objects));<br>       &#125;<br>       catch (Throwable e)&#123;<br><br>       &#125;<br>       return object;<br>   &#125;<br></code></pre></td></tr></table></figure>
-<p>测试结果：</p>
-<p>Around’s 123 123<br>before<br>service ‘s 123 123<br>也可以通过pjp.getArgs()获得参数<br>[123, 123]</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">@Around(&quot;pointcut()&amp;&amp;args(users,passwords)&quot;)<br>public Object Around(ProceedingJoinPoint pjp,String users,String passwords)&#123;<br>    Object object &#x3D; null;<br>    System.out.println(&quot;Around&#39;s &quot; + users +&quot; &quot; + passwords);<br>    try&#123;<br>        object &#x3D; pjp.proceed();<br>        Object[] objects &#x3D; pjp.getArgs();<br>        System.out.println(&quot;也可以通过pjp.getArgs()获得参数&quot;);<br>        System.out.println(Arrays.toString(objects));<br>    &#125;<br>    catch (Throwable e)&#123;<br><br>    &#125;<br>    return object;<br>&#125;<br></code></pre></td></tr></table></figure>
 ]]></content>
       <tags>
         <tag>Spring</tag>
@@ -4141,7 +4320,7 @@ print(str)            #12\n312312412412</code></pre>
 ]]></content>
       <tags>
         <tag>java</tag>
-        <tag>IO流</tag>
+        <tag>javaIO流</tag>
       </tags>
   </entry>
 </search>

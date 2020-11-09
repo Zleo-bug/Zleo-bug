@@ -980,6 +980,69 @@
       </tags>
   </entry>
   <entry>
+    <title>springboot整合数据库</title>
+    <url>/2020/11/05/springbootDatabase/</url>
+    <content><![CDATA[<h1 id="springboot整合数据库"><a href="#springboot整合数据库" class="headerlink" title="springboot整合数据库"></a><strong>springboot整合数据库</strong></h1><p>springboot整合数据库只需要做三个事情：</p>
+<ul>
+<li><p>导入相应依赖</p>
+</li>
+<li><p>修改数据源DataSource（可选，默认Hikari）</p>
+</li>
+<li><p>yaml文件进行相应的配置</p>
+</li>
+</ul>
+<h1 id="整合jdbc"><a href="#整合jdbc" class="headerlink" title="整合jdbc"></a><strong>整合jdbc</strong></h1><p><img src="/2020/11/05/springbootDatabase/jdbc.jpg" alt="jdbc"></p>
+<p>jdbc的依赖：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">&lt;dependency&gt;<br>    &lt;groupId&gt;org.springframework.boot&lt;&#x2F;groupId&gt;<br>    &lt;artifactId&gt;spring-boot-starter-jdbc&lt;&#x2F;artifactId&gt;<br>&lt;&#x2F;dependency&gt;<br><br>&lt;dependency&gt;<br>    &lt;groupId&gt;mysql&lt;&#x2F;groupId&gt;<br>    &lt;artifactId&gt;mysql-connector-java&lt;&#x2F;artifactId&gt;<br>    &lt;scope&gt;runtime&lt;&#x2F;scope&gt;<br>&lt;&#x2F;dependency&gt;<br></code></pre></td></tr></table></figure>
+
+<p>配置yaml文件</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">spring:<br>  datasource:<br>    username: root<br>    password: 111111<br>    url: jdbc:mysql:&#x2F;&#x2F;localhost:3306&#x2F;dbtest01?characterEncoding&#x3D;utf-8&amp;serverTimezone&#x3D;UTC<br>    driver-class-name: com.mysql.cj.jdbc.Driver<br></code></pre></td></tr></table></figure>
+
+<p>springboot的数据源DataSource：<code>class com.zaxxer.hikari.HikariDataSource</code></p>
+<p>jdbc增删查改：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">@Controller<br>public class jdbcController &#123;<br><br>    @Autowired<br>    JdbcTemplate jdbcTemplate;<br><br>    @RequestMapping(&quot;selectAll&quot;)<br>    @ResponseBody<br>    public String selectAll()&#123;<br><br>        String sql &#x3D; &quot;select * from dbtest01.teacher;&quot;;<br><br>        List&lt;Map&lt;String, Object&gt;&gt; list &#x3D; jdbcTemplate.queryForList(sql);<br><br>        return list.toString();<br><br>    &#125;<br><br>    @RequestMapping(&quot;&#x2F;add&quot;)<br>    @ResponseBody<br>    public String  add()&#123;<br><br>        String sql &#x3D; &quot;insert into teacher(tno,tname) values(?,?);&quot;;<br><br>        HashMap&lt;Object, Object&gt; map &#x3D; new HashMap&lt;&gt;();<br><br>        Object[] objects &#x3D; new Object[2];<br><br>        objects[0] &#x3D; 9;<br><br>        objects[1] &#x3D; &quot;四国一&quot;;<br><br>        jdbcTemplate.update(sql,objects);<br><br>        return &quot;ok&quot;;<br><br>    &#125;<br><br>    @RequestMapping(&quot;&#x2F;delete&#x2F;&#123;id&#125;&quot;)<br>    @ResponseBody<br>    public String delete(@PathVariable(&quot;id&quot;) int id)&#123;<br><br>        String sql &#x3D; &quot;delete from teacher where tno&#x3D;&quot;+id;<br><br>        jdbcTemplate.update(sql);<br><br>        return &quot;ok&quot;;<br><br>    &#125;<br><br>    @RequestMapping(&quot;&#x2F;update&#x2F;&#123;id&#125;&quot;)<br>    @ResponseBody<br>    public String update(@PathVariable(&quot;id&quot;) int id)&#123;<br><br>        String sql &#x3D; &quot;update teacher set tname&#x3D;? where tno&#x3D;&quot;+id;<br><br>        Object object &#x3D; &quot;name&quot;;<br><br>        jdbcTemplate.update(sql,object);<br><br>        return &quot;ok&quot;;<br><br>    &#125;<br><br><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h1 id="整合druid"><a href="#整合druid" class="headerlink" title="整合druid"></a><strong>整合druid</strong></h1><p>springboot整合druid，只要导入依赖就可以了</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">&lt;dependency&gt;<br>    &lt;groupId&gt;com.alibaba&lt;&#x2F;groupId&gt;<br>    &lt;artifactId&gt;druid-spring-boot-starter&lt;&#x2F;artifactId&gt;<br>    &lt;version&gt;1.1.10&lt;&#x2F;version&gt;<br>&lt;&#x2F;dependency&gt;<br></code></pre></td></tr></table></figure>
+
+<p>yaml配置DataSource</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">spring:<br>  datasource:<br>    username: root<br>    password: 111111<br>    url: jdbc:mysql:&#x2F;&#x2F;localhost:3306&#x2F;dbtest01?characterEncoding&#x3D;utf-8&amp;serverTimezone&#x3D;UTC<br>    driver-class-name: com.mysql.cj.jdbc.Driver<br>    type: com.alibaba.druid.pool.DruidDataSource<br></code></pre></td></tr></table></figure>
+
+<p>druid的最强大之处在于druid支持 监控、日志、防御sql注入等功能</p>
+<p>配置druid：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">druid:<br>      # 连接池的配置信息<br>      # 初始化大小，最小，最大<br>      initial-size: 5<br>      min-idle: 5<br>      maxActive: 20<br>      # 配置获取连接等待超时的时间<br>      maxWait: 60000<br>      # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒<br>      timeBetweenEvictionRunsMillis: 60000<br>      # 配置一个连接在池中最小生存的时间，单位是毫秒<br>      minEvictableIdleTimeMillis: 300000<br>      validationQuery: SELECT 1<br>      testWhileIdle: true<br>      testOnBorrow: false<br>      testOnReturn: false<br>      # 打开PSCache，并且指定每个连接上PSCache的大小<br>      poolPreparedStatements: true<br>      maxPoolPreparedStatementPerConnectionSize: 20<br>      # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，&#39;wall&#39;用于防火墙<br>      filters: stat,wall,slf4j<br>      # 通过connectProperties属性来打开mergeSql功能；慢SQL记录<br>      connectionProperties: druid.stat.mergeSql\&#x3D;true;druid.stat.slowSqlMillis\&#x3D;5000<br>      # 配置DruidStatFilter<br>      web-stat-filter:<br>        enabled: true<br>        url-pattern: &quot;&#x2F;*&quot;<br>        exclusions: &quot;*.js,*.gif,*.jpg,*.bmp,*.png,*.css,*.ico,&#x2F;druid&#x2F;*&quot;<br>      # 配置DruidStatViewServlet<br>      stat-view-servlet:<br>        url-pattern: &quot;&#x2F;druid&#x2F;*&quot;<br>        # IP白名单(没有配置或者为空，则允许所有访问)<br>        allow: 127.0.0.1,192.168.163.1<br>        # IP黑名单 (存在共同时，deny优先于allow)<br>        deny: 192.168.1.73<br>        #  禁用HTML页面上的“Reset All”功能<br>        reset-enable: false<br>        # 登录名<br>        login-username: admin<br>        # 登录密码<br>        login-password: 111111<br></code></pre></td></tr></table></figure>
+
+<p>访问    <a href="http://localhost:8080/druid%EF%BC%8C%E8%BF%9B%E5%85%A5Druid%E7%9A%84%E7%9B%91%E6%8E%A7%E9%A1%B5%E9%9D%A2%EF%BC%8C%E5%8F%AF%E4%BB%A5%E6%9F%A5%E7%9C%8Bdruid%E7%9A%84%E6%89%80%E6%9C%89%E9%85%8D%E7%BD%AE%E4%BF%A1%E6%81%AF%E4%BB%A5%E5%8F%8A%E7%9B%91%E6%8E%A7%E6%95%B0%E6%8D%AE%E5%BA%93">http://localhost:8080/druid，进入Druid的监控页面，可以查看druid的所有配置信息以及监控数据库</a></p>
+<h1 id="整合mybatis"><a href="#整合mybatis" class="headerlink" title="整合mybatis"></a><strong>整合mybatis</strong></h1><p>导入mybatis-spring-boot-starter依赖</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">&lt;dependency&gt;<br>    &lt;groupId&gt;org.mybatis.spring.boot&lt;&#x2F;groupId&gt;<br>    &lt;artifactId&gt;mybatis-spring-boot-starter&lt;&#x2F;artifactId&gt;<br>    &lt;version&gt;2.1.3&lt;&#x2F;version&gt;<br>&lt;&#x2F;dependency&gt;<br></code></pre></td></tr></table></figure>
+
+<p>配置yaml文件</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">spring:<br>  datasource:<br>    username: root<br>    password: 111111<br>    url: jdbc:mysql:&#x2F;&#x2F;localhost:3306&#x2F;dbtest01?characterEncoding&#x3D;utf-8&amp;serverTimezone&#x3D;UTC<br>    driver-class-name: com.mysql.cj.jdbc.Driver<br></code></pre></td></tr></table></figure>
+
+<p>pojo类：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">@Data<br>@AllArgsConstructor<br>@NoArgsConstructor<br>@Component<br>public class Teacher &#123;<br><br>    private int tno;<br><br>    private String tname;<br><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>TeacherMapper:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">@Mapper<br>@Repository<br>public interface TeacherMapper &#123;<br><br>    public List&lt;Teacher&gt; queryAllTeacher();<br>    <br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>TeacherMapper.xml:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;UTF-8&quot; ?&gt;<br>&lt;!DOCTYPE mapper<br>        PUBLIC &quot;-&#x2F;&#x2F;mybatis.org&#x2F;&#x2F;DTD Mapper 3.0&#x2F;&#x2F;EN&quot;<br>        &quot;http:&#x2F;&#x2F;mybatis.org&#x2F;dtd&#x2F;mybatis-3-mapper.dtd&quot;&gt;<br>&lt;!--namespace: 绑定一个mapper接口 包名.--&gt;<br>&lt;mapper namespace&#x3D;&quot;com.database.mapper.TeacherMapper&quot;&gt;<br>    <br>    <br>    &lt;select id&#x3D;&quot;queryAllTeacher&quot; resultType&#x3D;&quot;Teacher&quot;&gt;<br>        select * from teacher;<br>    &lt;&#x2F;select&gt;<br>    <br>&lt;&#x2F;mapper&gt;<br></code></pre></td></tr></table></figure>
+
+<p>yaml配置:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">mybatis:<br>&lt;!-- 别名 --&gt;<br>  type-aliases-package: com.database.pojo<br>  &lt;!-- 配置映射 （去mybatis-config中配置mapper） --&gt;<br>  mapper-locations: classpath:mybatis&#x2F;mapper&#x2F;*.xml<br></code></pre></td></tr></table></figure>
+
+<p>controller:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">@Controller<br>public class teacherController &#123;<br><br>    @Autowired<br>    TeacherMapper teacherMapper;<br><br>    @RequestMapping(&quot;&#x2F;all&quot;)<br>    @ResponseBody<br>    public String queryAllTeacher()&#123;<br><br>        List&lt;Teacher&gt; teachers &#x3D; teacherMapper.queryAllTeacher();<br><br>        System.out.println(teachers);<br><br>        return teachers.toString();<br><br>    &#125;<br><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>在springboot中，不用再创建sqlsession单元，用sqlsession去获得mapper类了！</p>
+<p>目录结构为：</p>
+<p><img src="/2020/11/05/springbootDatabase/structure.jpg" alt="structure"></p>
+]]></content>
+      <tags>
+        <tag>springboot</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>springboot入门</title>
     <url>/2020/11/03/springboot/</url>
     <content><![CDATA[<h1 id="什么是springboot"><a href="#什么是springboot" class="headerlink" title="什么是springboot"></a><strong>什么是springboot</strong></h1><p>springboot是由Pivotal团队提供的框架，其设计目的是用来简化新Spring应用的初始搭建以及开发过程。该框架使用了特定的方式(继承starter，约定优先于配置)来进行配置，从而使开发人员不再需要定义样板化的配置。springboot的核心是<strong>自动装配</strong></p>

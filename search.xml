@@ -1214,6 +1214,33 @@
 <figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">@Configuration<br>public class myconfiguration implements WebMvcConfigurer &#123;<br>    <br>    @Bean<br>    public MyReviewResolver reviewResolver()&#123;<br>        return new MyReviewResolver();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <h3 id="异常页面处理"><a href="#异常页面处理" class="headerlink" title="异常页面处理"></a><strong>异常页面处理</strong></h3><p>springboot中处理404非常简单，只要在templates下添加子目录error，将404页面放进error目录即可，500页面也一样，<strong>注：html页面的名字必须为404 或 500</strong></p>
+<h1 id="springboot自动配置原理"><a href="#springboot自动配置原理" class="headerlink" title="springboot自动配置原理"></a><strong>springboot自动配置原理</strong></h1><p>@SpringBootApplication -&gt;   @EnableAutoConfiguration   -&gt;  AutoConfigurationImportSelector</p>
+<p>-&gt;  selectImports   -&gt;  /meta/spring.factories    -&gt;    xxxAutoConfiguration</p>
+<p>xxxAutoConfiguration    -&gt;      @EnableConfigurationProperties(xxxProperties.class)     -&gt;</p>
+<p>xxxProperties(@ConfigurationProperties(prefix = “xxx”)</p>
+<h2 id="工作原理："><a href="#工作原理：" class="headerlink" title="工作原理："></a><strong>工作原理：</strong></h2><p>在springboot中，所有关于自动配置的源码（自动配置类）都在spring-boot-autoconfigure-x.x.x.x.jar包中的 spring.factories文件中</p>
+<p><img src="/2020/11/03/springboot/springfactories.jpg" alt="springfactories"></p>
+<p>在spring.factories中 包含了大量的 键值对 形式，表示自动配置类</p>
+<p><img src="/2020/11/03/springboot/autoconfigurationclass.jpg" alt="autoconfigurationclass"></p>
+<p>springboot的每个启动类中，都有一个注解<code>@SpringBootApplication</code>，<code>@SpringBootApplication</code>是一个复合注解或派生注解，在<code>@SpringBootApplication</code>中有一个注解<code>@EnableAutoConfiguration</code>，意思就是开启自动配置</p>
+<p><img src="/2020/11/03/springboot/springbootapplication.jpg" alt="springbootapplication"></p>
+<p><code>@EnableAutoConfiguration</code>这个注解也是一个派生注解，其中的关键功能由@Import提供，<code>@EnableAutoConfiguration</code>注解通过<code>@SpringBootApplication</code>被间接的标记在了springboot的启动类上</p>
+<p><img src="/2020/11/03/springboot/EnableAutoConfiguratio.jpg" alt="EnableAutoConfiguratio"></p>
+<p>在AutoConfigurationImportSelector有一个方法selectImports()</p>
+<p><img src="/2020/11/03/springboot/selectImports.jpg" alt="selectImports"></p>
+<p>AutoConfigurationImportSelector的selectImports()方法通过SpringFactoriesLoader.loadFactoryNames()方法扫描所有具有META-INF/spring.factories的jar包</p>
+<p>而在spring-boot-autoconfigure-x.x.x.x.jar包中的spring.factories文件中，就包含了springboot中的所有自动配置类，所以在启动springboot时，SpringApplication.run方法就会将所有自动配置类加载到Spring容器中。</p>
+<h2 id="自动配置如何生效"><a href="#自动配置如何生效" class="headerlink" title="自动配置如何生效"></a><strong>自动配置如何生效</strong></h2><p>上面说到，所有的自动配置类都在spring-boot-autoconfigure-x.x.x.x.jar包中的spring.factories文件中</p>
+<p>可以看到自动配置类都是xxxAutoConfiguration这样的形式</p>
+<p>以ServletWebServerFactoryAutoConfiguration为例：</p>
+<p><img src="/2020/11/03/springboot/ServletWebServerFactoryAutoConfiguration.jpg" alt="ServletWebServerFactoryAutoConfiguration"></p>
+<p>可以看到在ServletWebServerFactoryAutoConfiguration中有一个注解<code>@EnableConfigurationProperties(ServerProperties.class)</code>，它表示允许配置属性</p>
+<p>而在<code>ServerProperties.class</code>中，看到了熟悉的注解<code>@ConfigurationProperties</code>，它的作用就是从配置文件中绑定属性到对应的bean上</p>
+<p><img src="/2020/11/03/springboot/ServerProperties.jpg" alt="ServerProperties"></p>
+<p>而<code>@EnableConfigurationProperties(ServerProperties.class)</code>负责将这个已经绑定了属性的bean导入spring容器中</p>
+<p>所以，到现在可以大概的得出结论：</p>
+<p>springboot中所有的自动配置类都是以xxxAutoConfiguration这样的形式，每个自动配置类都是通过注解<code>@EnableConfigurationProperties(xxxProperties.class)</code>将绑定了属性的自动配置类导入spring容器中，而它们的属性由<br>xxxProperties类提供，xxxProperties类的属性又是通过<code>@ConfigurationProperties</code>注解与配置文件中的对应属性进行绑定</p>
+<p>所以，每个自动配置类xxxAutoConfiguration的属性 都对应着 xxxProperties类 中的属性，要想配置自动配置类中的属性，只要找到相应的xxxProperties即可</p>
 ]]></content>
       <tags>
         <tag>springboot</tag>

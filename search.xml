@@ -1017,6 +1017,140 @@
       </tags>
   </entry>
   <entry>
+    <title>java安全框架与springboot的整合</title>
+    <url>/2020/11/07/springsecurity/</url>
+    <content><![CDATA[<h1 id="SpringSecurity"><a href="#SpringSecurity" class="headerlink" title="SpringSecurity"></a><strong>SpringSecurity</strong></h1><h2 id="什么是SpringSecurity"><a href="#什么是SpringSecurity" class="headerlink" title="什么是SpringSecurity"></a><strong>什么是SpringSecurity</strong></h2><p>SpringSecurity是针对spring项目的一个身份验证和权限认证的一个框架（拦截器），可以实现强大的web安全控制。对于安全控制，只要导入 spring-boot-starter-security 依赖，进行少量配置，就可以实现强大的安全管理。</p>
+<h2 id="SpringSecurity的使用"><a href="#SpringSecurity的使用" class="headerlink" title="SpringSecurity的使用"></a><strong>SpringSecurity的使用</strong></h2><p>导入SpringSecurity依赖</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">&lt;!-- https:&#x2F;&#x2F;mvnrepository.com&#x2F;artifact&#x2F;org.springframework.boot&#x2F;spring-boot-starter-security --&gt;<br>&lt;dependency&gt;<br>    &lt;groupId&gt;org.springframework.boot&lt;&#x2F;groupId&gt;<br>    &lt;artifactId&gt;spring-boot-starter-security&lt;&#x2F;artifactId&gt;<br>    &lt;version&gt;2.3.4.RELEASE&lt;&#x2F;version&gt;<br>&lt;&#x2F;dependency&gt;<br></code></pre></td></tr></table></figure>
+
+<p>与SpringSecurity相关的重要类和注解如下：</p>
+<ul>
+<li><p>WebSecurityConfigurerAdapter 自定义Security策略</p>
+</li>
+<li><p>AuthenticationMangerBuilder 自定义认证策略</p>
+</li>
+<li><p>HttpSecurity：对特定的http请求基于安全考虑进行配置</p>
+</li>
+<li><p>@enableWebSecurity 开启websecurity</p>
+</li>
+</ul>
+<p>要使用SpringSecurity，只需要写一个配置类，继承WebSecurityConfigurerAdapter类并重写相应的configure方法，最后在配置类上加上注解<code>@EnableWebSecurity</code>即可</p>
+<h2 id="用户的登录和注销"><a href="#用户的登录和注销" class="headerlink" title="用户的登录和注销"></a><strong>用户的登录和注销</strong></h2><figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">&#x2F;&#x2F;        跳转登陆页面<br>    http.formLogin();<br><br>&#x2F;&#x2F;        注销功能：自动删除所有session，还能指定logout后跳转的页面<br><br>    http.logout().logoutSuccessUrl(&quot;&#x2F;&quot;);<br></code></pre></td></tr></table></figure>
+
+<p><img src="/2020/11/07/springsecurity/login1.jpg" alt="login1"></p>
+<p><img src="/2020/11/07/springsecurity/login2.jpg" alt="login2"></p>
+<p><img src="/2020/11/07/springsecurity/logout.jpg" alt="logout"></p>
+<h2 id="用户的认证和授权"><a href="#用户的认证和授权" class="headerlink" title="用户的认证和授权"></a><strong>用户的认证和授权</strong></h2><figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">@EnableWebSecurity<br>public class SecurityConfig extends WebSecurityConfigurerAdapter &#123;<br><br>&#x2F;&#x2F;    授权<br>    @Override<br>    protected void configure(HttpSecurity http) throws Exception &#123;<br><br>        http.authorizeRequests().antMatchers(&quot;&#x2F;&quot;).permitAll()<br>                .antMatchers(&quot;&#x2F;level1&#x2F;**&quot;).hasRole(&quot;vip1&quot;)<br>                .antMatchers(&quot;&#x2F;level2&#x2F;**&quot;).hasRole(&quot;vip2&quot;)<br>                .antMatchers(&quot;&#x2F;level3&#x2F;**&quot;).hasRole(&quot;vip3&quot;);<br><br>        http.formLogin().loginPage(&quot;&#x2F;tologin&quot;).usernameParameter().passwordParameter();<br><br>    &#125;<br><br>&#x2F;&#x2F;    认证<br>    @Override<br>    protected void configure(AuthenticationManagerBuilder auth) throws Exception &#123;<br><br>        auth.inMemoryAuthentication().passwordEncoder(new BCryptPasswordEncoder())<br>                .withUser(&quot;admin&quot;).password(new BCryptPasswordEncoder().encode(&quot;111111&quot;)).roles(&quot;vip2&quot;,&quot;vip3&quot;)<br>                .and()<br>                .withUser(&quot;admin1&quot;).password(new BCryptPasswordEncoder().encode(&quot;111111&quot;)).roles(&quot;vip1&quot;);<br><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>authorizeRequests().antMatchers()方法的作用是为请求路径赋予权限，hasRole()方法表示用户拥有某个权限才能不被拦截</p>
+<p>http.formLogin().loginPage(“/tologin”)方法的作用是如果有拦截的请求则自动跳转到自定义的登陆首页</p>
+<p>usernameParameter().passwordParameter()是表单中的字段name</p>
+<p>auth.inMemoryAuthentication()</p>
+<p>方法的作用是对内存中的用户进行认证</p>
+<p>passwordEncoder(new BCryptPasswordEncoder())的作用是密码编码，BCryptPasswordEncoder()是一种密码编码方式，如果不配置密码编码方式，则SpringSecurity会报错</p>
+<p>withUser()、password() 方法的作用是认证用户，roles() 的作用是为用户赋予权限</p>
+<p>认证的方式：</p>
+<ul>
+<li><p>inMemoryAuthentication()</p>
+</li>
+<li><p>jdbcAuthentication()</p>
+</li>
+</ul>
+<p><strong>jdbcAuthentication()：</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain"><br>auth.jdbcAuthentication()<br>                .dataSource(dataSource)<br>                .usersByUsernameQuery(&quot;select username,password,enabled from users WHERE username&#x3D;?&quot;)<br>                .authoritiesByUsernameQuery(&quot;select username,authority from authorities where username&#x3D;?&quot;)<br>                .passwordEncoder(new BCryptPasswordEncoder());<br></code></pre></td></tr></table></figure>
+
+<h2 id="RememberMe功能"><a href="#RememberMe功能" class="headerlink" title="RememberMe功能"></a><strong>RememberMe功能</strong></h2><p>SpringSecurity实现该功能非常简单，只需要在配置类中添加一段代码</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">@EnableWebSecurity<br>public class SecurityConfig extends WebSecurityConfigurerAdapter &#123;<br><br><br>    @Override<br>    protected void configure(HttpSecurity http) throws Exception &#123;<br><br><br>        http.rememberMe().rememberMeParameter(&quot;rememberme&quot;);<br><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>其中rememberme为html中选择框的name</p>
+<h1 id="shiro"><a href="#shiro" class="headerlink" title="shiro"></a><strong>shiro</strong></h1><p>shiro是一个强大且易用的Java安全框架,提供了认证、授权、加密和会话管理等功能。shiro都可以轻松为其提供全面的安全管理服务，相比业内spring security 而言，shiro显得更加小巧，应用也更加广泛。</p>
+<p><img src="/2020/11/07/springsecurity/shiro.jpg" alt="shiro"></p>
+<p>shiro的三大核心组件：</p>
+<ul>
+<li>Subject</li>
+</ul>
+<p>认证主体(当前用户)，代表了需要认证的内容，用户通过表单登陆后，Controller通过SecurityUtils.getSubject()方法获得当前的用户对象</p>
+<ul>
+<li>Shiro SecurityManager</li>
+</ul>
+<p>shiro的核心，所有 Subject 都绑定到 SecurityManager，与 Subject 的所有交互都会委托给 SecurityManager，所有具体的交互都通过 SecurityManager 进行控制</p>
+<ul>
+<li>Realm：</li>
+</ul>
+<p>连接 Shiro 和具体应用的桥梁，Shiro 从Realm 获取安全数据，SecurityManager 要验证用户身份，那么它需要从 Realm 获取相应的用户进行比较以确定用户身份是否合法，相当于是DataSource</p>
+<p>springboot配置shiro，如：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">@Configuration<br>public class shiroConfig &#123;<br><br><br>&#x2F;&#x2F;    shiroFilterFactoryBean<br><br>    @Bean<br>    public ShiroFilterFactoryBean getShiroFilterFactoryBean(@Qualifier(&quot;manager&quot;) DefaultWebSecurityManager manager)&#123;<br><br>         ...<br><br>    &#125;<br><br>&#x2F;&#x2F;    DeafultWebSecurityManager<br><br>    @Bean(name &#x3D; &quot;manager&quot;)<br>    public DefaultWebSecurityManager getDefaultWebSecurityManager(@Qualifier(&quot;userRealm&quot;) userRealm userRealm)&#123;<br><br>        DefaultWebSecurityManager securityManager &#x3D; new DefaultWebSecurityManager();<br><br>        securityManager.setRealm(userRealm);<br><br>        return securityManager;<br><br>    &#125;<br><br><br>&#x2F;&#x2F;    realm对象 需要自定义<br><br>    @Bean<br>    public userRealm userRealm()&#123;<br><br>        return new userRealm();<br><br>    &#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">public class userRealm extends AuthorizingRealm &#123;<br><br>    @Autowired<br>    userService userService;<br><br>&#x2F;&#x2F;    授权<br>    @Override<br>    protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) &#123;<br><br>        ...<br><br>    &#125;<br><br><br>&#x2F;&#x2F;    认证<br>    @Override<br>    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException &#123;<br><br>        ...<br><br>    &#125;<br><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="shiro实现登录拦截"><a href="#shiro实现登录拦截" class="headerlink" title="shiro实现登录拦截"></a><strong>shiro实现登录拦截</strong></h2><figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">@Bean<br>public ShiroFilterFactoryBean getShiroFilterFactoryBean(@Qualifier(&quot;manager&quot;) DefaultWebSecurityManager manager)&#123;<br><br>     ...<br><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>ShiroFilterFactoryBean是实现登陆拦截的核心，它是shiro中的过滤器，可以自定义很多拦截配置</p>
+<p><img src="/2020/11/07/springsecurity/bean.jpg" alt="bean"></p>
+<p>配置拦截的重要方法是setFilterChainDefinitionMap(hashmap)方法，参数中传入一个HashMap，HashMap中存放着代表（url，权限）的键值对</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">anon：无需验证就可访问<br><br>authc：必须验证才能访问<br><br>user：必须有 remember me 功能才能使用<br><br>perms：拥有某些资源才能访问<br><br>role：拥有某个权限才能访问<br><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain"><br>ShiroFilterFactoryBean bean &#x3D; new ShiroFilterFactoryBean();<br><br>bean.setSecurityManager(manager);<br><br>LinkedHashMap&lt;String, String&gt; filterMap &#x3D; new LinkedHashMap&lt;&gt;();<br><br>filterMap.put(&quot;&#x2F;add&quot;,&quot;authc&quot;);<br><br>filterMap.put(&quot;&#x2F;update&quot;,&quot;authc&quot;);<br><br>filterMap.put(&quot;&#x2F;add&quot;,&quot;perms[add]&quot;);<br><br>filterMap.put(&quot;&#x2F;update&quot;,&quot;perms[update]&quot;);<br><br>bean.setFilterChainDefinitionMap(filterMap);<br><br>return bean;<br></code></pre></td></tr></table></figure>
+
+<p>在过滤器中，还可以自定义拦截的页面、未授权页面 ….</p>
+<h2 id="实现用户验证"><a href="#实现用户验证" class="headerlink" title="实现用户验证"></a><strong>实现用户验证</strong></h2><figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">@Override<br>protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException &#123;<br><br>    ...<br><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>实现用户的验证，要交给userRealm（底层）中的doGetAuthenticationInfo()方法负责</p>
+<p>用户在表单登陆，Controller通过SecurityUtils.getSubject()获得当前对象，通过new UsernamePasswordToken(username,password)获得token doGetAuthenticationInfo获得 token ，最后再通过subject.login(token)进行验证，此时会进入userRealm中的方法进行验证</p>
+<p>在Realm中的doGetAuthenticationInfo方法中，对用户名和密码进行验证，其中 对密码的验证 是shiro已经帮我们做好了的，它在方法中返回new SimpleAuthenticationInfo((principle),user.getPassword(),(realmName)) 对密码进行验证</p>
+<p>第一个参数代表用户信息，可以通过subject.getPrincipal()方法获取</p>
+<p>SimpleAuthenticationInfo 密码判断（shiro已经帮我们做好了对密码判断的工作）</p>
+<h2 id="实现授权"><a href="#实现授权" class="headerlink" title="实现授权"></a><strong>实现授权</strong></h2><figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">@Override<br>protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) &#123;<br><br>    ...<br><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>在shiro的过滤链的哈希表中，键值对（url，perms[]）表示拥有了perms[]中指定的资源才可以访问url，对url进行访问的权限限制是在过滤链中进行，而授予用户权限是在realm中的doGetAuthorizationInfo方法中进行的</p>
+<p>在该方法中，可以通过subject.getPrincipal()方法获得当前对象（认证方法中传入的参数），通过SimpleAuthorizationInfo对象中的addStringPermission方法，为当前用户添加权限。</p>
+<h2 id="shiro整合thymeleaf"><a href="#shiro整合thymeleaf" class="headerlink" title="shiro整合thymeleaf"></a><strong>shiro整合thymeleaf</strong></h2><h2 id="springboot整合mybatis、shiro"><a href="#springboot整合mybatis、shiro" class="headerlink" title="springboot整合mybatis、shiro"></a><strong>springboot整合mybatis、shiro</strong></h2><p>数据库表：</p>
+<p><img src="/2020/11/07/springsecurity/db.jpg" alt="db"></p>
+<p>依赖：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">&lt;dependencies&gt;<br>    &lt;dependency&gt;<br>        &lt;groupId&gt;org.springframework.boot&lt;&#x2F;groupId&gt;<br>        &lt;artifactId&gt;spring-boot-starter-web&lt;&#x2F;artifactId&gt;<br>    &lt;&#x2F;dependency&gt;<br><br>    &lt;dependency&gt;<br>        &lt;groupId&gt;org.projectlombok&lt;&#x2F;groupId&gt;<br>        &lt;artifactId&gt;lombok&lt;&#x2F;artifactId&gt;<br>        &lt;optional&gt;true&lt;&#x2F;optional&gt;<br>    &lt;&#x2F;dependency&gt;<br>    &lt;dependency&gt;<br>        &lt;groupId&gt;org.springframework.boot&lt;&#x2F;groupId&gt;<br>        &lt;artifactId&gt;spring-boot-starter-test&lt;&#x2F;artifactId&gt;<br>        &lt;scope&gt;test&lt;&#x2F;scope&gt;<br>        &lt;exclusions&gt;<br>            &lt;exclusion&gt;<br>                &lt;groupId&gt;org.junit.vintage&lt;&#x2F;groupId&gt;<br>                &lt;artifactId&gt;junit-vintage-engine&lt;&#x2F;artifactId&gt;<br>            &lt;&#x2F;exclusion&gt;<br>        &lt;&#x2F;exclusions&gt;<br>    &lt;&#x2F;dependency&gt;<br><br>    &lt;dependency&gt;<br>        &lt;groupId&gt;org.apache.shiro&lt;&#x2F;groupId&gt;<br>        &lt;artifactId&gt;shiro-spring&lt;&#x2F;artifactId&gt;<br>        &lt;version&gt;1.5.3&lt;&#x2F;version&gt;<br>    &lt;&#x2F;dependency&gt;<br><br><br>    &lt;dependency&gt;<br>        &lt;groupId&gt;org.mybatis.spring.boot&lt;&#x2F;groupId&gt;<br>        &lt;artifactId&gt;mybatis-spring-boot-starter&lt;&#x2F;artifactId&gt;<br>        &lt;version&gt;2.1.3&lt;&#x2F;version&gt;<br>    &lt;&#x2F;dependency&gt;<br>    &lt;dependency&gt;<br>        &lt;groupId&gt;mysql&lt;&#x2F;groupId&gt;<br>        &lt;artifactId&gt;mysql-connector-java&lt;&#x2F;artifactId&gt;<br>        &lt;version&gt;8.0.19&lt;&#x2F;version&gt;<br>    &lt;&#x2F;dependency&gt;<br><br><br>    &lt;dependency&gt;<br>        &lt;groupId&gt;org.thymeleaf&lt;&#x2F;groupId&gt;<br>        &lt;artifactId&gt;thymeleaf-spring5&lt;&#x2F;artifactId&gt;<br>    &lt;&#x2F;dependency&gt;<br>    &lt;dependency&gt;<br>        &lt;groupId&gt;org.thymeleaf.extras&lt;&#x2F;groupId&gt;<br>        &lt;artifactId&gt;thymeleaf-extras-java8time&lt;&#x2F;artifactId&gt;<br>    &lt;&#x2F;dependency&gt;<br><br>    &lt;dependency&gt;<br>        &lt;groupId&gt;log4j&lt;&#x2F;groupId&gt;<br>        &lt;artifactId&gt;log4j&lt;&#x2F;artifactId&gt;<br>        &lt;version&gt;1.2.12&lt;&#x2F;version&gt;<br>    &lt;&#x2F;dependency&gt;<br><br><br>    &lt;dependency&gt;<br>        &lt;groupId&gt;org.thymeleaf&lt;&#x2F;groupId&gt;<br>        &lt;artifactId&gt;thymeleaf-spring5&lt;&#x2F;artifactId&gt;<br>    &lt;&#x2F;dependency&gt;<br>    &lt;dependency&gt;<br>        &lt;groupId&gt;org.thymeleaf.extras&lt;&#x2F;groupId&gt;<br>        &lt;artifactId&gt;thymeleaf-extras-java8time&lt;&#x2F;artifactId&gt;<br>    &lt;&#x2F;dependency&gt;<br><br><br>&lt;&#x2F;dependencies&gt;<br></code></pre></td></tr></table></figure>
+
+<p>User类：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">@Data<br>@AllArgsConstructor<br>@NoArgsConstructor<br>public class User &#123;<br><br>    private String username;<br><br>    private String password;<br><br>    private String permission;<br><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>userMapper:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">@Mapper<br>@Repository<br>public interface userMapper &#123;<br><br>    public User queryByUserName(String name);<br><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>resources/mybatis/mapper:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">&lt;?xml version&#x3D;&quot;1.0&quot; encoding&#x3D;&quot;UTF-8&quot; ?&gt;<br>&lt;!DOCTYPE mapper<br>        PUBLIC &quot;-&#x2F;&#x2F;mybatis.org&#x2F;&#x2F;DTD Mapper 3.0&#x2F;&#x2F;EN&quot;<br>        &quot;http:&#x2F;&#x2F;mybatis.org&#x2F;dtd&#x2F;mybatis-3-mapper.dtd&quot;&gt;<br>&lt;!--namespace: 绑定一个mapper接口 包名.--&gt;<br>&lt;mapper namespace&#x3D;&quot;springbootshiro.mapper.userMapper&quot;&gt;<br><br><br>    &lt;select id&#x3D;&quot;queryByUserName&quot; resultType&#x3D;&quot;user&quot;&gt;<br>        select * from users where username &#x3D; #&#123;username&#125;;<br>    &lt;&#x2F;select&gt;<br><br>&lt;&#x2F;mapper&gt;<br></code></pre></td></tr></table></figure>
+
+
+<p>application.yaml:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">spring:<br>  datasource:<br>    username: root<br>    password: 111111<br>    url: jdbc:mysql:&#x2F;&#x2F;localhost:3306&#x2F;dbtest01?characterEncoding&#x3D;utf-8&amp;serverTimezone&#x3D;UTC<br>    driver-class-name: com.mysql.cj.jdbc.Driver<br>    <br>mybatis:<br>  type-aliases-package: springbootshiro.pojo<br>  mapper-locations: classpath:mybatis&#x2F;mapper&#x2F;*.xml<br></code></pre></td></tr></table></figure>
+
+<p>userService:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">public interface userService &#123;<br><br>    public User queryByUserName(String name);<br><br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<p>userServiceImpl:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">@Component<br>public class userServiceImpl implements userService&#123;<br><br>    @Autowired<br>    userMapper userMapper;<br><br>    @Override<br>    public User queryByUserName(String name) &#123;<br>        return userMapper.queryByUserName(name);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>userController:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">@Controller<br>public class userController &#123;<br><br>    @Autowired<br>    userService userService;<br><br>    @RequestMapping(&quot;&#x2F;login&quot;)<br>    public String login(String username, String password, Model model)&#123;<br><br>        Subject subject &#x3D; SecurityUtils.getSubject();<br><br>        UsernamePasswordToken token &#x3D; new UsernamePasswordToken(username,password);<br><br>        try&#123;<br><br>            subject.login(token);<br><br>            return &quot;redirect:&#x2F;logining&quot;;<br><br>        &#125;<br>        catch (UnknownAccountException e)&#123;<br><br>            model.addAttribute(&quot;msg&quot;,&quot;用户名错误&quot;);<br><br>            return &quot;login&quot;;<br><br>        &#125;<br><br>        catch (IncorrectCredentialsException e)&#123;<br><br>            model.addAttribute(&quot;msg&quot;,&quot;密码错误&quot;);<br><br>            return &quot;login&quot;;<br><br>        &#125;<br><br><br>    &#125;<br><br>    @RequestMapping(&quot;&#x2F;add&quot;)<br>    public String add()&#123;<br><br>        return &quot;add&quot;;<br>    &#125;<br><br>    @RequestMapping(&quot;&#x2F;update&quot;)<br>    public String update()&#123;<br><br>        return &quot;update&quot;;<br>    &#125;<br><br>    @RequestMapping(&quot;&#x2F;Unauthorized&quot;)<br>    public String Unauthorized()&#123;<br><br>        return &quot;unauthorized&quot;;<br>    &#125;<br><br>    @RequestMapping(&quot;&#x2F;logout&quot;)<br>    public String logout()&#123;<br><br>        Subject subject &#x3D; SecurityUtils.getSubject();<br><br>        subject.logout();<br><br>        return &quot;login&quot;;<br><br>    &#125;<br><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>配置类：</p>
+<p>myConfig:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">@Configuration<br>public class myConfig implements WebMvcConfigurer &#123;<br><br>    @Override<br>    public void addViewControllers(ViewControllerRegistry registry) &#123;<br>        registry.addViewController(&quot;&#x2F;&quot;).setViewName(&quot;login&quot;);<br>        registry.addViewController(&quot;&#x2F;logining&quot;).setViewName(&quot;main&quot;);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>shiroConfig:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">@Configuration<br>public class shiroConfig &#123;<br><br><br>&#x2F;&#x2F;    shiroFilterFactoryBean<br><br>    @Bean<br>    public ShiroFilterFactoryBean getShiroFilterFactoryBean(@Qualifier(&quot;manager&quot;) DefaultWebSecurityManager manager)&#123;<br><br>         ShiroFilterFactoryBean bean &#x3D; new ShiroFilterFactoryBean();<br><br>         bean.setSecurityManager(manager);<br><br>        LinkedHashMap&lt;String, String&gt; filterMap &#x3D; new LinkedHashMap&lt;&gt;();<br><br>        filterMap.put(&quot;&#x2F;add&quot;,&quot;authc&quot;);<br><br>        filterMap.put(&quot;&#x2F;update&quot;,&quot;authc&quot;);<br><br>        filterMap.put(&quot;&#x2F;add&quot;,&quot;perms[add]&quot;);<br><br>        filterMap.put(&quot;&#x2F;update&quot;,&quot;perms[update]&quot;);<br><br>        bean.setFilterChainDefinitionMap(filterMap);<br><br>        bean.setLoginUrl(&quot;&#x2F;&quot;);<br><br>        bean.setUnauthorizedUrl(&quot;&#x2F;Unauthorized&quot;);<br><br>         return bean;<br><br>    &#125;<br><br>&#x2F;&#x2F;    DeafultWebSecurityManager<br><br>    @Bean(name &#x3D; &quot;manager&quot;)<br>    public DefaultWebSecurityManager getDefaultWebSecurityManager(@Qualifier(&quot;userRealm&quot;) userRealm userRealm)&#123;<br><br>        DefaultWebSecurityManager securityManager &#x3D; new DefaultWebSecurityManager();<br><br>        securityManager.setRealm(userRealm);<br><br>        return securityManager;<br><br>    &#125;<br><br>&#x2F;&#x2F;    realm对象 需要自定义<br><br><br>    @Bean<br>    public userRealm userRealm()&#123;<br><br>        return new userRealm();<br><br>    &#125;<br><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>userRealm:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">public class userRealm extends AuthorizingRealm &#123;<br><br>    @Autowired<br>    userService userService;<br><br>&#x2F;&#x2F;    授权<br>    @Override<br>    protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) &#123;<br><br>        SimpleAuthorizationInfo info &#x3D; new SimpleAuthorizationInfo();<br><br>        Subject subject &#x3D; SecurityUtils.getSubject();<br><br>        User currentUser &#x3D; (User) subject.getPrincipal();<br><br>        info.addStringPermission(currentUser.getPermission());<br><br>        return info;<br><br>    &#125;<br><br><br>&#x2F;&#x2F;    认证<br>    @Override<br>    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException &#123;<br><br>        UsernamePasswordToken userToken &#x3D; (UsernamePasswordToken) token;<br><br>        User user &#x3D; userService.queryByUserName(userToken.getUsername());<br><br>        if(user&#x3D;&#x3D;null)&#123;<br><br>            return null;<br><br>        &#125;<br>&#x2F;&#x2F;      密码验证<br>&#x2F;&#x2F;      第一个参数是principle，代表用户信息<br>        return new SimpleAuthenticationInfo(user,user.getPassword(),&quot;&quot;);<br><br>    &#125;<br><br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<p>最后简单写页面即可</p>
+<p>目录结构如下：</p>
+<p><img src="/2020/11/07/springsecurity/1.jpg" alt="1"></p>
+]]></content>
+      <tags>
+        <tag>SpringSecurity</tag>
+        <tag>Shiro</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>springboot整合数据库</title>
     <url>/2020/11/05/springbootDatabase/</url>
     <content><![CDATA[<h1 id="springboot整合数据库"><a href="#springboot整合数据库" class="headerlink" title="springboot整合数据库"></a><strong>springboot整合数据库</strong></h1><p>springboot整合数据库只需要做三个事情：</p>

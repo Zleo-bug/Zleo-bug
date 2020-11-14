@@ -980,6 +980,265 @@
       </tags>
   </entry>
   <entry>
+    <title>linux学习</title>
+    <url>/2020/11/13/linux/</url>
+    <content><![CDATA[<h1 id="linux介绍"><a href="#linux介绍" class="headerlink" title="linux介绍"></a><strong>linux介绍</strong></h1><p>CentOs、Ubuntu、redhat</p>
+<p>很多大型项目都是部署在linux上</p>
+<p>服务器的两种组合：LAMP、LNMP</p>
+<p>window:xshell+xftp </p>
+<p>mac:finalshell+forklift</p>
+<h1 id="linux基本命令操作"><a href="#linux基本命令操作" class="headerlink" title="linux基本命令操作"></a><strong>linux基本命令操作</strong></h1><h2 id="开机关机"><a href="#开机关机" class="headerlink" title="开机关机"></a><strong>开机关机</strong></h2><h3 id="开机"><a href="#开机" class="headerlink" title="开机"></a><strong>开机</strong></h3><ul>
+<li>ssh远程登陆</li>
+</ul>
+<p><code>ssh username@ip</code></p>
+<ul>
+<li>用户界面</li>
+</ul>
+<h3 id="关机"><a href="#关机" class="headerlink" title="关机"></a><strong>关机</strong></h3><p>关机指令：<code>shutdown</code></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">sync # 将数据由内存同步到硬盘中<br><br>shutdown<br><br>shutdown -h 10 # 十分钟后关机<br><br>shutdown -h now # 马上关机<br><br>shutdown -h 20:00 # 20:00关机<br><br>shutdown -r now # 马上重启<br><br>shutdown -r +10 # 十分钟后重启<br><br>reboot # 重启<br><br>halt # 关闭系统<br></code></pre></td></tr></table></figure>
+<p>在执行关机/重启操作之前，都要先执行sync命令同步数据</p>
+<h2 id="文件-目录操作"><a href="#文件-目录操作" class="headerlink" title="文件/目录操作"></a><strong>文件/目录操作</strong></h2><h3 id="查看目录下的文件"><a href="#查看目录下的文件" class="headerlink" title="查看目录下的文件"></a><strong>查看目录下的文件</strong></h3><p><code>ls /</code></p>
+<p><img src="/2020/11/13/linux/.jpg" alt="ls/"></p>
+<p><code>ls -a</code>：查看全部文件，包括隐藏文件</p>
+<p><code>ls -l</code>：列出除了隐藏文件以外的文件，包括文件的属性和权限</p>
+<p><code>ls -al</code>：列出全部文件及属性和权限</p>
+<p>以下是对这些目录的解释：</p>
+<table>
+<thead>
+<tr>
+<th>目录</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>/bin</td>
+<td>bin是Binary的缩写, 这个目录存放着最经常使用的命令。</td>
+</tr>
+<tr>
+<td>/boot</td>
+<td>这里存放的是启动Linux时使用的一些核心文件，包括一些连接文件以及镜像文件。</td>
+</tr>
+<tr>
+<td>/dev</td>
+<td>dev是Device(设备)的缩写, 存放的是Linux的外部设备，在Linux中访问设备的方式和访问文件的方式是相同的。</td>
+</tr>
+<tr>
+<td>/etc</td>
+<td>这个目录用来存放所有的系统管理所需要的配置文件和子目录。</td>
+</tr>
+<tr>
+<td>/home</td>
+<td>用户的主目录，在Linux中，每个用户都有一个自己的目录，一般该目录名是以用户的账号命名的。</td>
+</tr>
+<tr>
+<td>/lib</td>
+<td>这个目录里存放着系统最基本的动态连接共享库，其作用类似于Windows里的DLL文件。</td>
+</tr>
+<tr>
+<td>/lost+found</td>
+<td>这个目录一般情况下是空的，当系统非法关机后，这里就存放了一些文件。</td>
+</tr>
+<tr>
+<td>/media</td>
+<td>linux系统会自动识别一些设备，例如U盘、光驱等等，当识别后，linux会把识别的设备挂载到这个目录下。</td>
+</tr>
+<tr>
+<td>/mnt</td>
+<td>系统提供该目录是为了让用户临时挂载别的文件系统的，我们可以将光驱挂载在/mnt/上，然后进入该目录就可以查看光驱里的内容了。</td>
+</tr>
+<tr>
+<td>/opt</td>
+<td>这是给主机额外安装软件所摆放的目录。比如你安装一个ORACLE数据库则就可以放到这个目录下。默认是空的。</td>
+</tr>
+<tr>
+<td>/proc</td>
+<td>这个目录是一个虚拟的目录，它是系统内存的映射，我们可以通过直接访问这个目录来获取系统信息。</td>
+</tr>
+<tr>
+<td>/root</td>
+<td>该目录为系统管理员，也称作超级权限者的用户主目录。</td>
+</tr>
+<tr>
+<td>/sbin</td>
+<td>s就是Super User的意思，这里存放的是系统管理员使用的系统管理程序。</td>
+</tr>
+<tr>
+<td>/srv</td>
+<td>该目录存放一些服务启动之后需要提取的数据。</td>
+</tr>
+<tr>
+<td>/sys</td>
+<td>这是linux2.6内核的一个很大的变化。该目录下安装了2.6内核中新出现的一个文件系统 sysfs 。</td>
+</tr>
+<tr>
+<td>/tmp</td>
+<td>这个目录是用来存放一些临时文件的。</td>
+</tr>
+<tr>
+<td>/usr</td>
+<td>这是一个非常重要的目录，用户的很多应用程序和文件都放在这个目录下，类似于windows下的program files目录。</td>
+</tr>
+<tr>
+<td>/usr/bin</td>
+<td>系统用户使用的应用程序。</td>
+</tr>
+<tr>
+<td>/usr/sbin</td>
+<td>超级用户使用的比较高级的管理程序和系统守护程序。</td>
+</tr>
+<tr>
+<td>/usr/src</td>
+<td>内核源代码默认的放置目录。</td>
+</tr>
+<tr>
+<td>/var</td>
+<td>这个目录中存放着在不断扩充着的东西，我们习惯将那些经常被修改的目录放在这个目录下。包括各种日志文件。</td>
+</tr>
+<tr>
+<td>/run</td>
+<td>是一个临时文件系统，存储系统启动以来的信息。当系统重启时，这个目录下的文件应该被删掉或清除。</td>
+</tr>
+</tbody></table>
+<h3 id="切换目录"><a href="#切换目录" class="headerlink" title="切换目录"></a><strong>切换目录</strong></h3><p>cd 目录名(绝对路径/相对路径)</p>
+<ul>
+<li>绝对路径：/开头</li>
+</ul>
+<p>如：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">cd home<br><br>cd ..&#x2F;usr<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>相对目录：../../形式</li>
+</ul>
+<p>如：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">cd &#x2F;home&#x2F;newfile<br></code></pre></td></tr></table></figure>
+
+<p>进入当前用户目录：<code>cd ~</code></p>
+<p>显示当前所在目录：<code>pwd</code></p>
+<h3 id="创建-删除目录"><a href="#创建-删除目录" class="headerlink" title="创建\删除目录"></a><strong>创建\删除目录</strong></h3><p>创建一个目录：<code>mkdir filename</code></p>
+<p>创建层级目录：<code>mkdir -p file1/file2/file3</code></p>
+<p>删除目录：<code>rmdir filename</code></p>
+<p>删除层级目录：<code>rmdir -p file1/file2/file3</code></p>
+<h3 id="复制文件或目录"><a href="#复制文件或目录" class="headerlink" title="复制文件或目录"></a><strong>复制文件或目录</strong></h3><p><code>cp 当前文件 目标文件夹</code>：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">cp wallhaven-r2qp17.jpg new <br></code></pre></td></tr></table></figure>
+
+<p>复制当前目录下的文件夹/文件到另外一个目录</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">cp * -r ..&#x2F;new<br></code></pre></td></tr></table></figure>
+
+<h3 id="删除文件或目录"><a href="#删除文件或目录" class="headerlink" title="删除文件或目录"></a><strong>删除文件或目录</strong></h3><p><code>rm</code>：删除文件或目录</p>
+<p><code>-f</code>：忽略不存在的文件，不出现警告，强制删除</p>
+<p><code>-r</code>：层级删除</p>
+<p><code>-i</code>：询问是否删除</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">rm -rf wallhaven-r2qp17.jpg <br></code></pre></td></tr></table></figure>
+
+<p><strong>删库跑路：rm -rf /</strong></p>
+<h3 id="移动文件或目录"><a href="#移动文件或目录" class="headerlink" title="移动文件或目录"></a><strong>移动文件或目录</strong></h3><p><code>mv 文件/目录名 目标文件夹</code>：移动操作</p>
+<p><code>-f</code>：强制</p>
+<p><code>-u</code>：只替换已经更新的文件</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">mv wallhaven-r2qp17.jpg new<br><br>mv add new<br></code></pre></td></tr></table></figure>
+
+<p>移动当前目录下的所有文件到另一个目录：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">mv * ..&#x2F;newfile<br></code></pre></td></tr></table></figure>
+
+<p><strong>重命名：mv 原 新</strong></p>
+<h2 id="文件基本属性操作"><a href="#文件基本属性操作" class="headerlink" title="文件基本属性操作"></a><strong>文件基本属性操作</strong></h2><p>Linux系统是一种典型的多用户系统，不同的用户处于不同的地位，拥有不同的权限。为了保护系统的安全性，Linux系统对不同的用户访问同一文件（包括目录文件）的权限做了不同的规定。</p>
+<p>文件的基本属性</p>
+<p><img src="/2020/11/13/linux/pro.jpg" alt="pro"></p>
+<p>在Linux中第一个字符代表这个文件是目录、文件或链接文件等等：</p>
+<p>当为[ d ]则是目录</p>
+<p>当为[ - ]则是文件；</p>
+<p>若是[ l ]则表示为链接文档 ( link file )；</p>
+<p>若是[ b ]则表示为装置文件里面的可供储存的接口设备 ( 可随机存取装置 )；</p>
+<p>若是[ c ]则表示为装置文件里面的串行端口设备，例如键盘、鼠标 ( 一次性读取装置 )。</p>
+<p>接下来的字符中，以三个为一组，且均为『rwx』 的三个参数的组合。</p>
+<p>其中，[ r ]代表可读(read)、[ w ]代表可写(write)、[ x ]代表可执行(execute)。</p>
+<p>要注意的是，这三个权限的位置不会改变，如果没有权限，就会出现减号[ - ]而已。</p>
+<p><img src="/2020/11/13/linux/1.jpg" alt="1"></p>
+<p>对于文件来说，它都有一个特定的所有者，也就是对该文件具有所有权的用户。</p>
+<p>同时，在Linux系统中，用户是按组分类的，一个用户属于一个或多个组。</p>
+<p>文件所有者以外的用户又可以分为文件所有者的同组用户和其他用户。</p>
+<p>因此，Linux系统按文件所有者、文件所有者同组用户和其他用户来规定了不同的文件访问权限。</p>
+<p>十位字母后的数字属性表示 连接数：有多少个文件名连接到这个文件</p>
+<p>数字后的两个属性分别表示 属主 和 属组（用户组）</p>
+<p>再后面是文件大小 和 创建时间</p>
+<h2 id="修改文件属性"><a href="#修改文件属性" class="headerlink" title="修改文件属性"></a><strong>修改文件属性</strong></h2><h3 id="修改文件属组"><a href="#修改文件属组" class="headerlink" title="修改文件属组"></a><strong>修改文件属组</strong></h3><p><code>chgrp -R 属组名 要改的文件名</code></p>
+<p><code>chgrp -R 属主名:属组名 要改的文件名</code></p>
+<h3 id="修改文件权限"><a href="#修改文件权限" class="headerlink" title="修改文件权限"></a><strong>修改文件权限</strong></h3><p><code>chmod [-R] rwx 文件/目录</code></p>
+<p>Linux文件的基本权限就有九个，分别是owner/group/others三种身份各有自己的read/write/execute权限。</p>
+<p>文件的权限字符为：『-rwxrwxrwx』，这九个权限是三个三个一组的！其中，我们可以使用数字来代表各个权限，各权限的分数对照表如下：</p>
+<p>r：4   w：2   e：1   -：0</p>
+<p>如：</p>
+<p><code>chmod 777 filename</code>： 赋予最高权限</p>
+<p><code>chmod 770 filename</code>： 其他用户没有权限</p>
+<h2 id="查看文件内容"><a href="#查看文件内容" class="headerlink" title="查看文件内容"></a><strong>查看文件内容</strong></h2><p>Linux系统中使用以下命令来查看文件的内容：</p>
+<ul>
+<li><p>cat 由第一行开始显示文件内容</p>
+</li>
+<li><p>tac 从最后一行开始显示，可以看出 tac 是 cat 的倒着写！</p>
+</li>
+<li><p>nl  显示的时候，顺道输出行号！</p>
+</li>
+<li><p>more 一页一页的显示文件内容，空格翻页，回车下一行</p>
+</li>
+<li><p>less 与 more 类似，但是比 more 更好的是，他可以往前翻页！看完按q退出</p>
+</li>
+</ul>
+<p>在less中，方向键上下移动，用/向下查找字符串，?向上查找，n表示下一个，N表示上一个</p>
+<ul>
+<li><p>head -n 10 只看前10行</p>
+</li>
+<li><p>tail -n 10 只看尾10行</p>
+</li>
+</ul>
+<h2 id="硬链接和软链接"><a href="#硬链接和软链接" class="headerlink" title="硬链接和软链接"></a><strong>硬链接和软链接</strong></h2><p>linux中链接分为两种：</p>
+<ul>
+<li>硬链接</li>
+</ul>
+<p>硬链接表示一个文件可以拥有多个访问它的路径（拥有多个备份），修改任意一个文件，其他文件也会自动被修改，相当于指针，通常使用硬链接对文件进行备份，防止文件被误删</p>
+<ul>
+<li>软链接</li>
+</ul>
+<p>软链接类似window下的快捷方式，删除源文件，就不能通过访问快捷方式访访问源文件了</p>
+<p>创建硬链接：<code>ln f1 f2</code> 表示创建f1的硬链接f2</p>
+<p>创建软链接：<code>ln -s f1 f</code> 表示创建f1的软链接f3</p>
+<h2 id="vim编辑器的使用"><a href="#vim编辑器的使用" class="headerlink" title="vim编辑器的使用"></a><strong>vim编辑器的使用</strong></h2><p>vim是一个文本编辑器，在vim中，有三种使用模式：</p>
+<ul>
+<li>命令模式</li>
+</ul>
+<p>启动vim，便进入命令模式</p>
+<p>在命令模式下，键盘输入数字+空格：跳转到当前光标下的第n个下标</p>
+<p>H：移动到文本内容第一个字符</p>
+<p>M：移动到中间字符</p>
+<p>L：移动到最后一个字符</p>
+<p>/：向下寻找字符(串)</p>
+<p>?：向上寻找</p>
+<ul>
+<li>输入模式</li>
+</ul>
+<p>输入i、a、或o，进入插入模式，输入完毕，按esc回到命令模式</p>
+<ul>
+<li>底线命令模式</li>
+</ul>
+<p>输入 :wq 保存，结束底线命令模式</p>
+<p>其中w为保存，q为退出</p>
+<p>还有其他一些底线命令：</p>
+<ul>
+<li><p>w!：强制保存</p>
+</li>
+<li><p>q!：强制退出</p>
+</li>
+<li><p>ZZ：如果未编辑则不保存退出，如果编辑了则保存退出</p>
+</li>
+<li><p>set nu：设置行号</p>
+</li>
+<li><p>set nonu：取消行号</p>
+</li>
+</ul>
+<h1 id="账号管理"><a href="#账号管理" class="headerlink" title="账号管理"></a><strong>账号管理</strong></h1>]]></content>
+      <tags>
+        <tag>linux</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>swagger</title>
     <url>/2020/11/11/swagger/</url>
     <content><![CDATA[<h1 id="什么是swagger"><a href="#什么是swagger" class="headerlink" title="什么是swagger"></a><strong>什么是swagger</strong></h1><p>在前后端分离的时代，前后端的唯一交流方式就是接口文档，将一些请求地址、请求方法、请求参数、返回内容等等写入文档中，便于前后端之间的对接，接口文档变成了前后端开发人员联系的纽带。</p>

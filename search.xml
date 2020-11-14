@@ -982,23 +982,28 @@
   <entry>
     <title>linux学习</title>
     <url>/2020/11/13/linux/</url>
-    <content><![CDATA[<h1 id="linux介绍"><a href="#linux介绍" class="headerlink" title="linux介绍"></a><strong>linux介绍</strong></h1><p>CentOs、Ubuntu、redhat</p>
-<p>很多大型项目都是部署在linux上</p>
-<p>服务器的两种组合：LAMP、LNMP</p>
-<p>window:xshell+xftp </p>
-<p>mac:finalshell+forklift</p>
+    <content><![CDATA[<h1 id="linux介绍"><a href="#linux介绍" class="headerlink" title="linux介绍"></a><strong>linux介绍</strong></h1><p>linux是一个开源、免费的操作系统，是一个基于POSIX和UNIX的多用户、多任务、支持多线程和多CPU的操作系统，目前，很多大型项目都部署在linux上</p>
+<p>linux目前的发行版本主要有：CentOs、Ubuntu、redhat</p>
+<p>由于没有安装linux虚拟机，所以要借助工具远程连接服务器，需要借助以下工具：</p>
+<ol>
+<li><p>宝塔面板</p>
+</li>
+<li><p>xshell + xftp（finalshell + forklift）<br>如果在windows环境下：可以使用 xshell + xftp 远程控制服务器和传输文件<br>mac下：可以使用 finalshell + forklift 代替win下的 xshell + xftp</p>
+</li>
+</ol>
 <h1 id="linux基本命令操作"><a href="#linux基本命令操作" class="headerlink" title="linux基本命令操作"></a><strong>linux基本命令操作</strong></h1><h2 id="开机关机"><a href="#开机关机" class="headerlink" title="开机关机"></a><strong>开机关机</strong></h2><h3 id="开机"><a href="#开机" class="headerlink" title="开机"></a><strong>开机</strong></h3><ul>
 <li>ssh远程登陆</li>
 </ul>
-<p><code>ssh username@ip</code></p>
+<p>如果是使用服务器上的linux，使用<code>ssh username@ip</code></p>
 <ul>
 <li>用户界面</li>
 </ul>
+<p>ubuntu使用用户界面登陆即可</p>
 <h3 id="关机"><a href="#关机" class="headerlink" title="关机"></a><strong>关机</strong></h3><p>关机指令：<code>shutdown</code></p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">sync # 将数据由内存同步到硬盘中<br><br>shutdown<br><br>shutdown -h 10 # 十分钟后关机<br><br>shutdown -h now # 马上关机<br><br>shutdown -h 20:00 # 20:00关机<br><br>shutdown -r now # 马上重启<br><br>shutdown -r +10 # 十分钟后重启<br><br>reboot # 重启<br><br>halt # 关闭系统<br></code></pre></td></tr></table></figure>
 <p>在执行关机/重启操作之前，都要先执行sync命令同步数据</p>
 <h2 id="文件-目录操作"><a href="#文件-目录操作" class="headerlink" title="文件/目录操作"></a><strong>文件/目录操作</strong></h2><h3 id="查看目录下的文件"><a href="#查看目录下的文件" class="headerlink" title="查看目录下的文件"></a><strong>查看目录下的文件</strong></h3><p><code>ls /</code></p>
-<p><img src="/2020/11/13/linux/.jpg" alt="ls/"></p>
+<p><img src="/2020/11/13/linux/ls.jpg" alt="ls"></p>
 <p><code>ls -a</code>：查看全部文件，包括隐藏文件</p>
 <p><code>ls -l</code>：列出除了隐藏文件以外的文件，包括文件的属性和权限</p>
 <p><code>ls -al</code>：列出全部文件及属性和权限</p>

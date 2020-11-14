@@ -4099,6 +4099,137 @@ print(str)            #12\n312312412412</code></pre>
       </tags>
   </entry>
   <entry>
+    <title>git入门</title>
+    <url>/2020/09/18/git/</url>
+    <content><![CDATA[<h1 id="版本控制"><a href="#版本控制" class="headerlink" title="版本控制"></a><strong>版本控制</strong></h1><p>版本控制是一种在开发过程中用于管理我们对文件、目录或工程等内容的修改历史，方便查看更改历史记录，备份以便恢复以前的版本的软件工程技术</p>
+<p>版本控制技术用于管理多人协同开发项目，使用版本控制技术能实现多人协同开发，提高开发效率</p>
+<p>目前主要的版本控制器有：</p>
+<ul>
+<li><p>git</p>
+</li>
+<li><p>svn</p>
+</li>
+<li><p>cvs</p>
+</li>
+<li><p>vss</p>
+</li>
+<li><p>tfs</p>
+</li>
+</ul>
+<p>最广泛使用的是git和svn</p>
+<h1 id="版本控制分类"><a href="#版本控制分类" class="headerlink" title="版本控制分类"></a><strong>版本控制分类</strong></h1><ul>
+<li>本地版本控制</li>
+</ul>
+<p><img src="/2020/09/18/git/local.jpg" alt="local"></p>
+<ul>
+<li>集中式版本控制 svn</li>
+</ul>
+<p><img src="/2020/09/18/git/2.jpg" alt="2"></p>
+<ul>
+<li>分布式版本控制 git</li>
+</ul>
+<p><img src="/2020/09/18/git/3.jpg" alt="3"></p>
+<p>所有版本信息仓库全部同步到本地的每个用户，每个用户都可以在本地查看所有的版本历史</p>
+<h1 id="git的环境配置"><a href="#git的环境配置" class="headerlink" title="git的环境配置"></a><strong>git的环境配置</strong></h1><p>查看git的安装目录：<code>which git</code></p>
+<p>设置用户名和邮箱：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">git config --global user.name leobro #名称<br>leobro:~ apple$ git config --global user.email zhangakenug@qq.com #邮箱<br></code></pre></td></tr></table></figure>
+
+<p>查看git配置：<code>git config -l</code></p>
+<p>查看系统配置：<code>git config --system --list</code></p>
+<p>查看用户配置：<code>git config --global --list</code></p>
+<p>.gitconfig文件：</p>
+<p><img src="/2020/09/18/git/gitconfig.jpg" alt="gitconfig"></p>
+<p>gitconfig文件内容与终端查看的内容一样</p>
+<h1 id="git的基本理论"><a href="#git的基本理论" class="headerlink" title="git的基本理论"></a><strong>git的基本理论</strong></h1><p>git本地有三个工作区域：</p>
+<ul>
+<li>workspace：工作区</li>
+</ul>
+<p>平时存放项目代码的地方</p>
+<ul>
+<li>stage/index：暂存区</li>
+</ul>
+<p>临时存放对代码的改动，事实上只是一个文件，保存时将提交到文件列表信息中</p>
+<ul>
+<li>资源库</li>
+</ul>
+<p>本地安全存放数据的位置，里面有提交所有版本的数据，head指向最新放入仓库的版本</p>
+<ul>
+<li>远程仓库</li>
+</ul>
+<p><img src="/2020/09/18/git/git.jpg" alt="git"></p>
+<p>git的工作流程：</p>
+<p>先通过<code>git add files</code>将数据从工作区添加到暂存区，再通过<code>git commit</code>提交到本地git仓库，最后通过<code>git push</code>添加到远程仓库</p>
+<p><img src="/2020/09/18/git/git1.jpg" alt="git1"></p>
+<h1 id="搭建git项目和基本操作命令"><a href="#搭建git项目和基本操作命令" class="headerlink" title="搭建git项目和基本操作命令"></a><strong>搭建git项目和基本操作命令</strong></h1><h2 id="搭建git项目"><a href="#搭建git项目" class="headerlink" title="搭建git项目"></a><strong>搭建git项目</strong></h2><p>创建本地仓库：<code>git init</code></p>
+<p>创建后，就会自动新建一个隐藏文件.git</p>
+<p>克隆远程仓库：<code>git clone url</code></p>
+<p>如下载博客主题</p>
+<h2 id="git的基本操作命令"><a href="#git的基本操作命令" class="headerlink" title="git的基本操作命令"></a><strong>git的基本操作命令</strong></h2><h3 id="查看文件状态"><a href="#查看文件状态" class="headerlink" title="查看文件状态"></a><strong>查看文件状态</strong></h3><p>查看指定文件状态：<code>git status [filename]</code></p>
+<p>查看所有文件状态：<code>git status</code></p>
+<p><img src="/2020/09/18/git/status.jpg" alt="status"></p>
+<h3 id="添加所有的文件到暂存区"><a href="#添加所有的文件到暂存区" class="headerlink" title="添加所有的文件到暂存区"></a><strong>添加所有的文件到暂存区</strong></h3><p><code>git add .</code></p>
+<p><img src="/2020/09/18/git/add.jpg" alt="add"></p>
+<h3 id="提交暂存区的内容到本地仓库"><a href="#提交暂存区的内容到本地仓库" class="headerlink" title="提交暂存区的内容到本地仓库"></a><strong>提交暂存区的内容到本地仓库</strong></h3><p><code>git commit -m &quot;message&quot;</code></p>
+<p><img src="/2020/09/18/git/com.jpg" alt="com"></p>
+<h3 id="忽略文件"><a href="#忽略文件" class="headerlink" title="忽略文件"></a><strong>忽略文件</strong></h3><p>在主目录下建立<code>.gitignore</code>文件，该文件的规则如下：</p>
+<ul>
+<li><p>空行或者以 # 号开始的行会被忽略</p>
+</li>
+<li><p>*.text 忽略所有.text结尾的文件  </p>
+</li>
+<li><p>！表示例外规则，不会被忽略</p>
+</li>
+<li><p>/temp 不忽略temp目录</p>
+</li>
+<li><p>temp/ 忽略temp目录下的文件</p>
+</li>
+<li><p>temp/*.text 忽略temp下所有text文件，但不忽略temp子目录下的文件</p>
+</li>
+</ul>
+<h1 id="使用码云和github"><a href="#使用码云和github" class="headerlink" title="使用码云和github"></a><strong>使用码云和github</strong></h1><h2 id="配置ssh免密码登陆"><a href="#配置ssh免密码登陆" class="headerlink" title="配置ssh免密码登陆"></a><strong>配置ssh免密码登陆</strong></h2><p><code>~/.ssh</code>找到ssh文件</p>
+<p>生成公钥<code>ssh-keygen</code></p>
+<p><img src="/2020/09/18/git/keygen.jpg" alt="keygen"></p>
+<p><img src="/2020/09/18/git/ssh.jpg" alt="ssh"></p>
+<p>将id_rsa.pub文件的内容复制到码云或者github的ssh公钥中即可</p>
+<h2 id="创建远程仓库"><a href="#创建远程仓库" class="headerlink" title="创建远程仓库"></a><strong>创建远程仓库</strong></h2><p><img src="/2020/09/18/git/res.jpg" alt="res"></p>
+<h1 id="使用idea集成git"><a href="#使用idea集成git" class="headerlink" title="使用idea集成git"></a><strong>使用idea集成git</strong></h1><p>集成git的方式有：</p>
+<ol>
+<li><p>新建项目，将从远程仓库下载的git文件夹里面的所有文件拷贝到项目中</p>
+</li>
+<li><p>在git文件夹里创建项目</p>
+</li>
+</ol>
+<p>修改项目后，进行提交</p>
+<p><img src="/2020/09/18/git/11.jpg" alt="11"></p>
+<p>提交项目后，文件变成绿色</p>
+<p><img src="/2020/09/18/git/success.jpg" alt="success"></p>
+<p>在git中，我们可以看到每次提交的变化</p>
+<p><img src="/2020/09/18/git/change2.jpg" alt="change2"></p>
+<p><img src="/2020/09/18/git/change1.jpg" alt="change1"></p>
+<p>在终端，<code>git push</code>提交到远程仓库</p>
+<h1 id="git分支"><a href="#git分支" class="headerlink" title="git分支"></a><strong>git分支</strong></h1><p>分支可以理解为允许的环境</p>
+<p>查看所有分支：<code>git branch</code></p>
+<p><img src="/2020/09/18/git/branch.jpg" alt="branch"></p>
+<p>查看远程分支：<code>git branch -r</code><br><img src="/2020/09/18/git/branchr.jpg" alt="branchr"></p>
+<p>新建分支：<code>git branch xxx</code><br><img src="/2020/09/18/git/addbranchr.jpg" alt="addbranchr"></p>
+<p>新建远程分支：<code>git push --set-upstream origin dev</code><br><img src="/2020/09/18/git/addbranchr.jpg" alt="addbranchr"></p>
+<p>但当前分支仍然是主分支master</p>
+<p>新建分支并切换分支：<code>git checkout -b xxx</code></p>
+<p><img src="/2020/09/18/git/changebranch.jpg" alt="changebranch"></p>
+<p>切换分支：<code>git checkout dev</code></p>
+<p>合并当前分支到指定分支：<code>git merge [branch_name]</code></p>
+<p>删除分支：<code>git branch -d[branch_name]</code></p>
+<p>删除远程分支：<code>git branch -dr[</code></p>
+<p><img src="/2020/09/18/git/drbranch.jpg" alt="drbranch"></p>
+<p>多人协作下，如果修改了同一个文件，就会产生冲突，这时候要 修改冲突文件，选择其中一个修改的版本，再次提交。</p>
+<p>master主分支必须非常稳定，用来发布新的版本，发布新版本时，只要把其他分支merge到主分支就可以了</p>
+<p>git大全：<a href="https://gitee.com/all-about-git">https://gitee.com/all-about-git</a></p>
+]]></content>
+      <tags>
+        <tag>git</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>javaScript入门</title>
     <url>/2020/09/16/js/</url>
     <content><![CDATA[<p>JavaScript（js）是目前web开发中不可缺少的脚本语言，js不需要编译即可运行，运行在客户端，需要通过浏览器来解析执行JavaScript代码。</p>

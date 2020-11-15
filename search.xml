@@ -1323,8 +1323,29 @@
 <p><img src="/2020/11/13/linux/grep.jpg" alt="grep"></p>
 <p><code>ps -ef</code>：查看父进程信息</p>
 <p><code>pstree -pu</code>：以树的方式显示父id和用户组<br><img src="/2020/11/13/linux/pstree.jpg" alt="pstree"></p>
-<p><code>lsof -i tcp:进程id</code>：查看某个进程</p>
+<p><code>lsof -i 端口号</code>：查看某个进程</p>
 <p><code>kill -9 进程id</code>：强制结束进程</p>
+<h1 id="有关项目部署"><a href="#有关项目部署" class="headerlink" title="有关项目部署"></a><strong>有关项目部署</strong></h1><p>安装必要环境：</p>
+<ul>
+<li><p>rpm安装：<code>rpm -ivh xxx</code></p>
+</li>
+<li><p>解压缩安装：<code>tar -zxvf xxx</code></p>
+</li>
+<li><p>yum安装：<code>yum -y install xxx</code></p>
+</li>
+</ul>
+<p>查看当前防火墙的服务状态：<code>systemctl status firewalld</code></p>
+<p>开启防火墙服务：<code>service firewalld start</code></p>
+<p>重启防火墙服务：<code>service firewalld restart</code></p>
+<p>查看防火墙信息：<code>firewall-cmd --list-all</code></p>
+<p>查看端口信息：<code>firewall-cmd --list-ports</code></p>
+<p>重启防火墙：<code>systemctl restart firewalld.service</code></p>
+<p>开启端口：<code>firewall-cmd --zone=public --add-port=80/tcp --permanent</code></p>
+<p>项目打包:</p>
+<p><img src="/2020/11/13/linux/package.jpg" alt="package"></p>
+<p>直接丢到服务器</p>
+<p><code>javar -jar xx.jar</code></p>
+<p>访问公网ip</p>
 ]]></content>
       <tags>
         <tag>linux</tag>

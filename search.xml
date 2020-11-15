@@ -982,7 +982,7 @@
   <entry>
     <title>linux学习</title>
     <url>/2020/11/13/linux/</url>
-    <content><![CDATA[<h1 id="linux介绍"><a href="#linux介绍" class="headerlink" title="linux介绍"></a><strong>linux介绍</strong></h1><p>linux是一个开源、免费的操作系统，是一个基于POSIX和UNIX的多用户、多任务、支持多线程和多CPU的操作系统，目前，很多大型项目都部署在linux上</p>
+    <content><![CDATA[<h1 id="linux介绍"><a href="#linux介绍" class="headerlink" title="linux介绍"></a><strong>linux介绍</strong></h1><p>linux是一个开源、免费的操作系统，是一个基于POSIX和UNIX的多用户、多任务、支持多线程和多CPU的操作系统，目前，很多大型项目都部署在linux上，在linux中，一切皆文件</p>
 <p>linux目前的发行版本主要有：CentOs、Ubuntu、redhat</p>
 <p>由于没有安装linux虚拟机，所以要借助工具远程连接服务器，需要借助以下工具：</p>
 <ol>
@@ -1002,7 +1002,33 @@
 <h3 id="关机"><a href="#关机" class="headerlink" title="关机"></a><strong>关机</strong></h3><p>关机指令：<code>shutdown</code></p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">sync # 将数据由内存同步到硬盘中<br><br>shutdown<br><br>shutdown -h 10 # 十分钟后关机<br><br>shutdown -h now # 马上关机<br><br>shutdown -h 20:00 # 20:00关机<br><br>shutdown -r now # 马上重启<br><br>shutdown -r +10 # 十分钟后重启<br><br>reboot # 重启<br><br>halt # 关闭系统<br></code></pre></td></tr></table></figure>
 <p>在执行关机/重启操作之前，都要先执行sync命令同步数据</p>
-<h2 id="文件-目录操作"><a href="#文件-目录操作" class="headerlink" title="文件/目录操作"></a><strong>文件/目录操作</strong></h2><h3 id="查看目录下的文件"><a href="#查看目录下的文件" class="headerlink" title="查看目录下的文件"></a><strong>查看目录下的文件</strong></h3><p><code>ls /</code></p>
+<h2 id="文件-目录操作"><a href="#文件-目录操作" class="headerlink" title="文件/目录操作"></a><strong>文件/目录操作</strong></h2><h3 id="查找文件"><a href="#查找文件" class="headerlink" title="查找文件"></a><strong>查找文件</strong></h3><ul>
+<li><p>按文件名查找：<code>find /路径 -name &#39;文件名&#39;</code></p>
+</li>
+<li><p>按文件特征查找：<code>find /路径 特征</code><br>  特征主要有：</p>
+<ul>
+<li><p>-amin -time：在time分钟时间内访问的文件</p>
+</li>
+<li><p>-atime -time：在time小时内访问的文件</p>
+</li>
+<li><p>-empty：空的文件</p>
+</li>
+<li><p>-mmin -time：time分钟内修改过的文件</p>
+</li>
+<li><p>-mtime -time：time小时内修改过的文件</p>
+</li>
+<li><p>-user -username：属于username这个用户的文件</p>
+</li>
+<li><p>-size +size[c:字节,k:kb,M:Mb,G:GB]：大于size的文件</p>
+</li>
+<li><p>-size -size：小于size的文件</p>
+</li>
+</ul>
+</li>
+<li><p>混合查找：! -and -or</p>
+</li>
+</ul>
+<h3 id="查看目录下的文件"><a href="#查看目录下的文件" class="headerlink" title="查看目录下的文件"></a><strong>查看目录下的文件</strong></h3><p><code>ls /</code></p>
 <p><img src="/2020/11/13/linux/ls.jpg" alt="ls"></p>
 <p><code>ls -a</code>：查看全部文件，包括隐藏文件</p>
 <p><code>ls -l</code>：列出除了隐藏文件以外的文件，包括文件的属性和权限</p>
@@ -1106,19 +1132,14 @@
 </tbody></table>
 <h3 id="切换目录"><a href="#切换目录" class="headerlink" title="切换目录"></a><strong>切换目录</strong></h3><p>cd 目录名(绝对路径/相对路径)</p>
 <ul>
-<li>绝对路径：/开头</li>
-</ul>
-<p>如：</p>
+<li><p>绝对路径：/开头<br>如：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">cd home<br><br>cd ..&#x2F;usr<br></code></pre></td></tr></table></figure>
-
-<ul>
-<li>相对目录：../../形式</li>
-</ul>
-<p>如：</p>
+</li>
+<li><p>相对目录：../../形式<br>如：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs plain">cd &#x2F;home&#x2F;newfile<br></code></pre></td></tr></table></figure>
-
-<p>进入当前用户目录：<code>cd ~</code></p>
-<p>显示当前所在目录：<code>pwd</code></p>
+<p>进入当前用户目录：<code>cd ~</code><br>显示当前所在目录：<code>pwd</code></p>
+</li>
+</ul>
 <h3 id="创建-删除目录"><a href="#创建-删除目录" class="headerlink" title="创建\删除目录"></a><strong>创建\删除目录</strong></h3><p>创建一个目录：<code>mkdir filename</code></p>
 <p>创建层级目录：<code>mkdir -p file1/file2/file3</code></p>
 <p>删除目录：<code>rmdir filename</code></p>
@@ -1184,11 +1205,8 @@
 </li>
 <li><p>more 一页一页的显示文件内容，空格翻页，回车下一行</p>
 </li>
-<li><p>less 与 more 类似，但是比 more 更好的是，他可以往前翻页！看完按q退出</p>
+<li><p>less 与 more 类似，但是比 more 更好的是，他可以往前翻页！看完按q退出<br>在less中，方向键上下移动，用/向下查找字符串，?向上查找，n表示下一个，N表示上一个</p>
 </li>
-</ul>
-<p>在less中，方向键上下移动，用/向下查找字符串，?向上查找，n表示下一个，N表示上一个</p>
-<ul>
 <li><p>head -n 10 只看前10行</p>
 </li>
 <li><p>tail -n 10 只看尾10行</p>
@@ -1196,35 +1214,24 @@
 </ul>
 <h2 id="硬链接和软链接"><a href="#硬链接和软链接" class="headerlink" title="硬链接和软链接"></a><strong>硬链接和软链接</strong></h2><p>linux中链接分为两种：</p>
 <ul>
-<li>硬链接</li>
+<li><p>硬链接<br>硬链接表示一个文件可以拥有多个访问它的路径（拥有多个备份），修改任意一个文件，其他文件也会自动被修改，相当于指针，通常使用硬链接对文件进行备份，防止文件被误删</p>
+</li>
+<li><p>软链接<br>软链接类似window下的快捷方式，删除源文件，就不能通过访问快捷方式访访问源文件了</p>
+</li>
 </ul>
-<p>硬链接表示一个文件可以拥有多个访问它的路径（拥有多个备份），修改任意一个文件，其他文件也会自动被修改，相当于指针，通常使用硬链接对文件进行备份，防止文件被误删</p>
-<ul>
-<li>软链接</li>
-</ul>
-<p>软链接类似window下的快捷方式，删除源文件，就不能通过访问快捷方式访访问源文件了</p>
 <p>创建硬链接：<code>ln f1 f2</code> 表示创建f1的硬链接f2</p>
 <p>创建软链接：<code>ln -s f1 f</code> 表示创建f1的软链接f3</p>
 <h2 id="vim编辑器的使用"><a href="#vim编辑器的使用" class="headerlink" title="vim编辑器的使用"></a><strong>vim编辑器的使用</strong></h2><p>vim是一个文本编辑器，在vim中，有三种使用模式：</p>
 <ul>
-<li>命令模式</li>
-</ul>
-<p>启动vim，便进入命令模式</p>
-<p>在命令模式下，键盘输入数字+空格：跳转到当前光标下的第n个下标</p>
-<p>H：移动到文本内容第一个字符</p>
-<p>M：移动到中间字符</p>
-<p>L：移动到最后一个字符</p>
-<p>/：向下寻找字符(串)</p>
-<p>?：向上寻找</p>
-<ul>
-<li>输入模式</li>
+<li><p>命令模式<br>启动vim，便进入命令模式<br>在命令模式下，键盘输入数字+空格：跳转到当前光标下的第n个下标<br>H：移动到文本内容第一个字符<br>M：移动到中间字符<br>L：移动到最后一个字符<br>/：向下寻找字符(串)<br>?：向上寻找</p>
+</li>
+<li><p>输入模式</p>
+</li>
 </ul>
 <p>输入i、a、或o，进入插入模式，输入完毕，按esc回到命令模式</p>
 <ul>
-<li>底线命令模式</li>
+<li>底线命令模式<br>输入 :wq 保存，结束底线命令模式<br>其中w为保存，q为退出</li>
 </ul>
-<p>输入 :wq 保存，结束底线命令模式</p>
-<p>其中w为保存，q为退出</p>
 <p>还有其他一些底线命令：</p>
 <ul>
 <li><p>w!：强制保存</p>
@@ -1238,13 +1245,93 @@
 <li><p>set nonu：取消行号</p>
 </li>
 </ul>
-<h1 id="账号管理"><a href="#账号管理" class="headerlink" title="账号管理"></a><strong>账号管理</strong></h1>]]></content>
+<h1 id="账号管理"><a href="#账号管理" class="headerlink" title="账号管理"></a><strong>账号管理</strong></h1><p>Linux系统是一个多用户多任务的分时操作系统，任何一个要使用系统资源的用户，都必须首先向系统管理员申请一个账号，然后以这个账号的身份进入系统。</p>
+<p>实现用户账号的管理，要完成的工作主要有如下几个方面：</p>
+<ul>
+<li><p>用户账号的增删改</p>
+</li>
+<li><p>用户密码的管理。</p>
+</li>
+<li><p>用户组的管理。</p>
+</li>
+<li><p><strong>添加用户</strong><br>添加用户：<code>useradd -可选项 用户名</code><br>可选项：</p>
+<ul>
+<li><p>-c comment 指定一段注释性描述。</p>
+</li>
+<li><p>-d 目录 指定用户主目录，如果此目录不存在，则同时使用-m选项，可以创建主目录。</p>
+</li>
+<li><p>-g 用户组 指定用户所属的用户组。</p>
+</li>
+<li><p>-G 用户组，用户组 指定用户所属的附加组。</p>
+</li>
+<li><p>-m　使用者目录如不存在则自动建立。</p>
+</li>
+<li><p>-s Shell文件 指定用户的登录Shell。</p>
+</li>
+<li><p>-u 用户号 指定用户的用户号，如果同时有-o选项，则可以重复使用其他用户的标识号。</p>
+</li>
+</ul>
+</li>
+<li><p><strong>删除用户</strong><br>删除用户：<code>userdel -r 用户名</code></p>
+</li>
+</ul>
+<p>-r 表示层级删除</p>
+<ul>
+<li><p><strong>修改用户</strong><br><code>usermod 可选项 用户名</code>，其中可选项和增加用户的可选项一致</p>
+</li>
+<li><p><strong>切换用户</strong><br><code>su 用户名</code> <code>$</code>表示普通用户<br>可以使用再次使用<code>su</code>命令切换回原来的用户，也可以使用exit直接退出</p>
+</li>
+<li><p><strong>赋予用户密码</strong><br><code>passwd 用户名</code><br>只有root用户才可以赋予密码</p>
+</li>
+<li><p><strong>锁定用户</strong><br>如果你的用户权限比较高，还可以锁定别人的用户<br>锁定用户：<code>passwd -l 用户名</code><br>解锁：<code>passwd -u 用户名</code><br>删除用户密码：<code>passwd -d 用户名</code></p>
+</li>
+</ul>
+<p>对用户账号的管理，实质上是对/etc/passwd文件进行修改</p>
+<p><img src="/2020/11/13/linux/passwd.jpg" alt="passwd"></p>
+<p>/etc/passwd中一行记录对应着一个用户，每行记录又被冒号(:)分隔为7个字段，其格式和具体含义如下：</p>
+<p>用户名:密码(x表示不可见):用户标识号:组标识号:注释性描述:主目录:登录Shell</p>
+<p>真正加密后的密码是在/etc/shadow文件中</p>
+<h1 id="用户组管理"><a href="#用户组管理" class="headerlink" title="用户组管理"></a><strong>用户组管理</strong></h1><p>每个用户都有一个用户组，系统可以对一个用户组中的所有用户进行集中管理。</p>
+<p>用户组的管理涉及用户组的添加、删除和修改。组的增加、删除和修改实际上就是对/etc/group文件的更新。</p>
+<ul>
+<li><p><strong>创建用户组</strong><br><code>groupadd 组名</code><br>创建完用户组之后可以得到一个组的id，这个id是可以指定的，这个id表示权限的大小<br><code>groupadd -g id</code></p>
+</li>
+<li><p><strong>删除用户组</strong><br><code>groupdel 组名</code></p>
+</li>
+<li><p><strong>修改用户组信息</strong><br><code>groupmod [-g -n] 组名</code><br><code>groupmod -g 520 -n leo leobro</code>：将leobro组的id修改为520，将组名修改为bro</p>
+</li>
+<li><p><strong>切换组</strong><br><code>newgrp 组名</code></p>
+</li>
+</ul>
+<h1 id="磁盘管理"><a href="#磁盘管理" class="headerlink" title="磁盘管理"></a><strong>磁盘管理</strong></h1><p><code>df -h</code>查看系统磁盘总体情况</p>
+<p><img src="/2020/11/13/linux/df.jpg" alt="df"></p>
+<p><code>du -h</code>查看当前目录的使用情况</p>
+<p><img src="/2020/11/13/linux/du.jpg" alt="du"></p>
+<p>检查根目录下每个目录的情况：<code>du -sm /*</code></p>
+<p>在mac或linux下，如果想要挂载外部设备，使用命令<code>mount /dev/外部设备 /mnt/目录</code> 将外部设备挂载到mnt的目录下</p>
+<p>卸载：unmount -f(强制)</p>
+<h1 id="进程管理"><a href="#进程管理" class="headerlink" title="进程管理"></a><strong>进程管理</strong></h1><ul>
+<li><strong>查看当前系统进程的信息</strong><br><code>ps -xx</code>：<ul>
+<li><code>ps -a</code>：显示终端运行的当前进程信息</li>
+<li><code>ps -u</code>：以用户的信息显示进程</li>
+<li><code>ps -x</code>：显示后台运行进程的参数</li>
+</ul>
+</li>
+</ul>
+<p><code>ps -aux</code>：综合以上三个</p>
+<p>使用 <code>ps -aux|grep xxx</code> 查看与xxx相关的所有进程</p>
+<p><img src="/2020/11/13/linux/grep.jpg" alt="grep"></p>
+<p><code>ps -ef</code>：查看父进程信息</p>
+<p><code>pstree -pu</code>：以树的方式显示父id和用户组<br><img src="/2020/11/13/linux/pstree.jpg" alt="pstree"></p>
+<p><code>lsof -i tcp:进程id</code>：查看某个进程</p>
+<p><code>kill -9 进程id</code>：强制结束进程</p>
+]]></content>
       <tags>
         <tag>linux</tag>
       </tags>
   </entry>
   <entry>
-    <title>swagger</title>
+    <title>swagger学习</title>
     <url>/2020/11/11/swagger/</url>
     <content><![CDATA[<h1 id="什么是swagger"><a href="#什么是swagger" class="headerlink" title="什么是swagger"></a><strong>什么是swagger</strong></h1><p>在前后端分离的时代，前后端的唯一交流方式就是接口文档，将一些请求地址、请求方法、请求参数、返回内容等等写入文档中，便于前后端之间的对接，接口文档变成了前后端开发人员联系的纽带。</p>
 <p>而swagger是一个简单但功能强大的API表达工具，能够自动生成和同步接口，使前后端之间的联系变得更加简单</p>
